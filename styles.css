@@ -63,3 +63,5 @@ h1 em { color:#666; }
 .social-links .mono { color:#888; }
 .article-body p, .article-body li { color:#222; }
 .article-body code { background:rgba(17,17,17,.07); }
+.art-pink .feature-image { mix-blend-mode:normal; opacity:.82; filter:grayscale(.2) contrast(1.05); }
+.art-pink .art-shade { background:linear-gradient(135deg,rgba(17,17,17,.05),rgba(17,17,17,.22) 60%,rgba(0,0,0,.42)); }
