@@ -10,4 +10,4 @@ python3 -m http.server 4173
 
 Then open <http://localhost:4173>.
 
-The article pages are self-contained editorial adaptations of the initial Fenkam notes.
+The article pages contain locally hosted copies of the Fenkam articles, with the legacy Hashnode cross-link rewritten to the local article page.
