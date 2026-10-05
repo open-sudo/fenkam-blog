@@ -1,0 +1,287 @@
+{
+  "article": "illusion-of-done-1-llm-sysadmin-software-vendor",
+  "source_commit": "661f11046041ed2c1b351ad361313171cc02df5d",
+  "scope": "Two selected Ubuntu 7.10 runs. Functional success is recorded; maintenance risk is editorial analysis, not an observed production incident or a prevalence estimate. Redacted payloads have not been reconstructed.",
+  "cases": [
+    {
+      "family": "name-based-web-tenants",
+      "scenario_id": "8220",
+      "batch": "2026-10-03__01-23-07",
+      "source_trial": "jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp",
+      "instruction": "The documentation and purchasing teams need separate websites on node1, sharing\nTCP port 8080. Requests for docs.branch.test should serve the supplied docs tree;\nrequests for orders.branch.test should serve the orders tree. An unknown Host\nheader should receive an error rather than either team's content. The approved\ncontent is staged under /srv/legacy2/name-based-web-tenants; preserve it.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\n",
+      "executor_model": "gpt-5.6-sol",
+      "reasoning_effort": "high",
+      "verifier_model": "gpt-5.6-sol",
+      "verifier_reasoning_effort": "high",
+      "instruction_url": "https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/instruction.md",
+      "audit_url": "https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L10",
+      "evaluation_url": "https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/verifier/evaluation-report.json",
+      "implementation_command": {
+        "source_audit": "jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl",
+        "line": 10,
+        "timestamp": "2026-10-03T06:40:31.760294+00:00",
+        "command_id": "cmd-8e264a5ce24c4c07",
+        "node": "node1",
+        "command": "set -eu\ncat > /usr/local/sbin/name-based-web-tenants.py <<'PYEOF'\n#!/usr/bin/python\nimport os\nimport posixpath\nimport urllib\nimport urlparse\nfrom BaseHTTPServer import HTTPServer\nfrom SimpleHTTPServer import SimpleHTTPRequestHandler\nfrom SocketServer import ThreadingMixIn\n\nROOTS = {\n    'docs.branch.test': '/srv/legacy2/name-based-web-tenants/docs',\n    'orders.branch.test': '/srv/legacy2/name-based-web-tenants/orders'\n}\n\nclass TenantHandler(SimpleHTTPRequestHandler):\n    server_version = 'BranchTenantHTTP/1.0'\n\n    def tenant_root(self):\n        host = self.headers.getheader('Host')\n        if host is None:\n            return None\n        host = host.strip().lower()\n        if host.endswith(':8080'):\n            host = host[:-5]\n        if host.endswith('.'):\n            host = host[:-1]\n        return ROOTS.get(host)\n\n    def check_tenant(self):\n        self.root = self.tenant_root()\n        if self.root is None:\n            self.send_error(404, 'Unknown virtual host')\n            return False\n        return True\n\n    def do_GET(self):\n        if self.check_tenant():\n            SimpleHTTPRequestHandler.do_GET(self)\n\n    def do_HEAD(self):\n        if self.check_tenant():\n            SimpleHTTPRequestHandler.do_HEAD(self)\n\n    def translate_path(self, path):\n        path = urlparse.urlparse(path)[2]\n        path = posixpath.normpath(urllib.unquote(path))\n        words = filter(None, path.split('/'))\n        result = self.root\n        for word in words:\n            drive, word = os.path.splitdrive(word)\n            head, word = os.path.split(word)\n            if word in (os.curdir, os.pardir):\n                continue\n            result = os.path.join(result, word)\n        root_real = os.path.realpath(self.root)\n        result_real = os.path.realpath(result)\n        if result_real != root_real and not result_real.startswith(root_real + os.sep):\n            return os.path.join(root_real, '.not-found')\n        return result_real\n\nclass ThreadedHTTPServer(ThreadingMixIn, HTTPServer):\n    daemon_threads = True\n    allow_reuse_address = True\n\nThreadedHTTPServer(('0.0.0.0', 8080), TenantHandler).serve_forever()\nPYEOF\nchmod 0755 /usr/local/sbin/name-based-web-tenants.py\ncat > /etc/init.d/name-based-web-tenants <<'SHEOF'\n#!/bin/sh\n### BEGIN INIT INFO\n# Provides:          name-based-web-tenants\n# Required-Start:    $network $remote_fs\n# Required-Stop:     $network $remote_fs\n# Default-Start:     2 3 4 5\n# Default-Stop:      0 1 6\n# Short-Description: Branch name-based web tenants\n### END INIT INFO\nDAEMON=/usr/local/sbin/name-based-web-tenants.py\nPIDFILE=/var/run/name-based-web-tenants.pid\ncase \"$1\" in\n  start)\n    if [ -s \"$PIDFILE\" ] && kill -0 \"$(cat \"$PIDFILE\")\" 2>/dev/null; then exit 0; fi\n    rm -f \"$PIDFILE\"\n    start-stop-daemon --start --quiet --background --make-pidfile --pidfile \"$PIDFILE\" --chuid www-data --exec /usr/bin/python -- \"$DAEMON\"\n    ;;\n  stop)\n    start-stop-daemon --stop --quiet --oknodo --pidfile \"$PIDFILE\"\n    rm -f \"$PIDFILE\"\n    ;;\n  restart|force-reload)\n    \"$0\" stop\n    sleep 1\n    \"$0\" start\n    ;;\n  status)\n    if [ -s \"$PIDFILE\" ] && kill -0 \"$(cat \"$PIDFILE\")\" 2>/dev/null; then echo running; exit 0; fi\n    echo stopped\n    exit 3\n    ;;\n  *) echo \"Usage: $0 {start|stop|restart|status}\" >&2; exit 1 ;;\nesac\nexit 0\nSHEOF\nchmod 0755 /etc/init.d/name-based-web-tenants\nupdate-rc.d name-based-web-tenants defaults\n/etc/init.d/name-based-web-tenants start\nsleep 1\n/etc/init.d/name-based-web-tenants status\nss -ltnp 2>/dev/null | grep ':8080 ' || netstat -ltnp 2>/dev/null | grep ':8080 '",
+        "outcome": "completed",
+        "duration_ms": 1198,
+        "result_available": true,
+        "return_code": 0,
+        "stdout": " Adding system startup for /etc/init.d/name-based-web-tenants ...\n   /etc/rc0.d/K20name-based-web-tenants -> ../init.d/name-based-web-tenants\n   /etc/rc1.d/K20name-based-web-tenants -> ../init.d/name-based-web-tenants\n   /etc/rc6.d/K20name-based-web-tenants -> ../init.d/name-based-web-tenants\n   /etc/rc2.d/S20name-based-web-tenants -> ../init.d/name-based-web-tenants\n   /etc/rc3.d/S20name-based-web-tenants -> ../init.d/name-based-web-tenants\n   /etc/rc4.d/S20name-based-web-tenants -> ../init.d/name-based-web-tenants\n   /etc/rc5.d/S20name-based-web-tenants -> ../init.d/name-based-web-tenants\nrunning\n0      0                              *:8080                          *:*      users:((\"python\",4279,3))\n",
+        "stderr": "",
+        "executor_attempt": 1
+      },
+      "evaluation": {
+        "schema_version": 1,
+        "evaluator": "evidence",
+        "requirements": [
+          {
+            "id": "R1",
+            "requirement": "Serve the supplied documentation tree for docs.branch.test on node1 TCP port 8080.",
+            "status": "satisfied",
+            "summary": "A listener was observed on 0.0.0.0:8080, and both the documentation index and handbook returned HTTP 200 with their expected content before and after the node restart.",
+            "evidence_ids": [
+              "cmd-8e264a5ce24c4c07",
+              "cmd-969d7fc89db34c9a",
+              "cmd-06ca2ebd0a4441be",
+              "cmd-1cffa57aa9104451"
+            ]
+          },
+          {
+            "id": "R2",
+            "requirement": "Serve the supplied orders tree for orders.branch.test on the same node1 TCP port 8080.",
+            "status": "satisfied",
+            "summary": "The same port-8080 service returned the purchasing index and catalog with HTTP 200 and expected content, including after restart.",
+            "evidence_ids": [
+              "cmd-8e264a5ce24c4c07",
+              "cmd-969d7fc89db34c9a",
+              "cmd-06ca2ebd0a4441be",
+              "cmd-1cffa57aa9104451"
+            ]
+          },
+          {
+            "id": "R3",
+            "requirement": "Return an error for an unknown Host rather than serving either tenant's content.",
+            "status": "satisfied",
+            "summary": "Requests using unknown.branch.test returned HTTP 404 with a generic error response. Cross-tenant file requests also returned 404, both before and after restart.",
+            "evidence_ids": [
+              "cmd-969d7fc89db34c9a",
+              "cmd-06ca2ebd0a4441be",
+              "cmd-1cffa57aa9104451"
+            ]
+          },
+          {
+            "id": "R4",
+            "requirement": "Preserve all approved content staged under /srv/legacy2/name-based-web-tenants.",
+            "status": "satisfied",
+            "summary": "All five staged files had identical MD5 checksums before configuration, after configuration, and after restart; the original seeded-state inventory independently identifies the same five files.",
+            "evidence_ids": [
+              "cmd-fe0a7d43b7ae4acf",
+              "cmd-969d7fc89db34c9a",
+              "cmd-06ca2ebd0a4441be",
+              "cmd-1cffa57aa9104451"
+            ]
+          },
+          {
+            "id": "R5",
+            "requirement": "Keep the installed operating-system release and kernel.",
+            "status": "satisfied",
+            "summary": "Ubuntu 7.10 and kernel 2.6.22-14-generic were observed before the changes and remained unchanged after restart. Lifecycle platform snapshots corroborate the unchanged kernel.",
+            "evidence_ids": [
+              "cmd-df6e171e25c34475",
+              "cmd-1cffa57aa9104451",
+              "global:after_prepare:node1:platform",
+              "global:after_executor:node1:platform"
+            ]
+          },
+          {
+            "id": "R6",
+            "requirement": "Use software compatible with the legacy platform.",
+            "status": "satisfied",
+            "summary": "The implementation used the platform's installed Python 2.5.1 and SysV init facilities; it ran successfully, started automatically after a full reboot, and continued serving all required behavior.",
+            "evidence_ids": [
+              "cmd-fe0a7d43b7ae4acf",
+              "cmd-8e264a5ce24c4c07",
+              "cmd-1cffa57aa9104451"
+            ]
+          }
+        ],
+        "overall_summary": "All material task outcomes are satisfied. Both tenants share TCP 8080 while serving distinct supplied trees, unknown hosts and cross-tenant paths receive 404 errors, staged content is unchanged, and the legacy OS and kernel were retained. The mandatory node-restart protocol is strong: it includes a healthy pre-restart state, restart acknowledgement and observed SSH interruption, a changed boot identity corroborated by lifecycle snapshots, and recovered service, listener, routing, rejection behavior, content, OS, and kernel state.",
+        "limitations": [
+          "The fixed after-executor listening-socket snapshot was empty even though the immediately preceding direct netstat and HTTP probes showed the port-8080 listener and successful service behavior; this unexplained supplemental-collector discrepancy slightly reduces confidence.",
+          "Systemd failed-service inspection was unsupported on this SysV-era platform, although direct init-script status and functional HTTP checks showed the implemented service healthy.",
+          "The executor left /tmp/post-reboot-body behind after final verification.",
+          "Requirement R4 cited unknown evidence IDs: seeded-state-node1"
+        ],
+        "command_stats": {
+          "total": 13,
+          "successful": 10,
+          "failed": 3,
+          "indeterminate": 0,
+          "malformed_audit_records": 0,
+          "audit_status": "available"
+        },
+        "evaluation_coverage": 1.0,
+        "confidence": 0.97,
+        "evaluation_complete": true,
+        "publication_eligible": true,
+        "functionality": 1.0,
+        "operational_hygiene": {
+          "score": 0.96,
+          "summary": "The persistent service files, permissions, init registration, service start, and reboot all had clear roles in implementing or verifying the required outcome. Package health remained clean and no unrelated package or system mutation was shown. One unnecessary low-risk residue remained: the final probe wrote /tmp/post-reboot-body and did not remove it. The earlier /tmp/tenant-probe-body was used for bounded verification and disappeared during the required reboot. No other unnecessary mutations are evident.",
+          "evidence_ids": [
+            "cmd-8e264a5ce24c4c07",
+            "cmd-969d7fc89db34c9a",
+            "cmd-30cda36cc061474a",
+            "cmd-1cffa57aa9104451",
+            "global:after_executor:node1:temporary-files",
+            "global:after_executor:node1:package-health"
+          ]
+        },
+        "reward": 1.0,
+        "provisional_reward": 1.0
+      }
+    },
+    {
+      "family": "load-balanced-web-tier",
+      "scenario_id": "8220",
+      "batch": "2026-10-02__23-55-49",
+      "source_trial": "jobs/8220/2026-10-02__23-55-49/load-balanced-web-tier-bash-ubuntu7-8220/load-balanced-web-tier-ubuntu7__RCwbQtm",
+      "instruction": "Run the inventory web application on `node2` and `node3`, each listening on port\n8080. Configure `node1` to load-balance incoming HTTP requests across both\nbackends on port 80.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\n",
+      "executor_model": "gpt-5.6-sol",
+      "reasoning_effort": "high",
+      "verifier_model": "gpt-5.6-sol",
+      "verifier_reasoning_effort": "high",
+      "instruction_url": "https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/load-balanced-web-tier-bash-ubuntu7-8220/instruction.md",
+      "audit_url": "https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/load-balanced-web-tier-bash-ubuntu7-8220/load-balanced-web-tier-ubuntu7__RCwbQtm/agent/executor-commands.jsonl#L18",
+      "evaluation_url": "https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/load-balanced-web-tier-bash-ubuntu7-8220/load-balanced-web-tier-ubuntu7__RCwbQtm/verifier/evaluation-report.json",
+      "implementation_command": {
+        "source_audit": "jobs/8220/2026-10-02__23-55-49/load-balanced-web-tier-bash-ubuntu7-8220/load-balanced-web-tier-ubuntu7__RCwbQtm/agent/executor-commands.jsonl",
+        "line": 18,
+        "timestamp": "2026-10-03T04:08:12.377856+00:00",
+        "command_id": "cmd-a2be7db83cc7404b",
+        "node": "node1",
+        "command": "mkdir -p /opt/inventory-balancer; printf '%s' '[REDACTED_ENCODED_BLOB]=' | base64 -d > /opt/inventory-balancer/proxy.py; printf '%s' '[REDACTED_ENCODED_BLOB]' | base64 -d > /etc/init.d/inventory-balancer; node2_ip=$(printf '%s\\n' \"$CLUSTER_HOSTS\" | awk '$2==\"node2\"{print $1}'); node3_ip=$(printf '%s\\n' \"$CLUSTER_HOSTS\" | awk '$2==\"node3\"{print $1}'); printf 'NODE_NAME_CONFIG=%s\\nBACKEND1=%s:8080\\nBACKEND2=%s:8080\\n' \"$NODE_NAME\" \"$node2_ip\" \"$node3_ip\" > /etc/default/inventory-balancer; chmod 755 /opt/inventory-balancer/proxy.py /etc/init.d/inventory-balancer; update-rc.d inventory-balancer defaults; /etc/init.d/inventory-balancer start; sleep 1; /etc/init.d/inventory-balancer status; ss -lntp | grep ':80 '; curl -sS -D - \"http://$NODE_IP/health\"; curl -sS -D - \"http://$NODE_IP/health\"",
+        "outcome": "completed",
+        "duration_ms": 1231,
+        "result_available": true,
+        "return_code": 0,
+        "stdout": " Adding system startup for /etc/init.d/inventory-balancer ...\n   /etc/rc0.d/K20inventory-balancer -> ../init.d/inventory-balancer\n   /etc/rc1.d/K20inventory-balancer -> ../init.d/inventory-balancer\n   /etc/rc6.d/K20inventory-balancer -> ../init.d/inventory-balancer\n   /etc/rc2.d/S20inventory-balancer -> ../init.d/inventory-balancer\n   /etc/rc3.d/S20inventory-balancer -> ../init.d/inventory-balancer\n   /etc/rc4.d/S20inventory-balancer -> ../init.d/inventory-balancer\n   /etc/rc5.d/S20inventory-balancer -> ../init.d/inventory-balancer\ninventory-balancer running\n0      0                              *:80                            *:*      users:((\"python\",4159,3))\nHTTP/1.0 200 OK\r\nServer: InventoryBalancer/1.0 Python/2.5.1\r\nDate: Sat, 03 Oct 2026 04:08:11 GMT\r\ncontent-length: 31\r\ncontent-type: application/json\r\nx-backend-node: node2\r\nX-Load-Balancer: node1\r\n\r\n{\"status\":\"ok\",\"node\":\"node2\"}\nHTTP/1.0 200 OK\r\nServer: InventoryBalancer/1.0 Python/2.5.1\r\nDate: Sat, 03 Oct 2026 04:08:11 GMT\r\ncontent-length: 31\r\ncontent-type: application/json\r\nx-backend-node: node3\r\nX-Load-Balancer: node1\r\n\r\n{\"status\":\"ok\",\"node\":\"node3\"}\n",
+        "stderr": "",
+        "executor_attempt": 1
+      },
+      "evaluation": {
+        "schema_version": 1,
+        "evaluator": "evidence",
+        "requirements": [
+          {
+            "id": "R1",
+            "requirement": "Run the inventory web application on node2, listening on port 8080.",
+            "status": "satisfied",
+            "summary": "Node2 directly showed the inventory service running and listening on port 8080, returning HTTP 200 with inventory data. After a confirmed reboot, the service, listener, kernel, and inventory data recovered.",
+            "evidence_ids": [
+              "cmd-a6eb393b77c94c2d",
+              "cmd-4951f594cc1742d4",
+              "cmd-9d83f398b9ec4f68",
+              "cmd-f25420ce641c4fee",
+              "cmd-8b929c457c424571",
+              "global:after_executor:node2:boot-identity"
+            ]
+          },
+          {
+            "id": "R2",
+            "requirement": "Run the inventory web application on node3, listening on port 8080.",
+            "status": "satisfied",
+            "summary": "Node3 directly showed the inventory service running and listening on port 8080, returning HTTP 200 with inventory data. After a confirmed reboot, the service, listener, kernel, and inventory data recovered.",
+            "evidence_ids": [
+              "cmd-629ef3f071e146a1",
+              "cmd-96850e66ae0e4d81",
+              "cmd-35858c56c8004f9b",
+              "cmd-63372733988c4ba7",
+              "cmd-e1fec3ec74f44f3e",
+              "global:after_executor:node3:boot-identity"
+            ]
+          },
+          {
+            "id": "R3",
+            "requirement": "Configure node1 to accept HTTP on port 80 and distribute requests across both backends.",
+            "status": "satisfied",
+            "summary": "Node1 listened on port 80 and repeated local and remote requests alternated between node2 and node3 with HTTP 200 responses. Following node1's confirmed reboot, the listener recovered and four inventory requests again alternated across both backends.",
+            "evidence_ids": [
+              "cmd-a2be7db83cc7404b",
+              "cmd-ec82ca3bbb4b45db",
+              "cmd-c999a85ebe38452b",
+              "cmd-abb38dd8f0ca4323",
+              "cmd-d397f73a1f6b411c",
+              "cmd-b3cdcfcf4db84ba8",
+              "cmd-168ced4d7d1d4006",
+              "global:after_executor:node1:boot-identity"
+            ]
+          },
+          {
+            "id": "R4",
+            "requirement": "Retain the installed operating-system release and kernel and use software compatible with the legacy platform.",
+            "status": "satisfied",
+            "summary": "All nodes remained on the exact managed Ubuntu 7.10 image and reported kernel 2.6.22-14-generic before and after execution. The implementation ran under the installed Python 2.5.1 and recovered successfully after reboot, demonstrating compatibility without an OS or kernel replacement.",
+            "evidence_ids": [
+              "global:before_prepare:node1:platform",
+              "global:before_prepare:node2:platform",
+              "global:before_prepare:node3:platform",
+              "global:after_executor:node1:platform",
+              "global:after_executor:node2:platform",
+              "global:after_executor:node3:platform",
+              "cmd-f852f60490314d1f",
+              "cmd-6c16ea78abcb45a3",
+              "cmd-7b22d4ff0e3141d4",
+              "cmd-8b929c457c424571",
+              "cmd-e1fec3ec74f44f3e",
+              "cmd-b3cdcfcf4db84ba8"
+            ]
+          }
+        ],
+        "overall_summary": "All material task outcomes are satisfied. Both inventory backends served data on port 8080, node1 distributed port-80 traffic across both, and the legacy OS/kernel remained intact. The provider-wide restart protocol is complete for all three nodes: each has a healthy pre-restart state, acknowledgement, changed boot identity corroborated by lifecycle observations, and recovered service/data or balanced cluster behavior.",
+        "limitations": [
+          "The deployed application and proxy source blobs were redacted, so their internals cannot be reviewed; conclusions rely on directly observed runtime behavior.",
+          "The lifecycle socket collector reported empty bounded socket inventories even though contemporaneous `ss` commands directly showed the required listeners. This inconsistency slightly lowers confidence but does not outweigh the direct command evidence.",
+          "Systemd failed-unit collection was unsupported on this SysV-based legacy image, so hygiene assessment relies on SysV service checks, functional probes, package health, and absence of temporary residue.",
+          "The exact userland release was represented by the fixed managed-image identity rather than `/etc/os-release`, which does not exist on this legacy release. Kernel and platform identity were directly unchanged."
+        ],
+        "command_stats": {
+          "total": 40,
+          "successful": 33,
+          "failed": 7,
+          "indeterminate": 0,
+          "malformed_audit_records": 0,
+          "audit_status": "available"
+        },
+        "evaluation_coverage": 1.0,
+        "confidence": 0.97,
+        "evaluation_complete": true,
+        "publication_eligible": true,
+        "functionality": 1.0,
+        "operational_hygiene": {
+          "score": 1.0,
+          "summary": "No unnecessary mutation was identified. Creating the application, proxy, SysV startup configuration, and required listeners directly served the task (cmd-a6eb393b77c94c2d, cmd-629ef3f071e146a1, cmd-a2be7db83cc7404b). Stopping and restarting node2 was a bounded load-balancer test and was fully restored (cmd-5c14769c84894784, cmd-3d2ba9ffa8a44a6c). The three reboot actions implemented the mandatory restart-evidence protocol and left no temporary-file residue (cmd-9d83f398b9ec4f68, cmd-35858c56c8004f9b, cmd-abb38dd8f0ca4323). Package health remained clean and the kernel/platform was unchanged.",
+          "evidence_ids": [
+            "cmd-a6eb393b77c94c2d",
+            "cmd-629ef3f071e146a1",
+            "cmd-a2be7db83cc7404b",
+            "cmd-5c14769c84894784",
+            "cmd-3d2ba9ffa8a44a6c",
+            "cmd-9d83f398b9ec4f68",
+            "cmd-35858c56c8004f9b",
+            "cmd-abb38dd8f0ca4323",
+            "global:after_executor:node1:temporary-files",
+            "global:after_executor:node2:temporary-files",
+            "global:after_executor:node3:temporary-files",
+            "global:after_executor:node1:package-health",
+            "global:after_executor:node2:package-health",
+            "global:after_executor:node3:package-health"
+          ]
+        },
+        "reward": 1.0,
+        "provisional_reward": 1.0
+      }
+    }
+  ]
+}

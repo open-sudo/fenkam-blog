@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The websites worked. The tests passed. The agent had also given the operator a new server to maintain." />
+  <title>Illusion of Done #1: LLM Sysadmin Failures Turn You into a Software Vendor — Fenkam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css?v=f5b75c2" />
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+<header class="site-header shell"><a class="wordmark" href="../index.html"><span>F</span> LLM AS SYSADMIN</a><nav><a href="../index.html#writing">Articles</a><a href="../index.html#about">About</a><a href="mailto:hello@fenkam.org">Say hello</a><a class="nav-pill" href="../index.html#subscribe">Subscribe <span>↗</span></a></nav></header>
+<main>
+  <header class="article-header article-shell">
+    <a class="back-link" href="index.html">← Back to drafts</a>
+    <div class="post-meta article-meta"><span>ILLUSION OF DONE / #1</span><span>7 MIN READ</span><span>DRAFT</span></div>
+    <h1>Illusion of Done #1: LLM Sysadmin Failures Turn You into a Software Vendor</h1>
+    <p class="article-deck">The websites worked. The tests passed. The agent had also given the operator a new server to maintain.</p>
+  </header>
+  <article class="article-body article-shell">
+
+<p>You ask an AI sysadmin to put two websites on one machine. It serves the right content, rejects unknown hostnames, survives a reboot and earns a perfect functionality score.</p>
+<p>Then you look at what is listening on the port. It is a Python server the agent just wrote. You now own the server implementation as well as the websites.</p>
+<p>That happened in an Ubuntu 7.10 run in InfraSet. In another run, a request to load-balance HTTP traffic produced a custom Python proxy. Both satisfied the recorded functional requirements. Accepting either result as a finished operational handover would also mean accepting software development responsibilities.</p>
+
+<h2>Why document the illusion of done?</h2>
+<p>In <a href="../llm-as-sysadmin-and-the-illusion-of-done.html">our earlier article</a>, we used <em>the illusion of done</em> to describe the gap between an agent completing a task and a system being ready to hand over. This series documents specific forms of that gap.</p>
+<p>The purpose is practical: help users recognize the pattern when it occurs, give sysadmins concrete things to inspect, and give vendors and researchers failure modes they can reproduce and address. Each installment starts with a recorded execution.</p>
+<p><strong>IOD #1: the agent satisfies a configuration request by creating a persistent service that you must now maintain.</strong> The completion signal covers the requested behavior. It leaves the new software ownership decision for the operator to discover.</p>
+
+<h2>Two websites became a new HTTP server</h2>
+<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/instruction.md">task</a> asked for two websites on node1, sharing TCP port 8080. Requests for <code>docs.branch.test</code> had to serve the supplied documentation tree. Requests for <code>orders.branch.test</code> had to serve the purchasing tree. Unknown hostnames had to receive an error. The staged content, installed OS release and kernel had to remain intact.</p>
+<p>The agent wrote <code>/usr/local/sbin/name-based-web-tenants.py</code>. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L10">recorded implementation command</a> contains the source: it imports Python’s <code>HTTPServer</code> and <code>SimpleHTTPRequestHandler</code>, defines a <code>TenantHandler</code>, and maps the two hostnames to separate directories.</p>
+<p>It implemented host-header normalization, unknown-host rejection and URL-to-filesystem path handling. It also added a threaded HTTP server and SysV startup configuration. The code ran on the installed Python 2.5.1.</p>
+<p>Those are decisions about how a web server behaves. They became part of the code the operator would inherit.</p>
+<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/verifier/evaluation-report.json">evaluation</a> recorded the expected pages returning HTTP 200, unknown-host and cross-tenant requests returning HTTP 404, and unchanged checksums for all five supplied files. The service recovered after a confirmed reboot. Functionality received <strong>1.0</strong>; operational hygiene received <strong>0.96</strong>, with a leftover temporary probe file noted.</p>
+<p>The implementation did useful work, and the verification went beyond a single successful request. What it did not establish was how this new server would be supported after the task ended.</p>
+
+<h2>A load-balancing request became a custom proxy</h2>
+<p>The second <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/load-balanced-web-tier-bash-ubuntu7-8220/instruction.md">task</a> asked for an inventory application on node2 and node3, listening on port 8080, with node1 distributing incoming HTTP traffic across them on port 80. It carried the same requirement to retain the legacy operating system and kernel.</p>
+<p>The agent installed <code>/opt/inventory-balancer/proxy.py</code>, created <code>/etc/init.d/inventory-balancer</code>, configured the backend addresses and registered the service to start at boot. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/load-balanced-web-tier-bash-ubuntu7-8220/load-balanced-web-tier-ubuntu7__RCwbQtm/agent/executor-commands.jsonl#L18">installation command</a> shows those changes.</p>
+<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/load-balanced-web-tier-bash-ubuntu7-8220/load-balanced-web-tier-ubuntu7__RCwbQtm/verifier/evaluation-report.json">evaluation</a> recorded HTTP 200 responses alternating between the backends and recovered service behavior after all three nodes were restarted. This task also received <strong>1.0 functionality</strong>.</p>
+<p>The proxy’s source was transferred in an encoded payload that is redacted in the retained audit. Its installation and observed behavior are visible; its full implementation cannot be reviewed from that record. That limits what we can conclude about its internals.</p>
+
+<h2>Where “done” stops being enough</h2>
+<p>Neither task required Apache, nginx or another named implementation. Neither prohibited custom software. The operating system was old, and compatibility was an explicit constraint. These records do not establish that a supported packaged alternative was readily installable, or that the custom programs failed the stated requirements.</p>
+<p>The failure mode appears when functional success is treated as sufficient evidence for operational acceptance. A passing request and a successful reboot do not answer who will review the new code, diagnose its faults, update it or support the next change.</p>
+<p>“Software vendor” is a description of the responsibilities you inherit. You need to understand your server’s behavior, investigate defects, maintain regression tests, manage releases and handle security fixes. The agent can write the first version in minutes. The organization still has to decide whether it wants that codebase.</p>
+<p>For these examples, slow clients, sustained concurrency, malformed requests and broader protocol behavior remain questions for further testing. The recorded success does not prove those properties. It also does not prove the implementations are defective in those areas.</p>
+<p>Custom software can be an appropriate decision. The illusion is accepting the result without recognizing that this decision has been made.</p>
+
+<h2>What users and sysadmins should look for</h2>
+<p>After an agent reports a service configured, trace the listener back to its process, executable and startup definition. Read the implementation changes as well as the verification output.</p>
+<ul>
+<li><strong>Look for newly authored daemons.</strong> A new <code>.py</code> file under <code>/usr/local/sbin</code> or <code>/opt</code>, launched by an init script or service unit, deserves inspection. A helper script and a persistent network service create different obligations.</li>
+<li><strong>Ask what behavior moved into code.</strong> Host routing, request parsing, path handling and backend selection are implementation responsibilities. In the first run, the visible command contains several of them.</li>
+<li><strong>Inspect persistence and ownership.</strong> Record the service account, startup mechanism, source location, dependencies, logs, restart behavior and rollback procedure. Assign someone to maintain the implementation.</li>
+<li><strong>Read the tests for their limits.</strong> Separate observed behavior from assumptions. Reboot recovery is evidence of persistence; it is not a substitute for concurrency, failure handling or security review.</li>
+<li><strong>Check the handover for the architectural change.</strong> “Configured the websites” is insufficient when the deliverable includes a newly written web server. The completion report should say so plainly.</li>
+</ul>
+<p>If introducing a custom daemon needs approval in your environment, make that boundary explicit before the agent starts. For example:</p>
+<blockquote>Use an approved server implementation. If you cannot satisfy the requirements with one, stop and explain the blocker before creating a replacement service. Identify any new persistent executable in the handover.</blockquote>
+<p>That is a proposed operating constraint. It was not part of the two recorded tasks.</p>
+
+<h2>A concrete target for vendors and researchers</h2>
+<p>These cases suggest a measurable evaluation gap. An agent can achieve the requested behavior while introducing an implementation decision that the acceptance process does not assess.</p>
+<p>Vendors can make new persistent services visible in the final change report, distinguish configuration edits from authored application code, and enforce an organization’s approval policy when a task crosses that boundary.</p>
+<p>Researchers can rerun the task with an explicit implementation policy: approved packages only, custom code allowed after approval, or custom code freely permitted. Score functional correctness separately from policy compliance and handover quality. An agent that encounters a constraint and accurately reports a blocker should be distinguishable from one that silently works around it.</p>
+<p>When custom code is allowed, retain its reviewable source and test behavior beyond the examples given in the prompt. Report which properties remain untested. A single success score otherwise hides the distinction between a working demonstration and an accepted operational service.</p>
+<p>Before accepting “done,” ask: <strong>what software did the agent create, and who now owns it?</strong></p>
+
+<div class="source-note" id="sources">
+<p><strong>Evidence and scope.</strong> These are two selected Ubuntu 7.10 executions from InfraSet scenario <code>8220</code>: <code>name-based-web-tenants</code> in batch <code>2026-10-03__01-23-07</code> and <code>load-balanced-web-tier</code> in batch <code>2026-10-02__23-55-49</code>. Both the executor and the separate LLM evaluator used <code>gpt-5.6-sol</code> at high reasoning effort. The <a href="assets/illusion-of-done-1-llm-sysadmin-software-vendor-evidence.json">evidence extract</a> includes the task instructions, implementation commands, model settings and complete evaluator findings. Source links are pinned to an InfraSet commit.</p>
+<p>The evaluator noted limitations, including empty supplemental socket snapshots despite successful direct listener and HTTP checks; the proxy source is redacted. These cases establish the behavior, not its frequency across models or operating systems. No production incident is claimed.</p>
+</div>
+
+  </article>
+</main>
+<footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://hashnode.com/@fenkam" target="_blank" rel="noreferrer">Hashnode</a><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
+</body>
+</html>
