@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A load-balancing request produced a Python proxy. A mail-delivery request produced an SMTP daemon. Both worked—and both introduced software for the operator to maintain." />
+  <title>LLM as sysadmin builds its own crazy software to meet requirements — Fenkam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css?v=f5b75c2" />
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+<header class="site-header shell"><a class="wordmark" href="../index.html"><span>F</span> LLM AS SYSADMIN</a><nav><a href="../index.html#writing">Articles</a><a href="../index.html#about">About</a><a href="mailto:hello@fenkam.org">Say hello</a><a class="nav-pill" href="../index.html#subscribe">Subscribe <span>↗</span></a></nav></header>
+<main>
+  <header class="article-header article-shell">
+    <a class="back-link" href="../index.html">← Back to articles</a>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
+    <h1>LLM as sysadmin builds its own crazy software to meet requirements</h1>
+    <p class="article-deck">When your AI decides to become a software vendor.</p>
+  </header>
+  <article class="article-body article-shell">
+<p>Ask an AI agent to get a service working, and it may write the service itself.</p>
+<p>That happened in two Ubuntu 7.10 runs I examined. A request to load-balance HTTP traffic produced a custom Python reverse proxy. A request to restore local mail delivery produced a custom SMTP daemon. The agent installed both as persistent services and demonstrated their recovery after restarts.</p>
+<p>Both tasks received full functionality scores. Both also left behind software that somebody would now have to maintain.</p>
+
+<h2>A load-balancing request produced a new proxy</h2>
+<p>The request described an ordinary three-machine deployment:</p>
+<blockquote>Run the inventory web application on node2 and node3, each listening on port 8080. Configure node1 to load-balance incoming HTTP requests across both backends on port 80.</blockquote>
+<p>The task also required retaining the installed operating-system release and kernel. It did not prescribe a particular load balancer.</p>
+<p>The agent created Python 2.5 applications for the two backends and wrote a reverse proxy to <code>/opt/inventory-balancer/proxy.py</code>. It installed an <code>/etc/init.d/inventory-balancer</code> startup script. Its execution report describes round-robin distribution and retrying the other backend when one fails.</p>
+<p>The recorded evaluation confirms requests reaching both backends, recovery after a backend interruption, and service recovery after sequential restarts of all three machines. Changed boot identities corroborated those restarts.</p>
+<p>This was a running service with startup configuration and observed recovery behavior. Accepting the result would also mean accepting responsibility for that proxy’s implementation.</p>
+<p>The proxy source was transferred as an encoded payload that is redacted in the audit. Its destination, installation and behavioral evidence remain visible. Those records establish the custom implementation, but do not allow a complete source review.</p>
+
+<h2>A mail-delivery request produced a new SMTP daemon</h2>
+<p>The second task asked:</p>
+<blockquote>Restore local mail delivery for branch.test on node1. Mail sent from node2 to
+helpdesk@branch.test should reach both the alice and bob local mailboxes;
+accounts@branch.test should reach bob only. Unknown recipients should be rejected,
+and relaying for unrelated domains should be rejected. Preserve the
+sample messages and routing handover in /srv/legacy2/smtp-alias-delivery.<br /><br />Keep the installed operating-system release and kernel; use software compatible with this legacy platform.</blockquote>
+<p>The agent inspected the installed Python SMTP support, then wrote <code>/usr/local/sbin/branch-smtpd.py</code>. The visible source imports <code>smtpd</code>, <code>asyncore</code>, <code>fcntl</code> and <code>pwd</code>, and defines <code>BranchSMTPChannel</code> and <code>BranchSMTPServer</code>.</p>
+<p>The implementation needed debugging. Early delivery attempts failed. A later command replaced an <code>os.fchown(...)</code> call with <code>os.chown(...)</code>, restarted the daemon, and checked its port-25 listener. The evaluator records that the compatibility defect was corrected and empty mailbox state from the failed attempts was cleaned before final testing.</p>
+<p>The final evidence showed the required delivery, alias routing and rejection behavior. The handover files were preserved, and the service recovered after node restarts. The evaluator awarded full marks.</p>
+<p>The agent had moved from administering a mail service to developing, debugging and deploying one.</p>
+
+<h2>The implementation becomes part of the handover</h2>
+<p>There is real capability here. The agent used an old runtime to build useful services, corrected a compatibility problem and made the results persistent. The requests left implementation choices open, so custom software was a legitimate way to satisfy them.</p>
+<p>That freedom also changes what the operator receives. Alongside the requested behavior comes a codebase with an owner to assign, faults to diagnose and future changes to manage.</p>
+<p>A working proxy still raises questions about slow clients, concurrent requests and malformed HTTP. A working SMTP daemon raises questions about full disks, interrupted deliveries and protocol edge cases. The recorded tests do not establish all those properties. They also do not establish that the programs fail them.</p>
+<p>The operational concern is the responsibility introduced by the implementation. A short request can result in a service whose behavior the organization must now understand well enough to support.</p>
+<p>If approved software is a requirement, it belongs in the task or operating policy. If custom services are acceptable, their introduction should be explicit in the handover, together with their source, tests, limitations and maintenance ownership.</p>
+<p>The useful question after an agent reports success is: <strong>what software did it create to get there?</strong></p>
+
+<div class="source-note" id="sources">
+<p><strong>About these examples.</strong> These are two recorded Ubuntu 7.10 tasks from InfraSet, executed by <code>gpt-5.6-sol</code> at high reasoning effort. The evaluator used the same model and effort. <a href="assets/llm-as-sysadmin-builds-its-own-crazy-software-to-meet-requirements-evidence.json">The evidence extract</a> contains the requests, selected commands, source paths and evaluator findings for these two cases. They demonstrate the behavior; they do not establish how frequently agents choose custom implementations or whether these services are production-ready. The experiment lives in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p>
+</div>
+
+
+  </article>
+</main>
+<footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://hashnode.com/@fenkam" target="_blank" rel="noreferrer">Hashnode</a><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
+</body>
+</html>

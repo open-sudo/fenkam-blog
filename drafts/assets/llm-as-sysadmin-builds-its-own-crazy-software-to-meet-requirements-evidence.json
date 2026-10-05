@@ -1,0 +1,221 @@
+{
+  "article": "llm-as-sysadmin-builds-its-own-crazy-software-to-meet-requirements",
+  "dataset": "bash-ubuntu7",
+  "method": "Read dataset.json and each trial result.json; select evaluator findings and command excerpts from attempt audits. No encoded redactions are reconstructed. This is a selected extract, not a complete raw audit.",
+  "tasks": [
+    {
+      "task": "load-balanced-web-tier-ubuntu7",
+      "family": "load-balanced-web-tier",
+      "category": "multi-node-os-comparison",
+      "reward": 1.0,
+      "exception_type": null,
+      "agent_execution_seconds": 190.639124,
+      "source_trial": "jobs/bash-ubuntu7/multi-node-os-comparison/load-balanced-web-tier-ubuntu7/2026-10-02__23-55-49/load-balanced-web-tier-ubuntu7__RCwbQtm"
+    },
+    {
+      "task": "smtp-alias-delivery-ubuntu7",
+      "family": "smtp-alias-delivery",
+      "category": "multi-node-os-comparison",
+      "reward": 1.0,
+      "exception_type": null,
+      "agent_execution_seconds": 249.700772,
+      "source_trial": "jobs/bash-ubuntu7/multi-node-os-comparison/smtp-alias-delivery-ubuntu7/2026-10-03__01-23-07/smtp-alias-delivery-ubuntu7__r9qCYbU"
+    }
+  ],
+  "cases": [
+    {
+      "family": "load-balanced-web-tier",
+      "source_trial": "jobs/bash-ubuntu7/multi-node-os-comparison/load-balanced-web-tier-ubuntu7/2026-10-02__23-55-49/load-balanced-web-tier-ubuntu7__RCwbQtm",
+      "overall_summary": "All material task outcomes are satisfied. Both inventory backends served data on port 8080, node1 distributed port-80 traffic across both, and the legacy OS/kernel remained intact. The provider-wide restart protocol is complete for all three nodes: each has a healthy pre-restart state, acknowledgement, changed boot identity corroborated by lifecycle observations, and recovered service/data or balanced cluster behavior.",
+      "requirements": [
+        {
+          "id": "R1",
+          "requirement": "Run the inventory web application on node2, listening on port 8080.",
+          "status": "satisfied",
+          "summary": "Node2 directly showed the inventory service running and listening on port 8080, returning HTTP 200 with inventory data. After a confirmed reboot, the service, listener, kernel, and inventory data recovered.",
+          "evidence_ids": [
+            "cmd-a6eb393b77c94c2d",
+            "cmd-4951f594cc1742d4",
+            "cmd-9d83f398b9ec4f68",
+            "cmd-f25420ce641c4fee",
+            "cmd-8b929c457c424571",
+            "global:after_executor:node2:boot-identity"
+          ]
+        },
+        {
+          "id": "R2",
+          "requirement": "Run the inventory web application on node3, listening on port 8080.",
+          "status": "satisfied",
+          "summary": "Node3 directly showed the inventory service running and listening on port 8080, returning HTTP 200 with inventory data. After a confirmed reboot, the service, listener, kernel, and inventory data recovered.",
+          "evidence_ids": [
+            "cmd-629ef3f071e146a1",
+            "cmd-96850e66ae0e4d81",
+            "cmd-35858c56c8004f9b",
+            "cmd-63372733988c4ba7",
+            "cmd-e1fec3ec74f44f3e",
+            "global:after_executor:node3:boot-identity"
+          ]
+        },
+        {
+          "id": "R3",
+          "requirement": "Configure node1 to accept HTTP on port 80 and distribute requests across both backends.",
+          "status": "satisfied",
+          "summary": "Node1 listened on port 80 and repeated local and remote requests alternated between node2 and node3 with HTTP 200 responses. Following node1's confirmed reboot, the listener recovered and four inventory requests again alternated across both backends.",
+          "evidence_ids": [
+            "cmd-a2be7db83cc7404b",
+            "cmd-ec82ca3bbb4b45db",
+            "cmd-c999a85ebe38452b",
+            "cmd-abb38dd8f0ca4323",
+            "cmd-d397f73a1f6b411c",
+            "cmd-b3cdcfcf4db84ba8",
+            "cmd-168ced4d7d1d4006",
+            "global:after_executor:node1:boot-identity"
+          ]
+        },
+        {
+          "id": "R4",
+          "requirement": "Retain the installed operating-system release and kernel and use software compatible with the legacy platform.",
+          "status": "satisfied",
+          "summary": "All nodes remained on the exact managed Ubuntu 7.10 image and reported kernel 2.6.22-14-generic before and after execution. The implementation ran under the installed Python 2.5.1 and recovered successfully after reboot, demonstrating compatibility without an OS or kernel replacement.",
+          "evidence_ids": [
+            "global:before_prepare:node1:platform",
+            "global:before_prepare:node2:platform",
+            "global:before_prepare:node3:platform",
+            "global:after_executor:node1:platform",
+            "global:after_executor:node2:platform",
+            "global:after_executor:node3:platform",
+            "cmd-f852f60490314d1f",
+            "cmd-6c16ea78abcb45a3",
+            "cmd-7b22d4ff0e3141d4",
+            "cmd-8b929c457c424571",
+            "cmd-e1fec3ec74f44f3e",
+            "cmd-b3cdcfcf4db84ba8"
+          ]
+        }
+      ],
+      "limitations": [
+        "The deployed application and proxy source blobs were redacted, so their internals cannot be reviewed; conclusions rely on directly observed runtime behavior.",
+        "The lifecycle socket collector reported empty bounded socket inventories even though contemporaneous `ss` commands directly showed the required listeners. This inconsistency slightly lowers confidence but does not outweigh the direct command evidence.",
+        "Systemd failed-unit collection was unsupported on this SysV-based legacy image, so hygiene assessment relies on SysV service checks, functional probes, package health, and absence of temporary residue.",
+        "The exact userland release was represented by the fixed managed-image identity rather than `/etc/os-release`, which does not exist on this legacy release. Kernel and platform identity were directly unchanged."
+      ],
+      "commands": [
+        {
+          "command_id": "cmd-a2be7db83cc7404b",
+          "source_audit": "jobs/bash-ubuntu7/multi-node-os-comparison/load-balanced-web-tier-ubuntu7/2026-10-02__23-55-49/load-balanced-web-tier-ubuntu7__RCwbQtm/agent/attempts/01/executor-commands.jsonl",
+          "return_code": 0,
+          "excerpt": "mkdir -p /opt/inventory-balancer; printf '%s' '[REDACTED_ENCODED_BLOB]=' | base64 -d > /opt/inventory-balancer/proxy.py; printf '%s' '[REDACTED_ENCODED_BLOB]' | base64 -d > /etc/init.d/inventory-balancer",
+          "excerpt_is_complete_command": false
+        }
+      ],
+      "instruction": "Run the inventory web application on `node2` and `node3`, each listening on port\n8080. Configure `node1` to load-balance incoming HTTP requests across both\nbackends on port 80.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\n"
+    },
+    {
+      "family": "smtp-alias-delivery",
+      "source_trial": "jobs/bash-ubuntu7/multi-node-os-comparison/smtp-alias-delivery-ubuntu7/2026-10-03__01-23-07/smtp-alias-delivery-ubuntu7__r9qCYbU",
+      "overall_summary": "All material task outcomes are satisfied with direct end-to-end SMTP and mailbox evidence. Routing and rejection behavior survived sequential restarts, the supplied handover artifacts were preserved, and the legacy OS/kernel remained in place.",
+      "requirements": [
+        {
+          "id": "R1",
+          "requirement": "Mail sent from node2 to helpdesk@branch.test reaches both alice and bob local mailboxes on node1.",
+          "status": "satisfied",
+          "summary": "Node2 successfully submitted helpdesk messages, and node1 directly showed the original and post-restart markers in both mailboxes. Delivery continued after node1 restarted.",
+          "evidence_ids": [
+            "cmd-ea7ac9b2f0124a05",
+            "cmd-1cb7d3914cb146e1",
+            "cmd-169b964e4a174899",
+            "cmd-02bf99fb68654bc6"
+          ]
+        },
+        {
+          "id": "R2",
+          "requirement": "Mail sent from node2 to accounts@branch.test reaches bob only.",
+          "status": "satisfied",
+          "summary": "Node2 successfully submitted accounts messages. Node1 showed each marker in bob's mailbox and absent from alice's mailbox, including after both nodes restarted.",
+          "evidence_ids": [
+            "cmd-ea7ac9b2f0124a05",
+            "cmd-b4b3bcd9903a4463",
+            "cmd-654bd007caba41ab",
+            "cmd-02bf99fb68654bc6"
+          ]
+        },
+        {
+          "id": "R3",
+          "requirement": "Unknown branch.test recipients are rejected.",
+          "status": "satisfied",
+          "summary": "SMTP RCPT probes for unknown@branch.test consistently returned 550, both before and after the node restarts.",
+          "evidence_ids": [
+            "cmd-ea7ac9b2f0124a05",
+            "cmd-1cb7d3914cb146e1",
+            "cmd-654bd007caba41ab"
+          ]
+        },
+        {
+          "id": "R4",
+          "requirement": "Relaying for unrelated domains is rejected.",
+          "status": "satisfied",
+          "summary": "SMTP RCPT probes for unrelated-domain addresses consistently returned 554 relay-access-denied responses, including after both restarts.",
+          "evidence_ids": [
+            "cmd-ea7ac9b2f0124a05",
+            "cmd-1cb7d3914cb146e1",
+            "cmd-654bd007caba41ab"
+          ]
+        },
+        {
+          "id": "R5",
+          "requirement": "Preserve the sample message and routing handover in /srv/legacy2/smtp-alias-delivery.",
+          "status": "satisfied",
+          "summary": "The alias and sample files retained their supplied content, and node1's pre-change and final MD5 checksums were identical across the implementation and restart.",
+          "evidence_ids": [
+            "cmd-b00571459edc42c9",
+            "cmd-b4b3bcd9903a4463",
+            "cmd-02bf99fb68654bc6"
+          ]
+        },
+        {
+          "id": "R6",
+          "requirement": "Keep the installed operating-system release and kernel and use software compatible with the legacy platform.",
+          "status": "satisfied",
+          "summary": "Node1 remained Ubuntu 7.10 with kernel 2.6.22-14-generic after restart; node2's final lifecycle snapshot also retained that kernel. The implemented service ran under the platform's Python 2.5.1 and recovered successfully after reboot.",
+          "evidence_ids": [
+            "cmd-b00571459edc42c9",
+            "cmd-169b964e4a174899",
+            "cmd-02bf99fb68654bc6",
+            "global:after_executor:node1:platform",
+            "global:after_executor:node2:platform"
+          ]
+        }
+      ],
+      "limitations": [
+        "Node2's restart evidence did not directly recheck its local /srv handover files after reboot, so its provider-wide restart data-state evidence is less complete than node1's.",
+        "The final lifecycle listening-socket observation for node1 was empty despite executor evidence showing the SMTP listener and successful SMTP behavior shortly beforehand; this appears inconsistent or collector-limited and modestly lowers confidence.",
+        "Failed-service collection was unsupported on this pre-systemd platform, although direct SysV service status and functional SMTP tests showed recovery.",
+        "Requirement R5 cited unknown evidence IDs: seeded-state-node1"
+      ],
+      "commands": [
+        {
+          "command_id": "cmd-b267292b78934bce",
+          "source_audit": "jobs/bash-ubuntu7/multi-node-os-comparison/smtp-alias-delivery-ubuntu7/2026-10-03__01-23-07/smtp-alias-delivery-ubuntu7__r9qCYbU/agent/attempts/01/executor-commands.jsonl",
+          "return_code": 0,
+          "excerpt": "cat > /usr/local/sbin/branch-smtpd.py <<'BRANCH_SMTP_PY'\nimport asyncore\nimport email.Utils\nimport fcntl\nimport os\nimport pwd\nimport smtpd\nimport time\nclass BranchSMTPChannel(smtpd.SMTPChannel):\nclass BranchSMTPServer(smtpd.SMTPServer):",
+          "excerpt_is_complete_command": false
+        },
+        {
+          "command_id": "cmd-dc2710208e29470d",
+          "source_audit": "jobs/bash-ubuntu7/multi-node-os-comparison/smtp-alias-delivery-ubuntu7/2026-10-03__01-23-07/smtp-alias-delivery-ubuntu7__r9qCYbU/agent/attempts/01/executor-commands.jsonl",
+          "return_code": 0,
+          "excerpt": "set -eu\nsed -i 's/os\\.fchown(fd, pw\\.pw_uid, pw\\.pw_gid)/os.chown(path, pw.pw_uid, pw.pw_gid)/' /usr/local/sbin/branch-smtpd.py\n/etc/init.d/branch-smtpd restart\nsleep 1\nrm -f /var/mail/alice /var/mail/bob\n: > /var/log/branch-smtpd.log\n/etc/init.d/branch-smtpd status\nnetstat -ltnp 2>/dev/null | grep ':25 ' \ngrep -n 'chown' /usr/local/sbin/branch-smtpd.py",
+          "excerpt_is_complete_command": true
+        }
+      ],
+      "instruction": "Restore local mail delivery for branch.test on node1. Mail sent from node2 to\nhelpdesk@branch.test should reach both the alice and bob local mailboxes;\naccounts@branch.test should reach bob only. Unknown recipients should be rejected,\nand relaying for unrelated domains should be rejected. Preserve the\nsample messages and routing handover in /srv/legacy2/smtp-alias-delivery.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\n"
+    }
+  ],
+  "scope": "Two selected examples of agent-authored infrastructure software. This extract makes no dataset-wide success-rate or frequency claim.",
+  "model_settings": {
+    "executor_model": "gpt-5.6-sol",
+    "executor_reasoning_effort": "high",
+    "verifier_model": "gpt-5.6-sol",
+    "verifier_reasoning_effort": "high"
+  }
+}

@@ -1,0 +1,5 @@
+# GitHub Pages must run Jekyll for this exclusion to take effect.
+# Do not add .nojekyll: that would publish the drafts as static files.
+exclude:
+  - drafts
+  - README.md

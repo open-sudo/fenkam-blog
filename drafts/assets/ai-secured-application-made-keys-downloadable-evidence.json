@@ -1,0 +1,257 @@
+{
+  "trial": "jobs/bash-centos-stream10/multi-node-os-comparison/kerberos-service-identity-centos-stream10/2026-10-03__15-57-02/kerberos-service-identity-centos__GVC4vJ8",
+  "prompt": "Establish the BRANCH.TEST Kerberos realm on node1 for a legacy application on\nnode2. Create the user principal analyst and the service principal\nreports/node2.branch.test, with a keytab for the application on node2. An analyst\nshould be able to obtain a ticket for that service; the application keytab must\nvalidate the service ticket. Keep the principal ownership notes under\n/srv/legacy2/kerberos-service-identity intact.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\n",
+  "agent": {
+    "name": "harbor_antrieb.agent:AntriebHostAgent",
+    "model_name": "gpt-5.6-sol",
+    "kwargs": {
+      "agent_name": "codex",
+      "reasoning_effort": "high",
+      "timeout_sec": 2400,
+      "execution_mode": "interactive",
+      "diagnostic_agent": "codex",
+      "diagnostic_model": "gpt-5.6-sol",
+      "diagnostic_reasoning_effort": "high",
+      "service_tier": "fast"
+    }
+  },
+  "commands": [
+    {
+      "timestamp": "2026-10-03T20:04:28.776137+00:00",
+      "command_id": "cmd-0ca48cdab1b0407e",
+      "node": "node1",
+      "command": "sudo sh -c 'install -d -m 700 /run/legacy-keytab-transfer; cp /root/reports-node2.keytab /run/legacy-keytab-transfer/reports-node2.keytab; chmod 600 /run/legacy-keytab-transfer/reports-node2.keytab; openssl req -x509 -newkey rsa:2048 -nodes -subj /CN=node1 -keyout /run/legacy-keytab-transfer/transfer.key -out /run/legacy-keytab-transfer/transfer.crt -days 1 >/dev/null 2>&1; cd /run/legacy-keytab-transfer; nohup openssl s_server -quiet -accept 10.100.11.10:9443 -cert transfer.crt -key transfer.key -WWW >/run/legacy-keytab-transfer/server.log 2>&1 & echo $! >/run/legacy-keytab-transfer/server.pid'\nfor i in 1 2 3 4 5; do ss -lnt | grep -q '10.100.11.10:9443' && break; sleep 1; done\nss -lnt | grep '10.100.11.10:9443'",
+      "outcome": "completed",
+      "duration_ms": 1349,
+      "result_available": true,
+      "return_code": 0,
+      "stdout": "LISTEN 0      4096    10.100.11.10:9443      0.0.0.0:*   ",
+      "stderr": ""
+    },
+    {
+      "timestamp": "2026-10-03T20:04:32.754401+00:00",
+      "command_id": "cmd-9b0cdf25de094ef8",
+      "node": "node2",
+      "command": "curl --fail --silent --show-error --insecure https://10.100.11.10:9443/reports-node2.keytab -o /tmp/reports-node2.keytab\nsudo install -o root -g root -m 600 /tmp/reports-node2.keytab /etc/krb5.keytab\nrm -f /tmp/reports-node2.keytab\nsudo restorecon -F /etc/krb5.keytab\nsudo klist -kte /etc/krb5.keytab\nsudo stat -c 'mode=%a owner=%U group=%G size=%s path=%n' /etc/krb5.keytab",
+      "outcome": "completed",
+      "duration_ms": 215,
+      "result_available": true,
+      "return_code": 1,
+      "stdout": "curl: (7) Failed to connect to 10.100.11.10 port 9443 after 0 ms: Could not connect to server\ninstall: cannot stat '/tmp/reports-node2.keytab': No such file or directory\nrestorecon: lstat(/etc/krb5.keytab) failed: No such file or directory\nklist: Key table file '/etc/krb5.keytab' not found while starting keytab scan\nKeytab name: FILE:/etc/krb5.keytab\nstat: cannot statx '/etc/krb5.keytab': No such file or directory",
+      "stderr": ""
+    },
+    {
+      "timestamp": "2026-10-03T20:04:37.198919+00:00",
+      "command_id": "cmd-71cc0e707b6c4f62",
+      "node": "node1",
+      "command": "sudo firewall-cmd --add-port=9443/tcp\nsudo firewall-cmd --query-port=9443/tcp\nss -lnt | grep '10.100.11.10:9443'",
+      "outcome": "completed",
+      "duration_ms": 303,
+      "result_available": true,
+      "return_code": 0,
+      "stdout": "success\nyes\nLISTEN 0      4096    10.100.11.10:9443      0.0.0.0:*   ",
+      "stderr": ""
+    },
+    {
+      "timestamp": "2026-10-03T20:04:40.490319+00:00",
+      "command_id": "cmd-5f0f3f0089ff44b4",
+      "node": "node2",
+      "command": "curl --fail --silent --show-error --insecure https://10.100.11.10:9443/reports-node2.keytab -o /tmp/reports-node2.keytab\nsudo install -o root -g root -m 600 /tmp/reports-node2.keytab /etc/krb5.keytab\nrm -f /tmp/reports-node2.keytab\nsudo restorecon -F /etc/krb5.keytab\nsudo klist -kte /etc/krb5.keytab\nsudo stat -c 'mode=%a owner=%U group=%G size=%s path=%n' /etc/krb5.keytab",
+      "outcome": "completed",
+      "duration_ms": 182,
+      "result_available": true,
+      "return_code": 0,
+      "stdout": "Keytab name: FILE:/etc/krb5.keytab\nKVNO Timestamp           Principal\n---- ------------------- ------------------------------------------------------\n   2 10/03/2026 16:04:06 reports/node2.branch.test@BRANCH.TEST (aes256-cts-hmac-sha1-96) \n   2 10/03/2026 16:04:06 reports/node2.branch.test@BRANCH.TEST (aes128-cts-hmac-sha1-96) \nmode=600 owner=root group=root size=178 path=/etc/krb5.keytab",
+      "stderr": ""
+    },
+    {
+      "timestamp": "2026-10-03T20:04:43.791917+00:00",
+      "command_id": "cmd-ebe7090464e34aac",
+      "node": "node1",
+      "command": "sudo sh -c 'if test -f /run/legacy-keytab-transfer/server.pid; then kill \"$(cat /run/legacy-keytab-transfer/server.pid)\" 2>/dev/null || true; fi; rm -rf /run/legacy-keytab-transfer'\nsudo firewall-cmd --remove-port=9443/tcp\nif ss -lnt | grep -q ':9443'; then exit 1; fi\nsudo firewall-cmd --query-port=9443/tcp; test $? -eq 1",
+      "outcome": "completed",
+      "duration_ms": 313,
+      "result_available": true,
+      "return_code": 0,
+      "stdout": "success\nno",
+      "stderr": ""
+    },
+    {
+      "timestamp": "2026-10-03T20:05:02.282208+00:00",
+      "command_id": "cmd-fc28a591a4294809",
+      "node": "node1",
+      "command": "sudo sh -c 'install -d -m 700 /run/legacy-ccache-transfer; cp /run/analyst.ccache /run/legacy-ccache-transfer/analyst.ccache; chmod 600 /run/legacy-ccache-transfer/analyst.ccache; openssl req -x509 -newkey rsa:2048 -nodes -subj /CN=node1 -keyout /run/legacy-ccache-transfer/transfer.key -out /run/legacy-ccache-transfer/transfer.crt -days 1 >/dev/null 2>&1; cd /run/legacy-ccache-transfer; nohup openssl s_server -quiet -accept 10.100.11.10:9443 -cert transfer.crt -key transfer.key -WWW >/run/legacy-ccache-transfer/server.log 2>&1 & echo $! >/run/legacy-ccache-transfer/server.pid'\nsudo firewall-cmd --add-port=9443/tcp\nfor i in 1 2 3 4 5; do ss -lnt | grep -q '10.100.11.10:9443' && break; sleep 1; done\nss -lnt | grep '10.100.11.10:9443'",
+      "outcome": "completed",
+      "duration_ms": 296,
+      "result_available": true,
+      "return_code": 0,
+      "stdout": "success\nLISTEN 0      4096    10.100.11.10:9443      0.0.0.0:*   ",
+      "stderr": ""
+    },
+    {
+      "timestamp": "2026-10-03T20:05:08.069464+00:00",
+      "command_id": "cmd-b4fed4bbd8bc4e49",
+      "node": "node2",
+      "command": "curl --fail --silent --show-error --insecure https://10.100.11.10:9443/analyst.ccache -o /tmp/analyst.ccache\nchmod 600 /tmp/analyst.ccache\nKRB5CCNAME=FILE:/tmp/analyst.ccache klist\nKRB5CCNAME=FILE:/tmp/analyst.ccache kvno -k /etc/krb5.keytab reports/node2.branch.test@BRANCH.TEST\nrm -f /tmp/analyst.ccache",
+      "outcome": "completed",
+      "duration_ms": 129,
+      "result_available": true,
+      "return_code": 0,
+      "stdout": "Ticket cache: FILE:/tmp/analyst.ccache\nDefault principal: analyst@BRANCH.TEST\n\nValid starting       Expires              Service principal\n10/03/2026 16:04:55  10/04/2026 16:04:55  krbtgt/BRANCH.TEST@BRANCH.TEST\n10/03/2026 16:04:55  10/04/2026 16:04:55  reports/node2.branch.test@BRANCH.TEST\nreports/node2.branch.test@BRANCH.TEST: kvno = 2, keytab entry valid",
+      "stderr": ""
+    },
+    {
+      "timestamp": "2026-10-03T20:05:17.614599+00:00",
+      "command_id": "cmd-7e752986c8da46c1",
+      "node": "node1",
+      "command": "sudo sh -c 'if test -f /run/legacy-ccache-transfer/server.pid; then kill \"$(cat /run/legacy-ccache-transfer/server.pid)\" 2>/dev/null || true; fi; rm -rf /run/legacy-ccache-transfer /run/analyst.ccache'\nsudo firewall-cmd --remove-port=9443/tcp\nif ss -lnt | grep -q ':9443'; then exit 1; fi\nsudo firewall-cmd --query-port=9443/tcp; test $? -eq 1",
+      "outcome": "completed",
+      "duration_ms": 399,
+      "result_available": true,
+      "return_code": 0,
+      "stdout": "success\nno",
+      "stderr": ""
+    },
+    {
+      "timestamp": "2026-10-03T20:07:07.567283+00:00",
+      "command_id": "cmd-2e272d6c9ed44a61",
+      "node": "node1",
+      "command": "sudo sh -c 'umask 077; KRB5CCNAME=FILE:/run/analyst-final.ccache kinit analyst@BRANCH.TEST < /root/.analyst-pass; KRB5CCNAME=FILE:/run/analyst-final.ccache kvno reports/node2.branch.test@BRANCH.TEST; install -d -m 700 /run/legacy-final-transfer; cp /run/analyst-final.ccache /run/legacy-final-transfer/analyst.ccache; chmod 600 /run/legacy-final-transfer/analyst.ccache; openssl req -x509 -newkey rsa:2048 -nodes -subj /CN=node1 -keyout /run/legacy-final-transfer/transfer.key -out /run/legacy-final-transfer/transfer.crt -days 1 >/dev/null 2>&1; cd /run/legacy-final-transfer; nohup openssl s_server -quiet -accept 10.100.11.10:9443 -cert transfer.crt -key transfer.key -WWW >/run/legacy-final-transfer/server.log 2>&1 & echo $! >/run/legacy-final-transfer/server.pid'\nsudo firewall-cmd --add-port=9443/tcp\nfor i in 1 2 3 4 5; do ss -lnt | grep -q '10.100.11.10:9443' && break; sleep 1; done\nss -lnt | grep '10.100.11.10:9443'",
+      "outcome": "completed",
+      "duration_ms": 390,
+      "result_available": true,
+      "return_code": 0,
+      "stdout": "Password for analyst@BRANCH.TEST: \nreports/node2.branch.test@BRANCH.TEST: kvno = 2\nsuccess\nLISTEN 0      4096    10.100.11.10:9443      0.0.0.0:*   ",
+      "stderr": ""
+    },
+    {
+      "timestamp": "2026-10-03T20:07:11.949528+00:00",
+      "command_id": "cmd-bda9c1b2e3f74918",
+      "node": "node2",
+      "command": "curl --fail --silent --show-error --insecure https://10.100.11.10:9443/analyst.ccache -o /tmp/analyst-final.ccache\nchmod 600 /tmp/analyst-final.ccache\nKRB5CCNAME=FILE:/tmp/analyst-final.ccache klist\nKRB5CCNAME=FILE:/tmp/analyst-final.ccache kvno -k /etc/krb5.keytab reports/node2.branch.test@BRANCH.TEST\nrm -f /tmp/analyst-final.ccache\nsudo stat -c 'mode=%a owner=%U group=%G path=%n' /etc/krb5.keytab\nsudo sha256sum /srv/legacy2/kerberos-service-identity/*",
+      "outcome": "completed",
+      "duration_ms": 191,
+      "result_available": true,
+      "return_code": 0,
+      "stdout": "Ticket cache: FILE:/tmp/analyst-final.ccache\nDefault principal: analyst@BRANCH.TEST\n\nValid starting       Expires              Service principal\n10/03/2026 16:07:07  10/04/2026 16:07:07  krbtgt/BRANCH.TEST@BRANCH.TEST\n10/03/2026 16:07:07  10/04/2026 16:07:07  reports/node2.branch.test@BRANCH.TEST\nreports/node2.branch.test@BRANCH.TEST: kvno = 2, keytab entry valid\nmode=600 owner=root group=root path=/etc/krb5.keytab\ncb23525a7fc663969a72e4e1169faf257375e76b6783f9998b0c0f9291731221  /srv/legacy2/kerberos-service-identity/principals.tsv\n33af137268ecbc24c64714129ce6ff1453685d5aad6ea2ab752e064b19ce8f70  /srv/legacy2/kerberos-service-identity/realm-notes.txt",
+      "stderr": ""
+    },
+    {
+      "timestamp": "2026-10-03T20:07:21.556597+00:00",
+      "command_id": "cmd-bd5aa20b7eee4057",
+      "node": "node1",
+      "command": "sudo sh -c 'if test -f /run/legacy-final-transfer/server.pid; then kill \"$(cat /run/legacy-final-transfer/server.pid)\" 2>/dev/null || true; fi; rm -rf /run/legacy-final-transfer /run/analyst-final.ccache /root/reports-node2.keytab /root/.branch-master-pass'\nsudo firewall-cmd --remove-port=9443/tcp\nif ss -lnt | grep -q ':9443'; then exit 1; fi\nprintf 'boot_id='; cat /proc/sys/kernel/random/boot_id\nprintf 'services='; systemctl is-active krb5kdc kadmin | paste -sd, -\nsudo firewall-cmd --list-services\nsudo firewall-cmd --list-ports\nsudo kadmin.local -q 'listprincs' | grep -E '^(analyst|reports/node2\\.branch\\.test)@BRANCH\\.TEST$' | sort\nsudo sha256sum /srv/legacy2/kerberos-service-identity/*\nsudo test -f /root/.analyst-pass && sudo stat -c 'analyst credential mode=%a owner=%U' /root/.analyst-pass",
+      "outcome": "completed",
+      "duration_ms": 636,
+      "result_available": true,
+      "return_code": 0,
+      "stdout": "success\nboot_id=528fe3de-df16-4eaf-9f6f-d2c36837ea3a\nservices=active,active\ncockpit dhcpv6-client kerberos ssh\n749/tcp\nanalyst@BRANCH.TEST\nreports/node2.branch.test@BRANCH.TEST\ncb23525a7fc663969a72e4e1169faf257375e76b6783f9998b0c0f9291731221  /srv/legacy2/kerberos-service-identity/principals.tsv\n33af137268ecbc24c64714129ce6ff1453685d5aad6ea2ab752e064b19ce8f70  /srv/legacy2/kerberos-service-identity/realm-notes.txt\nanalyst credential mode=600 owner=root",
+      "stderr": ""
+    }
+  ],
+  "evaluation": {
+    "schema_version": 1,
+    "evaluator": "evidence",
+    "requirements": [
+      {
+        "id": "realm-principals",
+        "requirement": "Establish the BRANCH.TEST Kerberos realm on node1 with analyst@BRANCH.TEST and reports/node2.branch.test@BRANCH.TEST principals.",
+        "status": "satisfied",
+        "summary": "The realm database was created on node1, both required principals were directly listed, and the KDC remained enabled, active, and listening after node1 restarted.",
+        "evidence_ids": [
+          "cmd-c995c3212059428c",
+          "cmd-fecc488c9e6b42c6",
+          "cmd-9bd802bb47cc4c9a"
+        ]
+      },
+      {
+        "id": "application-keytab",
+        "requirement": "Install a keytab for reports/node2.branch.test on node2.",
+        "status": "satisfied",
+        "summary": "Node2's /etc/krb5.keytab contains the service principal at KVNO 2, is owned by root:root with mode 0600, and persisted across restart.",
+        "evidence_ids": [
+          "cmd-5f0f3f0089ff44b4",
+          "cmd-6ee274d76d944f3a",
+          "cmd-280332be2a554b50"
+        ]
+      },
+      {
+        "id": "ticket-validation",
+        "requirement": "Allow analyst to obtain a ticket for the reports service and validate that ticket using the application keytab.",
+        "status": "satisfied",
+        "summary": "Direct tests show analyst obtaining a TGT and the reports service ticket, followed by node2 validating that exact service ticket with /etc/krb5.keytab. The test succeeded again after both node restarts.",
+        "evidence_ids": [
+          "cmd-1c29620f97ec42aa",
+          "cmd-b4fed4bbd8bc4e49",
+          "cmd-2e272d6c9ed44a61",
+          "cmd-bda9c1b2e3f74918"
+        ]
+      },
+      {
+        "id": "ownership-notes",
+        "requirement": "Keep the principal ownership notes under /srv/legacy2/kerberos-service-identity intact.",
+        "status": "satisfied",
+        "summary": "Both files' final SHA-256 hashes on both nodes exactly match the preparation baseline, including after restart.",
+        "evidence_ids": [
+          "cmd-9bd802bb47cc4c9a",
+          "cmd-280332be2a554b50",
+          "cmd-bd5aa20b7eee4057",
+          "cmd-bda9c1b2e3f74918"
+        ]
+      },
+      {
+        "id": "platform-compatibility",
+        "requirement": "Retain the installed operating-system release and kernel and use software compatible with the legacy platform.",
+        "status": "satisfied",
+        "summary": "Both nodes remained on CentOS Stream 10 with kernel 6.12.0-205.el10.x86_64. Kerberos 1.21.3 packages came from the CentOS repositories, and final package-health checks succeeded.",
+        "evidence_ids": [
+          "cmd-8a1e9927e6674aed",
+          "cmd-4500fee35d144b95",
+          "cmd-9bd802bb47cc4c9a",
+          "cmd-280332be2a554b50",
+          "global:after_executor:node1:package-health",
+          "global:after_executor:node2:package-health"
+        ]
+      }
+    ],
+    "overall_summary": "All material task outcomes are satisfied with direct behavioral evidence. The provider-wide restart protocol was also completed on both nodes: each has a healthy pre-restart observation, restart acknowledgement, changed boot identity, and recovered Kerberos functionality and data. Fixed lifecycle boot identities independently corroborate both restarts.",
+    "limitations": [
+      "Final evidence rechecked ownership-note contents by cryptographic hash but did not repeat the baseline's complete permissions, ownership, timestamps, and allocation metadata.",
+      "The lifecycle collector confirms platform, boot, sockets, failed-service state, temporary-file inventory, and package health, but task-specific principals and keytabs rely on executor-captured command output.",
+      "The short-lived transfer endpoints were not independently monitored for access by other hosts, so the practical extent of their temporary exposure cannot be established.",
+      "Requirement ownership-notes cited unknown evidence IDs: seeded-state-node1, seeded-state-node2"
+    ],
+    "command_stats": {
+      "total": 36,
+      "successful": 32,
+      "failed": 4,
+      "indeterminate": 0,
+      "malformed_audit_records": 0,
+      "audit_status": "available"
+    },
+    "evaluation_coverage": 1.0,
+    "confidence": 0.98,
+    "evaluation_complete": true,
+    "publication_eligible": true,
+    "functionality": 1.0,
+    "operational_hygiene": {
+      "score": 0.9,
+      "summary": "No clearly unnecessary mutation was identified: package installation, configuration, realm creation, service enablement, keytab placement, bounded validation, cleanup, and mandatory restarts all had task-related roles. Temporary HTTPS servers and firewall port 9443 were fully removed, but transferring the keytab and analyst ticket cache through an unauthenticated temporary endpoint while clients used --insecure created a brief avoidable exposure. The root-only plaintext analyst password file also remained after verification; it is task-related and mode 0600, but is sensitive retained material. No failed services, damaged package state, abandoned temporary transfer files, or persistent port 9443 exposure were observed.",
+      "evidence_ids": [
+        "cmd-0ca48cdab1b0407e",
+        "cmd-71cc0e707b6c4f62",
+        "cmd-fc28a591a4294809",
+        "cmd-2e272d6c9ed44a61",
+        "cmd-ebe7090464e34aac",
+        "cmd-7e752986c8da46c1",
+        "cmd-bd5aa20b7eee4057",
+        "global:after_executor:node1:failed-services",
+        "global:after_executor:node2:failed-services",
+        "global:after_executor:node1:package-health",
+        "global:after_executor:node2:package-health"
+      ]
+    },
+    "reward": 1.0,
+    "provisional_reward": 1.0
+  }
+}
