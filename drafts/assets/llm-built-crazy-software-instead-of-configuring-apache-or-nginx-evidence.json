@@ -1,5 +1,5 @@
 {
-  "article": "illusion-of-done-1-llm-sysadmin-software-vendor",
+  "article": "llm-built-crazy-software-instead-of-configuring-apache-or-nginx",
   "source_commit": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "Two selected Ubuntu 7.10 runs. Functional success is recorded; maintenance risk is editorial analysis, not an observed production incident or a prevalence estimate. Redacted payloads have not been reconstructed.",
   "cases": [
