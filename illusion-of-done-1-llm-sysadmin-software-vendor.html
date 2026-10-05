@@ -22,11 +22,11 @@
   </header>
   <article class="article-body article-shell">
 
-<p>When I ask an AI sysadmin to put two websites on a machine, I expect Apache or nginx configuration. In one Ubuntu 7.10 task in InfraSet, I found that the agent had written its own HTTP server instead. Both websites worked, and the task received a perfect functionality score. But if I accepted that result, I would also inherit a new program to maintain.</p>
-<p>This is the first example in my <em>Illusion of Done</em> series, following <a href="https://fenkam.org/llm-as-sysadmin-and-the-illusion-of-done.html">the earlier article</a>. I want to show what can remain unfinished after an agent says the job is done, so you know what to look for.</p>
+<p>When I asked an AI sysadmin to put two websites on a machine, I expected Apache or nginx configuration. In one Ubuntu 7.10 task in InfraSet, I found that the agent had written its own HTTP server instead. Both websites worked, and the task received a perfect functionality score. Accepting that result would have meant inheriting a new program to maintain.</p>
+<p>I chose this as the first example in my <em>Illusion of Done</em> series, following <a href="https://fenkam.org/llm-as-sysadmin-and-the-illusion-of-done.html">the earlier article</a>. I wanted to show what remained unfinished after an agent declared the job done, and what a user needed to look for.</p>
 
 <h2>What happened</h2>
-<p>Here is the <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/instruction.md">original task prompt</a>:</p>
+<p>Here was the <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/instruction.md">original task prompt</a>:</p>
 <blockquote>
 <p>The documentation and purchasing teams need separate websites on node1, sharing
 TCP port 8080. Requests for docs.branch.test should serve the supplied docs tree;
@@ -35,23 +35,23 @@ header should receive an error rather than either team's content. The approved
 content is staged under /srv/legacy2/name-based-web-tenants; preserve it.</p>
 <p>Keep the installed operating-system release and kernel; use software compatible with this legacy platform.</p>
 </blockquote>
-<p>The agent created <code>/usr/local/sbin/name-based-web-tenants.py</code>. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L10">execution log contains the command and source code</a>: it uses Python’s HTTP server classes, adds hostname routing and file-path handling, and installs startup configuration so the service returns after a reboot.</p>
-<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/verifier/evaluation-report.json">evaluation report</a> records both sites returning the expected content, unknown hosts and cross-tenant file requests receiving errors, and unchanged content checksums. The service survived a reboot. That earned it <strong>1.0 for functionality</strong>.</p>
-<p>The task did not require Apache or nginx or forbid custom code. I have not established that either package was readily installable on this old system. So the agent met the stated requirements. What surprised me was how much new software came with the result.</p>
+<p>The agent created <code>/usr/local/sbin/name-based-web-tenants.py</code>. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L10">execution log recorded the command and source code</a>: it used Python’s HTTP server classes, added hostname routing and file-path handling, and installed startup configuration so the service returned after a reboot.</p>
+<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/verifier/evaluation-report.json">evaluation report</a> recorded both sites returning the expected content, unknown hosts and cross-tenant file requests receiving errors, and unchanged content checksums. The service survived a reboot. That earned it <strong>1.0 for functionality</strong>.</p>
+<p>The task did not require Apache or nginx or forbid custom code. I had not established that either package was readily installable on this old system. So the agent met the stated requirements. What surprised me was how much new software came with the result.</p>
 
-<h2>The server is now your problem</h2>
-<p>This is what I mean by “crazy software”: you asked for two websites and ended up with a custom web server. If a URL behaves strangely next week, someone has to investigate that code. If you change it, someone has to test the change. You need to decide where the source lives, who maintains it and how fixes are deployed.</p>
-<p>The passing tests do not answer those questions. They showed that the requested behavior worked and recovered after a restart. They did not establish how the server handles sustained load, slow clients or malformed requests. Those are untested properties, not defects demonstrated by this run.</p>
-<p>Custom software may be acceptable to you. But that should be a conscious decision. The illusion of done is accepting the successful result without noticing the maintenance job attached to it.</p>
+<h2>The server became my problem</h2>
+<p>That was what I meant by “crazy software”: I had asked for two websites and ended up with a custom web server. Any future fault would have required someone to investigate that code, and any change would have needed testing. Accepting it meant deciding where the source belonged, who maintained it and how fixes were deployed.</p>
+<p>The passing tests did not answer those questions. They showed that the requested behavior worked and recovered after a restart. They did not establish how the server handled sustained load, slow clients or malformed requests. Those properties remained untested; the run had not demonstrated defects in those areas.</p>
+<p>Custom software might have been an acceptable choice, but that choice needed to be deliberate. The illusion of done lay in accepting the successful result without noticing the maintenance job attached to it.</p>
 
-<h2>What to check</h2>
-<p>My first check before accepting an agent’s work would be the process listening on the port and the command used to start it. In this case, that leads to the new Python server. Ask the agent which persistent programs it wrote and why. Read enough of the changes to tell whether it configured an existing service or implemented one.</p>
-<p>If it created a service, make sure you have its source, know how to restart or remove it, and understand what was tested. Decide who will maintain it before treating the task as complete.</p>
-<p>You can also set the boundary upfront: “Use an approved web server. If that is not possible on this machine, explain the blocker before writing a replacement.” That instruction was absent here.</p>
-<p>I want the websites to work. I also want to know what I will have to keep working after the agent leaves.</p>
+<h2>What needed checking</h2>
+<p>Before accepting the result, I needed to identify the process listening on the port and the command used to start it. In this case, the execution log led to the new Python server. The key question was which persistent programs the agent had written and why. Reviewing those changes showed whether it had configured an existing service or implemented one.</p>
+<p>A complete handover would have included the source, instructions for restarting or removing the service, and a clear account of what had been tested. Someone also needed to take responsibility for maintaining it.</p>
+<p>I could also have set a boundary upfront: require an approved web server and an explanation of any blocker before the agent wrote a replacement. That instruction had been absent from this task.</p>
+<p>I had wanted two working websites. What I also needed to understand was how much software I would have to keep working after the agent left.</p>
 
 <div class="source-note" id="sources">
-<p><strong>Run details.</strong> Ubuntu 7.10, InfraSet scenario <code>8220</code>, task <code>name-based-web-tenants</code>, batch <code>2026-10-03__01-23-07</code>. The executor and separate LLM evaluator used <code>gpt-5.6-sol</code> at high reasoning effort. Evidence links above point to a fixed commit. This is one recorded case, not a claim about how often this happens.</p>
+<p><strong>Run details.</strong> Ubuntu 7.10, InfraSet scenario <code>8220</code>, task <code>name-based-web-tenants</code>, batch <code>2026-10-03__01-23-07</code>. The executor and separate LLM evaluator used <code>gpt-5.6-sol</code> at high reasoning effort. Evidence was linked to a fixed commit. I examined one recorded case and did not measure how often this happened.</p>
 </div>
 
   </article>
