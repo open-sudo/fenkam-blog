@@ -21,6 +21,17 @@ folder using `_config.yml`. Do not add `.nojekyll`, because it disables this
 exclusion. Draft files committed to this public repository remain visible on
 GitHub, even though they are not published on the website.
 
-To publish an article, move its HTML to the root and its evidence to `assets/`,
-change `../styles.css` and `../index.html` links back to `styles.css` and
-`index.html`, and add its card to the root `index.html`.
+To publish an article, place its HTML in `<slug>/index.html` and its evidence
+in `assets/`. Use root-relative links such as `/styles.css`, `/theme.js`,
+`/assets/example.png`, and `/index.html`, and add its card to the homepage.
+Include the canonical URL and `og:url`, plus the Cloudflare analytics snippet.
+
+## Article URLs
+
+- `/illusion-of-done/`: the original experiment article.
+- `/illusion1/`: Illusion of Done #1, the custom web-server article.
+
+The original long HTML URLs remain as browser-side redirects. JavaScript
+preserves query strings and section anchors; an HTML refresh and a visible
+link provide fallbacks without JavaScript. Redirect pages omit analytics to
+avoid recording an extra pageview before the destination loads.
