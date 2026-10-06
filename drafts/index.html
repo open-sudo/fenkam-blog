@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+  <script src="../theme.js?v=1"></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Exploring how to make the best of AI in infrastructure, from greenfield to brownfield, datacenter to edge, security to scale." />
@@ -8,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../styles.css?v=subscribe-embed-2" />
+    <link rel="stylesheet" href="../styles.css?v=theme-1" />
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>
@@ -19,7 +20,7 @@
         <a href="#about">About</a>
         <a href="mailto:hello@fenkam.org">Say hello</a>
         <a class="nav-pill" href="#subscribe">Subscribe</a>
-      </nav>
+      <select class="theme-select" aria-label="Color theme" hidden><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></nav>
     </header>
 
     <main>
@@ -90,7 +91,7 @@
       <section id="subscribe" class="subscribe shell">
         <div class="subscribe-copy"><p class="eyebrow">03 / The newsletter</p><h2>Weekly experiment<br /><span>using LLM as Sysadmin.</span></h2><p>New findings, infrastructure experiments, and notes on what happens when language models touch real systems.</p></div>
         <div class="subscribe-form subscribe-embed">
-          <iframe class="subscribe-widget" src="https://buttondown.com/fenkam?as_embed=true&amp;tag=website" title="Subscribe to the LLM as Sysadmin newsletter" loading="lazy" width="100%" height="220"></iframe>
+          <iframe class="subscribe-widget" src="https://buttondown.com/fenkam?as_embed=true&amp;tag=website" title="Subscribe to the LLM as Sysadmin newsletter" loading="lazy" width="100%" height="170"></iframe>
           <p class="subscribe-fine">No noise. Unsubscribe whenever you want.</p>
           <p class="subscribe-fallback"><a href="https://buttondown.com/fenkam?tag=website" target="_blank" rel="noopener noreferrer">Form not loading? Subscribe on Buttondown ↗</a></p>
         </div>
