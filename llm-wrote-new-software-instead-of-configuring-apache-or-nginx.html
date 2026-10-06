@@ -44,15 +44,14 @@ content is staged under /srv/legacy2/name-based-web-tenants; preserve it.</p>
 <p>I ran the same task on ten operating-system releases:</p>
 <div class="run-table-scroll" role="region" aria-label="Server choices across operating-system releases" tabindex="0">
 <table class="run-comparison">
-<thead><tr><th scope="col">Server choice</th><th scope="col">OS releases</th></tr></thead>
+<thead><tr><th scope="col">OS releases</th><th scope="col">LLM Implementation Choice</th></tr></thead>
 <tbody>
-<tr><th scope="row"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5018/2026-10-03__17-05-51/name-based-web-tenants-bash-alpine-5018/name-based-web-tenants-alpine__jpsfVwH/agent/executor-commands.jsonl#L12">nginx</a></th><td>Alpine Linux</td></tr>
-<tr><th scope="row">Apache</th><td>AlmaLinux 9, RHEL 10.0, RHEL 9.8, Ubuntu 24.04, CentOS Stream 10</td></tr>
-<tr class="custom-server"><th scope="row">Custom Python server</th><td>Ubuntu 7.10, Ubuntu 16.04, CentOS 5.11, RHEL 7.9</td></tr>
+<tr><th scope="row">Alpine Linux</th><td>nginx</td></tr>
+<tr><th scope="row">AlmaLinux 9, RHEL 10.0, RHEL 9.8, Ubuntu 24.04, CentOS Stream 10</th><td>Apache</td></tr>
+<tr class="custom-server"><th scope="row">Ubuntu 7.10, Ubuntu 16.04, CentOS 5.11, RHEL 7.9</th><td>Custom Python server</td></tr>
 </tbody>
 </table>
 </div>
-<p>The <a href="#sources">Run details table</a> links to each implementation.</p>
 <p>In the case of Ubuntu 7.10, <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L10">The recorded source</a> shows how the agent used Python’s HTTP server classes, added hostname routing and file-path handling, and installed startup configuration so the service returned after a reboot.</p>
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/verifier/evaluation-report.json">evaluation report</a> recorded both sites returning the expected content, unknown hosts and cross-tenant file requests receiving errors, and unchanged content checksums. The service survived a reboot and  earned it <strong>1.0 for functionality</strong>.</p>
 <p>The agent met the stated requirements. Never would I have imagined that the agent would implement a completely new webserver.</p>
