@@ -104,9 +104,14 @@ h1 em { color:var(--muted); }
 .subscribe-fallback a { text-decoration:underline; text-underline-offset:3px; }
 .subscribe-fallback a:hover { color:#fff; }
 
-/* Reader theme preference. Native select supports keyboard and touch input. */
-.theme-select { max-width:100%; padding:9px 10px; border:1px solid var(--line); border-radius:99px; background:var(--paper); color:var(--ink); font:500 12px 'Space Grotesk',sans-serif; cursor:pointer; }
-.theme-select:focus-visible, a:focus-visible { outline:2px solid var(--ink); outline-offset:4px; }
+/* Reader theme toggle. */
+.theme-toggle { display:inline-grid; place-items:center; width:40px; height:40px; padding:0; flex-shrink:0; border:1px solid var(--line); border-radius:50%; background:var(--paper); color:var(--ink); cursor:pointer; }
+.theme-toggle[hidden] { display:none; }
+.theme-toggle:hover { background:var(--code-background); }
+.theme-sun { display:none; }
+[data-theme="dark"] .theme-sun { display:block; }
+[data-theme="dark"] .theme-moon { display:none; }
+.theme-toggle:focus-visible, a:focus-visible { outline:2px solid var(--ink); outline-offset:4px; }
 .source-note { color:var(--muted); }
 /* Buttondown owns the iframe contents; retain its native light presentation. */
 .subscribe-widget { color-scheme:light; }
