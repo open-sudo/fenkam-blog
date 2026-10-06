@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../styles.css?v=iod1-illustration-1" />
+    <link rel="stylesheet" href="../styles.css?v=subscribe-embed-1" />
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>
@@ -89,13 +89,11 @@
 
       <section id="subscribe" class="subscribe shell">
         <div class="subscribe-copy"><p class="eyebrow">03 / The newsletter</p><h2>Weekly experiment<br /><span>using LLM as Sysadmin.</span></h2><p>New findings, infrastructure experiments, and notes on what happens when language models touch real systems.</p></div>
-        <form class="subscribe-form" action="https://buttondown.com/api/emails/embed-subscribe/fenkam" method="post">
-          <label for="subscribe-email">Your email address</label>
-          <div class="subscribe-row"><input id="subscribe-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required /><button type="submit">Subscribe <span>↗</span></button></div>
-          <input type="hidden" name="embed" value="1" />
-          <input type="hidden" name="tag" value="website" />
+        <div class="subscribe-form subscribe-embed">
+          <iframe class="subscribe-widget" src="https://buttondown.com/fenkam?as_embed=true&amp;tag=website" title="Subscribe to the LLM as Sysadmin newsletter" loading="lazy" width="100%" height="320"></iframe>
           <p class="subscribe-fine">No noise. Unsubscribe whenever you want.</p>
-        </form>
+          <p class="subscribe-fallback"><a href="https://buttondown.com/fenkam?tag=website" target="_blank" rel="noopener noreferrer">Form not loading? Subscribe on Buttondown ↗</a></p>
+        </div>
       </section>
 
       <section id="about" class="about shell">
