@@ -124,3 +124,14 @@ h1 em { color:var(--muted); }
   .site-header nav { width:100%; justify-content:space-between; gap:16px; }
 }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+
+/* Release comparison in the article's run details. */
+.run-table-scroll { max-width:100%; overflow-x:auto; margin:24px 0; }
+.run-table-scroll:focus-visible { outline:2px solid var(--ink); outline-offset:4px; }
+.article-body .run-comparison { display:table; width:100%; min-width:600px; margin:0; border-collapse:collapse; font:13px/1.5 'Space Grotesk',sans-serif; color:var(--ink); }
+.run-comparison caption { text-align:left; margin-bottom:12px; color:var(--muted); }
+.run-comparison th, .run-comparison td { padding:12px 10px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line); }
+.run-comparison thead { background:var(--code-background); }
+.run-comparison tbody th { font-weight:600; }
+.run-comparison .custom-server { background:var(--code-background); }
+.source-note h2 { color:var(--ink); }
