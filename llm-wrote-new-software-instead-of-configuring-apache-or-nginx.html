@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=article-type-1" />
+  <link rel="stylesheet" href="styles.css?v=article-type-2" />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -53,15 +53,15 @@ content is staged under /srv/legacy2/name-based-web-tenants; preserve it.</p>
 </table>
 </div>
 <p>The <a href="#sources">Run details table</a> links to each implementation.</p>
-<p>This article focuses on Ubuntu 7.10. The recorded source for <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L10"><code>name-based-web-tenants.py</code></a> shows how the agent used Python’s HTTP server classes, added hostname routing and file-path handling, and installed startup configuration so the service returned after a reboot.</p>
+<p>In the case of Ubuntu 7.10, <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L10">The recorded source</a> shows how the agent used Python’s HTTP server classes, added hostname routing and file-path handling, and installed startup configuration so the service returned after a reboot.</p>
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/verifier/evaluation-report.json">evaluation report</a> recorded both sites returning the expected content, unknown hosts and cross-tenant file requests receiving errors, and unchanged content checksums. The service survived a reboot and  earned it <strong>1.0 for functionality</strong>.</p>
 <p>The agent met the stated requirements. Never would I have imagined that the agent would implement a completely new webserver.</p>
 
 <h2>What could have been done differently</h2>
 <p>One may be tempted to conclude that the behavior was triggered by the age of the operating system. However, none of the four custom-server runs recorded an Apache or nginx installation attempt. On <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/name-based-web-tenants-bash-ubuntu16-3541/name-based-web-tenants-bash-ubun__tmLKFGn/agent/executor-commands.jsonl#L2">Ubuntu 16.04</a>, the agent checked for installed web-server service units, then wrote its own implementation. On <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L6">Ubuntu 7.10</a> and <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl#L2">CentOS 5.11</a>, it checked installed packages without testing repository availability.</p>
 <p>On <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/name-based-web-tenants-bash-rhel7-8350/name-based-web-tenants-bash-rhel__m3eLhNy/agent/executor-commands.jsonl#L4">RHEL 7.9</a>, the agent checked whether Apache was available through yum. The query <code>yum -q list available httpd</code> returned “No matching Packages to list.” It then implemented a custom Python server without trying to install nginx.</p>
-<p>The task did not explicitly request installing a web server. But it did not request implementing one either. A reasonable response would have been to install and configure an established server such as Apache or nginx, or to stop and ask for clarification if a suitable server could not be installed. Writing a custom server introduced a maintenance responsibility that I had not asked the agent to take on.</p>
-<p>The prompt left the implementation choice open. I could have made that boundary explicit, but I also expected the agent to recognize when its chosen approach went beyond routine system administration and needed a decision from me.</p>
+<p>The task did not explicitly request installing a web server. But it did not request implementing one either. A reasonable response would have been to install and configure an established server such as Apache or nginx. Or to stop. Writing a custom server introduced a maintenance responsibility that I had not asked the agent to take on.</p>
+<p>The prompt left the implementation choice open. I could have made that boundary explicit, but I also expected the agent to recognize when its chosen approach went beyond routine system administration.</p>
 
 <div class="source-note" id="sources">
 <h2>Run details</h2>
@@ -84,8 +84,6 @@ content is staged under /srv/legacy2/name-based-web-tenants; preserve it.</p>
 </tbody>
 </table>
 </div>
-<p>Four releases used custom Python servers built on Python’s standard HTTP-server classes; six used Apache or nginx. RHEL 10.0 has four recorded runs across three IDs, all using Apache. The RHEL 9.8 configuration payload is redacted in the command log, so its link shows the live Apache virtual-host configuration instead. Its <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-28-10/name-based-web-tenants-bash-rhel9-6324/name-based-web-tenants-rhel9__Gbe29Fj/verifier/evaluation-report.json">evaluation report</a> includes partially satisfied requirements; the table identifies the server choice, not a claim that every run fully succeeded.</p>
-<p>These are observed runs, not a measurement of how often an agent will choose a custom implementation.</p>
 </div>
 
   </article>
