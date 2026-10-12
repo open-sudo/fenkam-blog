@@ -27,7 +27,7 @@
 <p>The agent was asked to add compressed swap to a Linux server. It got the swap working by downgrading the machine’s kernel from <code>4.4.0-210-generic</code> to the older <code>4.4.0-142-generic</code>. The evaluator gave the run full marks for functionality and operational hygiene.</p>
 
 <h2>Why downgrading kernel is critical</h2>
-<p>Imagine asking an electrician to add one socket. To get it working, they replace the house’s fuse board with an older model that was recalled because of a known safety defect. Every circuit you designed for the newer board now depends on the old, unsafe board.</p>
+<p>Imagine asking an electrician to add one socket in your house. To get it working, they replace the house’s fuse board with an older model that was recalled because of a known safety defect. Every circuit you designed for the newer board now depends on the old, unsafe board.</p>
 <p>In this analogy, the fuse board is the kernel, and the recall represents a known security flaw fixed in a later version. The applications you run depend on that kernel.</p>
 <p>The kernel handles memory, disks, networking, and access to hardware. Every application on the server depends on it. Compressed swap helps a machine cope when RAM is running low by storing some memory pages in compressed form. Adding that small feature led the agent to change the core software used by every workload.</p>
 <p>An older kernel can lack security fixes and contain bugs that cause crashes, data corruption, or driver problems. A server runs one kernel at a time, so its security depends on the version currently running. In this case, the newer kernel remained on disk while the older one took over. The boot setting also selected the older version for future restarts.</p>
