@@ -1,0 +1,10 @@
+Generated with the built-in image_gen tool.
+
+Use case: illustration-story.
+Asset type: landscape editorial illustration for the Fenkam article "Swap Request resulted in Kernel Downgrade", used inside the article and as a homepage thumbnail.
+Scene: the electrical fuse board in a house, viewed close enough for the equipment to read clearly.
+Primary subject: an electrician's gloved hands fitting an old, worn metal fuse board with porcelain fuse holders into the house wiring. A clean modern circuit-breaker board has been removed and rests nearby. Numerous existing house circuits connect to the old board. A single newly added wall socket is visible, making the small requested addition clear.
+Key detail: a prominent red paper safety-recall tag hangs from the old board. The tag reads exactly "RECALLED", in large clear uppercase letters. The word is R E C A L L E D. This is the sole text in the image.
+Style: polished editorial illustration with tactile paper grain, realistic equipment details and collage-like shading. Match a restrained infrastructure blog aesthetic: warm cream background, charcoal equipment, muted yellow tools, subdued pink accent. Clear visual storytelling suitable for a lightly technical reader.
+Composition: landscape 3:2, approximately 1536 by 1024; the old board, removed newer board, socket and gloved hands are the main readable forms. Keep key details in the central area so the image works as a cropped website thumbnail. Soft lighting, restrained serious mood.
+Constraints: show a fuse-board replacement, with a visibly different older fuse board and modern removed breaker board. No fire, sparks, explosions, extra people, logos, watermark, computer screens, headings or captions. Opaque background.
