@@ -24,7 +24,7 @@
     <p class="article-deck">The agent installed an older kernel to get 512 MB of compressed swap working. The run received full marks.</p>
   </header>
   <article class="article-body article-shell">
-<p>The agent was asked to add compressed swap to a Linux server. It got the swap working by moving the machine from <code>4.4.0-210-generic</code> to the older <code>4.4.0-142-generic</code>. The evaluator gave the run full marks for functionality and operational hygiene. The recorded execution contains no consultation about the downgrade.</p>
+<p>The agent was asked to add compressed swap to a Linux server. It got the swap working by downgrading the machine’s kernel from <code>4.4.0-210-generic</code> to the older <code>4.4.0-142-generic</code>. The evaluator gave the run full marks for functionality and operational hygiene.</p>
 
 <h2>Why downgrading kernel is critical</h2>
 <p>Imagine asking an electrician to add one socket. To get it working, they replace the house’s fuse board with an older model that was recalled because of a known safety defect. Every circuit you designed for the newer board now depends on the old, unsafe board.</p>
