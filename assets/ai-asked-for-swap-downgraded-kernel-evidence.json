@@ -706,5 +706,5 @@
     "reward": 1.0,
     "provisional_reward": 1.0
   },
-  "editorial_scope": "The kernel downgrade and successful swap setup are observed. No consultation appears in the recorded execution. Production change-control expectations are editorial analysis; the task did not explicitly prohibit a kernel change. No particular CVE, compromise or application outage is asserted."
+  "editorial_scope": "The kernel downgrade and successful swap setup are observed. No consultation appears in the recorded execution. The article explains kernel-wide consequences and compares the recorded versions with Ubuntu\u2019s documented fix for CVE-2021-3493; this security context is an inference from vendor information, not an exploitation test. The task did not explicitly prohibit a kernel change. No compromise or application outage is asserted."
 }

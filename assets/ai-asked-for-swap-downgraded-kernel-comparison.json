@@ -1,0 +1,1090 @@
+{
+  "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
+  "primary_case": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu16-5782/zram-swap-ubuntu16__qvv7vZc",
+  "scope": "Seven other systems from batch 5782, execution 2026-10-01__19-16-34, plus one separate Ubuntu 16.04 run.",
+  "security_context": {
+    "source": "https://ubuntu.com/security/CVE-2021-3493",
+    "ubuntu_linux_fixed_version": "4.4.0-209.241",
+    "observed_original_kernel": "4.4.0-210-generic",
+    "observed_destination_package": "4.4.0-142.168",
+    "interpretation": "The installed older package predates Ubuntu\u2019s documented fix. Exploitability and loss of individual patches were not tested in the execution."
+  },
+  "runs": [
+    {
+      "trial": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7",
+      "label": "Ubuntu 24.04.3",
+      "implementation": "Installed extra modules for the running kernel, then created a systemd swap service.",
+      "source_line": 12,
+      "instruction": "On `node1`, add at least 512 MB of compressed in-memory swap, active at boot\nand preferred over any disk-backed swap.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "kernel_before": {
+        "node1": "6.8.0-71-generic"
+      },
+      "kernel_after": {
+        "node1": "6.8.0-71-generic"
+      },
+      "functionality": 1.0,
+      "operational_hygiene": 1.0,
+      "agent_report": {
+        "status": "completed",
+        "summary": "Configured node1 with persistent 512 MiB zram swap using zstd compression at priority 32767. It remained active after a verified node reboot.",
+        "actions_performed": [
+          "Installed the running kernel's optional modules package to provide zram support.",
+          "Created and enabled zram-swap.service for boot-time activation.",
+          "Configured a 536,870,912-byte zram device using zstd compression.",
+          "Activated it as swap with priority 32767, ensuring preference over disk-backed swap.",
+          "Safely rebooted node1 and verified its boot identity changed and the zram swap recovered automatically."
+        ],
+        "evidence": [
+          {
+            "requirement": "At least 512 MB compressed in-memory swap, active at boot and preferred over disk-backed swap",
+            "command_ids": [
+              "cmd-8d7d36c8f82f46ab",
+              "cmd-eb503d71a6d84b55"
+            ],
+            "summary": "Before and after reboot, /dev/zram0 is active with a 536,870,912-byte disk size, zstd selected, and maximum swap priority 32767. The enabled service and boot journal prove automatic boot activation."
+          },
+          {
+            "requirement": "node1 mandatory restart sequence and recovery",
+            "command_ids": [
+              "cmd-8d7d36c8f82f46ab",
+              "cmd-bc223ff3d63a48b0",
+              "cmd-0f8da7596f3346c0",
+              "cmd-eb503d71a6d84b55"
+            ],
+            "summary": "Healthy baseline used boot ID 3fad4432-1dea-40c8-b4f1-970d19eb5f34; reboot scheduling was acknowledged; the new boot ID is e666603a-4bda-4c41-8ee8-b7ae97560888; post-restart system state, service, compression, size, and active swap all recovered."
+          }
+        ]
+      },
+      "source_files": {
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/instruction.md": "295780f32f742e328894fb56f60dba2d58614cb2175a30e303caeeaee9b74daf",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/config.json": "717019e2e0656de2a4e9a0f5891daf892d1a459e6996f0dfee3f9238d705488a",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/agent-output.json": "3b1958cdbab3c7accefcc2d92da4e4027986ae4d6fdc369e436b1393d54c0ab7",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/executor-commands.jsonl": "648ceef0506bafd73e4239dea76a17042cefd0365fbe62604f7d3edc3cd4b684",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/environment-baseline.json": "06e5d8eb7d871e3961c36a1dd7313c3b79bf24d95d56c032d006652b06236ee0",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/verifier/environment-post.json": "4e309c74d0ee080bcf966040365fdc828889283bc646d4724a6331668706a128",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/verifier/evaluation-report.json": "dea21089f5332a7ec9564235b8399f43ee121dda20597fd2fdeb44b6e992e401"
+      },
+      "command_extracts": [
+        {
+          "source_line": 12,
+          "timestamp": "2026-10-02T03:10:20.583911+00:00",
+          "command_id": "cmd-7398cdd4fd834ed0",
+          "node": "node1",
+          "command": "DEBIAN_FRONTEND=noninteractive apt-get install -y linux-modules-extra-$(uname -r)",
+          "outcome": "completed",
+          "duration_ms": 7726,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "Reading package lists...\nBuilding dependency tree...\nReading state information...\nThe following packages were automatically installed and are no longer required:\n  libintl-perl libintl-xs-perl libmodule-find-perl libmodule-scandeps-perl\n  libproc-processtable-perl libsort-naturally-perl libterm-readkey-perl\nUse 'apt autoremove' to remove them.\nThe following additional packages will be installed:\n  wireless-regdb\nThe following NEW packages will be installed:\n  linux-modules-extra-6.8.0-71-generic wireless-regdb\n0 upgraded, 2 newly installed, 0 to remove and 241 not upgraded.\nNeed to get 7714 B/113 MB of archives.\nAfter this operation, 112 MB of additional disk space will be used.\nGet:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 wireless-regdb all 2026.05.30-0ubuntu1~24.04.1 [7714 B]\nFetched 7714 B in 0s (134 kB/s)\nSelecting previously unselected package wireless-regdb.\r\n(Reading database ... \r(Reading database ... 5%\r(Reading database ... 10%\r(Reading database ... 15%\r(Reading database ... 20%\r(Reading database ... 25%\r(Reading database ... 30%\r(Reading database ... 35%\r(Reading database ... 40%\r(Reading database ... 45%\r(Reading database ... 50%\r(Reading database ... 55%\r(Reading database ... 60%\r(Reading database ... 65%\r(Reading database ... 70%\r(Reading database ... 75%\r(Reading database ... 80%\r(Reading database ... 85%\r(Reading database ... 90%\r(Reading database ... 95%\r(Reading database ... 100%\r(Reading database ... 74801 files and directories currently installed.)\r\nPreparing to unpack .../wireless-regdb_2026.05.30-0ubuntu1~24.04.1_all.deb ...\r\nUnpacking wireless-regdb (2026.05.30-0ubuntu1~24.04.1) ...\r\nSelecting previously unselected package linux-modules-extra-6.8.0-71-generic.\r\nPreparing to unpack .../linux-modules-extra-6.8.0-71-generic_6.8.0-71.71_amd64.deb ...\r\nUnpacking linux-modules-extra-6.8.0-71-generic (6.8.0-71.71) ...\r\nSetting up wireless-regdb (2026.05.30-0ubuntu1~24.04.1) ...\r\nSetting up linux-modules-extra-6.8.0-71-generic (6.8.0-71.71) ...\r\nProcessing triggers for man-db (2.12.0-4build2) ...\r\nProcessing triggers for linux-image-6.8.0-71-generic (6.8.0-71.71) ...\r\n/etc/kernel/postinst.d/initramfs-tools:\r\nupdate-initramfs: Generating /boot/initrd.img-6.8.0-71-generic\r\n/etc/kernel/postinst.d/zz-update-grub:\r\nSourcing file `/etc/default/grub'\r\nSourcing file `/etc/default/grub.d/50-cloudimg-settings.cfg'\r\nGenerating grub configuration file ...\r\nFound linux image: /boot/vmlinuz-6.8.0-71-generic\r\nFound initrd image: /boot/initrd.img-6.8.0-71-generic\r\nWarning: os-prober will not be executed to detect other bootable partitions.\r\nSystems on them will not be added to the GRUB boot configuration.\r\nCheck GRUB_DISABLE_OS_PROBER documentation entry.\r\nAdding boot menu entry for UEFI Firmware Settings ...\r\ndone\r",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 18,
+          "timestamp": "2026-10-02T03:10:41.049514+00:00",
+          "command_id": "cmd-564ef8bd0c694217",
+          "node": "node1",
+          "command": "systemctl status zram-swap.service --no-pager -l; journalctl -u zram-swap.service -n 30 --no-pager; zramctl; swapon --show",
+          "outcome": "completed",
+          "duration_ms": 63,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "\u00d7 zram-swap.service - Compressed RAM swap on zram\n     Loaded: loaded (/etc/systemd/system/zram-swap.service; enabled; preset: enabled)\n     Active: failed (Result: exit-code) since Thu 2026-10-01 23:10:38 EDT; 2s ago\n       Docs: man:zramctl(8)\n             man:swapon(8)\n    Process: 6367 ExecStartPre=/usr/sbin/zramctl --reset /dev/zram0 (code=exited, status=0/SUCCESS)\n    Process: 6371 ExecStart=/usr/sbin/modprobe zram (code=exited, status=0/SUCCESS)\n    Process: 6373 ExecStart=/usr/sbin/zramctl --algorithm zstd --size 512M /dev/zram0 (code=exited, status=1/FAILURE)\n   Main PID: 6373 (code=exited, status=1/FAILURE)\n        CPU: 6ms\n\nOct 01 23:10:38 node1 systemd[1]: Starting zram-swap.service - Compressed RAM swap on zram...\nOct 01 23:10:38 node1 zramctl[6373]: zramctl: /dev/zram0: No such device\nOct 01 23:10:38 node1 systemd[1]: zram-swap.service: Main process exited, code=exited, status=1/FAILURE\nOct 01 23:10:38 node1 systemd[1]: zram-swap.service: Failed with result 'exit-code'.\nOct 01 23:10:38 node1 systemd[1]: Failed to start zram-swap.service - Compressed RAM swap on zram.\nOct 01 23:10:38 node1 systemd[1]: Starting zram-swap.service - Compressed RAM swap on zram...\nOct 01 23:10:38 node1 zramctl[6373]: zramctl: /dev/zram0: No such device\nOct 01 23:10:38 node1 systemd[1]: zram-swap.service: Main process exited, code=exited, status=1/FAILURE\nOct 01 23:10:38 node1 systemd[1]: zram-swap.service: Failed with result 'exit-code'.\nOct 01 23:10:38 node1 systemd[1]: Failed to start zram-swap.service - Compressed RAM swap on zram.",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 20,
+          "timestamp": "2026-10-02T03:10:46.011724+00:00",
+          "command_id": "cmd-c26b2d9c743c4d9f",
+          "node": "node1",
+          "command": "printf '%s\\n' '--- module params'; ls -la /sys/class/zram-control /sys/block/zram* 2>&1 || true; cat /sys/module/zram/parameters/num_devices 2>/dev/null || true; printf '%s\\n' '--- devices'; ls -la /dev/zram* 2>&1 || true; printf '%s\\n' '--- create'; cat /sys/class/zram-control/hot_add 2>&1; udevadm settle; ls -la /dev/zram* /sys/block/zram* 2>&1 || true; zramctl",
+          "outcome": "completed",
+          "duration_ms": 62,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "--- module params\nls: cannot access '/sys/block/zram*': No such file or directory\n/sys/class/zram-control:\ntotal 0\ndrwxr-xr-x  2 root root    0 Oct  1 23:10 .\ndrwxr-xr-x 68 root root    0 Jun 14 22:08 ..\n-r--------  1 root root 4096 Oct  1 23:10 hot_add\n--w-------  1 root root 4096 Oct  1 23:10 hot_remove\n--- devices\nls: cannot access '/dev/zram*': No such file or directory\n--- create\n0\nbrw-rw---- 1 root disk 251, 0 Oct  1 23:10 /dev/zram0\nlrwxrwxrwx 1 root root      0 Oct  1 23:10 /sys/block/zram0 -> ../devices/virtual/block/zram0",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 24,
+          "timestamp": "2026-10-02T03:11:02.789768+00:00",
+          "command_id": "cmd-8d7d36c8f82f46ab",
+          "node": "node1",
+          "command": "printf '%s\\n' '--- unit'; systemctl is-enabled zram-swap.service; systemctl is-active zram-swap.service; systemctl status zram-swap.service --no-pager -l | sed -n '1,18p'; printf '%s\\n' '--- active swap bytes'; swapon --bytes --show=NAME,TYPE,SIZE,USED,PRIO; printf '%s\\n' '--- zram'; zramctl --bytes; printf 'disksize='; cat /sys/block/zram0/disksize; printf 'algorithm='; cat /sys/block/zram0/comp_algorithm; printf '%s\\n' '--- memory'; free -h; printf '%s\\n' '--- config'; systemctl cat zram-swap.service; printf '%s\\n' '--- boot'; cat /proc/sys/kernel/random/boot_id",
+          "outcome": "completed",
+          "duration_ms": 82,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "--- unit\nenabled\nactive\n\u25cf zram-swap.service - Compressed RAM swap on zram\n     Loaded: loaded (/etc/systemd/system/zram-swap.service; enabled; preset: enabled)\n     Active: active (exited) since Thu 2026-10-01 23:10:58 EDT; 4s ago\n       Docs: man:zramctl(8)\n             man:swapon(8)\n    Process: 6473 ExecStart=/usr/sbin/modprobe zram (code=exited, status=0/SUCCESS)\n    Process: 6475 ExecStart=/bin/sh -ec dev=$(/usr/sbin/zramctl --find --algorithm zstd --size 512M); /usr/sbin/mkswap --label zram-swap \"$dev\"; /usr/sbin/swapon --priority 32767 \"$dev\" (code=exited, status=0/SUCCESS)\n   Main PID: 6475 (code=exited, status=0/SUCCESS)\n        CPU: 7ms\n\nOct 01 23:10:58 node1 systemd[1]: Starting zram-swap.service - Compressed RAM swap on zram...\nOct 01 23:10:58 node1 sh[6480]: Setting up swapspace version 1, size = 512 MiB (536866816 bytes)\nOct 01 23:10:58 node1 sh[6480]: LABEL=zram-swap, UUID=b9724cd3-518b-4c9c-9b8f-7d766c50ebba\nOct 01 23:10:58 node1 systemd[1]: Finished zram-swap.service - Compressed RAM swap on zram.\n--- active swap bytes\nNAME       TYPE           SIZE USED  PRIO\n/dev/zram0 partition 536866816    0 32767\n--- zram\nNAME       ALGORITHM  DISKSIZE  DATA COMPR TOTAL STREAMS MOUNTPOINT\n/dev/zram0 zstd      536870912  4096    68 20480       4 [SWAP]\ndisksize=536870912\nalgorithm=lzo lzo-rle lz4 lz4hc 842 [zstd] \n--- memory\n               total        used        free      shared  buff/cache   available\nMem:           1.9Gi       338Mi       886Mi       1.0Mi       909Mi       1.6Gi\nSwap:          511Mi          0B       511Mi\n--- config\n# /etc/systemd/system/zram-swap.service\n[Unit]\nDescription=Compressed RAM swap on zram\nDocumentation=man:zramctl(8) man:swapon(8)\nAfter=systemd-modules-load.service\nBefore=swap.target\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/sbin/modprobe zram\nExecStart=/bin/sh -ec 'dev=$(/usr/sbin/zramctl --find --algorithm zstd --size 512M); /usr/sbin/mkswap --label zram-swap \"$dev\"; /usr/sbin/swapon --priority 32767 \"$dev\"'\nExecStop=-/usr/sbin/swapoff /dev/zram0\nExecStop=-/usr/sbin/zramctl --reset /dev/zram0\n\n[Install]\nWantedBy=swap.target\n--- boot\n3fad4432-1dea-40c8-b4f1-970d19eb5f34",
+          "stderr": "",
+          "executor_attempt": 1
+        }
+      ]
+    },
+    {
+      "trial": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel7-5782/zram-swap-rhel7__CUyCH5P",
+      "label": "RHEL 7.9",
+      "implementation": "Wrote a zram lifecycle script and a systemd swap service.",
+      "source_line": 10,
+      "instruction": "On `node1`, add at least 512 MB of compressed in-memory swap, active at boot\nand preferred over any disk-backed swap.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "kernel_before": {
+        "node1": "3.10.0-1160.el7.x86_64"
+      },
+      "kernel_after": {
+        "node1": "3.10.0-1160.el7.x86_64"
+      },
+      "functionality": 1.0,
+      "operational_hygiene": 1.0,
+      "agent_report": {
+        "status": "completed",
+        "summary": "Configured node1 with 512 MiB of LZO-compressed zram swap. It starts automatically at boot with priority 100, preferred over /dev/vda2 at priority -2, and recovered successfully after a full node restart.",
+        "actions_performed": [
+          "Created an idempotent zram swap lifecycle script.",
+          "Created and enabled zram-swap.service under swap.target.",
+          "Activated /dev/zram0 with a configured capacity of 536870912 bytes.",
+          "Restarted node1 exactly once and verified its boot identity changed.",
+          "Confirmed the enabled service, zram capacity, compression, and swap priorities after restart."
+        ],
+        "evidence": [
+          {
+            "requirement": "At least 512 MB of active compressed in-memory swap, preferred over disk-backed swap.",
+            "command_ids": [
+              "cmd-4f6f97cb7a4f4012",
+              "cmd-8853f9c199ca4f62"
+            ],
+            "summary": "Before and after restart, /dev/zram0 was active with 536870912 configured bytes, LZO compression, and priority 100; /dev/vda2 remained at priority -2."
+          },
+          {
+            "requirement": "The zram swap is active automatically at boot.",
+            "command_ids": [
+              "cmd-9a972ce782e64b05",
+              "cmd-8853f9c199ca4f62"
+            ],
+            "summary": "zram-swap.service was enabled and active initially, then started successfully during the new boot."
+          },
+          {
+            "requirement": "Mandatory node1 restart and recovery evidence.",
+            "command_ids": [
+              "cmd-4f6f97cb7a4f4012",
+              "cmd-ebb632b3b1cc46ff",
+              "cmd-c7ef6bdebd88472e",
+              "cmd-8853f9c199ca4f62"
+            ],
+            "summary": "Healthy baseline boot ID 809708f3-1c5f-4e37-ad6a-8bcbae408799 was captured, the native reboot was acknowledged, the post-restart boot ID changed to cdad1322-0785-4f2d-bd3f-4f7f379c54c2, and the required swap service recovered fully."
+          }
+        ]
+      },
+      "source_files": {
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel7-5782/instruction.md": "295780f32f742e328894fb56f60dba2d58614cb2175a30e303caeeaee9b74daf",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel7-5782/zram-swap-rhel7__CUyCH5P/config.json": "194c9005b9969da4d5dbf5dfb5a922cffb30bfed59cd5bda799ec6874f591d73",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel7-5782/zram-swap-rhel7__CUyCH5P/agent/agent-output.json": "cc887c76bf71ec1fec00c7834b959e223def734a98565d2425a7a928714b4068",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel7-5782/zram-swap-rhel7__CUyCH5P/agent/executor-commands.jsonl": "dd167640dce963bd9d8aad69e53fb08c8f934f1fedee28cca6d2e9c0d0b34476",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel7-5782/zram-swap-rhel7__CUyCH5P/environment-baseline.json": "b3c6bae75800211b664366385ec3023dc05c577607e2b5c4b17d78229c544209",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel7-5782/zram-swap-rhel7__CUyCH5P/verifier/environment-post.json": "7a08fe3c1f52c38104c5264b9029680b42310fb3809350a7fe1192f96ef54d52",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel7-5782/zram-swap-rhel7__CUyCH5P/verifier/evaluation-report.json": "cf0717f3377ab129e11cb427d853b59007a9e2951ac7454c36fd5d3e5325e1ca"
+      },
+      "command_extracts": [
+        {
+          "source_line": 10,
+          "timestamp": "2026-10-02T02:16:20.787052+00:00",
+          "command_id": "cmd-9a972ce782e64b05",
+          "node": "node1",
+          "command": "sudo -n tee /etc/systemd/system/zram-swap.service >/dev/null <<'ANTRIEB_ZRAM_UNIT'\n[Unit]\nDescription=Compressed in-memory swap on zram\nDocumentation=man:swapon(8)\nBefore=swap.target\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/local/sbin/zram-swap start\nExecStop=/usr/local/sbin/zram-swap stop\n\n[Install]\nWantedBy=swap.target\nANTRIEB_ZRAM_UNIT\nsudo -n systemctl daemon-reload\nsudo -n systemctl enable zram-swap.service\nsudo -n systemctl start zram-swap.service\nsystemctl is-enabled zram-swap.service; systemctl is-active zram-swap.service; systemctl status zram-swap.service --no-pager -l | head -25",
+          "outcome": "completed",
+          "duration_ms": 467,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "enabled\nactive\n\u25cf zram-swap.service - Compressed in-memory swap on zram\n   Loaded: loaded (/etc/systemd/system/zram-swap.service; enabled; vendor preset: disabled)\n   Active: active (exited) since Wed 2026-08-26 10:36:19 EDT; 9ms ago\n     Docs: man:swapon(8)\n  Process: 1950 ExecStart=/usr/local/sbin/zram-swap start (code=exited, status=0/SUCCESS)\n Main PID: 1950 (code=exited, status=0/SUCCESS)\n",
+          "stderr": "Created symlink from /etc/systemd/system/swap.target.wants/zram-swap.service to /etc/systemd/system/zram-swap.service.\n",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 18,
+          "timestamp": "2026-10-02T02:16:56.236314+00:00",
+          "command_id": "cmd-1b3783dcbdde46b6",
+          "node": "node1",
+          "command": "cat /proc/sys/kernel/random/boot_id; uptime",
+          "outcome": "completed",
+          "duration_ms": 231,
+          "result_available": true,
+          "return_code": 255,
+          "stdout": "",
+          "stderr": "Connection to 10.100.182.10 closed by remote host.\r\n",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 20,
+          "timestamp": "2026-10-02T02:17:05.454483+00:00",
+          "command_id": "cmd-aef930e991ef445f",
+          "node": "node1",
+          "command": "cat /proc/sys/kernel/random/boot_id; uptime",
+          "outcome": "completed",
+          "duration_ms": 5069,
+          "result_available": true,
+          "return_code": 255,
+          "stdout": "",
+          "stderr": "ssh: connect to host 10.100.182.10 port 22: Connection timed out\r\n",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 24,
+          "timestamp": "2026-10-02T02:17:16.465477+00:00",
+          "command_id": "cmd-8853f9c199ca4f62",
+          "node": "node1",
+          "command": "printf 'post_restart_boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'service_enabled='; systemctl is-enabled zram-swap.service; printf 'service_active='; systemctl is-active zram-swap.service; /sbin/swapon --show=NAME,TYPE,SIZE,USED,PRIO --bytes; printf 'configured_zram_bytes='; cat /sys/block/zram0/disksize; printf 'compression='; cat /sys/block/zram0/comp_algorithm; test \"$(cat /sys/block/zram0/disksize)\" -ge 536870912; test \"$(awk '$1==\"/dev/zram0\" {print $5}' /proc/swaps)\" -gt \"$(awk '$1==\"/dev/vda2\" {print $5}' /proc/swaps)\"; printf 'post_restart_capacity_and_priority_checks=PASS\\n'; systemctl status zram-swap.service --no-pager -l | head -20",
+          "outcome": "completed",
+          "duration_ms": 337,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "post_restart_boot_id=cdad1322-0785-4f2d-bd3f-4f7f379c54c2\nservice_enabled=enabled\nservice_active=active\nNAME       TYPE            SIZE USED PRIO\n/dev/vda2  partition 2147479552    0   -2\n/dev/zram0 partition  536866816    0  100\nconfigured_zram_bytes=536870912\ncompression=[lzo] \npost_restart_capacity_and_priority_checks=PASS\n\u25cf zram-swap.service - Compressed in-memory swap on zram\n   Loaded: loaded (/etc/systemd/system/zram-swap.service; enabled; vendor preset: disabled)\n   Active: active (exited) since Thu 2026-10-01 22:17:09 EDT; 7s ago\n     Docs: man:swapon(8)\n  Process: 519 ExecStart=/usr/local/sbin/zram-swap start (code=exited, status=0/SUCCESS)\n Main PID: 519 (code=exited, status=0/SUCCESS)\n   CGroup: /system.slice/zram-swap.service\n",
+          "stderr": "",
+          "executor_attempt": 1
+        }
+      ]
+    },
+    {
+      "trial": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel9-5782/zram-swap-rhel9__SNF3oA8",
+      "label": "RHEL 9.8",
+      "implementation": "Created a systemd swap service using the existing zram module.",
+      "source_line": 8,
+      "instruction": "On `node1`, add at least 512 MB of compressed in-memory swap, active at boot\nand preferred over any disk-backed swap.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "kernel_before": {
+        "node1": "5.14.0-687.20.1.el9_8.x86_64"
+      },
+      "kernel_after": {
+        "node1": "5.14.0-687.20.1.el9_8.x86_64"
+      },
+      "functionality": 1.0,
+      "operational_hygiene": 1.0,
+      "agent_report": {
+        "status": "completed",
+        "summary": "Configured node1 with persistent 512 MiB zstd-compressed zram swap at priority 100, preferred over disk swap at priority -2. Reboot persistence was successfully verified.",
+        "actions_performed": [
+          "Created and enabled zram-swap.service.",
+          "Activated /dev/zram0 as 512 MiB compressed swap with priority 100.",
+          "Safely rebooted node1 and verified its boot identity changed.",
+          "Confirmed the system, zram service, disk swap, and zram swap recovered without failed units."
+        ],
+        "evidence": [
+          {
+            "requirement": "At least 512 MB of compressed in-memory swap, preferred over disk-backed swap",
+            "command_ids": [
+              "cmd-adadbd2f89cc4395",
+              "cmd-094e96cddf5d4219"
+            ],
+            "summary": "Before and after reboot, zramctl showed /dev/zram0 using zstd with a 512 MiB capacity; /proc/swaps showed priority 100 versus disk swap priority -2."
+          },
+          {
+            "requirement": "Active automatically at boot",
+            "command_ids": [
+              "cmd-b866de2c252544fe",
+              "cmd-094e96cddf5d4219"
+            ],
+            "summary": "The zram systemd service was enabled and active, then returned active after reboot with /dev/zram0 mounted as swap."
+          },
+          {
+            "requirement": "node1 mandatory restart and recovery sequence",
+            "command_ids": [
+              "cmd-adadbd2f89cc4395",
+              "cmd-9ed6d061814c4988",
+              "cmd-cce3aeeaf6e04a22",
+              "cmd-094e96cddf5d4219"
+            ],
+            "summary": "Baseline boot ID was 5f3ce3b8-4860-447e-bcf1-d6643718694e; the reboot was safely scheduled and acknowledged; the new boot ID was 9e2653ed-a30a-4661-9dda-eafaa72dd0a3; system state recovered to running with both swap devices healthy and no failed units."
+          }
+        ]
+      },
+      "source_files": {
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel9-5782/instruction.md": "295780f32f742e328894fb56f60dba2d58614cb2175a30e303caeeaee9b74daf",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel9-5782/zram-swap-rhel9__SNF3oA8/config.json": "3f80a51add7f382e3bcc3a8cce8159910b13aef0c4ae0ac3c654485912ae221b",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel9-5782/zram-swap-rhel9__SNF3oA8/agent/agent-output.json": "f5687b86119ee7d3645472a72a6eaf49bd111aff5a7075b89c7c02ea3ad91c31",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel9-5782/zram-swap-rhel9__SNF3oA8/agent/executor-commands.jsonl": "1b29bcccd01b737d9ef9796c74171dc017c748a9d5deac71ae6a8bce80c43331",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel9-5782/zram-swap-rhel9__SNF3oA8/environment-baseline.json": "ae630353970bafdb3b85a3aeede59d7ad357f12d3f94e997173ff9e4d0e06435",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel9-5782/zram-swap-rhel9__SNF3oA8/verifier/environment-post.json": "3efc64521c10766d4ea7390b3b32a7a9832a3bd6f7af267cab631934e8181aef",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel9-5782/zram-swap-rhel9__SNF3oA8/verifier/evaluation-report.json": "5eb41d75d08b17f2935526b682d9a72387218bdbbb15dae4d1ff80ceab5ab2c7"
+      },
+      "command_extracts": [
+        {
+          "source_line": 8,
+          "timestamp": "2026-10-02T02:35:39.946490+00:00",
+          "command_id": "cmd-e018457286f84878",
+          "node": "node1",
+          "command": "set -eu\ncat > /etc/systemd/system/zram-swap.service <<'ANTRIEB_EOF'\n[Unit]\nDescription=Compressed in-memory zram swap\nDocumentation=man:zramctl(8) man:swapon(8)\nAfter=systemd-modules-load.service\nBefore=swap.target\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/sbin/modprobe zram\nExecStart=/usr/sbin/zramctl --algorithm zstd --size 512M /dev/zram0\nExecStart=/usr/sbin/mkswap /dev/zram0\nExecStart=/usr/sbin/swapon --priority 100 /dev/zram0\nExecStop=-/usr/sbin/swapoff /dev/zram0\nExecStop=-/usr/sbin/zramctl --reset /dev/zram0\n\n[Install]\nWantedBy=swap.target\nANTRIEB_EOF\nrestorecon /etc/systemd/system/zram-swap.service\nsystemd-analyze verify /etc/systemd/system/zram-swap.service\nprintf 'unit_written='; stat -c '%n %a %U:%G' /etc/systemd/system/zram-swap.service",
+          "outcome": "completed",
+          "duration_ms": 194,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "sysinit.target: Found ordering cycle on swap.target/start; has dependency on zram-swap.service/start, sysinit.target/start\nsysinit.target: Job swap.target/start deleted to break ordering cycle starting with sysinit.target/start\nunit_written=/etc/systemd/system/zram-swap.service 644 root:root",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 18,
+          "timestamp": "2026-10-02T02:35:59.870058+00:00",
+          "command_id": "cmd-7228c28f0ca140ec",
+          "node": "node1",
+          "command": "printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'uptime_seconds='; cut -d. -f1 /proc/uptime",
+          "outcome": "completed",
+          "duration_ms": 56,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "boot_id=5f3ce3b8-4860-447e-bcf1-d6643718694e\nuptime_seconds=108",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 20,
+          "timestamp": "2026-10-02T02:36:02.641531+00:00",
+          "command_id": "cmd-c7d42a25c6d449c5",
+          "node": "node1",
+          "command": "printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'uptime_seconds='; cut -d. -f1 /proc/uptime",
+          "outcome": "completed",
+          "duration_ms": 78,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "boot_id=5f3ce3b8-4860-447e-bcf1-d6643718694e\nuptime_seconds=111",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 24,
+          "timestamp": "2026-10-02T02:36:11.903001+00:00",
+          "command_id": "cmd-b6bf0e032aa04354",
+          "node": "node1",
+          "command": "printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'uptime_seconds='; cut -d. -f1 /proc/uptime",
+          "outcome": "completed",
+          "duration_ms": 2062,
+          "result_available": true,
+          "return_code": -1,
+          "stdout": "",
+          "stderr": "[Errno 110] Connection timed out",
+          "executor_attempt": 1
+        }
+      ]
+    },
+    {
+      "trial": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel10-5782/zram-swap-rhel10__uUbMVWi",
+      "label": "RHEL 10.0",
+      "implementation": "Created a systemd swap service and corrected its boot ordering.",
+      "source_line": 30,
+      "instruction": "On `node1`, add at least 512 MB of compressed in-memory swap, active at boot\nand preferred over any disk-backed swap.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "kernel_before": {
+        "node1": "6.12.0-55.9.1.el10_0.x86_64"
+      },
+      "kernel_after": {
+        "node1": "6.12.0-55.9.1.el10_0.x86_64"
+      },
+      "functionality": 1.0,
+      "operational_hygiene": 0.98,
+      "agent_report": {
+        "status": "completed",
+        "summary": "Configured node1 with 512 MiB of zstd-compressed zram swap. It starts automatically at boot with priority 100, preferred over disk swap at priority -2. Reboot persistence was verified.",
+        "actions_performed": [
+          "Created and enabled /etc/systemd/system/zram-swap.service.",
+          "Activated /dev/zram0 with 512 MiB capacity and zstd compression.",
+          "Corrected the unit\u2019s boot ordering and verified no ordering-cycle messages remain.",
+          "Safely rebooted node1 and confirmed full recovery."
+        ],
+        "evidence": [
+          {
+            "requirement": "At least 512 MB of compressed in-memory swap",
+            "command_ids": [
+              "cmd-d01e4a95d56b4a6e"
+            ],
+            "summary": "Post-reboot output shows /dev/zram0 using zstd with a 512 MiB disk size and active as swap."
+          },
+          {
+            "requirement": "Preferred over disk-backed swap",
+            "command_ids": [
+              "cmd-d01e4a95d56b4a6e"
+            ],
+            "summary": "Post-reboot swapon output shows zram priority 100 versus /dev/vda3 priority -2."
+          },
+          {
+            "requirement": "Active automatically at boot",
+            "command_ids": [
+              "cmd-c04777706b3a48c8",
+              "cmd-d01e4a95d56b4a6e"
+            ],
+            "summary": "The service is enabled under multi-user.target and recovered active after reboot; the current-boot journal records successful zram creation and activation."
+          },
+          {
+            "requirement": "node1 mandatory restart and recovery",
+            "command_ids": [
+              "cmd-6b107a83fe2c43e6",
+              "cmd-e3b0181a2f0d491c",
+              "cmd-6481b88a2ba842bd",
+              "cmd-b0daa6e221464f13",
+              "cmd-d01e4a95d56b4a6e"
+            ],
+            "summary": "Healthy baseline used boot ID 7bb01663-3a26-4a9e-bcc4-cacbe07f7703; the reboot was acknowledged and connectivity dropped; node1 returned with boot ID b8ae22ed-427f-4eb0-8339-1ce2a130637f and healthy zram/disk swap state."
+          }
+        ]
+      },
+      "source_files": {
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel10-5782/instruction.md": "295780f32f742e328894fb56f60dba2d58614cb2175a30e303caeeaee9b74daf",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel10-5782/zram-swap-rhel10__uUbMVWi/config.json": "aedbc8e1c05b9e39e05257f73b0012cc8dc9b09fdacef46432651727f71aa131",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel10-5782/zram-swap-rhel10__uUbMVWi/agent/agent-output.json": "405f1fe324689be62925953705dcee64f5e2bcb7cc2fbb6a4051e7ef659f6f3b",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel10-5782/zram-swap-rhel10__uUbMVWi/agent/executor-commands.jsonl": "967b7c25032b1c55f34918e7629bbfb2c6adea14bc5dbd80d7450657e63573f0",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel10-5782/zram-swap-rhel10__uUbMVWi/environment-baseline.json": "495e9a3af4497389c636af63430e011a7274ddd219175e6cf451eb4074df070f",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel10-5782/zram-swap-rhel10__uUbMVWi/verifier/environment-post.json": "7405379f0ba784521c8eb0d5775b9843658f6439042b39cafa9bfe9b455b1bcd",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel10-5782/zram-swap-rhel10__uUbMVWi/verifier/evaluation-report.json": "9807c59efc53a8708a38555428a8b7ae3214a5eaf797f03710161fe53a0531c7"
+      },
+      "command_extracts": [
+        {
+          "source_line": 18,
+          "timestamp": "2026-10-02T01:38:01.328652+00:00",
+          "command_id": "cmd-c370295668b74ac7",
+          "node": "node1",
+          "command": "sleep 5; printf 'boot_id='; cat /proc/sys/kernel/random/boot_id",
+          "outcome": "completed",
+          "duration_ms": 5075,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "boot_id=2b19e976-dee2-4700-9045-90d61b6dcffe",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 20,
+          "timestamp": "2026-10-02T01:38:04.370312+00:00",
+          "command_id": "cmd-26e393ed31184905",
+          "node": "node1",
+          "command": "systemctl status harbor-reboot-node1.timer harbor-reboot-node1.service --no-pager; journalctl -u harbor-reboot-node1.service -n 20 --no-pager",
+          "outcome": "completed",
+          "duration_ms": 81,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "\u25cf harbor-reboot-node1.timer - [systemd-run] /usr/bin/systemctl reboot\n     Loaded: loaded (/run/systemd/transient/harbor-reboot-node1.timer; transient)\n  Transient: yes\n     Active: active (running) since Thu 2026-10-01 21:37:48 EDT; 15s ago\n Invocation: fa594dc3e8914897bb6d6894d363ca9e\n    Trigger: n/a\n   Triggers: \u25cf harbor-reboot-node1.service\n\nOct 01 21:37:48 node1 systemd[1]: Started harbor-reboot-node1.timer - [systemd-run] /usr/bin/systemctl reboot.\n\n\u25cf harbor-reboot-node1.service - [systemd-run] /usr/bin/systemctl reboot\n     Loaded: loaded (/run/systemd/transient/harbor-reboot-node1.service; transient)\n  Transient: yes\n     Active: active (running) since Thu 2026-10-01 21:38:04 EDT; 2ms ago\n Invocation: f1ee5718b8644c6ea832984732cdae09\nTriggeredBy: \u25cf harbor-reboot-node1.timer\n   Main PID: 1768 ((ystemctl))\n      Tasks: 1 (limit: 12343)\n     Memory: 1M (peak: 1M)\n        CPU: 624us\n     CGroup: /system.slice/harbor-reboot-node1.service\n             \u2514\u25001768 \"(ystemctl)\"\n\nOct 01 21:38:04 node1 systemd[1]: Started harbor-reboot-node1.service - [systemd-run] /usr/bin/systemctl reboot.\nOct 01 21:38:04 node1 systemd[1]: Started harbor-reboot-node1.service - [systemd-run] /usr/bin/systemctl reboot.",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 24,
+          "timestamp": "2026-10-02T01:38:13.647805+00:00",
+          "command_id": "cmd-722b0d6686e8467c",
+          "node": "node1",
+          "command": "printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; systemctl is-system-running",
+          "outcome": "completed",
+          "duration_ms": 1028,
+          "result_available": true,
+          "return_code": -1,
+          "stdout": "",
+          "stderr": "[Errno 104] Connection reset by peer",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 30,
+          "timestamp": "2026-10-02T01:38:42.241694+00:00",
+          "command_id": "cmd-c04777706b3a48c8",
+          "node": "node1",
+          "command": "systemctl disable zram-swap.service; cat > /etc/systemd/system/zram-swap.service <<'ANTRIEB_EOF'\n[Unit]\nDescription=Compressed in-memory swap on zram\nDocumentation=man:zramctl(8) man:swapon(8)\nAfter=systemd-modules-load.service\nBefore=multi-user.target\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/sbin/modprobe zram\nExecStart=/usr/sbin/zramctl --algorithm zstd --size 512M /dev/zram0\nExecStart=/usr/sbin/mkswap /dev/zram0\nExecStart=/usr/sbin/swapon --priority 100 /dev/zram0\nExecStop=/usr/sbin/swapoff /dev/zram0\nExecStop=/usr/sbin/zramctl --reset /dev/zram0\n\n[Install]\nWantedBy=multi-user.target\nANTRIEB_EOF\nrestorecon /etc/systemd/system/zram-swap.service; systemctl daemon-reload; systemctl enable zram-swap.service; systemctl is-enabled zram-swap.service; readlink -f /etc/systemd/system/multi-user.target.wants/zram-swap.service",
+          "outcome": "completed",
+          "duration_ms": 432,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "Removed '/etc/systemd/system/swap.target.wants/zram-swap.service'.\nCreated symlink '/etc/systemd/system/multi-user.target.wants/zram-swap.service' \u2192 '/etc/systemd/system/zram-swap.service'.\nenabled\n/etc/systemd/system/zram-swap.service",
+          "stderr": "",
+          "executor_attempt": 1
+        }
+      ]
+    },
+    {
+      "trial": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-almalinux9-5782/zram-swap-almalinux9__mXxA3JT",
+      "label": "AlmaLinux 9.6",
+      "implementation": "Wrote a setup script and a systemd swap service.",
+      "source_line": 8,
+      "instruction": "On `node1`, add at least 512 MB of compressed in-memory swap, active at boot\nand preferred over any disk-backed swap.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "kernel_before": {
+        "node1": "5.14.0-570.12.1.el9_6.x86_64"
+      },
+      "kernel_after": {
+        "node1": "5.14.0-570.12.1.el9_6.x86_64"
+      },
+      "functionality": 1.0,
+      "operational_hygiene": 1.0,
+      "agent_report": {
+        "status": "completed",
+        "summary": "Configured node1 with a persistent 512 MiB compressed zram swap device at maximum priority 32767. Reboot verification succeeded.",
+        "actions_performed": [
+          "Created a native zram setup script and systemd service.",
+          "Enabled the service through swap.target.",
+          "Activated /dev/zram0 as compressed swap.",
+          "Safely rebooted node1 and verified automatic recovery."
+        ],
+        "evidence": [
+          {
+            "requirement": "At least 512 MB of active compressed in-memory swap",
+            "command_ids": [
+              "cmd-1b52e746ddf04731",
+              "cmd-e4a6acda4c3040a9"
+            ],
+            "summary": "/dev/zram0 reports a 512 MiB compressed device and 536866816 bytes of active swap before and after reboot."
+          },
+          {
+            "requirement": "Active at boot",
+            "command_ids": [
+              "cmd-a06c5b31079b41fc",
+              "cmd-e4a6acda4c3040a9"
+            ],
+            "summary": "zram-swap.service is enabled via swap.target and started successfully during the verified post-reboot boot."
+          },
+          {
+            "requirement": "Preferred over disk-backed swap",
+            "command_ids": [
+              "cmd-1b52e746ddf04731",
+              "cmd-e4a6acda4c3040a9"
+            ],
+            "summary": "The zram swap is active at Linux's maximum swap priority, 32767."
+          },
+          {
+            "requirement": "Mandatory node1 restart and recovery",
+            "command_ids": [
+              "cmd-32c6ded2f908460d",
+              "cmd-c368e7e3d4fc44ad",
+              "cmd-ebe33e0cf1ac4d16",
+              "cmd-e4a6acda4c3040a9"
+            ],
+            "summary": "Healthy pre-restart boot ID 49dafad6-5cc2-457a-b0f6-1219740a651e was captured, reboot was acknowledged, boot ID changed to 8fbfe00b-7838-4ca8-a448-eac07355949b, and the enabled service plus compressed swap recovered with the system healthy."
+          }
+        ]
+      },
+      "source_files": {
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-almalinux9-5782/instruction.md": "295780f32f742e328894fb56f60dba2d58614cb2175a30e303caeeaee9b74daf",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-almalinux9-5782/zram-swap-almalinux9__mXxA3JT/config.json": "afb1e0d5a7be7e503ada2bcdafb48cb6b317d233d57e46e46246a7b18f0da55b",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-almalinux9-5782/zram-swap-almalinux9__mXxA3JT/agent/agent-output.json": "6c4e6ac67b5183d17a7dc84578f5438f398ee5bdf224718267d41dedf5397c3e",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-almalinux9-5782/zram-swap-almalinux9__mXxA3JT/agent/executor-commands.jsonl": "755e17219967bbbe77f3141d53b8abfc8b164a518aa4b5d5ae27e951294ab9fb",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-almalinux9-5782/zram-swap-almalinux9__mXxA3JT/environment-baseline.json": "5f2f14795b4fb85429b138e2aec2ff78389d8c744b29ac29d25cc9d1bc61c650",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-almalinux9-5782/zram-swap-almalinux9__mXxA3JT/verifier/environment-post.json": "0676f98df1affa6f3526c2f6779eff354c1d862803c7503f3a76fb80b60889b1",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-almalinux9-5782/zram-swap-almalinux9__mXxA3JT/verifier/evaluation-report.json": "136ff0ba336a46d52e7f39c00f3b5c5feda1b44ecc1bc2f17ce48c0d40ab9728"
+      },
+      "command_extracts": [
+        {
+          "source_line": 8,
+          "timestamp": "2026-10-02T01:01:29.906321+00:00",
+          "command_id": "cmd-923d86414488455d",
+          "node": "node1",
+          "command": "set -eu\ninstall -d -m 0755 /usr/local/sbin\ncat > /usr/local/sbin/zram-swap <<'ANTRIEB_ZRAM_SCRIPT'\n#!/bin/sh\nset -eu\n\nSTATE_FILE=/run/zram-swap.device\n\ncase \"${1:-}\" in\n  start)\n    if [ -r \"$STATE_FILE\" ]; then\n      DEVICE=$(cat \"$STATE_FILE\")\n      if swapon --show=NAME --noheadings | grep -Fxq \"$DEVICE\"; then\n        exit 0\n      fi\n    fi\n\n    /usr/sbin/modprobe zram\n    DEVICE=$(/usr/sbin/zramctl --find --size 512M)\n    /usr/sbin/mkswap \"$DEVICE\"\n    /usr/sbin/swapon --priority 32767 \"$DEVICE\"\n    printf '%s\\n' \"$DEVICE\" > \"$STATE_FILE\"\n    ;;\n  stop)\n    if [ -r \"$STATE_FILE\" ]; then\n      DEVICE=$(cat \"$STATE_FILE\")\n      /usr/sbin/swapoff \"$DEVICE\" 2>/dev/null || true\n      /usr/sbin/zramctl --reset \"$DEVICE\" 2>/dev/null || true\n      rm -f \"$STATE_FILE\"\n    fi\n    ;;\n  *)\n    printf 'Usage: %s {start|stop}\\n' \"$0\" >&2\n    exit 2\n    ;;\nesac\nANTRIEB_ZRAM_SCRIPT\nchmod 0755 /usr/local/sbin/zram-swap\nrestorecon -F /usr/local/sbin/zram-swap\n\ncat > /etc/systemd/system/zram-swap.service <<'ANTRIEB_ZRAM_UNIT'\n[Unit]\nDescription=Compressed in-memory zram swap\nDocumentation=man:zramctl(8) man:swapon(8)\nAfter=systemd-modules-load.service\nBefore=swap.target\n\n[Service]\nType=oneshot\nExecStart=/usr/local/sbin/zram-swap start\nExecStop=/usr/local/sbin/zram-swap stop\nRemainAfterExit=yes\n\n[Install]\nWantedBy=swap.target\nANTRIEB_ZRAM_UNIT\nchmod 0644 /etc/systemd/system/zram-swap.service\nrestorecon -F /etc/systemd/system/zram-swap.service\nsystemd-analyze verify /etc/systemd/system/zram-swap.service",
+          "outcome": "completed",
+          "duration_ms": 211,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "sysinit.target: Found ordering cycle on swap.target/start\nsysinit.target: Found dependency on zram-swap.service/start\nsysinit.target: Found dependency on sysinit.target/start\nsysinit.target: Job swap.target/start deleted to break ordering cycle starting with sysinit.target/start",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 18,
+          "timestamp": "2026-10-02T01:02:06.795042+00:00",
+          "command_id": "cmd-b2295ef4075a497e",
+          "node": "node1",
+          "command": "printf 'BOOT_ID='; cat /proc/sys/kernel/random/boot_id\nprintf 'SYSTEM_STATE='; systemctl is-system-running || true",
+          "outcome": "completed",
+          "duration_ms": 107,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "BOOT_ID=49dafad6-5cc2-457a-b0f6-1219740a651e\nSYSTEM_STATE=running",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 20,
+          "timestamp": "2026-10-02T01:02:10.899689+00:00",
+          "command_id": "cmd-d64db200f26b4f7e",
+          "node": "node1",
+          "command": "printf 'BOOT_ID='; cat /proc/sys/kernel/random/boot_id\nprintf 'UPTIME='; cut -d' ' -f1 /proc/uptime\nprintf 'SYSTEM_STATE='; systemctl is-system-running || true",
+          "outcome": "completed",
+          "duration_ms": 1643,
+          "result_available": true,
+          "return_code": -1,
+          "stdout": "",
+          "stderr": "[Errno 104] Connection reset by peer",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 24,
+          "timestamp": "2026-10-02T01:02:21.506561+00:00",
+          "command_id": "cmd-e4a6acda4c3040a9",
+          "node": "node1",
+          "command": "set -eu\nprintf 'BOOT_ID='; cat /proc/sys/kernel/random/boot_id\nprintf 'SERVICE_ENABLED='; systemctl is-enabled zram-swap.service\nprintf 'SERVICE_ACTIVE='; systemctl is-active zram-swap.service\nprintf '%s\\n' 'SWAP_STATE:'\nswapon --show=NAME,TYPE,SIZE,USED,PRIO --bytes\nprintf '%s\\n' 'ZRAM_STATE:'\nzramctl --output NAME,ALGORITHM,DISKSIZE,DATA,COMPR,TOTAL,MOUNTPOINT\nprintf '%s\\n' 'CURRENT_BOOT_SERVICE_LOG:'\njournalctl -b -u zram-swap.service --no-pager -n 20\nprintf 'SYSTEM_STATE='; systemctl is-system-running",
+          "outcome": "completed",
+          "duration_ms": 176,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "BOOT_ID=8fbfe00b-7838-4ca8-a448-eac07355949b\nSERVICE_ENABLED=enabled\nSERVICE_ACTIVE=active\nSWAP_STATE:\nNAME       TYPE           SIZE USED  PRIO\n/dev/zram0 partition 536866816    0 32767\nZRAM_STATE:\nNAME       ALGORITHM DISKSIZE DATA COMPR TOTAL MOUNTPOINT\n/dev/zram0 lzo-rle       512M   4K   73B   12K [SWAP]\nCURRENT_BOOT_SERVICE_LOG:\nOct 01 21:02:10 node1 systemd[1]: Starting Compressed in-memory zram swap...\nOct 01 21:02:10 node1 zram-swap[606]: Setting up swapspace version 1, size = 512 MiB (536866816 bytes)\nOct 01 21:02:10 node1 zram-swap[606]: no label, UUID=c7278c14-25f5-4a30-a193-3f8c74b249ac\nOct 01 21:02:10 node1 systemd[1]: Finished Compressed in-memory zram swap.\nSYSTEM_STATE=running",
+          "stderr": "",
+          "executor_attempt": 1
+        }
+      ]
+    },
+    {
+      "trial": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-centos-stream10-5782/zram-swap-centos-stream10__BjPHkVX",
+      "label": "CentOS Stream 10",
+      "implementation": "Installed and configured the packaged zram-generator.",
+      "source_line": 16,
+      "instruction": "On `node1`, add at least 512 MB of compressed in-memory swap, active at boot\nand preferred over any disk-backed swap.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "kernel_before": {
+        "node1": "6.12.0-205.el10.x86_64"
+      },
+      "kernel_after": {
+        "node1": "6.12.0-205.el10.x86_64"
+      },
+      "functionality": 1.0,
+      "operational_hygiene": 0.88,
+      "agent_report": {
+        "status": "completed",
+        "summary": "Configured node1 with persistent 512 MiB zstd-compressed zram swap at maximum priority 32767. It activated successfully during a verified node reboot, and the host recovered healthy.",
+        "actions_performed": [
+          "Installed zram-generator.",
+          "Configured /dev/zram0 for 512 MiB using zstd compression and swap priority 32767.",
+          "Verified the live swap and systemd boot-target wiring.",
+          "Safely rebooted node1 exactly once and verified its boot identity changed.",
+          "Confirmed zram swap automatically recovered after reboot with no failed systemd units."
+        ],
+        "evidence": [
+          {
+            "requirement": "At least 512 MB of compressed in-memory swap",
+            "command_ids": [
+              "cmd-29df818ac90942cd",
+              "cmd-cb90e37fec174f33"
+            ],
+            "summary": "/dev/zram0 reports 536,866,816 bytes (512 MiB), zstd compression, and active [SWAP] status before and after reboot."
+          },
+          {
+            "requirement": "Swap active at boot",
+            "command_ids": [
+              "cmd-29df818ac90942cd",
+              "cmd-cb90e37fec174f33"
+            ],
+            "summary": "The generated swap unit is wired into swap.target; the new boot journal directly records creation, formatting, and activation of /dev/zram0."
+          },
+          {
+            "requirement": "Preferred over disk-backed swap",
+            "command_ids": [
+              "cmd-29df818ac90942cd",
+              "cmd-cb90e37fec174f33"
+            ],
+            "summary": "The zram swap is active at priority 32767, the kernel's maximum swap priority. Pre-reboot inspection also confirmed no disk-backed swap was configured."
+          },
+          {
+            "requirement": "Mandatory node1 restart and recovery",
+            "command_ids": [
+              "cmd-29df818ac90942cd",
+              "cmd-3df97ebfea8046da",
+              "cmd-a06dd87881ab4156",
+              "cmd-cb90e37fec174f33"
+            ],
+            "summary": "Healthy baseline boot ID 83a0a80f-773c-4f3e-9137-1e7aa887b07a was captured, safe reboot acknowledged, and the new boot ID 2bddbb3a-671f-4b8d-944d-82f10eeecd8c proved restart. Post-restart state was running, both zram units were active, swap retained the requested size/compression/priority, and zero systemd units had failed."
+          }
+        ]
+      },
+      "source_files": {
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-centos-stream10-5782/instruction.md": "295780f32f742e328894fb56f60dba2d58614cb2175a30e303caeeaee9b74daf",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-centos-stream10-5782/zram-swap-centos-stream10__BjPHkVX/config.json": "e9e45eb6f6703d8dd9c916d9be2028727e6c43ed02a09dab7728c6cc2d897277",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-centos-stream10-5782/zram-swap-centos-stream10__BjPHkVX/agent/agent-output.json": "fb1acd044f0220976f88afd6b42ee95005af40135a36b901e54efc2fad7aeafb",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-centos-stream10-5782/zram-swap-centos-stream10__BjPHkVX/agent/executor-commands.jsonl": "c214689f38e88e8bfd644eb4601089948f0e4316b9bf36184164944690f6e009",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-centos-stream10-5782/zram-swap-centos-stream10__BjPHkVX/environment-baseline.json": "8ce3d95ce8292c443b3ae4027a5ae3d1a02bb1508351537d6e9859bd16622035",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-centos-stream10-5782/zram-swap-centos-stream10__BjPHkVX/verifier/environment-post.json": "bb0ac7e4a51da3f6a7a7fc21134d85adcc62cd9b14c8a46adc5a394fa1790d3e",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-centos-stream10-5782/zram-swap-centos-stream10__BjPHkVX/verifier/evaluation-report.json": "059983f79cb20ee3e754354ea76c12d070192dd74f806d59998640869eae43a8"
+      },
+      "command_extracts": [
+        {
+          "source_line": 16,
+          "timestamp": "2026-10-02T01:25:40.781526+00:00",
+          "command_id": "cmd-0d17a7a887864480",
+          "node": "node1",
+          "command": "set -eu\nsystemctl stop systemd-zram-setup@zram0.service 2>/dev/null || true\nprintf '%s\\n' '[zram0]' 'zram-size = 512' 'compression-algorithm = zstd' 'swap-priority = 32767' > /etc/systemd/zram-generator.conf\nsystemctl daemon-reload\nsystemctl start systemd-zram-setup@zram0.service",
+          "outcome": "completed",
+          "duration_ms": 307,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 18,
+          "timestamp": "2026-10-02T01:25:49.783772+00:00",
+          "command_id": "cmd-ce282667c8414feb",
+          "node": "node1",
+          "command": "set -eu\nprintf 'boot_id='; cat /proc/sys/kernel/random/boot_id\nprintf '\\n-- configured policy --\\n'; cat /etc/systemd/zram-generator.conf\nprintf '\\n-- live swap --\\n'; swapon --show --bytes --output=NAME,TYPE,SIZE,USED,PRIO\nprintf '\\n-- zram device --\\n'; zramctl /dev/zram0\nprintf '\\n-- service and boot wiring --\\n'; systemctl is-active systemd-zram-setup@zram0.service; systemctl is-active dev-zram0.swap\nsystemctl status dev-zram0.swap --no-pager -l | sed -n '1,14p'\nfind /run/systemd/generator -maxdepth 3 -type l -path '*swap.target.wants*' -ls\nprintf '\\n-- disk-backed swap check --\\n'; lsblk -o NAME,TYPE,SIZE,FSTYPE,MOUNTPOINTS; grep -v '^[[:space:]]*#' /etc/fstab | grep -E '[[:space:]]swap[[:space:]]' || true",
+          "outcome": "completed",
+          "duration_ms": 155,
+          "result_available": true,
+          "return_code": 1,
+          "stdout": "boot_id=83a0a80f-773c-4f3e-9137-1e7aa887b07a\n\n-- configured policy --\n[zram0]\nzram-size = 512\ncompression-algorithm = zstd\nswap-priority = 32767\n\n-- live swap --\nswapon: option '--output-all' doesn't allow an argument\nTry 'swapon --help' for more information.",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 20,
+          "timestamp": "2026-10-02T01:25:55.570730+00:00",
+          "command_id": "cmd-29df818ac90942cd",
+          "node": "node1",
+          "command": "set -eu\nprintf 'boot_id='; cat /proc/sys/kernel/random/boot_id\nprintf '\\n-- configured policy --\\n'; cat /etc/systemd/zram-generator.conf\nprintf '\\n-- live swap --\\n'; swapon --show=NAME,TYPE,SIZE,USED,PRIO --bytes\nprintf '\\n-- zram device --\\n'; zramctl /dev/zram0\nprintf '\\n-- service and boot wiring --\\n'; systemctl is-active systemd-zram-setup@zram0.service; systemctl is-active dev-zram0.swap\nsystemctl status dev-zram0.swap --no-pager -l | sed -n '1,14p'\nfind /run/systemd/generator -maxdepth 3 -type l -path '*swap.target.wants*' -ls\nprintf '\\n-- disk-backed swap check --\\n'; lsblk -o NAME,TYPE,SIZE,FSTYPE,MOUNTPOINTS; grep -v '^[[:space:]]*#' /etc/fstab | grep -E '[[:space:]]swap[[:space:]]' || true",
+          "outcome": "completed",
+          "duration_ms": 177,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "boot_id=83a0a80f-773c-4f3e-9137-1e7aa887b07a\n\n-- configured policy --\n[zram0]\nzram-size = 512\ncompression-algorithm = zstd\nswap-priority = 32767\n\n-- live swap --\nNAME       TYPE           SIZE USED  PRIO\n/dev/zram0 partition 536866816    0 32767\n\n-- zram device --\nNAME       ALGORITHM DISKSIZE DATA COMPR TOTAL STREAMS MOUNTPOINT\n/dev/zram0 zstd          512M   4K   69B   20K       4 [SWAP]\n\n-- service and boot wiring --\nactive\nactive\n\u25cf dev-zram0.swap - Compressed Swap on /dev/zram0\n     Loaded: loaded (/run/systemd/generator/dev-zram0.swap; generated)\n     Active: active since Thu 2026-10-01 21:25:40 EDT; 14s ago\n Invocation: 92cba394ae8b4ea6bc2f559fae3424c8\n       What: /dev/zram0\n       Docs: man:zram-generator(8)\n             man:zram-generator.conf(5)\n      Tasks: 0 (limit: 9416)\n     Memory: 56K (peak: 1.2M)\n        CPU: 4ms\n     CGroup: /system.slice/dev-zram0.swap\n\nOct 01 21:25:40 node1 systemd[1]: Activating swap dev-zram0.swap - Compressed Swap on /dev/zram0...\nOct 01 21:25:40 node1 systemd[1]: Activated swap dev-zram0.swap - Compressed Swap on /dev/zram0.\n     1849      0 lrwxrwxrwx   1 root     root           17 Oct  1 21:25 /run/systemd/generator/swap.target.wants/dev-zram0.swap -> ../dev-zram0.swap\n\n-- disk-backed swap check --\nNAME   TYPE  SIZE FSTYPE MOUNTPOINTS\nzram0  disk  512M swap   [SWAP]\nvda    disk   20G        \n\u251c\u2500vda1 part    1M        \n\u251c\u2500vda2 part  200M vfat   /boot/efi\n\u2514\u2500vda3 part 19.8G xfs    /",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 24,
+          "timestamp": "2026-10-02T01:26:11.650921+00:00",
+          "command_id": "cmd-1c3a0d2cd47d49f3",
+          "node": "node1",
+          "command": "printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; systemctl is-system-running 2>/dev/null || true",
+          "outcome": "completed",
+          "duration_ms": 2081,
+          "result_available": true,
+          "return_code": -1,
+          "stdout": "",
+          "stderr": "[Errno 104] Connection reset by peer",
+          "executor_attempt": 1
+        }
+      ]
+    },
+    {
+      "trial": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-alpine-5782/zram-swap-alpine__awkmyPs",
+      "label": "Alpine 3.23.3",
+      "implementation": "Installed zram-init and enabled it through OpenRC, Alpine\u2019s startup manager.",
+      "source_line": 12,
+      "instruction": "On `node1`, add at least 512 MB of compressed in-memory swap, active at boot\nand preferred over any disk-backed swap.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "kernel_before": {
+        "node1": "6.18.7-0-lts"
+      },
+      "kernel_after": {
+        "node1": "6.18.7-0-lts"
+      },
+      "functionality": 1.0,
+      "operational_hygiene": 0.95,
+      "agent_report": {
+        "status": "completed",
+        "summary": "Configured node1 with persistent 512 MiB zram swap using zstd at maximum priority 32767. It remained active after reboot.",
+        "actions_performed": [
+          "Installed Alpine zram-init.",
+          "Configured one 536,870,912-byte zram device.",
+          "Enabled zram-init in the OpenRC boot runlevel.",
+          "Rebooted node1 once and verified recovery with a changed boot ID."
+        ],
+        "evidence": [
+          {
+            "requirement": "At least 512 MiB compressed in-memory swap, active at boot and preferred over disk swap",
+            "command_ids": [
+              "cmd-d647303d41f242f2",
+              "cmd-ef3096f86fdb4e4b",
+              "cmd-7d51c7d087214e3b"
+            ],
+            "summary": "Shows boot enablement, a 536,870,912-byte zram0 device using zstd, and active swap at priority 32767 before and after reboot."
+          },
+          {
+            "requirement": "node1 mandatory restart and recovery",
+            "command_ids": [
+              "cmd-ef3096f86fdb4e4b",
+              "cmd-2ee5d6f81d624d58",
+              "cmd-2f5cf44a4fc64f91",
+              "cmd-7d51c7d087214e3b"
+            ],
+            "summary": "Captures healthy baseline boot ID 6f089428-2c47-4d90-991c-ddcf39025cf6, reboot acknowledgement, changed boot ID a75d2729-9d22-47a4-80b7-3ea7f791a36b, and recovered services and zram swap."
+          }
+        ]
+      },
+      "source_files": {
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-alpine-5782/instruction.md": "295780f32f742e328894fb56f60dba2d58614cb2175a30e303caeeaee9b74daf",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-alpine-5782/zram-swap-alpine__awkmyPs/config.json": "bcbc0c6563dd03c7d8b6f7c24b8ada34ff26f715ac680f06b4371fe9c65b7103",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-alpine-5782/zram-swap-alpine__awkmyPs/agent/agent-output.json": "cc2447bfd269a91b69185cc2c9b165c8d6bbddf0662a69f72bedff26ad254e8f",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-alpine-5782/zram-swap-alpine__awkmyPs/agent/executor-commands.jsonl": "f35f996abac5f6fdf0b9931bdd1882d4b1abc00ca5e9bee3e86052540c7fb88d",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-alpine-5782/zram-swap-alpine__awkmyPs/environment-baseline.json": "9d03fe923e4158461518803156fed5ea9cecda5da1fcc4eea0d02d12ac974b38",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-alpine-5782/zram-swap-alpine__awkmyPs/verifier/environment-post.json": "96850f72dfd4748face63743ad211d429a12b0d537a21594d20416085debb102",
+        "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-alpine-5782/zram-swap-alpine__awkmyPs/verifier/evaluation-report.json": "35f163c7ce3ae24dac1540c2288a99ebcc170a7ae8e3262616fcec8aa83a4214"
+      },
+      "command_extracts": [
+        {
+          "source_line": 12,
+          "timestamp": "2026-10-02T01:13:17.274058+00:00",
+          "command_id": "cmd-d647303d41f242f2",
+          "node": "node1",
+          "command": "sed -i 's/^options zram num_devices=.*/options zram num_devices=1/' /etc/modprobe.d/zram.conf && rc-update add zram-init boot && rc-service zram-init start",
+          "outcome": "completed",
+          "duration_ms": 1160,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": " * service zram-init added to runlevel boot\n * Caching service dependencies ... [ ok ]\n * Loading zram module...\n [ ok ]\n * Swap->zram0\n [ ok ]",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 18,
+          "timestamp": "2026-10-02T01:13:34.003677+00:00",
+          "command_id": "cmd-81150907380a4a8d",
+          "node": "node1",
+          "command": "printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'uptime_seconds='; cut -d. -f1 /proc/uptime",
+          "outcome": "completed",
+          "duration_ms": 63,
+          "result_available": true,
+          "return_code": -1,
+          "stdout": "",
+          "stderr": "[Errno 104] Connection reset by peer",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 20,
+          "timestamp": "2026-10-02T01:13:36.461624+00:00",
+          "command_id": "cmd-92fba511d9bc4f62",
+          "node": "node1",
+          "command": "printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'uptime_seconds='; cut -d. -f1 /proc/uptime",
+          "outcome": "completed",
+          "duration_ms": 62,
+          "result_available": true,
+          "return_code": -1,
+          "stdout": "",
+          "stderr": "[Errno 104] Connection reset by peer",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 24,
+          "timestamp": "2026-10-02T01:13:45.657038+00:00",
+          "command_id": "cmd-b1705ba75e2046ad",
+          "node": "node1",
+          "command": "printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'uptime_seconds='; cut -d. -f1 /proc/uptime",
+          "outcome": "completed",
+          "duration_ms": 2106,
+          "result_available": true,
+          "return_code": -1,
+          "stdout": "",
+          "stderr": "[Errno 110] Connection timed out",
+          "executor_attempt": 1
+        }
+      ]
+    },
+    {
+      "trial": "jobs/5782/2026-10-02__08-42-41/zram-swap-bash-ubuntu16-5782/zram-swap-ubuntu16__vJeFoMW",
+      "label": "Ubuntu 16.04.7, separate execution",
+      "implementation": "Installed linux-modules-extra-4.4.0-210-generic and created a systemd swap service.",
+      "source_line": 24,
+      "instruction": "On `node1`, add at least 512 MB of compressed in-memory swap, active at boot\nand preferred over any disk-backed swap.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "kernel_before": {
+        "node1": "4.4.0-210-generic"
+      },
+      "kernel_after": {
+        "node1": "4.4.0-210-generic"
+      },
+      "functionality": 1.0,
+      "operational_hygiene": 1.0,
+      "agent_report": {
+        "status": "completed",
+        "summary": "Configured node1 with persistent 512 MiB lzo-compressed zram swap at maximum priority 32767. It remained enabled, active, and healthy after a verified node reboot.",
+        "actions_performed": [
+          "Installed the matching kernel extra-modules package to provide zram support.",
+          "Created and enabled zram-swap.service for automatic boot activation.",
+          "Configured /dev/zram0 with 536870912 bytes and swap priority 32767.",
+          "Safely rebooted node1 and verified its boot identity changed.",
+          "Confirmed the service and compressed swap recovered successfully after reboot."
+        ],
+        "evidence": [
+          {
+            "requirement": "At least 512 MB of compressed in-memory swap, active at boot and preferred over disk-backed swap",
+            "command_ids": [
+              "cmd-977ae079a3fd4fb8",
+              "cmd-fa942374ea8d41ee"
+            ],
+            "summary": "Shows a 536870912-byte lzo zram device, active as swap at maximum priority 32767, with zram-swap.service enabled and active before and after reboot."
+          },
+          {
+            "requirement": "node1 mandatory restart and recovery sequence",
+            "command_ids": [
+              "cmd-977ae079a3fd4fb8",
+              "cmd-edd20338fa53465a",
+              "cmd-057837f117f846e9",
+              "cmd-fa942374ea8d41ee"
+            ],
+            "summary": "Captures the healthy baseline and old boot ID, reboot acknowledgement, changed boot ID, and successful post-restart service and swap recovery."
+          }
+        ]
+      },
+      "source_files": {
+        "jobs/5782/2026-10-02__08-42-41/zram-swap-bash-ubuntu16-5782/instruction.md": "295780f32f742e328894fb56f60dba2d58614cb2175a30e303caeeaee9b74daf",
+        "jobs/5782/2026-10-02__08-42-41/zram-swap-bash-ubuntu16-5782/zram-swap-ubuntu16__vJeFoMW/config.json": "bd8e48133b795883af15481d419a3a2a7810e94900be333a1786e26362387828",
+        "jobs/5782/2026-10-02__08-42-41/zram-swap-bash-ubuntu16-5782/zram-swap-ubuntu16__vJeFoMW/agent/agent-output.json": "4145830c7a03314e7060dd5245c53cf4eeeb668bfc8f65d30b1a20693af3eeb7",
+        "jobs/5782/2026-10-02__08-42-41/zram-swap-bash-ubuntu16-5782/zram-swap-ubuntu16__vJeFoMW/agent/executor-commands.jsonl": "05085c8eb0f7aeec35d3d7a77d65d3847641c04ce690c56541755416aa433a6f",
+        "jobs/5782/2026-10-02__08-42-41/zram-swap-bash-ubuntu16-5782/zram-swap-ubuntu16__vJeFoMW/environment-baseline.json": "12c82cb3aae57883848a829436674141ec86ac0906883b84b2359e8596173f7b",
+        "jobs/5782/2026-10-02__08-42-41/zram-swap-bash-ubuntu16-5782/zram-swap-ubuntu16__vJeFoMW/verifier/environment-post.json": "fa16a85ae8171d6b3022c7ab4a8b8078b1c4903354e2c525125079105f58bb9b",
+        "jobs/5782/2026-10-02__08-42-41/zram-swap-bash-ubuntu16-5782/zram-swap-ubuntu16__vJeFoMW/verifier/evaluation-report.json": "061065564fa6548a47b188cbbff81deacef9c1e48702362d5126dc3ad14ea093"
+      },
+      "command_extracts": [
+        {
+          "source_line": 18,
+          "timestamp": "2026-10-02T16:19:51.141936+00:00",
+          "command_id": "cmd-0deb29771cc94277",
+          "node": "node1",
+          "command": "set -eu\npkg=\"linux-modules-extra-$(uname -r)\"\napt-cache policy \"$pkg\"\napt-cache show \"$pkg\" | sed -n '1,24p'",
+          "outcome": "completed",
+          "duration_ms": 2436,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "linux-modules-extra-4.4.0-210-generic:\n  Installed: (none)\n  Candidate: 4.4.0-210.242\n  Version table:\n     4.4.0-210.242 500\n        500 http://archive.ubuntu.com/ubuntu xenial-updates/main i386 Packages\n        500 http://security.ubuntu.com/ubuntu xenial-security/main i386 Packages\nPackage: linux-modules-extra-4.4.0-210-generic\nSource: linux\nPriority: optional\nSection: kernel\nInstalled-Size: 112604\nMaintainer: Ubuntu Kernel Team <kernel-team@lists.ubuntu.com>\nArchitecture: i386\nVersion: 4.4.0-210.242\nDepends: linux-image-4.4.0-210-generic | linux-image-unsigned-4.4.0-210-generic, crda | wireless-crda\nFilename: pool/main/l/linux/linux-modules-extra-4.4.0-210-generic_4.4.0-210.242_i386.deb\nSize: 36221764\nMD5sum: d34d52dbad7aef4867bef36059a111dd\nSHA1: 2acf5a08700373b1ed9cfb12937fb58781391d52\nSHA256: c5f459ba66b347d23c18063e262d6b57683fe04da20d9cf50132d8b7f735da2b\nSHA512: [REDACTED_ENCODED_BLOB]\nDescription-en: Linux kernel extra modules for version 4.4.0 on 32 bit x86 SMP\n This package contains the Linux kernel extra modules for version 4.4.0 on\n 32 bit x86 SMP.\n .\n Also includes the corresponding System.map file, the modules built by the\n packager, and scripts that try to ensure that the system is not left in an\n unbootable state after an update.\n .\n Supports Generic processors.\n",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 20,
+          "timestamp": "2026-10-02T16:19:55.850733+00:00",
+          "command_id": "cmd-3cd7387bf2744c38",
+          "node": "node1",
+          "command": "set -eu\npkg=\"linux-modules-extra-$(uname -r)\"\nsudo -n sh -c \"DEBIAN_FRONTEND=noninteractive apt-get install -y '$pkg' > /tmp/zram-apt-install.log 2>&1 & echo \\$! > /tmp/zram-apt-install.pid\"\nprintf 'apt_install_pid='; cat /tmp/zram-apt-install.pid",
+          "outcome": "completed",
+          "duration_ms": 1536,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "apt_install_pid=2921\n",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 24,
+          "timestamp": "2026-10-02T16:20:08.927234+00:00",
+          "command_id": "cmd-6d2dc3be37804a17",
+          "node": "node1",
+          "command": "set -eu\ndpkg-query -W -f='${Status} ${Package} ${Version}\\n' \"linux-modules-extra-$(uname -r)\"\nls -l \"/lib/modules/$(uname -r)/kernel/drivers/block/zram/zram.ko\"\nsudo -n modprobe zram\nlsmod | grep '^zram'\nls -l /dev/zram0\ncat /sys/block/zram0/comp_algorithm",
+          "outcome": "completed",
+          "duration_ms": 2623,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "install ok installed linux-modules-extra-4.4.0-210-generic 4.4.0-210.242\n-rw-r--r-- 1 root root 39046 Apr 16  2021 /lib/modules/4.4.0-210-generic/kernel/drivers/block/zram/zram.ko\nzram                   24576  1\nbrw-rw---- 1 root disk 251, 0 Oct  2 12:20 /dev/zram0\n[lzo] lz4 \n",
+          "stderr": "",
+          "executor_attempt": 1
+        },
+        {
+          "source_line": 50,
+          "timestamp": "2026-10-02T16:22:39.691220+00:00",
+          "command_id": "cmd-fa942374ea8d41ee",
+          "node": "node1",
+          "command": "set -eu\nold_boot_id='fa1e87e6-00f3-42d2-acc5-ad1df6c3d16a'\nnew_boot_id=$(cat /proc/sys/kernel/random/boot_id)\n[ \"$new_boot_id\" != \"$old_boot_id\" ]\n[ \"$(systemctl is-enabled zram-swap.service)\" = enabled ]\n[ \"$(systemctl is-active zram-swap.service)\" = active ]\nsize=$(cat /sys/block/zram0/disksize)\npriority=$(awk '$1 == \"/dev/zram0\" {print $5}' /proc/swaps)\n[ \"$size\" -ge 536870912 ]\n[ \"$priority\" -eq 32767 ]\nawk 'NR > 1 && $1 != \"/dev/zram0\" && $5 >= 32767 { bad=1 } END { exit bad }' /proc/swaps\nprintf 'boot_id_before=%s\\nboot_id_after=%s\\nboot_id_changed=yes\\n' \"$old_boot_id\" \"$new_boot_id\"\nprintf 'service_enabled=enabled\\nservice_active=active\\n'\nprintf '%s\\n' '--- active swaps ---'\ncat /proc/swaps\nprintf '%s\\n' '--- compressed memory device ---'\nzramctl /dev/zram0\nprintf 'disksize_bytes=%s\\nsize_at_least_512MiB=yes\\npriority=%s\\npriority_is_maximum=yes\\n' \"$size\" \"$priority\"\nprintf 'compression_algorithms='; cat /sys/block/zram0/comp_algorithm\nprintf 'disk_backed_swaps_with_equal_or_higher_priority=none\\n'\nprintf '%s\\n' '--- service result this boot ---'\nsudo -n systemctl --no-pager --full status zram-swap.service | sed -n '1,14p'\nprintf '%s\\n' 'all_post_reboot_checks=passed'",
+          "outcome": "completed",
+          "duration_ms": 2361,
+          "result_available": true,
+          "return_code": 0,
+          "stdout": "boot_id_before=fa1e87e6-00f3-42d2-acc5-ad1df6c3d16a\nboot_id_after=087dc67a-9081-4dab-9d42-58d8281eba0f\nboot_id_changed=yes\nservice_enabled=enabled\nservice_active=active\n--- active swaps ---\nFilename\t\t\t\tType\t\tSize\tUsed\tPriority\n/dev/zram0                              partition\t524284\t0\t32767\n--- compressed memory device ---\nNAME       ALGORITHM DISKSIZE DATA COMPR TOTAL STREAMS MOUNTPOINT\n/dev/zram0 lzo           512M   4K   76B    4K       1 [SWAP]\ndisksize_bytes=536870912\nsize_at_least_512MiB=yes\npriority=32767\npriority_is_maximum=yes\ncompression_algorithms=[lzo] lz4 \ndisk_backed_swaps_with_equal_or_higher_priority=none\n--- service result this boot ---\n\u25cf zram-swap.service - Compressed in-memory swap on zram\n   Loaded: loaded (/etc/systemd/system/zram-swap.service; enabled; vendor preset: enabled)\n   Active: active (exited) since Fri 2026-10-02 12:21:48 EDT; 49s ago\n  Process: 790 ExecStart=/sbin/swapon --priority 32767 /dev/zram0 (code=exited, status=0/SUCCESS)\n  Process: 785 ExecStart=/sbin/mkswap /dev/zram0 (code=exited, status=0/SUCCESS)\n  Process: 782 ExecStart=/sbin/zramctl --size 512M /dev/zram0 (code=exited, status=0/SUCCESS)\n  Process: 710 ExecStartPre=/sbin/modprobe zram (code=exited, status=0/SUCCESS)\n Main PID: 790 (code=exited, status=0/SUCCESS)\n    Tasks: 0\n   Memory: 0B\n      CPU: 0\n   CGroup: /system.slice/zram-swap.service\n\nOct 02 12:21:48 node1 systemd[1]: Starting Compressed in-memory swap on zram...\nall_post_reboot_checks=passed\n",
+          "stderr": "",
+          "executor_attempt": 1
+        }
+      ]
+    }
+  ]
+}
