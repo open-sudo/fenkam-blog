@@ -92,7 +92,7 @@ h1 em { color:var(--muted); }
 /* Editorial illustration for Illusion of Done #1. */
 .feature-card.reverse { grid-template-columns:59% 41%; }
 .art-illustration { background:#eee5d3; }
-.art-illustration .feature-image { object-fit:contain; mix-blend-mode:normal; opacity:1; filter:none; }
+.art-illustration .feature-image { object-fit:cover; mix-blend-mode:normal; opacity:1; filter:none; }
 .article-body .article-illustration { margin:0 0 36px; }
 .article-body .article-illustration img { margin:0; }
 .article-illustration figcaption { margin-top:10px; color:var(--muted); font:11px/1.5 'DM Mono',monospace; }
