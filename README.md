@@ -28,6 +28,8 @@ Include the canonical URL and `og:url`, plus the Cloudflare analytics snippet.
 
 ## Article URLs
 
+- `/ai-asked-for-swap-downgraded-kernel/`: the swap request and kernel downgrade field note.
+
 - `/illusion-of-done/`: the original experiment article.
 - `/illusion1/`: Illusion of Done #1, the custom web-server article.
 
