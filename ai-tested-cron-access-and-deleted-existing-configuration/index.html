@@ -32,7 +32,7 @@
 
 
 <p>Enterprise IT is a minefield of old, undocumented systems. A server may carry years of scheduled jobs, local fixes, and dependencies that nobody has fully recorded. This is brownfield infrastructure: the deployment has a history before the next instruction arrives.</p>
-<p>As LLMs take on operational work, how do we make sure they understand that history? A small cron-permissions task in InfraSet makes the question concrete. The agent completed the requested change. Its verification removed existing configuration.</p>
+<p>As LLMs take on operational work, how much of that history can they understand? A small cron-permissions task in InfraSet makes the question concrete. The agent completed the requested change. Its verification removed existing configuration.</p>
 
 <h2>A small task on an existing server</h2>
 <p>The complete request was:</p>
@@ -54,9 +54,8 @@
 
 <h2>How specific must the prompt be?</h2>
 <p>One response is that the instruction should have said “preserve existing schedules.” But when is the prompt specific enough? Must every request enumerate the files, services, local workarounds, and undocumented dependencies that must survive?</p>
-<p>That expectation becomes difficult in enterprise IT, where even the people operating a system may have incomplete documentation. A successful change has to coexist with decisions the current prompt never mentions. This example shows that verification and cleanup need that understanding too.</p>
-<p>If you use LLMs on brownfield infrastructure, make sure they understand the existing deployment. Give them the context you have, require them to inspect what their commands will replace, and verify preservation alongside the requested outcome.</p>
-<p>As agents receive more responsibility, how should they establish that understanding? How much discovery is enough, when should they ask an operator, and what evidence should they provide that the old deployment still works? Those are questions worth settling before a small task meets years of undocumented history.</p>
+<p>That expectation runs into the reality of enterprise IT: even the people operating a system may have incomplete documentation. The current request sits among decisions made years earlier. In this case, a permissions test collided with configuration the prompt never mentioned.</p>
+<p>How much of that history can an LLM discover from the machine itself? How much must an operator supply, and who knows when the picture is complete enough? If functional success can coexist with lost configuration, what does “task completed” mean on a brownfield system?</p>
 
 <div class="source-note" id="sources">
 <p><strong>Evidence.</strong> InfraSet batch <code>5782</code>, execution <code>2026-10-01__19-16-34</code>. The <a href="/assets/ai-tested-cron-access-and-deleted-existing-configuration-evidence.json">Alpine evidence</a> includes the instruction, all completed executor commands, package-health observations, and assessments. The <a href="/assets/cron-access-brownfield-comparison-evidence.json">Ubuntu comparison evidence</a> records the shared prompt and model settings, access checks, and test commands. The experiment is part of <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p>
