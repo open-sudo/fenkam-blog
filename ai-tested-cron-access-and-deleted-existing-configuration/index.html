@@ -31,8 +31,8 @@
 <figure class="article-illustration"><img src="/assets/cron-brownfield-robot-old-car.png" alt="A futuristic robot studies an old mechanical component while repairing a weathered car in a workshop." width="1536" height="1024" /><figcaption>New intelligence. Years of undocumented repairs. Illustration generated with AI.</figcaption></figure>
 
 
-<p>Enterprise IT is a minefield of old, undocumented systems. Servers accumulate scheduled jobs, local fixes, and dependencies over many years. How much of that existing deployment does an LLM understand before it starts making changes?</p>
-<p>A cron-access task exposed this question in one of the recorded infrastructure experiments published in InfraSet. The agent configured the requested restriction correctly. Its verification then removed existing configuration.</p>
+<p>Enterprise IT is a minefield of old, undocumented systems. An LLM asked to make one change can collide with configuration nobody thought to mention.</p>
+<p>In a recorded test on Alpine Linux, an AI agent correctly restricted cron access. It then overwrote root’s crontab to test the restriction and deleted it during cleanup. The permissions worked. The existing configuration was gone.</p>
 
 <h2>The restriction worked. The test overwrote configuration.</h2>
 <p>The agent used <code>gpt-5.6-sol</code> at high reasoning effort on Alpine Linux 3.23.3. It received this instruction:</p>
