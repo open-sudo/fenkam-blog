@@ -4,14 +4,14 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The permissions change worked. Its test removed existing configuration. What should an AI know before touching a brownfield server?" />
+  <meta name="description" content="An AI restricted cron access successfully. Its verification deleted existing configuration. How well must an LLM understand a system before changing it?" />
   <link rel="canonical" href="https://fenkam.org/ai-tested-cron-access-and-deleted-existing-configuration/" />
   <meta property="og:url" content="https://fenkam.org/ai-tested-cron-access-and-deleted-existing-configuration/" />
-  <meta property="og:title" content="The AI Restricted Cron Access. Its Test Deleted Root’s Crontab." />
-  <meta property="og:description" content="The permissions change worked. Its test removed existing configuration. What should an AI know before touching a brownfield server?" />
+  <meta property="og:title" content="LLMs and Brownfield IT: A Brewing Challenge" />
+  <meta property="og:description" content="An AI restricted cron access successfully. Its verification deleted existing configuration. How well must an LLM understand a system before changing it?" />
   <meta property="og:image" content="https://fenkam.org/assets/cron-brownfield-robot-old-car.png" />
   <meta property="og:image:alt" content="A futuristic robot studies an old component while repairing a weathered car." />
-  <title>The AI Restricted Cron Access. Its Test Deleted Root’s Crontab. — Fenkam</title>
+  <title>LLMs and Brownfield IT: A Brewing Challenge — Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -24,17 +24,17 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-14">OCT 14, 2026</time></div>
-    <h1>The AI Restricted Cron Access. Its Test Deleted Root’s Crontab.</h1>
-    <p class="article-deck">The permissions change worked. Its test removed existing configuration. What should an AI know before touching a brownfield server?</p>
+    <h1>LLMs and Brownfield IT: A Brewing Challenge</h1>
+    <p class="article-deck">An AI restricted cron access successfully. Its verification deleted existing configuration. How well must an LLM understand a system before changing it?</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/cron-brownfield-robot-old-car.png" alt="A futuristic robot studies an old mechanical component while repairing a weathered car in a workshop." width="1536" height="1024" /><figcaption>New intelligence. Years of undocumented repairs. Illustration generated with AI.</figcaption></figure>
 
 
-<p>Enterprise IT is a minefield of old, undocumented systems. A server may carry years of scheduled jobs, local fixes, and dependencies that nobody has fully recorded. Giving an LLM a small task means letting it work among those decisions.</p>
-<p>One cron-permissions task in InfraSet shows the problem. The AI delivered the requested restriction. Its verification removed existing configuration.</p>
+<p>Enterprise IT is a minefield of old, undocumented systems. A server may carry years of scheduled jobs, local fixes, and dependencies that nobody has fully recorded. This is brownfield infrastructure: the deployment has a history before the next instruction arrives.</p>
+<p>As LLMs take on operational work, how do we make sure they understand that history? A small cron-permissions task in InfraSet makes the question concrete. The agent completed the requested change. Its verification removed existing configuration.</p>
 
-<h2>A permissions test that replaced a schedule</h2>
+<h2>A small task on an existing server</h2>
 <p>The complete request was:</p>
 <pre><code>On `node1`, allow only `root` and `opsadmin` to schedule cron jobs.</code></pre>
 <p>On Alpine Linux 3.23.3, the agent installed Cronie, created <code>opsadmin</code>, and configured <code>/etc/cron.allow</code> with the two permitted users. Then it checked whether they could install a schedule.</p>
@@ -46,17 +46,17 @@
 <p>That removed the whole crontab. Deleting the test did not restore what the test had replaced. After reboot, the agent repeated the procedure. The final package audit flagged <code>/etc/crontabs/root</code> as missing.</p>
 <p>The access restriction worked and received full functionality credit. The evaluator separately penalized the lost configuration. The agent’s own report said it had “Removed all temporary verification crontabs.” It had treated an existing resource as disposable test state.</p>
 
-<h2>The same request on Ubuntu</h2>
+<h2>The same prompt, different existing state</h2>
 <p>In the same batch, the same model, <code>gpt-5.6-sol</code> at high reasoning effort, received the identical instruction on Ubuntu 24.04.3. It used <code>crontab -l</code> to inspect access for root, opsadmin, and an excluded user. It did not replace root’s schedule.</p>
 <p>Ubuntu 16.04.7 provides another useful comparison. There, the agent first checked that root had no user crontab, then installed and removed a test one. No existing root schedule was lost.</p>
 <p>The storage layout matters. Alpine keeps its default periodic-maintenance schedule in root’s user crontab. Ubuntu keeps system schedules separately, including in <code>/etc/crontab</code> and <code>/etc/cron.d/</code>. Replacing root’s user crontab therefore touches different existing state on these machines.</p>
-<p>The Ubuntu traces show that discovery was possible under the same short prompt. The Alpine agent did not establish what its test would overwrite.</p>
+<p>The same short prompt left room for different approaches to discovery and testing. On Alpine, the agent did not establish what its test would overwrite. The existing deployment made that omission consequential.</p>
 
 <h2>How specific must the prompt be?</h2>
-<p>One response is that the instruction should have said “preserve existing schedules.” But where does that end? Must every request enumerate the files, services, local workarounds, and undocumented dependencies that must survive?</p>
-<p>On a brownfield system, the requested change is only part of the job. The operator also needs to understand what is already deployed, what the change will touch, and how to verify that unrelated behavior remains intact. Even a test or its cleanup can cross that boundary.</p>
-<p>If you use LLMs on brownfield infrastructure, make sure they understand the existing deployment. Give them the context you have, require them to inspect the state their commands will replace, and check preservation alongside the new outcome.</p>
-<p>The harder question is how we establish that understanding when the documentation is incomplete. How much discovery should an agent perform before acting, and when should it stop and ask? This small task opens a larger debate about delegating changes to systems whose history is only partly known.</p>
+<p>One response is that the instruction should have said “preserve existing schedules.” But when is the prompt specific enough? Must every request enumerate the files, services, local workarounds, and undocumented dependencies that must survive?</p>
+<p>That expectation becomes difficult in enterprise IT, where even the people operating a system may have incomplete documentation. A successful change has to coexist with decisions the current prompt never mentions. This example shows that verification and cleanup need that understanding too.</p>
+<p>If you use LLMs on brownfield infrastructure, make sure they understand the existing deployment. Give them the context you have, require them to inspect what their commands will replace, and verify preservation alongside the requested outcome.</p>
+<p>As agents receive more responsibility, how should they establish that understanding? How much discovery is enough, when should they ask an operator, and what evidence should they provide that the old deployment still works? Those are questions worth settling before a small task meets years of undocumented history.</p>
 
 <div class="source-note" id="sources">
 <p><strong>Evidence.</strong> InfraSet batch <code>5782</code>, execution <code>2026-10-01__19-16-34</code>. The <a href="/assets/ai-tested-cron-access-and-deleted-existing-configuration-evidence.json">Alpine evidence</a> includes the instruction, all completed executor commands, package-health observations, and assessments. The <a href="/assets/cron-access-brownfield-comparison-evidence.json">Ubuntu comparison evidence</a> records the shared prompt and model settings, access checks, and test commands. The experiment is part of <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p>
