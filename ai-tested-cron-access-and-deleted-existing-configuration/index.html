@@ -41,7 +41,7 @@
 <p>The agent installed Cronie, created <code>opsadmin</code>, and wrote <code>/etc/cron.allow</code> with exactly the two permitted users.</p>
 <p>To test root’s access, it wrote a dummy entry to a temporary file and installed it:</p>
 <pre><code>crontab /tmp/cron-access-test</code></pre>
-<p>The command replaced root’s entire crontab. The agent had not saved the existing contents. Its next <code>crontab -l</code> showed only the test entry.</p>
+<p>The command replaced root’s existing schedule with the test entry. The agent had not backed up the original schedule.</p>
 <p>The agent confirmed that root and opsadmin could install crontabs. It then cleaned up its test by running:</p>
 <pre><code>crontab -r</code></pre>
 <p>That deleted root’s crontab without restoring the previous configuration. After rebooting the server, the agent repeated the test and deletion.</p>
