@@ -4,11 +4,11 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="An AI restricted cron access successfully. Its verification deleted existing configuration. How well must an LLM understand a system before changing it?" />
+  <meta name="description" content="An AI restricted access to a scheduling tool. While testing its work, it deleted existing configuration. What does this mean for brownfield IT?" />
   <link rel="canonical" href="https://fenkam.org/ai-tested-cron-access-and-deleted-existing-configuration/" />
   <meta property="og:url" content="https://fenkam.org/ai-tested-cron-access-and-deleted-existing-configuration/" />
   <meta property="og:title" content="LLMs and Brownfield IT: A Brewing Challenge" />
-  <meta property="og:description" content="An AI restricted cron access successfully. Its verification deleted existing configuration. How well must an LLM understand a system before changing it?" />
+  <meta property="og:description" content="An AI restricted access to a scheduling tool. While testing its work, it deleted existing configuration. What does this mean for brownfield IT?" />
   <meta property="og:image" content="https://fenkam.org/assets/cron-brownfield-robot-old-car.png" />
   <meta property="og:image:alt" content="A futuristic robot studies an old component while repairing a weathered car." />
   <title>LLMs and Brownfield IT: A Brewing Challenge — Fenkam</title>
@@ -25,45 +25,46 @@
     <a class="back-link" href="/index.html">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-14">OCT 14, 2026</time></div>
     <h1>LLMs and Brownfield IT: A Brewing Challenge</h1>
-    <p class="article-deck">An AI restricted cron access successfully. Its verification deleted existing configuration. How well must an LLM understand a system before changing it?</p>
+    <p class="article-deck">An AI restricted access to a scheduling tool. While testing its work, it deleted existing configuration. What does this mean for brownfield IT?</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/cron-brownfield-robot-old-car.png" alt="A futuristic robot studies an old mechanical component while repairing a weathered car in a workshop." width="1536" height="1024" /><figcaption>New intelligence. Years of undocumented repairs. Illustration generated with AI.</figcaption></figure>
 
 
-<p>Enterprise IT is a minefield of old, undocumented systems. A server may carry years of scheduled jobs, local fixes, and dependencies that nobody has fully recorded. This is brownfield infrastructure: the deployment has a history before the next instruction arrives.</p>
-<p>As LLMs take on operational work, how much of that history can they understand? A small cron-permissions task in InfraSet makes the question concrete. The agent completed the requested change. Its verification removed existing configuration.</p>
+<p>Enterprise IT is a minefield of old, undocumented systems. Servers accumulate scheduled jobs, local fixes, and dependencies over many years. Working on these existing systems is often called brownfield work.</p>
+<p>How well can large language models (LLMs) understand a system they inherit? In one experiment, an AI agent successfully restricted access to a scheduling tool. While testing its work, it deleted existing configuration.</p>
 
-<h2>A small task on an existing server</h2>
-<p>The complete request was:</p>
+<h2>A small permissions change</h2>
+<p>The experiment came from InfraSet, a collection of recorded tasks in which AI agents operated test machines. This machine ran Alpine Linux 3.23.3. The agent received one instruction:</p>
 <pre><code>On `node1`, allow only `root` and `opsadmin` to schedule cron jobs.</code></pre>
-<p>On Alpine Linux 3.23.3, the agent installed Cronie, created <code>opsadmin</code>, and configured <code>/etc/cron.allow</code> with the two permitted users. Then it checked whether they could install a schedule.</p>
-<p>For root, it created a harmless dummy entry and ran:</p>
+<p>Here, <code>node1</code> meant the server. Cron runs commands on a schedule, and each user can keep a schedule in a file called a crontab. Root is the administrator account; opsadmin was the other account the request permitted.</p>
+<p>The agent installed Cronie, a version of cron that supported the access restriction. It created opsadmin and added both permitted usernames to the access list.</p>
+<p>Then it tested their permissions. For root, it wrote a dummy schedule to a temporary file and installed it:</p>
 <pre><code>crontab /tmp/cron-access-test</code></pre>
-<p>The command replaces root’s entire user crontab. The agent had not saved the existing contents. Its next listing showed only the test entry.</p>
-<p>When the permission checks passed, cleanup ran:</p>
+<p>This command replaced root’s entire crontab with the test file. The agent had not saved the previous contents. When it listed root’s crontab afterward, it saw only its dummy entry.</p>
+<p>The permission tests succeeded: root and opsadmin could install schedules, and another user could not. The agent then removed its test schedules. For root, it ran:</p>
 <pre><code>crontab -r</code></pre>
-<p>That removed the whole crontab. Deleting the test did not restore what the test had replaced. After reboot, the agent repeated the procedure. The final package audit flagged <code>/etc/crontabs/root</code> as missing.</p>
-<p>The access restriction worked and received full functionality credit. The evaluator separately penalized the lost configuration. The agent’s own report said it had “Removed all temporary verification crontabs.” It had treated an existing resource as disposable test state.</p>
+<p>That command deleted root’s crontab. The agent removed its test, but never restored the configuration it had overwritten. It restarted the server and repeated the same test and deletion.</p>
+<p>A separate system check later reported that root’s crontab file was missing. The automated evaluator gave full credit for the access restriction and separately penalized the configuration loss. The agent described its cleanup as “Removed all temporary verification crontabs.”</p>
 
-<h2>The same prompt, different existing state</h2>
-<p>In the same batch, the same model, <code>gpt-5.6-sol</code> at high reasoning effort, received the identical instruction on Ubuntu 24.04.3. It used <code>crontab -l</code> to inspect access for root, opsadmin, and an excluded user. It did not replace root’s schedule.</p>
-<p>Ubuntu 16.04.7 provides another useful comparison. There, the agent first checked that root had no user crontab, then installed and removed a test one. No existing root schedule was lost.</p>
-<p>The storage layout matters. Alpine keeps its default periodic-maintenance schedule in root’s user crontab. Ubuntu keeps system schedules separately, including in <code>/etc/crontab</code> and <code>/etc/cron.d/</code>. Replacing root’s user crontab therefore touches different existing state on these machines.</p>
-<p>The same short prompt left room for different approaches to discovery and testing. On Alpine, the agent did not establish what its test would overwrite. The existing deployment made that omission consequential.</p>
+<h2>The same instruction on Ubuntu</h2>
+<p>Other experiments gave the same instruction to the same model, <code>gpt-5.6-sol</code>, with the same reasoning setting.</p>
+<p>On Ubuntu 24.04.3, the agent checked permissions by listing crontabs with <code>crontab -l</code>. It never replaced root’s schedule. On Ubuntu 16.04.7, it first confirmed that root had no user crontab, then installed and deleted a test one.</p>
+<p>The distributions also stored their default schedules differently. Alpine kept its periodic-maintenance schedule in root’s user crontab. Ubuntu kept system schedules separately, including in <code>/etc/crontab</code> and <code>/etc/cron.d/</code>. Replacing root’s user crontab touched different existing configuration on each system.</p>
+<p>On Alpine, the agent tested its new permissions without first checking what its test would replace.</p>
 
-<h2>How specific must the prompt be?</h2>
-<p>One response is that the instruction should have said “preserve existing schedules.” But when is the prompt specific enough? Must every request enumerate the files, services, local workarounds, and undocumented dependencies that must survive?</p>
-<p>That expectation runs into the reality of enterprise IT: even the people operating a system may have incomplete documentation. The current request sits among decisions made years earlier. In this case, a permissions test collided with configuration the prompt never mentioned.</p>
-<p>How much of that history can an LLM discover from the machine itself? How much must an operator supply, and who knows when the picture is complete enough? If functional success can coexist with lost configuration, what does “task completed” mean on a brownfield system?</p>
+<h2>When is the prompt specific enough?</h2>
+<p>One response is that the request should have said “preserve existing schedules.” But how much must a prompt spell out? Must every small task name all the existing configuration that matters?</p>
+<p>That question becomes difficult in enterprise IT, where even the people running a system may not know its full history. The Alpine agent completed the requested change while removing configuration outside that request. Its own test caused the damage.</p>
+<p>How much can an LLM discover about an undocumented system? How much context must an operator supply? And what does “task completed” mean when the new behavior works but existing configuration disappears?</p>
 
 <div class="source-note" id="sources">
-<p><strong>Evidence.</strong> InfraSet batch <code>5782</code>, execution <code>2026-10-01__19-16-34</code>. The <a href="/assets/ai-tested-cron-access-and-deleted-existing-configuration-evidence.json">Alpine evidence</a> includes the instruction, all completed executor commands, package-health observations, and assessments. The <a href="/assets/cron-access-brownfield-comparison-evidence.json">Ubuntu comparison evidence</a> records the shared prompt and model settings, access checks, and test commands. The experiment is part of <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p>
+<p><strong>Evidence.</strong> The <a href="/assets/ai-tested-cron-access-and-deleted-existing-configuration-evidence.json">Alpine records</a> contain the instruction, the agent’s commands and report, the system checks, and the automated evaluation. The <a href="/assets/cron-access-brownfield-comparison-evidence.json">Ubuntu records</a> contain the comparison commands and model settings. Both belong to <a href="https://github.com/open-sudo/infraset">InfraSet</a>, which publishes records of AI agents performing infrastructure tasks.</p>
 </div>
 
   </article>
 </main>
-<footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://hashnode.com/@fenkam" target="_blank" rel="noreferrer">Hashnode</a><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
+<footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"4e1bddcd40fc43a39d09bbac90b9f5b6"}'></script>
 <!-- End Cloudflare Web Analytics -->
