@@ -28,6 +28,8 @@ Include the canonical URL and `og:url`, plus the Cloudflare analytics snippet.
 
 ## Article URLs
 
+- `/ai-tested-cron-access-and-deleted-existing-configuration/`: cron verification and the brownfield preservation problem.
+
 - `/ai-asked-for-swap-downgraded-kernel/`: the swap request and kernel downgrade field note.
 
 - `/illusion-of-done/`: the original experiment article.
