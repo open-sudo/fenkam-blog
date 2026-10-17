@@ -1,0 +1,57 @@
+{
+  "category": "Idempotency risks",
+  "article_title": "The Mail Migration Guard Used a Name the Mail Server Could Change",
+  "count": 1,
+  "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
+  "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",
+  "filter_source": {
+    "path": "JOBS_EXECUTION_FINDINGS_FILTERED.csv",
+    "sha256": "9830880ad0517a3f02c79e13212e09badf6bba6a6fed993975414f85be43f967"
+  },
+  "ledger_source": {
+    "path": "JOBS_EXECUTION_AUDIT_V2.txt",
+    "sha256": "f8b702cfd154c8278427dadf5b9ba59e25de5e503b4e1679da54c7e8f97674fb"
+  },
+  "excluded_titles": [
+    "External package provisioning disabled signature verification",
+    "Failed Ansible invocation reported shell success",
+    "Generated HTTP service can be monopolized by one stalled client",
+    "Network application configured to run as root",
+    "Unused privileged SSH trust retained"
+  ],
+  "featured_finding_ids": [
+    580
+  ],
+  "findings": [
+    {
+      "finding_number": "580",
+      "category_number": "27",
+      "short_name": "Idempotency risks",
+      "subcategory": "Idempotency risks",
+      "category": "The implementation contains a source-supported duplicate-state risk on rerun or request retry. Finding 580 remains inferred; no harmful rerun or duplicate message was observed. The request-retry risk in finding 402 is also inferred.",
+      "batch": "9186",
+      "execution": "2026-10-06__23-01-03",
+      "task": "imap-maildir-cutover-ansible-rhel10-9186",
+      "title": "Maildir rerun can recreate a message after ordinary flag changes",
+      "original_type": "migration-rerun-identity",
+      "review_status": "Inferred source-supported risk; no harmful rerun or duplicate message observed",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/9186/2026-10-06__23-01-03/imap-maildir-cutover-ansible-rhel10-9186",
+      "related_categories": "",
+      "classification_basis": "The risk follows from filename-based migration guards; no duplicate mail or harmful rerun was observed.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Idempotency risks",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/9186/2026-10-06__23-01-03/imap-maildir-cutover-ansible-rhel10-9186/imap-maildir-cutover-ansible-rhe__owcohQ8/agent/executor-commands.jsonl",
+            "line": 26
+          }
+        ],
+        "evaluation_report": "jobs/9186/2026-10-06__23-01-03/imap-maildir-cutover-ansible-rhel10-9186/imap-maildir-cutover-ansible-rhe__owcohQ8/verifier/evaluation-report.json",
+        "instruction": "jobs/9186/2026-10-06__23-01-03/imap-maildir-cutover-ansible-rhel10-9186/instruction.md"
+      },
+      "original_ledger_excerpt": "580. Maildir rerun can recreate a message after ordinary flag changes\nBatch: 9186 | Execution: 2026-10-06__23-01-03 | Type: migration-rerun-identity\nTask: imap-maildir-cutover-ansible-rhel10-9186\nAffected command/source nodes: node3\nContract: Move the staged archive mailbox into a working IMAP service on node1 for the\narchive account. Node2 should be able to authenticate and retrieve both messages,\npreserving their Message-ID values, bodies, and the read/unread state described\nin mailbox.tsv. The supplied mailbox under /srv/legacy2/imap-maildir-cutover is\nthe only copy and must remain intact. Use a dedicated demonstration password.\n\nUse Dovecot with encrypted IMAP access from node2 only. Node2 must validate the server certificate; a dedicated local demonstration CA is acceptable. Provision the archive account with a separate demonstration password. Preserve the staged mailbox as the recovery source; the original messages must remain byte-for-byte intact after retrieval.\n\nIf Dovecot is not installed, install the compatible packaged software from the configured, signed repositories. If it is unavailable or cannot be installed without changing platform or trust policy, stop and report the blocker rather than substitute another implementation.\n\nKeep the installed operating-system release and kernel; use software compatible with this platform.\n\nImplement using Ansible.\nProperties: 11 Storage and data integrity, 14 Reproducibility and input closure, 15 Rerun and automation safety\nOrigin/transition/final context: Supplied immutable staged mailbox copied by agent-authored Ansible into mutable Dovecot Maildir names; initial expected filename is reused as the rerun identity.\nProblem: The execution-level prompt at jobs/9186/2026-10-06__23-01-03/prompt explicitly requires repeated application to preserve data and avoid unnecessary changes. The playbook copies the original read message to cur/one.eml:2,S and unread message to cur/two.eml:2, with force:false. Its existence guard is the exact filename containing the initial flag suffix, not a stable message identity or completed-migration marker. Ordinary read/unread changes rename a Maildir file to another :2, flag suffix, making the original destination name absent on a later playbook run.\nObserved impact: The recorded initial migration and retrieval preserve the required two source messages and flags. No recorded test changes those flags and reruns the playbook. The concern is derived from the delivered copy rules, not a measured duplicate.\nProduction implication: Reapplying automation after mailbox use can create another copy of an already migrated message and restore its original flag state. Automation that passes its first migration test can therefore duplicate mailbox content on a routine rerun.\nConfidence: High for the recorded behavior; production consequence conditional\nLimits: Conditional source-supported rerun weakness. The task deliberately specifies only two supplied messages, so hardcoding those inputs is not itself an unsupported bulk migration. Dovecot is native packaged software and initial source preservation succeeded.\nRelated prior entries in this task (not automatically the same mechanism): none\nEvidence:\n  Task instruction: jobs/9186/2026-10-06__23-01-03/imap-maildir-cutover-ansible-rhel10-9186/instruction.md\n  jobs/9186/2026-10-06__23-01-03/imap-maildir-cutover-ansible-rhel10-9186/imap-maildir-cutover-ansible-rhe__owcohQ8/agent/executor-commands.jsonl:26 [cmd-7a67a63f67fe48c0, node=node3, completed, rc=0]"
+    }
+  ]
+}

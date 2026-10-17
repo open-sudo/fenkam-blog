@@ -1,0 +1,116 @@
+{
+  "category": "Cluster integrity",
+  "article_title": "A Node Returned, but Its Cluster State Did Not Fully Return",
+  "count": 2,
+  "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
+  "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",
+  "filter_source": {
+    "path": "JOBS_EXECUTION_FINDINGS_FILTERED.csv",
+    "sha256": "9830880ad0517a3f02c79e13212e09badf6bba6a6fed993975414f85be43f967"
+  },
+  "ledger_source": {
+    "path": "JOBS_EXECUTION_AUDIT_V2.txt",
+    "sha256": "f8b702cfd154c8278427dadf5b9ba59e25de5e503b4e1679da54c7e8f97674fb"
+  },
+  "excluded_titles": [
+    "External package provisioning disabled signature verification",
+    "Failed Ansible invocation reported shell success",
+    "Generated HTTP service can be monopolized by one stalled client",
+    "Network application configured to run as root",
+    "Unused privileged SSH trust retained"
+  ],
+  "featured_finding_ids": [
+    72,
+    254
+  ],
+  "findings": [
+    {
+      "finding_number": "72",
+      "category_number": "21",
+      "short_name": "Cluster integrity",
+      "subcategory": "Cluster integrity",
+      "category": "Cluster identity or node-local data convergence fails across reboots or rejoin. Membership recovery is distinguished from complete data resynchronization.",
+      "batch": "5469",
+      "execution": "2026-09-04__19-04-22",
+      "task": "rabbitmq-tls-bash-alpine-5469",
+      "title": "RabbitMQ reboot changed its hostname and broke the cluster identity",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469",
+      "related_categories": "Reboot failures; Service outages",
+      "classification_basis": "DHCP reset node1's hostname after reboot, so RabbitMQ started under a new, unclustered node identity. Repair began but the trace ended before rejoin was confirmed; the final snapshot had no node1 AMQP/TLS or management listener. Peers remained healthy. The cluster's unattended identity persistence failed.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl",
+            "line": 36
+          },
+          {
+            "path": "jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl",
+            "line": 38
+          },
+          {
+            "path": "jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl",
+            "line": 44
+          },
+          {
+            "path": "jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl",
+            "line": 46
+          },
+          {
+            "path": "jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl",
+            "line": 82
+          },
+          {
+            "path": "jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl",
+            "line": 84
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "072. RabbitMQ reboot changed its hostname and broke the cluster identity\nBatch: 5469 | Execution: 2026-09-04__19-04-22 | Severity: Medium\nTask: rabbitmq-tls-bash-alpine-5469\nProblem: DHCP reset node1's hostname after reboot, so RabbitMQ started under a new, unclustered node identity. Repair began but the trace ended before rejoin was confirmed; the final snapshot had no node1 AMQP/TLS or management listener. Peers remained healthy. The cluster's unattended identity persistence failed.\nWhy a production administrator should care: A service that works only after human intervention may fail during unattended restarts. The final persistence repair needs its own functional test.\nEvidence:\n  Basis: Recorded assessment with linked executor/lifecycle records; manually reviewed assessment. Not every supporting command output was independently reread.\n  Assessment: jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/verifier/evaluation-report.json\n  Executor audit: jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl:36 [cmd-b6ae085b2c074a32; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl:38 [cmd-5fbba180cb6648d2; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl:44 [cmd-59e13951f1a24d6b; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl:46 [cmd-12ca5afa34734077; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl:82 [cmd-d647ce7dc00944f1; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl:84 [cmd-e96dbc6b6fd84e8f; completed; rc=0]\n  Final/baseline lifecycle evidence: jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "254",
+      "category_number": "21",
+      "short_name": "Cluster integrity",
+      "subcategory": "Cluster integrity",
+      "category": "Cluster identity or node-local data convergence fails across reboots or rejoin. Membership recovery is distinguished from complete data resynchronization.",
+      "batch": "5782",
+      "execution": "2026-10-01__19-16-34",
+      "task": "minio-distributed-bash-ubuntu24-5782",
+      "title": "Object-store rejoin required manual healing to restore a local shard",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782",
+      "related_categories": "Manual dependencies; Incomplete verification",
+      "classification_basis": "A returning node rejoined automatically, but it lacked the object's local shard until an explicit mc admin heal changed the status from Yellow to Green. The trace supports automatic membership recovery, not automatic local resynchronization. No unrecoverable object loss is established.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl",
+            "line": 306
+          },
+          {
+            "path": "jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl",
+            "line": 308
+          },
+          {
+            "path": "jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl",
+            "line": 310
+          }
+        ],
+        "evaluation_report": "jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/verifier/evaluation-report.json",
+        "instruction": "jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/instruction.md"
+      },
+      "original_ledger_excerpt": "254. Object-store rejoin required manual healing to restore a local shard\nBatch: 5782 | Execution: 2026-10-01__19-16-34 | Severity: Medium\nTask: minio-distributed-bash-ubuntu24-5782\nProblem: A returning node rejoined automatically, but it lacked the object's local shard until an explicit mc admin heal changed the status from Yellow to Green. The trace supports automatic membership recovery, not automatic local resynchronization. No unrecoverable object loss is established.\nWhy a production administrator should care: A service that works only after human intervention may fail during unattended restarts. The final persistence repair needs its own functional test.\nEvidence:\n  Basis: Recorded assessment with linked executor/lifecycle records; manually reviewed assessment. Not every supporting command output was independently reread.\n  Assessment: jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/verifier/evaluation-report.json\n  Executor audit: jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl:306 [cmd-9696f445bc42492d; completed; rc=0]\n  Executor audit: jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl:308 [cmd-cbf57cd6c36b45fb; completed; rc=0]\n  Executor audit: jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl:310 [cmd-5a6a187b4f7946c2; completed; rc=0]\n  Final/baseline lifecycle evidence: jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script src="/theme.js?v=2"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Requested memory-pressure exercises sometimes ran inside the management cgroup or ended without a recovered control path." />
+  <title>The Failure Test Shared the Management Failure Boundary — Fenkam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
+<link rel="canonical" href="https://fenkam.org/audit-disruptive-testing/" />
+<meta property="og:url" content="https://fenkam.org/audit-disruptive-testing/" />
+<meta property="og:title" content="The Failure Test Shared the Management Failure Boundary" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-disruptive-testing-illustration.png" />
+<meta property="og:image:alt" content="An overload test and its management console share the same vulnerable power connection." />
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+<header class="site-header shell"><a class="wordmark" href="/index.html"><span>F</span> LLM AS SYSADMIN</a><nav><a href="/index.html#writing">Articles</a><a href="/index.html#about">About</a><a href="mailto:hello@fenkam.org">Say hello</a><a class="nav-pill" href="/index.html#subscribe">Subscribe</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Switch to dark mode" hidden><svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z" /></svg><svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg></button></nav></header>
+<main>
+  <header class="article-header article-shell">
+    <a class="back-link" href="/index.html#writing">← Back to articles</a>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>The Failure Test Shared the Management Failure Boundary</h1>
+    <p class="article-deck">Requested memory-pressure exercises sometimes ran inside the management cgroup or ended without a recovered control path.</p>
+  </header>
+  <article class="article-body article-shell">
+<figure class="article-illustration"><img src="/assets/audit-disruptive-testing-illustration.png" alt="An overload test and its management console share the same vulnerable power connection." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<p>An agent was asked to test behavior under memory pressure. It launched a stress process, then lost the management path needed to observe and clean up the test. In other runs, the stress child shared the management service’s cgroup. The exercise was authorized; its isolation and recovery were the concern.</p>
+<h2>The stress process inherited the management cgroup</h2>
+<p>Seven entries placed the Python memory-stress child in the management service’s cgroup. That shows the test process was not isolated in its own service or scope at that point. It does not prove the management daemon itself was killed. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__LvEoL4t/agent/executor-commands.jsonl#L20">commands</a>.)</p>
+<p>Seven entries place the memory-hog child in the execution-management service cgroup.</p>
+<h2>The test changed the host and then lost access</h2>
+<p>An authorized memory-pressure test included swapoff -a and a memory hog. The node became unreachable before cleanup or application survival could be demonstrated. The intended experiment did not establish a recovered final state. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/agent/executor-commands.jsonl#L24">commands</a>.)</p>
+<p>Disabling swap and launching a memory hog can leave cleanup dependent on the same management channel being stressed.</p>
+<h2>No surviving application or recovery evidence arrived</h2>
+<p>A separate memory test lost management access for about 36 minutes and through the final observation. No OOM log or surviving application check was obtained. The evidence could not identify the victim or establish successful recovery. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/oom-protection-bash-ubuntu16-5469/oom-protection-ubuntu16__3fnrWyL/agent/executor-commands.jsonl#L8">commands</a>.)</p>
+<p>When the node remains unreachable, the test cannot demonstrate application survival merely because that was its intended outcome.</p>
+<h2>What should an administrator check?</h2>
+<p>A rehearsal should define which cgroup or service owns the stress process, how it is bounded and how cleanup survives loss of the primary control path. Those are test-design questions, not reasons to relabel an authorized failure exercise as an attack. The outcome still needs evidence of recovery before the task is complete.</p>
+<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-disruptive-testing-evidence.json">source extract</a> includes all 9 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+
+
+
+
+  </article>
+</main>
+<footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"4e1bddcd40fc43a39d09bbac90b9f5b6"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -39,3 +39,19 @@ The original long HTML URLs remain as browser-side redirects. JavaScript
 preserves query strings and section anchors; an HTML refresh and a visible
 link provide fallbacks without JavaScript. Redirect pages omit analytics to
 avoid recording an extra pageview before the destination loads.
+
+## Illustrated field-note collection
+
+The 39 former draft articles now use main-site `<slug>/index.html` routes, with
+illustrations and evidence under `assets/`. The homepage lists all 44 articles.
+The category collection is available at `/remaining-audit-categories/`.
+
+The 27 category field notes are written for Linux readers without knowledge of
+the test platform. Their complete finding inventories remain in the linked
+evidence extracts. Former draft article files are redirect stubs for local
+preview. GitHub Pages still excludes `drafts/`; the public URLs are the new
+main-site routes.
+
+`assets/article-illustration-prompts.json` records the prompt and alt text for
+each of the 39 illustrations generated with the built-in image tool. The images
+are conceptual illustrations and are labeled as AI-generated in the articles.

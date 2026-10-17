@@ -1,0 +1,577 @@
+{
+  "category": "Reboot failures",
+  "article_title": "Recovery Worked Only After Another Manual Command",
+  "count": 12,
+  "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
+  "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",
+  "filter_source": {
+    "path": "JOBS_EXECUTION_FINDINGS_FILTERED.csv",
+    "sha256": "9830880ad0517a3f02c79e13212e09badf6bba6a6fed993975414f85be43f967"
+  },
+  "ledger_source": {
+    "path": "JOBS_EXECUTION_AUDIT_V2.txt",
+    "sha256": "f8b702cfd154c8278427dadf5b9ba59e25de5e503b4e1679da54c7e8f97674fb"
+  },
+  "excluded_titles": [
+    "External package provisioning disabled signature verification",
+    "Failed Ansible invocation reported shell success",
+    "Generated HTTP service can be monopolized by one stalled client",
+    "Network application configured to run as root",
+    "Unused privileged SSH trust retained"
+  ],
+  "featured_finding_ids": [
+    126,
+    130,
+    131,
+    134,
+    135,
+    159,
+    169,
+    178,
+    319,
+    324,
+    337
+  ],
+  "findings": [
+    {
+      "finding_number": "126",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "5469",
+      "execution": "2026-09-05__03-00-00",
+      "task": "transparent-l2-bridge-bash-ubuntu24-5469",
+      "title": "Working bridge existed only as live commands and disappeared on reboot",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469",
+      "related_categories": "Manual dependencies",
+      "classification_basis": "The bridge was created with imperative ip link commands without persistent configuration. After node1 reboot, br0 was absent and its member interfaces were down; manual recreation restored connectivity. The delivered bridge was not durable across reboot.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/transparent-l2-bridge-ubuntu24__m6YfrrS/agent/executor-commands.jsonl",
+            "line": 22
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/transparent-l2-bridge-ubuntu24__m6YfrrS/agent/executor-commands.jsonl",
+            "line": 32
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/transparent-l2-bridge-ubuntu24__m6YfrrS/agent/executor-commands.jsonl",
+            "line": 84
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/transparent-l2-bridge-ubuntu24__m6YfrrS/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "126. Working bridge existed only as live commands and disappeared on reboot\nBatch: 5469 | Execution: 2026-09-05__03-00-00 | Severity: Medium\nTask: transparent-l2-bridge-bash-ubuntu24-5469\nProblem: The bridge was created with imperative ip link commands without persistent configuration. After node1 reboot, br0 was absent and its member interfaces were down; manual recreation restored connectivity. The delivered bridge was not durable across reboot.\nWhy a production administrator should care: A successful rerun after manual repair can hide an unreproducible deployment. Verify the actual provisioning path from a controlled baseline and recovery without manual intervention.\nEvidence:\n  Trial directory: jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/transparent-l2-bridge-ubuntu24__m6YfrrS\n  Assessment: verifier/evaluation-report.json (paths below are relative to this trial).\n  Executor audit: agent/executor-commands.jsonl:22 [cmd-78dfaf2fbed0482d, completed, rc=0], agent/executor-commands.jsonl:32 [cmd-6d6d5192f0954acd, completed, rc=0], agent/executor-commands.jsonl:84 [cmd-a771a9886ac240e2, completed, rc=0]\n  Final/baseline lifecycle evidence: verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "130",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "5469",
+      "execution": "2026-09-05__03-00-00",
+      "task": "dynamic-route-exchange-bash-almalinux9-5469",
+      "title": "BGP reboot recovery required manual configuration before the final persistence hook",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469",
+      "related_categories": "Manual dependencies; Incomplete verification",
+      "classification_basis": "The reboot lost node1's BGP neighbor and required manual re-entry. The recovery hook was added afterward and was not tested by another node1 reboot. Node2's later successful restart does not prove node1's repaired mechanism.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl",
+            "line": 96
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl",
+            "line": 116
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl",
+            "line": 118
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl",
+            "line": 126
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl",
+            "line": 128
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl",
+            "line": 92
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "130. BGP reboot recovery required manual configuration before the final persistence hook\nBatch: 5469 | Execution: 2026-09-05__03-00-00 | Severity: Medium\nTask: dynamic-route-exchange-bash-almalinux9-5469\nProblem: The reboot lost node1's BGP neighbor and required manual re-entry. The recovery hook was added afterward and was not tested by another node1 reboot. Node2's later successful restart does not prove node1's repaired mechanism.\nWhy a production administrator should care: A service that works only after human intervention may fail during unattended restarts. The final persistence repair needs its own functional test.\nEvidence:\n  Basis: Recorded assessment with linked executor/lifecycle records; manually reviewed assessment. Not every supporting command output was independently reread.\n  Assessment: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/verifier/evaluation-report.json\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl:96 [cmd-52972012c5014877; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl:116 [cmd-8206038dc2ad4826; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl:118 [cmd-9fa29b9e8ae84412; completed; rc=1]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl:126 [cmd-e0c4132c362246a1; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl:128 [cmd-4008ec468d1440ec; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl:92 [cmd-aee3e3d7a6214394; completed; rc=0]\n  Final/baseline lifecycle evidence: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "131",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "5469",
+      "execution": "2026-09-05__03-00-00",
+      "task": "dynamic-route-exchange-bash-centos-stream10-5469",
+      "title": "SONiC reboot discarded BGP neighbors and the fix was not retested on that router",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469",
+      "related_categories": "Manual dependencies; Incomplete verification",
+      "classification_basis": "Node1 reboot regenerated FRR configuration without the manually configured neighbor, leaving BGP down. A recovery service was created after manual repair, but node1 was not rebooted again to prove it. Final connectivity followed intervention.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl",
+            "line": 74
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl",
+            "line": 134
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl",
+            "line": 136
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl",
+            "line": 142
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl",
+            "line": 144
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl",
+            "line": 162
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "131. SONiC reboot discarded BGP neighbors and the fix was not retested on that router\nBatch: 5469 | Execution: 2026-09-05__03-00-00 | Severity: Medium\nTask: dynamic-route-exchange-bash-centos-stream10-5469\nProblem: Node1 reboot regenerated FRR configuration without the manually configured neighbor, leaving BGP down. A recovery service was created after manual repair, but node1 was not rebooted again to prove it. Final connectivity followed intervention.\nWhy a production administrator should care: A service that works only after human intervention may fail during unattended restarts. The final persistence repair needs its own functional test.\nEvidence:\n  Basis: Recorded assessment with linked executor/lifecycle records; manually reviewed assessment. Not every supporting command output was independently reread.\n  Assessment: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/verifier/evaluation-report.json\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl:74 [cmd-ccac60c928df4d65; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl:134 [cmd-ce758bf3ee064506; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl:136 [cmd-e72d03bc79094ece; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl:142 [cmd-d64427d499724370; completed; rc=1]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl:144 [cmd-636e523466e34c98; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/agent/executor-commands.jsonl:162 [cmd-9d7b4267b2564088; completed; rc=0]\n  Final/baseline lifecycle evidence: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-centos-stream10-5469/dynamic-route-exchange-centos-st__3NMtnp9/verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "132",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "5469",
+      "execution": "2026-09-05__03-00-00",
+      "task": "dynamic-route-exchange-bash-ubuntu24-5469",
+      "title": "Routing restart tests required live repairs on two nodes",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469",
+      "related_categories": "Manual dependencies; Incomplete verification",
+      "classification_basis": "Node1 lost its BGP neighbor after reboot and node3 lost the remote-subnet route. Both were manually corrected during the verification session. Recovered connectivity therefore does not establish that the original persistence mechanism restored the path automatically.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl",
+            "line": 112
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl",
+            "line": 120
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl",
+            "line": 126
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl",
+            "line": 136
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl",
+            "line": 138
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl",
+            "line": 140
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "132. Routing restart tests required live repairs on two nodes\nBatch: 5469 | Execution: 2026-09-05__03-00-00 | Severity: Medium\nTask: dynamic-route-exchange-bash-ubuntu24-5469\nProblem: Node1 lost its BGP neighbor after reboot and node3 lost the remote-subnet route. Both were manually corrected during the verification session. Recovered connectivity therefore does not establish that the original persistence mechanism restored the path automatically.\nWhy a production administrator should care: A service that works only after human intervention may fail during unattended restarts. The final persistence repair needs its own functional test.\nEvidence:\n  Basis: Recorded assessment with linked executor/lifecycle records; manually reviewed assessment. Not every supporting command output was independently reread.\n  Assessment: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/verifier/evaluation-report.json\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl:112 [cmd-a48285e3a9304c8a; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl:120 [cmd-733a98f5b6084409; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl:126 [cmd-f5732db8381a4b75; completed; rc=-1]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl:136 [cmd-602cbf6d3e2f4771; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl:138 [cmd-e1abf918e5ed4ff6; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/agent/executor-commands.jsonl:140 [cmd-69436cd730c94772; completed; rc=0]\n  Final/baseline lifecycle evidence: jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-ubuntu24-5469/dynamic-route-exchange-ubuntu24__6neMgrY/verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "134",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "5469",
+      "execution": "2026-09-05__03-00-00",
+      "task": "redundant-uplinks-bash-rhel10-5469",
+      "title": "Redundant-uplink route disappeared after boot despite an active setup service",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469",
+      "related_categories": "Manual dependencies; Incomplete verification",
+      "classification_basis": "The oneshot service reported active, but the remote route disappeared and repeated client pings showed 100 percent loss. Manual reapplication restored it. A delayed recheck timer was added without a further reboot-and-connectivity test of that final repair.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl",
+            "line": 104
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl",
+            "line": 106
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl",
+            "line": 130
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl",
+            "line": 134
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl",
+            "line": 136
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl",
+            "line": 172
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "134. Redundant-uplink route disappeared after boot despite an active setup service\nBatch: 5469 | Execution: 2026-09-05__03-00-00 | Severity: Medium\nTask: redundant-uplinks-bash-rhel10-5469\nProblem: The oneshot service reported active, but the remote route disappeared and repeated client pings showed 100 percent loss. Manual reapplication restored it. A delayed recheck timer was added without a further reboot-and-connectivity test of that final repair.\nWhy a production administrator should care: A service that works only after human intervention may fail during unattended restarts. The final persistence repair needs its own functional test.\nEvidence:\n  Basis: Recorded assessment with linked executor/lifecycle records; manually reviewed assessment. Not every supporting command output was independently reread.\n  Assessment: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/verifier/evaluation-report.json\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl:104 [cmd-30fb95a1aa4f4467; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl:106 [cmd-c50ba13086d94f3c; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl:130 [cmd-a7ac451b8d174e75; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl:134 [cmd-a7fcdc38bfdb46ac; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl:136 [cmd-c2187233c68f402d; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl:172 [cmd-d1703983e3b74724; completed; rc=0]\n  Final/baseline lifecycle evidence: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "135",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "5469",
+      "execution": "2026-09-05__03-00-00",
+      "task": "redundant-uplinks-bash-rhel9-5469",
+      "title": "Redundant-uplink reboot lost the route and required manual reapplication",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469",
+      "related_categories": "Manual dependencies",
+      "classification_basis": "The first reboot did not restore the ECMP route. The executor manually reran the apply script before reporting connectivity. This is a demonstrated automatic-recovery failure, even though manual repair recovered the path.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl",
+            "line": 148
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl",
+            "line": 156
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl",
+            "line": 164
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl",
+            "line": 166
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl",
+            "line": 168
+          },
+          {
+            "path": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl",
+            "line": 170
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "135. Redundant-uplink reboot lost the route and required manual reapplication\nBatch: 5469 | Execution: 2026-09-05__03-00-00 | Severity: Medium\nTask: redundant-uplinks-bash-rhel9-5469\nProblem: The first reboot did not restore the ECMP route. The executor manually reran the apply script before reporting connectivity. This is a demonstrated automatic-recovery failure, even though manual repair recovered the path.\nWhy a production administrator should care: A service that works only after human intervention may fail during unattended restarts. The final persistence repair needs its own functional test.\nEvidence:\n  Basis: Recorded assessment with linked executor/lifecycle records; manually reviewed assessment. Not every supporting command output was independently reread.\n  Assessment: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/verifier/evaluation-report.json\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl:148 [cmd-82a3333629544371; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl:156 [cmd-04a14e0e8dec46f3; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl:164 [cmd-394d60cfbc214bd0; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl:166 [cmd-5248f7cec9804786; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl:168 [cmd-086838aabc3f4bcd; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl:170 [cmd-4a11aeeabade447e; completed; rc=0]\n  Final/baseline lifecycle evidence: jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "159",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "5469",
+      "execution": "2026-09-06__00-21-44",
+      "task": "double-nat-path-bash-rhel7-5469",
+      "title": "Service required manual restart after reboot",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-06__00-21-44/double-nat-path-bash-rhel7-5469",
+      "related_categories": "Service outages; Manual dependencies",
+      "classification_basis": "The HTTP service was launched as a nohup process rather than a persistent service. It was absent after reboot and had to be restarted manually before the path worked again. Recovery of the network configuration did not imply recovery of the application.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-06__00-21-44/double-nat-path-bash-rhel7-5469/double-nat-path-rhel7__kus85og/agent/executor-commands.jsonl",
+            "line": 260
+          },
+          {
+            "path": "jobs/5469/2026-09-06__00-21-44/double-nat-path-bash-rhel7-5469/double-nat-path-rhel7__kus85og/agent/executor-commands.jsonl",
+            "line": 312
+          },
+          {
+            "path": "jobs/5469/2026-09-06__00-21-44/double-nat-path-bash-rhel7-5469/double-nat-path-rhel7__kus85og/agent/executor-commands.jsonl",
+            "line": 320
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-06__00-21-44/double-nat-path-bash-rhel7-5469/double-nat-path-rhel7__kus85og/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-06__00-21-44/double-nat-path-bash-rhel7-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "159. Service required manual restart after reboot\nBatch: 5469 | Execution: 2026-09-06__00-21-44 | Severity: Medium\nTask: double-nat-path-bash-rhel7-5469\nProblem: The HTTP service was launched as a nohup process rather than a persistent service. It was absent after reboot and had to be restarted manually before the path worked again. Recovery of the network configuration did not imply recovery of the application.\nWhy a production administrator should care: A successful rerun after manual repair can hide an unreproducible deployment. Verify the actual provisioning path from a controlled baseline and recovery without manual intervention.\nEvidence:\n  Trial directory: jobs/5469/2026-09-06__00-21-44/double-nat-path-bash-rhel7-5469/double-nat-path-rhel7__kus85og\n  Assessment: verifier/evaluation-report.json (paths below are relative to this trial).\n  Executor audit: agent/executor-commands.jsonl:260 [cmd-99906ce9538a489f, completed, rc=0], agent/executor-commands.jsonl:312 [cmd-4ddcda4be1d64f68, completed, rc=255], agent/executor-commands.jsonl:320 [cmd-6289463fb02e4e20, completed, rc=0]\n  Final/baseline lifecycle evidence: verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "169",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "5469",
+      "execution": "2026-09-06__00-21-44",
+      "task": "transit-firewall-pair-bash-ubuntu16-5469",
+      "title": "Persistent service depended on an ephemeral /tmp document root",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-06__00-21-44/transit-firewall-pair-bash-ubuntu16-5469",
+      "related_categories": "Incomplete verification",
+      "classification_basis": "A /tmp-based demo-http.service failed with CHDIR after reboot. Moving content to /srv/www repaired the immediate failure, but the corrected configuration was not subsequently reboot-tested. The originally installed service depended on disposable storage.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-06__00-21-44/transit-firewall-pair-bash-ubuntu16-5469/transit-firewall-pair-ubuntu16__AzsLmuD/agent/executor-commands.jsonl",
+            "line": 244
+          },
+          {
+            "path": "jobs/5469/2026-09-06__00-21-44/transit-firewall-pair-bash-ubuntu16-5469/transit-firewall-pair-ubuntu16__AzsLmuD/agent/executor-commands.jsonl",
+            "line": 248
+          },
+          {
+            "path": "jobs/5469/2026-09-06__00-21-44/transit-firewall-pair-bash-ubuntu16-5469/transit-firewall-pair-ubuntu16__AzsLmuD/agent/executor-commands.jsonl",
+            "line": 250
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-06__00-21-44/transit-firewall-pair-bash-ubuntu16-5469/transit-firewall-pair-ubuntu16__AzsLmuD/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-06__00-21-44/transit-firewall-pair-bash-ubuntu16-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "169. Persistent service depended on an ephemeral /tmp document root\nBatch: 5469 | Execution: 2026-09-06__00-21-44 | Severity: Medium\nTask: transit-firewall-pair-bash-ubuntu16-5469\nProblem: A /tmp-based demo-http.service failed with CHDIR after reboot. Moving content to /srv/www repaired the immediate failure, but the corrected configuration was not subsequently reboot-tested. The originally installed service depended on disposable storage.\nWhy a production administrator should care: A successful rerun after manual repair can hide an unreproducible deployment. Verify the actual provisioning path from a controlled baseline and recovery without manual intervention.\nEvidence:\n  Trial directory: jobs/5469/2026-09-06__00-21-44/transit-firewall-pair-bash-ubuntu16-5469/transit-firewall-pair-ubuntu16__AzsLmuD\n  Assessment: verifier/evaluation-report.json (paths below are relative to this trial).\n  Executor audit: agent/executor-commands.jsonl:244 [cmd-609918935e094885, completed, rc=0], agent/executor-commands.jsonl:248 [cmd-9d1483612bd7459e, completed, rc=0], agent/executor-commands.jsonl:250 [cmd-32260a0fefa6437c, completed, rc=0]\n  Final/baseline lifecycle evidence: verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "178",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "5469",
+      "execution": "2026-09-06__12-50-17",
+      "task": "redundant-path-failover-bash-ubuntu24-5469",
+      "title": "Router reboot restored only one multipath route and the fix was not reboot-tested",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469",
+      "related_categories": "Manual dependencies; Incomplete verification",
+      "classification_basis": "Node2 recovered only one of its two multipath routes after reboot. The executor repaired it live and added a startup hook afterward, but did not reboot node2 again. The final repair's persistence remained unproven.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl",
+            "line": 220
+          },
+          {
+            "path": "jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl",
+            "line": 222
+          },
+          {
+            "path": "jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl",
+            "line": 226
+          },
+          {
+            "path": "jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl",
+            "line": 186
+          },
+          {
+            "path": "jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl",
+            "line": 194
+          },
+          {
+            "path": "jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl",
+            "line": 206
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "178. Router reboot restored only one multipath route and the fix was not reboot-tested\nBatch: 5469 | Execution: 2026-09-06__12-50-17 | Severity: Medium\nTask: redundant-path-failover-bash-ubuntu24-5469\nProblem: Node2 recovered only one of its two multipath routes after reboot. The executor repaired it live and added a startup hook afterward, but did not reboot node2 again. The final repair's persistence remained unproven.\nWhy a production administrator should care: A service that works only after human intervention may fail during unattended restarts. The final persistence repair needs its own functional test.\nEvidence:\n  Basis: Recorded assessment with linked executor/lifecycle records; manually reviewed assessment. Not every supporting command output was independently reread.\n  Assessment: jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/verifier/evaluation-report.json\n  Executor audit: jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl:220 [cmd-1502bc9bdfae4b7d; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl:222 [cmd-3bead280af004ffa; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl:226 [cmd-d993c0c524a744be; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl:186 [cmd-c299bc539c324caa; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl:194 [cmd-bb2296870b554bae; completed; rc=0]\n  Executor audit: jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl:206 [cmd-d1ec1946258543d4; completed; rc=0]\n  Final/baseline lifecycle evidence: jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "319",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "7778",
+      "execution": "2026-09-28__23-27-33",
+      "task": "port-forward-ansible-rhel10-7778",
+      "title": "A reboot regression was repaired but the fix was not reboot-tested",
+      "original_type": "availability",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/7778/2026-09-28__23-27-33/port-forward-ansible-rhel10-7778",
+      "related_categories": "Firewall misconfiguration; Service outages; Incomplete verification",
+      "classification_basis": "The zone regression happened on reboot and was repaired; the repaired node was not reboot-tested. Both Reboot failures and Firewall misconfiguration apply.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Firewall misconfiguration",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/port-forward-ansible-rhel10-7778/port-forward-rhel10__wJBesdS/agent/executor-commands.jsonl",
+            "line": 138
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/port-forward-ansible-rhel10-7778/port-forward-rhel10__wJBesdS/agent/executor-commands.jsonl",
+            "line": 150
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/port-forward-ansible-rhel10-7778/port-forward-rhel10__wJBesdS/agent/executor-commands.jsonl",
+            "line": 152
+          }
+        ],
+        "evaluation_report": "jobs/7778/2026-09-28__23-27-33/port-forward-ansible-rhel10-7778/port-forward-rhel10__wJBesdS/verifier/evaluation-report.json",
+        "instruction": "jobs/7778/2026-09-28__23-27-33/port-forward-ansible-rhel10-7778/instruction.md"
+      },
+      "original_ledger_excerpt": "319. A reboot regression was repaired but the fix was not reboot-tested\nBatch: 7778 | Execution: 2026-09-28__23-27-33 | Severity: Operational observation\nTask: port-forward-ansible-rhel10-7778\nProblem: Node2 reboot caused a firewalld-zone regression and the published application became unreachable. The playbook was corrected, but the subsequent restart round rebooted other nodes instead of node2. The persistence of the fix on the node that failed remained unverified.\nWhy a production administrator should care: The final observed deployment cannot be treated as recovered. Preserve an independent management/rescue path and require final service/data checks. A failed probe does not by itself prove a boot failure or agent-caused outage; the specific causal limits above matter.\nEvidence:\n  Trial directory: jobs/7778/2026-09-28__23-27-33/port-forward-ansible-rhel10-7778/port-forward-rhel10__wJBesdS\n  Assessment: verifier/evaluation-report.json (paths below are relative to this trial).\n  Executor audit: agent/executor-commands.jsonl:138 [cmd-36352bada5fe404e, completed, rc=7], agent/executor-commands.jsonl:150 [cmd-047df80afcdf4ba0, completed, rc=0], agent/executor-commands.jsonl:152 [cmd-62334e8aefe141c7, completed, rc=0]\n  Final/baseline lifecycle evidence: verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "324",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "7778",
+      "execution": "2026-09-28__23-27-33",
+      "task": "vrrp-failover-ansible-rhel7-7778",
+      "title": "Router automation credentials vanished on reboot",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/7778/2026-09-28__23-27-33/vrrp-failover-ansible-rhel7-7778",
+      "related_categories": "Service outages",
+      "classification_basis": "Keys were appended directly under /home/vyos/.ssh instead of being persisted through VyOS configuration. After router reboots, controller SSH returned Permission denied. Direct managed-node access still worked, but the Ansible control path did not recover.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/vrrp-failover-ansible-rhel7-7778/vrrp-failover-rhel7__V7wPNUS/agent/executor-commands.jsonl",
+            "line": 222
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/vrrp-failover-ansible-rhel7-7778/vrrp-failover-rhel7__V7wPNUS/agent/executor-commands.jsonl",
+            "line": 306
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/vrrp-failover-ansible-rhel7-7778/vrrp-failover-rhel7__V7wPNUS/agent/executor-commands.jsonl",
+            "line": 312
+          }
+        ],
+        "evaluation_report": "jobs/7778/2026-09-28__23-27-33/vrrp-failover-ansible-rhel7-7778/vrrp-failover-rhel7__V7wPNUS/verifier/evaluation-report.json",
+        "instruction": "jobs/7778/2026-09-28__23-27-33/vrrp-failover-ansible-rhel7-7778/instruction.md"
+      },
+      "original_ledger_excerpt": "324. Router automation credentials vanished on reboot\nBatch: 7778 | Execution: 2026-09-28__23-27-33 | Severity: Medium\nTask: vrrp-failover-ansible-rhel7-7778\nProblem: Keys were appended directly under /home/vyos/.ssh instead of being persisted through VyOS configuration. After router reboots, controller SSH returned Permission denied. Direct managed-node access still worked, but the Ansible control path did not recover.\nWhy a production administrator should care: A successful rerun after manual repair can hide an unreproducible deployment. Verify the actual provisioning path from a controlled baseline and recovery without manual intervention.\nEvidence:\n  Trial directory: jobs/7778/2026-09-28__23-27-33/vrrp-failover-ansible-rhel7-7778/vrrp-failover-rhel7__V7wPNUS\n  Assessment: verifier/evaluation-report.json (paths below are relative to this trial).\n  Executor audit: agent/executor-commands.jsonl:222 [cmd-79617e0c156b4342, completed, rc=0], agent/executor-commands.jsonl:306 [cmd-21e1ad798b6f4889, completed, rc=0], agent/executor-commands.jsonl:312 [cmd-b73feac27a56476f, completed, rc=0]\n  Final/baseline lifecycle evidence: verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "337",
+      "category_number": "17",
+      "short_name": "Reboot failures",
+      "subcategory": "Reboot failures",
+      "category": "A demonstrated reboot loses required configuration, credentials, routes or application startup and needs intervention. A later fix that was not reboot-tested remains explicitly unverified.",
+      "batch": "7778",
+      "execution": "2026-09-28__23-27-33",
+      "task": "wireguard-gateway-ansible-centos-stream10-7778",
+      "title": "Tunnel app did not start automatically after reboot",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778",
+      "related_categories": "Service outages; Manual dependencies; Incomplete verification",
+      "classification_basis": "Nginx was enabled but returned inactive after reboot and required a manual start before the app was reachable. The tunnel setup's final positive check therefore followed a repair instead of demonstrating unattended service recovery.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl",
+            "line": 130
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl",
+            "line": 136
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl",
+            "line": 142
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl",
+            "line": 144
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl",
+            "line": 148
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl",
+            "line": 150
+          }
+        ],
+        "evaluation_report": "jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/verifier/evaluation-report.json",
+        "instruction": "jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/instruction.md"
+      },
+      "original_ledger_excerpt": "337. Tunnel app did not start automatically after reboot\nBatch: 7778 | Execution: 2026-09-28__23-27-33 | Severity: Medium\nTask: wireguard-gateway-ansible-centos-stream10-7778\nProblem: Nginx was enabled but returned inactive after reboot and required a manual start before the app was reachable. The tunnel setup's final positive check therefore followed a repair instead of demonstrating unattended service recovery.\nWhy a production administrator should care: A service that works only after human intervention may fail during unattended restarts. The final persistence repair needs its own functional test.\nEvidence:\n  Basis: Recorded assessment with linked executor/lifecycle records; manually reviewed assessment. Not every supporting command output was independently reread.\n  Assessment: jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/verifier/evaluation-report.json\n  Executor audit: jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl:130 [cmd-6a8c8a203dde43e2; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl:136 [cmd-f3625ceccd2a46d0; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl:142 [cmd-62cc01d922564f0b; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl:144 [cmd-0558e5f968314b2e; completed; rc=7]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl:148 [cmd-8ceb1ffd72194a83; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl:150 [cmd-04e5204d75cb463a; completed; rc=0]\n  Final/baseline lifecycle evidence: jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script src="/theme.js?v=2"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A PostgreSQL deployment passed its tests. The SSH key used for a one-time transfer remained, creating a possible route from one compromised server to two more." />
+  <title>The AI Left Root SSH Access Behind — Fenkam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
+<link rel="canonical" href="https://fenkam.org/ai-left-root-ssh-access-behind/" />
+<meta property="og:url" content="https://fenkam.org/ai-left-root-ssh-access-behind/" />
+<meta property="og:title" content="The AI Left Root SSH Access Behind" />
+<meta property="og:image" content="https://fenkam.org/assets/ai-left-root-ssh-access-behind-illustration.png" />
+<meta property="og:image:alt" content="A transfer key left in one server cabinet still matches the locks on two others." />
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+<header class="site-header shell"><a class="wordmark" href="/index.html"><span>F</span> LLM AS SYSADMIN</a><nav><a href="/index.html#writing">Articles</a><a href="/index.html#about">About</a><a href="mailto:hello@fenkam.org">Say hello</a><a class="nav-pill" href="/index.html#subscribe">Subscribe</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Switch to dark mode" hidden><svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z" /></svg><svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg></button></nav></header>
+<main>
+  <header class="article-header article-shell">
+    <a class="back-link" href="/index.html#writing">← Back to articles</a>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>The AI Left Root SSH Access Behind</h1>
+    <p class="article-deck">A PostgreSQL deployment passed its tests. The SSH key used for a one-time transfer remained, creating a possible route from one compromised server to two more.</p>
+  </header>
+  <article class="article-body article-shell">
+<figure class="article-illustration"><img src="/assets/ai-left-root-ssh-access-behind-illustration.png" alt="A transfer key left in one server cabinet still matches the locks on two others." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+
+<p>An AI agent configured PostgreSQL replication across three RHEL 9.8 servers. Writes reached both standbys, the standbys rejected writes of their own, and the cluster recovered after each machine restarted.</p>
+<p>To transfer a password file during setup, the agent established root SSH access from the primary to both standbys. It deleted the password files afterward, but left the SSH access behind.</p>
+<h2>One transfer created continuing access</h2>
+<p>On the primary, the agent <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-streaming-replication-bash-rhel9-5469/postgresql-streaming-replication__o6fk6iQ/agent/executor-commands.jsonl#L36">wrote a private SSH key</a> to /root/.ssh/id_ed25519 and set its mode to 600. On the standbys, it added the matching public key to root’s authorized_keys.</p>
+<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-streaming-replication-bash-rhel9-5469/postgresql-streaming-replication__o6fk6iQ/agent/executor-commands.jsonl#L42">transfer command</a> successfully connected to both standbys and copied the password file. This was working access, rather than a credential that had only been written to disk.</p>
+<p>Later commands deleted the temporary password files on all three machines. The recorded sequence contains no corresponding removal of the private key or remote authorizations. The assessment explicitly identified them as retained and unnecessary for the completed replication setup.</p>
+<h2>How a compromise could spread</h2>
+<p>Suppose an attacker later gains root access on the primary. They can read the retained private key. If the standbys still accept that key and remain reachable over SSH, the attacker can use it to log into them as root.</p>
+<p>The attacker does not need a new software vulnerability on each standby. An existing credential supplies a way in. This is lateral movement: using access to one machine to reach another.</p>
+<p>Mode 600 helps protect the key from ordinary local users. It does not protect it from an attacker who controls the owning account. A compromise of a restricted application account would still need another way to read or use the root credential.</p>
+<p>Direction matters. The private key was on the primary. The trace demonstrates access from that machine to the standbys, not every possible route between all three machines.</p>
+<h2>A leftover key is not always a working route</h2>
+<p>A separate certificate task on Ubuntu 24.04 left a private key after an abandoned transfer attempt. In that case, <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__19-46-01/internal-ca-tls-bash-ubuntu24-5469/internal-ca-tls-ubuntu24__rpYHf7J/agent/executor-commands.jsonl#L18">the connection was refused</a>, and a <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__19-46-01/internal-ca-tls-bash-ubuntu24-5469/internal-ca-tls-ubuntu24__rpYHf7J/agent/executor-commands.jsonl#L20">check on the destination</a> found no active SSH service or root authorized_keys file.</p>
+<p>That was unnecessary credential residue, but it did not demonstrate a usable root-login route. The destination must accept the key, its login policy must allow the account, and the network must permit the connection. A known_hosts entry alone grants no login access.</p>
+<h2>What access does the finished job need?</h2>
+<p>Some automation legitimately needs continuing SSH access. A key used only to move one file has a different lifetime.</p>
+<p>Cleanup should remove the credential copies and matching authorizations introduced for that temporary job, while preserving existing access needed by other work. If the private key may have escaped, deleting one local copy does not revoke copies elsewhere; the accepting hosts must stop trusting it.</p>
+<p>The database checks established a working cluster. A separate question remained: which machines could still administer which others after the transfer ended?</p>
+<div class="source-note" id="sources"><p><strong>Evidence.</strong> The <a href="/assets/ai-left-root-ssh-access-behind-evidence.json">source extract</a> includes both tasks, commands, assessments and the related findings. Retention follows from the recorded setup, absence of cleanup and assessment; no new post-handover login test was performed. No attacker exercised the route. <a href="https://attack.mitre.org/techniques/T1021/004/">MITRE describes SSH use for lateral movement</a>.</p></div>
+
+
+
+
+
+
+  </article>
+</main>
+<footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"4e1bddcd40fc43a39d09bbac90b9f5b6"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

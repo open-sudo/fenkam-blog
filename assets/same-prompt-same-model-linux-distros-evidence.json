@@ -1,0 +1,1140 @@
+{
+  "cases": [
+    {
+      "os": "ubuntu7",
+      "trial": "jobs/bash-ubuntu7/single-node-os-comparison/certificate-rotation-ubuntu7/2026-10-02__23-55-49/certificate-rotation-ubuntu7__2syH2xw",
+      "prompt": "On `node1`, serve HTTPS on port 8443 with a certificate that is renewed\nautomatically before it expires, and have the service pick up each new\ncertificate while it keeps answering requests.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "rewards": {
+        "reward": 1.0,
+        "evaluation_coverage": 1.0,
+        "confidence": 0.93,
+        "evaluation_complete": 1.0,
+        "publication_eligible": 1.0,
+        "functionality": 1.0,
+        "operational_hygiene": 0.68
+      },
+      "executor_report": {
+        "status": "completed",
+        "summary": "node1 now serves HTTPS on port 8443 using legacy-compatible Apache 2.2 and OpenSSL. Certificates are generated locally, checked daily, renewed within seven days of expiry, and loaded with a graceful reload. Rotation completed with 300/300 successful continuity probes and survived a full node restart.",
+        "actions_performed": [
+          "Configured Apache HTTPS on TCP 8443 with persistent startup.",
+          "Created a 30-day node-local certificate with DNS and IP identities.",
+          "Installed daily renewal automation with a seven-day renewal threshold, validation, atomic publication, rollback protection, and graceful Apache reload.",
+          "Verified live certificate rotation changed the served serial while Apache retained its parent PID.",
+          "Restarted node1 safely and confirmed its boot identity changed and all services, content, certificate state, and automation recovered.",
+          "Preserved Ubuntu 7.10 and kernel 2.6.22-14-generic."
+        ],
+        "evidence": [
+          {
+            "requirement": "Serve HTTPS on port 8443",
+            "command_ids": [
+              "cmd-125d2d90d4e54cdb",
+              "cmd-b0e0cddec91c41f2"
+            ],
+            "summary": "Direct HTTPS requests returned the expected content and HTTP 200; Apache was the sole web listener on port 8443."
+          },
+          {
+            "requirement": "Automatically renew the certificate before expiry",
+            "command_ids": [
+              "cmd-ef48e3ad403d40d3",
+              "cmd-125d2d90d4e54cdb"
+            ],
+            "summary": "The renewal program and daily cron schedule were installed. The live due-date check correctly retained a certificate outside its seven-day renewal window."
+          },
+          {
+            "requirement": "Load each renewed certificate while continuing to answer requests",
+            "command_ids": [
+              "cmd-df5bf8c22b3c46a6",
+              "cmd-c093d9591a36431a"
+            ],
+            "summary": "Forced rotation changed the served serial from EEDC7E3A666A9FF3 to D0B44C233A36F843 while the Apache parent PID remained 4925; 300 consecutive HTTPS probes completed with zero failures."
+          },
+          {
+            "requirement": "Keep the installed operating-system release and kernel",
+            "command_ids": [
+              "cmd-70ecf752e1434fbe",
+              "cmd-e93c53e68f174272"
+            ],
+            "summary": "Ubuntu 7.10 and kernel 2.6.22-14-generic were unchanged before and after implementation and restart."
+          },
+          {
+            "requirement": "node1 mandatory restart and recovery",
+            "command_ids": [
+              "cmd-487cc1465e064472",
+              "cmd-edabbf8256d34602",
+              "cmd-e93c53e68f174272"
+            ],
+            "summary": "Healthy pre-restart HTTPS, certificate, cron state, boot ID e938fb84-a884-49d2-a202-757eb41086f4, and safe reboot acknowledgement were captured. After reboot, boot ID changed to 3fb4f3c2-9edb-4f75-9123-f391a2f7c2fc; Apache recovered on 8443, served the retained certificate and content, cron recovered, and configuration validation passed."
+          }
+        ]
+      },
+      "command_index": [
+        {
+          "command_id": "cmd-ffba42a3466c4978",
+          "timestamp": "2026-10-03T04:36:00.844661+00:00",
+          "return_code": 1
+        },
+        {
+          "command_id": "cmd-70ecf752e1434fbe",
+          "timestamp": "2026-10-03T04:36:07.248552+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-b90c79b5dc564f2c",
+          "timestamp": "2026-10-03T04:36:17.295769+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-7c66402027944368",
+          "timestamp": "2026-10-03T04:36:21.091254+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-22148936c65c4025",
+          "timestamp": "2026-10-03T04:36:25.740424+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-953a5e8db8904d3c",
+          "timestamp": "2026-10-03T04:36:32.737251+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-a447b364ee3a4a7f",
+          "timestamp": "2026-10-03T04:36:36.418405+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-b065d6b9b656477d",
+          "timestamp": "2026-10-03T04:36:40.423331+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-1a05c48bab88439f",
+          "timestamp": "2026-10-03T04:36:53.017024+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-2958809e00e74fac",
+          "timestamp": "2026-10-03T04:36:56.485519+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-0da9ade4827149dc",
+          "timestamp": "2026-10-03T04:37:11.499380+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-84468a2197a64014",
+          "timestamp": "2026-10-03T04:37:35.463309+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-ef48e3ad403d40d3",
+          "timestamp": "2026-10-03T04:37:56.024526+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-0acd73b429c34bae",
+          "timestamp": "2026-10-03T04:38:02.563117+00:00",
+          "return_code": 1
+        },
+        {
+          "command_id": "cmd-9f9e9dc76f67495f",
+          "timestamp": "2026-10-03T04:38:07.543684+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-125d2d90d4e54cdb",
+          "timestamp": "2026-10-03T04:38:21.975971+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-c780e96da5784885",
+          "timestamp": "2026-10-03T04:38:30.726843+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-579979cae981496f",
+          "timestamp": "2026-10-03T04:38:33.714440+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-09876c80c80549ad",
+          "timestamp": "2026-10-03T04:38:38.942657+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-df5bf8c22b3c46a6",
+          "timestamp": "2026-10-03T04:38:44.847612+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-c093d9591a36431a",
+          "timestamp": "2026-10-03T04:38:57.549721+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-487cc1465e064472",
+          "timestamp": "2026-10-03T04:39:06.581959+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-8d28052a6edb4a3a",
+          "timestamp": "2026-10-03T04:39:10.400682+00:00",
+          "return_code": 255
+        },
+        {
+          "command_id": "cmd-44547b7ca62e46f3",
+          "timestamp": "2026-10-03T04:39:14.368210+00:00",
+          "return_code": 255
+        },
+        {
+          "command_id": "cmd-034ee91d5ba94005",
+          "timestamp": "2026-10-03T04:39:23.502779+00:00",
+          "return_code": 255
+        },
+        {
+          "command_id": "cmd-edabbf8256d34602",
+          "timestamp": "2026-10-03T04:39:28.329432+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-e93c53e68f174272",
+          "timestamp": "2026-10-03T04:39:35.636213+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-b0e0cddec91c41f2",
+          "timestamp": "2026-10-03T04:39:46.918486+00:00",
+          "return_code": 0
+        }
+      ]
+    },
+    {
+      "os": "ubuntu24",
+      "trial": "jobs/bash-ubuntu24/single-node-os-comparison/certificate-rotation-ubuntu24/2026-10-03__14-57-05/certificate-rotation-ubuntu24__22B4zK6",
+      "prompt": "On `node1`, serve HTTPS on port 8443 with a certificate that is renewed\nautomatically before it expires, and have the service pick up each new\ncertificate while it keeps answering requests.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "rewards": {
+        "reward": 1.0,
+        "evaluation_coverage": 1.0,
+        "confidence": 0.98,
+        "evaluation_complete": 1.0,
+        "publication_eligible": 1.0,
+        "functionality": 1.0,
+        "operational_hygiene": 1.0
+      },
+      "executor_report": {
+        "status": "completed",
+        "summary": "HTTPS is live on node1:8443 with automatic certificate renewal, zero-downtime nginx reloads, and verified persistence across a full node reboot.",
+        "actions_performed": [
+          "Installed Ubuntu Noble\u2019s nginx 1.24 package without upgrading the existing OS or kernel.",
+          "Configured HTTPS on IPv4 and IPv6 port 8443.",
+          "Created a 30-day certificate renewal script with a seven-day pre-expiry threshold.",
+          "Enabled a persistent daily systemd renewal timer.",
+          "Demonstrated certificate rotation while 250 consecutive HTTPS requests completed successfully.",
+          "Rebooted node1 once and verified complete recovery."
+        ],
+        "evidence": [
+          {
+            "requirement": "Preserve the installed OS release and kernel; use compatible software",
+            "command_ids": [
+              "cmd-ede368a17d4a4e16",
+              "cmd-9e265c5cc43b45c2"
+            ],
+            "summary": "Ubuntu 24.04.3 and kernel 6.8.0-71 were retained. Distribution nginx 1.24 was installed with zero existing packages upgraded."
+          },
+          {
+            "requirement": "Serve HTTPS on port 8443",
+            "command_ids": [
+              "cmd-9009bd4fe1db4ac4"
+            ],
+            "summary": "Nginx configuration passed validation, listened on 0.0.0.0:8443 and [::]:8443, and returned the expected content over HTTPS at the managed node IP."
+          },
+          {
+            "requirement": "Renew the certificate automatically before expiry",
+            "command_ids": [
+              "cmd-d9b5fed32cfb4b48",
+              "cmd-a0bf9b0c63534225",
+              "cmd-46a70ee785754709"
+            ],
+            "summary": "The enabled persistent daily timer invokes a seven-day-threshold renewal service. A served one-day certificate was automatically replaced by a new 30-day certificate with a different serial."
+          },
+          {
+            "requirement": "Pick up each new certificate while continuing to answer requests",
+            "command_ids": [
+              "cmd-46a70ee785754709"
+            ],
+            "summary": "Nginx served the new certificate after reload; 250 of 250 HTTPS requests succeeded during the exercised rotation, with zero failures."
+          },
+          {
+            "requirement": "node1 mandatory restart and recovery",
+            "command_ids": [
+              "cmd-674fe3f3590b4df0",
+              "cmd-4f9a01f595254d3a",
+              "cmd-2981b6cd75fd4f49",
+              "cmd-ef4cdcc3f52d4564",
+              "cmd-9e8904c21ac94c8f"
+            ],
+            "summary": "Before reboot, boot ID f9bf293d-1eb8-423e-b185-84e94db646f3 had healthy HTTPS and timer state. The safe reboot was acknowledged and the connection reset. Afterward, boot ID changed to 2780af21-4c99-4955-8537-18b7e13542a7; nginx and the renewal timer were enabled and active, port 8443 was listening, the same certificate and HTTPS data were recovered, and nginx configuration remained valid."
+          }
+        ]
+      },
+      "command_index": [
+        {
+          "command_id": "cmd-ede368a17d4a4e16",
+          "timestamp": "2026-10-03T19:18:38.909616+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-a34e403535b840bc",
+          "timestamp": "2026-10-03T19:18:43.750479+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-f65a8c01c86647e1",
+          "timestamp": "2026-10-03T19:18:46.308986+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-9e265c5cc43b45c2",
+          "timestamp": "2026-10-03T19:18:53.153868+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-d53cdcdfee694104",
+          "timestamp": "2026-10-03T19:19:08.695091+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-9009bd4fe1db4ac4",
+          "timestamp": "2026-10-03T19:19:15.391065+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-d9b5fed32cfb4b48",
+          "timestamp": "2026-10-03T19:19:22.874075+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-88ed67adb0b44248",
+          "timestamp": "2026-10-03T19:19:36.975014+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-a0bf9b0c63534225",
+          "timestamp": "2026-10-03T19:19:42.140384+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-46a70ee785754709",
+          "timestamp": "2026-10-03T19:19:55.532379+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-674fe3f3590b4df0",
+          "timestamp": "2026-10-03T19:20:10.258543+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-4f9a01f595254d3a",
+          "timestamp": "2026-10-03T19:20:16.574986+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-cb4d40d32d5244b3",
+          "timestamp": "2026-10-03T19:20:19.122826+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-85d04a0b6dd843b3",
+          "timestamp": "2026-10-03T19:20:32.876722+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-b267dd9edba24a94",
+          "timestamp": "2026-10-03T19:20:36.031997+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-2981b6cd75fd4f49",
+          "timestamp": "2026-10-03T19:20:40.058813+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-ef4cdcc3f52d4564",
+          "timestamp": "2026-10-03T19:20:43.484557+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-9e8904c21ac94c8f",
+          "timestamp": "2026-10-03T19:20:51.236503+00:00",
+          "return_code": 0
+        }
+      ]
+    },
+    {
+      "os": "alpine",
+      "trial": "jobs/bash-alpine/single-node-os-comparison/certificate-rotation-alpine/2026-10-03__17-05-51/certificate-rotation-alpine__mYcug5S",
+      "prompt": "On `node1`, serve HTTPS on port 8443 with a certificate that is renewed\nautomatically before it expires, and have the service pick up each new\ncertificate while it keeps answering requests.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "rewards": {
+        "reward": 1.0,
+        "evaluation_coverage": 1.0,
+        "confidence": 0.98,
+        "evaluation_complete": 1.0,
+        "publication_eligible": 1.0,
+        "functionality": 1.0,
+        "operational_hygiene": 0.93
+      },
+      "executor_report": {
+        "status": "completed",
+        "summary": "node1 now serves HTTPS on port 8443 with automatic pre-expiry certificate renewal, graceful certificate reloads, and boot persistence. Alpine 3.23.3 and kernel 6.18.7-0-lts were retained.",
+        "actions_performed": [
+          "Installed Alpine-compatible nginx and OpenSSL packages.",
+          "Configured nginx TLS on port 8443.",
+          "Created atomic certificate rotation with a 7-day renewal threshold and 30-day validity.",
+          "Scheduled daily renewal through OpenRC crond.",
+          "Enabled nginx and crond at boot.",
+          "Verified 100/100 successful requests during both forced and expiry-triggered rotations.",
+          "Restarted node1 and verified full recovery and persistence."
+        ],
+        "evidence": [
+          {
+            "requirement": "Serve HTTPS on port 8443",
+            "command_ids": [
+              "cmd-b29def68f3684918",
+              "cmd-acbc2cc8ef294f6a"
+            ],
+            "summary": "nginx listened on IPv4 and IPv6 port 8443, returned the expected healthy response, and served the active certificate before and after restart."
+          },
+          {
+            "requirement": "Renew the certificate automatically before expiry",
+            "command_ids": [
+              "cmd-b3d3563dbff24e6c",
+              "cmd-9230f59df4d1419c"
+            ],
+            "summary": "A certificate expiring within the configured 7-day window was detected by the unforced daily hook and replaced with a fresh 30-day certificate."
+          },
+          {
+            "requirement": "Load each new certificate while continuing to answer requests",
+            "command_ids": [
+              "cmd-087546b512984935",
+              "cmd-9230f59df4d1419c"
+            ],
+            "summary": "Certificate serials changed after graceful reloads; both rotation tests completed 100/100 HTTPS requests successfully, and nginx served the new serial afterward."
+          },
+          {
+            "requirement": "Retain the installed OS release and kernel",
+            "command_ids": [
+              "cmd-d7d962ca8a2c42a3",
+              "cmd-acbc2cc8ef294f6a"
+            ],
+            "summary": "Alpine 3.23.3 and kernel 6.18.7-0-lts were unchanged across the work and restart."
+          },
+          {
+            "requirement": "node1 mandatory restart and recovery",
+            "command_ids": [
+              "cmd-d7d962ca8a2c42a3",
+              "cmd-fa0f6f067acc4246",
+              "cmd-0da36aaa05e94a44",
+              "cmd-acbc2cc8ef294f6a"
+            ],
+            "summary": "Healthy baseline used boot ID 378b3e9c-3e63-470f-b0d0-069e815779c9; reboot was acknowledged; the recovered boot ID was 69a45b8b-3ef3-4dbd-b587-3429d290345d. nginx, crond, listener, HTTPS response, certificate serial, schedule, and configuration checksums all recovered."
+          }
+        ]
+      },
+      "command_index": [
+        {
+          "command_id": "cmd-37b7fed5ff034505",
+          "timestamp": "2026-10-03T21:30:54.872302+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-e41df2a0b46e494e",
+          "timestamp": "2026-10-03T21:31:04.168602+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-6933357a08e048ab",
+          "timestamp": "2026-10-03T21:31:07.025699+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-746dce9889ef4150",
+          "timestamp": "2026-10-03T21:31:53.633715+00:00",
+          "return_code": 1
+        },
+        {
+          "command_id": "cmd-63cc62d955eb4dad",
+          "timestamp": "2026-10-03T21:32:07.349999+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-01cb3a957f924013",
+          "timestamp": "2026-10-03T21:32:15.303563+00:00",
+          "return_code": 1
+        },
+        {
+          "command_id": "cmd-b29def68f3684918",
+          "timestamp": "2026-10-03T21:32:23.967677+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-087546b512984935",
+          "timestamp": "2026-10-03T21:32:39.543659+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-b3d3563dbff24e6c",
+          "timestamp": "2026-10-03T21:32:54.893587+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-9230f59df4d1419c",
+          "timestamp": "2026-10-03T21:33:09.721223+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-d7d962ca8a2c42a3",
+          "timestamp": "2026-10-03T21:33:22.264136+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-fa0f6f067acc4246",
+          "timestamp": "2026-10-03T21:33:25.824014+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-58611af2bff24c57",
+          "timestamp": "2026-10-03T21:33:28.584601+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-45aed8184dc6422c",
+          "timestamp": "2026-10-03T21:33:33.147730+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-6a37a6cb525f4700",
+          "timestamp": "2026-10-03T21:33:37.588119+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-5071b5a183bb4930",
+          "timestamp": "2026-10-03T21:33:43.163755+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-661c565005504776",
+          "timestamp": "2026-10-03T21:33:45.380117+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-851b9af1ef3b45d6",
+          "timestamp": "2026-10-03T21:33:47.585961+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-3d393a91e48946d0",
+          "timestamp": "2026-10-03T21:33:53.049862+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-0da36aaa05e94a44",
+          "timestamp": "2026-10-03T21:34:00.716262+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-acbc2cc8ef294f6a",
+          "timestamp": "2026-10-03T21:34:07.581543+00:00",
+          "return_code": 0
+        }
+      ]
+    },
+    {
+      "os": "centos-stream10",
+      "trial": "jobs/bash-centos-stream10/single-node-os-comparison/certificate-rotation-centos-stream10/2026-10-03__15-57-02/certificate-rotation-centos-stre__pfx6zC5",
+      "prompt": "On `node1`, serve HTTPS on port 8443 with a certificate that is renewed\nautomatically before it expires, and have the service pick up each new\ncertificate while it keeps answering requests.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "rewards": {
+        "reward": 1.0,
+        "evaluation_coverage": 1.0,
+        "confidence": 0.98,
+        "evaluation_complete": 1.0,
+        "publication_eligible": 1.0,
+        "functionality": 1.0,
+        "operational_hygiene": 0.88
+      },
+      "executor_report": {
+        "status": "completed",
+        "summary": "node1 now serves HTTPS on port 8443 using a locally generated 30-day self-signed certificate. A daily systemd timer renews it within seven days of expiry and gracefully reloads nginx. Automatic renewal, uninterrupted rotation, and persistence across a node reboot were verified.",
+        "actions_performed": [
+          "Installed the CentOS Stream 10 nginx package without changing the OS release or kernel.",
+          "Configured nginx for TLS 1.2/1.3 on TCP/8443 and opened the port in firewalld.",
+          "Generated and secured the certificate private key on node1.",
+          "Created a daily certificate-renewal timer with a seven-day renewal window.",
+          "Verified forced and timer-triggered rotations with uninterrupted HTTPS responses.",
+          "Safely rebooted node1 and verified complete recovery."
+        ],
+        "evidence": [
+          {
+            "requirement": "Serve HTTPS on port 8443",
+            "command_ids": [
+              "cmd-b622c31f9dac453e",
+              "cmd-3a86e410b83943c1"
+            ],
+            "summary": "Direct HTTPS requests succeeded; nginx listens on IPv4 and IPv6 port 8443, firewalld permits it, and the live peer certificate is valid."
+          },
+          {
+            "requirement": "Automatically renew before expiry and load each certificate without interruption",
+            "command_ids": [
+              "cmd-f918494a08864013",
+              "cmd-3e1788e4f7e54fea",
+              "cmd-1c015f007d0c49ff",
+              "cmd-d2a376d8f9b44333",
+              "cmd-4c9e76694b5949b9"
+            ],
+            "summary": "The renewal-window check avoided premature rotation. Forced rotation changed the serial with 120/120 successful probes and an unchanged nginx master PID. The production timer subsequently detected a one-day certificate, installed a different 30-day certificate, and gracefully reloaded nginx while HTTPS remained healthy."
+          },
+          {
+            "requirement": "Keep the installed OS release and kernel",
+            "command_ids": [
+              "cmd-eeceb3e2921047ef",
+              "cmd-3a86e410b83943c1"
+            ],
+            "summary": "CentOS Stream 10 and kernel 6.12.0-205.el10.x86_64 were unchanged from initial inspection through final verification."
+          },
+          {
+            "requirement": "node1 mandatory restart and recovery",
+            "command_ids": [
+              "cmd-9aba8362b51644b7",
+              "cmd-20ebd05b86ac4e15",
+              "cmd-bcf78e5f69bd446c",
+              "cmd-ba1c7396dde645f5",
+              "cmd-1242216a01844ce0"
+            ],
+            "summary": "Captured a healthy baseline, received native reboot acknowledgement, observed temporary unavailability, confirmed the boot ID changed from d052eb57-c81d-4309-ae7f-bce362073ff9 to 0458544e-ce8a-4715-af3f-27c160fccfbc, and verified nginx, HTTPS data, certificate, timer, listener, and firewall recovery with zero failed units."
+          }
+        ]
+      },
+      "command_index": [
+        {
+          "command_id": "cmd-eeceb3e2921047ef",
+          "timestamp": "2026-10-03T20:18:31.729036+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-d916180ef27c46f0",
+          "timestamp": "2026-10-03T20:18:41.160988+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-acde66cb667e47c7",
+          "timestamp": "2026-10-03T20:18:49.881290+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-c9ccfe5007f84ee3",
+          "timestamp": "2026-10-03T20:19:05.330464+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-6bf8c14d696d4ee3",
+          "timestamp": "2026-10-03T20:19:10.698466+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-2da7ee01cf2f4ae3",
+          "timestamp": "2026-10-03T20:19:19.034265+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-b622c31f9dac453e",
+          "timestamp": "2026-10-03T20:19:22.490336+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-f918494a08864013",
+          "timestamp": "2026-10-03T20:19:29.467982+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-3e1788e4f7e54fea",
+          "timestamp": "2026-10-03T20:19:43.993030+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-9aba8362b51644b7",
+          "timestamp": "2026-10-03T20:19:56.896581+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-20ebd05b86ac4e15",
+          "timestamp": "2026-10-03T20:20:00.437922+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-059c861bd2c04ca5",
+          "timestamp": "2026-10-03T20:20:03.477387+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-bcf78e5f69bd446c",
+          "timestamp": "2026-10-03T20:20:09.661433+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-ba1c7396dde645f5",
+          "timestamp": "2026-10-03T20:20:14.467616+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-1242216a01844ce0",
+          "timestamp": "2026-10-03T20:20:22.698863+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-22c3ed37e07c42b5",
+          "timestamp": "2026-10-03T20:20:59.401021+00:00",
+          "return_code": 1
+        },
+        {
+          "command_id": "cmd-1c015f007d0c49ff",
+          "timestamp": "2026-10-03T20:21:03.375676+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-d2a376d8f9b44333",
+          "timestamp": "2026-10-03T20:21:08.294069+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-4c9e76694b5949b9",
+          "timestamp": "2026-10-03T20:21:16.559141+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-3a86e410b83943c1",
+          "timestamp": "2026-10-03T20:21:28.437122+00:00",
+          "return_code": 0
+        }
+      ]
+    },
+    {
+      "os": "rhel9",
+      "trial": "jobs/bash-rhel9/single-node-os-comparison/certificate-rotation-rhel9/2026-10-03__19-23-12/certificate-rotation-rhel9__ant5rJM",
+      "prompt": "On `node1`, serve HTTPS on port 8443 with a certificate that is renewed\nautomatically before it expires, and have the service pick up each new\ncertificate while it keeps answering requests.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "rewards": {
+        "reward": 1.0,
+        "evaluation_coverage": 1.0,
+        "confidence": 0.97,
+        "evaluation_complete": 1.0,
+        "publication_eligible": 1.0,
+        "functionality": 1.0,
+        "operational_hygiene": 0.97
+      },
+      "executor_report": {
+        "status": "completed",
+        "summary": "HTTPS is serving on node1:8443 using a locally generated self-signed certificate. It is checked every 6 hours, renewed 3 days before expiry, and loaded on each new TLS connection without restarting the service. Configuration survived the required node reboot.",
+        "actions_performed": [
+          "Created an unprivileged autohttps service using installed Python 3 and OpenSSL.",
+          "Configured 7-day certificates with DNS node1 and node IP SANs.",
+          "Installed and enabled a persistent systemd renewal timer and HTTPS service.",
+          "Persistently opened TCP/8443 in firewalld.",
+          "Demonstrated rotation with 100 successful requests and zero failures.",
+          "Rebooted node1 safely and verified complete recovery with unchanged OS and kernel."
+        ],
+        "evidence": [
+          {
+            "requirement": "Serve HTTPS on port 8443",
+            "command_ids": [
+              "cmd-3e3652058f7d44d0",
+              "cmd-824b1f8ac99d41d9"
+            ],
+            "summary": "Verified the firewall opening, listening socket, trusted TLS handshake, certificate serial, active service, and healthy HTTPS response."
+          },
+          {
+            "requirement": "Automatically renew certificates before expiry",
+            "command_ids": [
+              "cmd-c7bd958617e947ca",
+              "cmd-84d375a0f9a44ed1"
+            ],
+            "summary": "The enabled timer schedules recurring checks; a controlled renewal changed the certificate serial and completed successfully."
+          },
+          {
+            "requirement": "Pick up renewed certificates while continuing to answer requests",
+            "command_ids": [
+              "cmd-84d375a0f9a44ed1"
+            ],
+            "summary": "The peer immediately presented the new serial while all 100 HTTPS requests completed successfully with zero failures."
+          },
+          {
+            "requirement": "Keep the installed OS release and kernel",
+            "command_ids": [
+              "cmd-57db390e5c974214",
+              "cmd-2c1fa95be937456b"
+            ],
+            "summary": "RHEL 9.8 and kernel 5.14.0-687.20.1.el9_8.x86_64 remained unchanged."
+          },
+          {
+            "requirement": "node1 restart and recovery",
+            "command_ids": [
+              "cmd-824b1f8ac99d41d9",
+              "cmd-24318ccafaef4487",
+              "cmd-30a1bffa70a442e7",
+              "cmd-2c1fa95be937456b"
+            ],
+            "summary": "Captured the healthy baseline and old boot ID, received reboot acknowledgement, observed a changed boot ID, then verified the HTTPS service, renewal timer, firewall rule, certificate, listener, and response recovered."
+          }
+        ]
+      },
+      "command_index": [
+        {
+          "command_id": "cmd-57db390e5c974214",
+          "timestamp": "2026-10-03T23:24:13.470064+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-7d2c23fc968943ee",
+          "timestamp": "2026-10-03T23:24:34.278475+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-c7bd958617e947ca",
+          "timestamp": "2026-10-03T23:24:50.361696+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-36a3a9732fa046dc",
+          "timestamp": "2026-10-03T23:24:54.692432+00:00",
+          "return_code": 35
+        },
+        {
+          "command_id": "cmd-c14dd33bba8849c9",
+          "timestamp": "2026-10-03T23:25:04.048150+00:00",
+          "return_code": 1
+        },
+        {
+          "command_id": "cmd-3e3652058f7d44d0",
+          "timestamp": "2026-10-03T23:25:08.615765+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-b088fa4964e84312",
+          "timestamp": "2026-10-03T23:25:30.007694+00:00",
+          "return_code": 1
+        },
+        {
+          "command_id": "cmd-180289a2434249ec",
+          "timestamp": "2026-10-03T23:25:39.934567+00:00",
+          "return_code": 1
+        },
+        {
+          "command_id": "cmd-13469fd2159d4416",
+          "timestamp": "2026-10-03T23:25:44.969067+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-84d375a0f9a44ed1",
+          "timestamp": "2026-10-03T23:25:59.763046+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-824b1f8ac99d41d9",
+          "timestamp": "2026-10-03T23:26:09.005714+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-24318ccafaef4487",
+          "timestamp": "2026-10-03T23:26:11.719837+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-055bc56cf4cc4d76",
+          "timestamp": "2026-10-03T23:26:15.437576+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-59f8ef92f69e4f31",
+          "timestamp": "2026-10-03T23:26:19.511544+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-cedf1bac31cf4226",
+          "timestamp": "2026-10-03T23:26:23.483590+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-30a1bffa70a442e7",
+          "timestamp": "2026-10-03T23:26:25.407241+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-2c1fa95be937456b",
+          "timestamp": "2026-10-03T23:26:36.358624+00:00",
+          "return_code": 0
+        }
+      ]
+    },
+    {
+      "os": "rhel10",
+      "trial": "jobs/bash-rhel10/single-node-os-comparison/certificate-rotation-rhel10/2026-10-03__19-17-24/certificate-rotation-rhel10__NRVTidV",
+      "prompt": "On `node1`, serve HTTPS on port 8443 with a certificate that is renewed\nautomatically before it expires, and have the service pick up each new\ncertificate while it keeps answering requests.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\n",
+      "agent": {
+        "name": "harbor_antrieb.agent:AntriebHostAgent",
+        "model_name": "gpt-5.6-sol",
+        "kwargs": {
+          "agent_name": "codex",
+          "reasoning_effort": "high",
+          "timeout_sec": 2400,
+          "execution_mode": "interactive",
+          "diagnostic_agent": "codex",
+          "diagnostic_model": "gpt-5.6-sol",
+          "diagnostic_reasoning_effort": "high",
+          "service_tier": "fast"
+        }
+      },
+      "rewards": {
+        "reward": 1.0,
+        "evaluation_coverage": 1.0,
+        "confidence": 0.97,
+        "evaluation_complete": 1.0,
+        "publication_eligible": 1.0,
+        "functionality": 1.0,
+        "operational_hygiene": 0.97
+      },
+      "executor_report": {
+        "status": "completed",
+        "summary": "node1 now serves HTTPS on port 8443 using a 30-day self-signed certificate. A persistent systemd timer checks twice daily, renews within seven days of expiry, and gracefully reloads Apache. Rotation completed with 150/150 successful concurrent requests. Configuration and certificate persisted across a verified node reboot; RHEL 10.0 and kernel 6.12.0-55.9.1.el10_0 remain installed.",
+        "actions_performed": [
+          "Installed the distribution-supported Apache, mod_ssl, and OpenSSL packages.",
+          "Configured Apache to serve HTTPS exclusively on port 8443.",
+          "Created certificate renewal logic with atomic replacement, key validation, and graceful Apache reload.",
+          "Enabled a persistent twice-daily systemd renewal timer.",
+          "Opened TCP/8443 in runtime and permanent firewalld configuration.",
+          "Verified live certificate rotation without request failures.",
+          "Restarted node1 safely and verified boot identity change and complete recovery."
+        ],
+        "evidence": [
+          {
+            "requirement": "Serve HTTPS on port 8443",
+            "command_ids": [
+              "cmd-3ef1dc59b4b94c00",
+              "cmd-1af24ee881a9443d"
+            ],
+            "summary": "Shows the active 8443 listener, HTTP 200 response through the managed-node IP, valid Apache configuration, and no failed units."
+          },
+          {
+            "requirement": "Automatically renew the certificate before expiration",
+            "command_ids": [
+              "cmd-57810599df4a4f06",
+              "cmd-1af24ee881a9443d"
+            ],
+            "summary": "Shows a successful renewal-service execution, active persistent timer, 12-hour schedule, seven-day renewal threshold, and 30-day certificate lifetime."
+          },
+          {
+            "requirement": "Pick up each new certificate while continuing to answer requests",
+            "command_ids": [
+              "cmd-dcf8c90e3ef84985"
+            ],
+            "summary": "The live certificate serial changed, matched the renewed on-disk certificate, and all 150 concurrent HTTPS probes succeeded with zero failures."
+          },
+          {
+            "requirement": "Keep the installed operating-system release and kernel",
+            "command_ids": [
+              "cmd-ef2215cb93b3472d",
+              "cmd-a20b65555f994a17"
+            ],
+            "summary": "Before and after evidence shows RHEL 10.0 and kernel 6.12.0-55.9.1.el10_0 unchanged."
+          },
+          {
+            "requirement": "node1 mandatory restart and recovery",
+            "command_ids": [
+              "cmd-73aed0fbbd6f4e00",
+              "cmd-5976b5bd44bd49c0",
+              "cmd-f6e3008e1b534c8c",
+              "cmd-a20b65555f994a17"
+            ],
+            "summary": "Captures the healthy pre-restart state, safe reboot acknowledgement, changed boot ID from d9f8550d-5cb3-4929-9e62-a388df86bcf6 to 04a8d0d6-8a30-451e-8c6c-0e7cdf6b8811, and recovered HTTPS response, listener, certificate, timer, firewall, and enabled services."
+          }
+        ]
+      },
+      "command_index": [
+        {
+          "command_id": "cmd-ef2215cb93b3472d",
+          "timestamp": "2026-10-03T23:18:32.905586+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-81a24abed3934910",
+          "timestamp": "2026-10-03T23:18:44.663642+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-bb5d2faafe9043fa",
+          "timestamp": "2026-10-03T23:18:57.293784+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-685a5fd195e24043",
+          "timestamp": "2026-10-03T23:19:10.111225+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-2c888736654142ca",
+          "timestamp": "2026-10-03T23:19:40.389839+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-3a60ebbb7c704bc7",
+          "timestamp": "2026-10-03T23:19:52.971366+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-30fb19a6f4004e20",
+          "timestamp": "2026-10-03T23:19:58.176591+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-3ef1dc59b4b94c00",
+          "timestamp": "2026-10-03T23:20:12.112117+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-dcf8c90e3ef84985",
+          "timestamp": "2026-10-03T23:20:28.191164+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-57810599df4a4f06",
+          "timestamp": "2026-10-03T23:20:37.761595+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-73aed0fbbd6f4e00",
+          "timestamp": "2026-10-03T23:20:42.638021+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-5976b5bd44bd49c0",
+          "timestamp": "2026-10-03T23:20:47.495433+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-74a81745d25a48f4",
+          "timestamp": "2026-10-03T23:20:50.401817+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-3cdf5687341846c5",
+          "timestamp": "2026-10-03T23:20:55.802020+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-a662e699e9514a03",
+          "timestamp": "2026-10-03T23:20:59.837226+00:00",
+          "return_code": -1
+        },
+        {
+          "command_id": "cmd-f6e3008e1b534c8c",
+          "timestamp": "2026-10-03T23:21:01.966888+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-a20b65555f994a17",
+          "timestamp": "2026-10-03T23:21:10.701115+00:00",
+          "return_code": 0
+        },
+        {
+          "command_id": "cmd-1af24ee881a9443d",
+          "timestamp": "2026-10-03T23:21:23.072941+00:00",
+          "return_code": 0
+        }
+      ]
+    }
+  ],
+  "operator_observation": {
+    "scope": "RHEL9 rerun, separate from executor, during execution",
+    "command": "dnf -q repolist enabled; dnf -q list --available httpd mod_ssl nginx",
+    "exit_code": 0,
+    "enabled_repositories": [
+      "rhel-9-for-x86_64-appstream-rpms",
+      "rhel-9-for-x86_64-baseos-rpms"
+    ],
+    "available_packages": {
+      "httpd": "2.4.62-13.el9_8.6",
+      "mod_ssl": "1:2.4.62-13.el9_8.6",
+      "nginx": "2:1.20.1-28.el9_8.6"
+    },
+    "source": "Operator tool response recorded in the authoring conversation; not an executor command."
+  }
+}

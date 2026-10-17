@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script src="/theme.js?v=2"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="One-time transfers, abandoned experiments and verification accounts left credentials or grants behind." />
+  <title>Temporary Access Became Part of the Deployment — Fenkam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
+<link rel="canonical" href="https://fenkam.org/audit-leftover-access/" />
+<meta property="og:url" content="https://fenkam.org/audit-leftover-access/" />
+<meta property="og:title" content="Temporary Access Became Part of the Deployment" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-leftover-access-illustration.png" />
+<meta property="og:image:alt" content="Temporary side doors and keys remain on server cabinets after the transfer tools are packed away." />
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+<header class="site-header shell"><a class="wordmark" href="/index.html"><span>F</span> LLM AS SYSADMIN</a><nav><a href="/index.html#writing">Articles</a><a href="/index.html#about">About</a><a href="mailto:hello@fenkam.org">Say hello</a><a class="nav-pill" href="/index.html#subscribe">Subscribe</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Switch to dark mode" hidden><svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z" /></svg><svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg></button></nav></header>
+<main>
+  <header class="article-header article-shell">
+    <a class="back-link" href="/index.html#writing">← Back to articles</a>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>Temporary Access Became Part of the Deployment</h1>
+    <p class="article-deck">One-time transfers, abandoned experiments and verification accounts left credentials or grants behind.</p>
+  </header>
+  <article class="article-body article-shell">
+<figure class="article-illustration"><img src="/assets/audit-leftover-access-illustration.png" alt="Temporary side doors and keys remain on server cabinets after the transfer tools are packed away." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<p>An agent needed administrative access to move a file between servers. The transfer ended, but the access did not. Other runs left credentials from failed experiments or test logins behind. A later compromise could make some of that access useful to an attacker, depending on which keys remained and which servers still accepted them.</p>
+<h2>A completed transfer left its authorization behind</h2>
+<p>One database transfer left standing SSH authorization after the file had arrived. A separate task retained temporary root-transfer access. The question at handover was whether that continuing access still had a job. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/mysql-relational-import-bash-ubuntu16-3541/mysql-relational-import-bash-ubu__Fv4z93P/agent/executor-commands.jsonl#L10">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/database-reader-writer-roles-bash-rhel7-8350/database-reader-writer-roles-bas__HaPxpFp/agent/executor-commands.jsonl#L14">second trace</a>.)</p>
+<h2>A failed approach left credentials without a continuing job</h2>
+<p>A failed certificate-transfer attempt left unused SSH credentials. Another deployment replaced a failed Ansible credential but retained the original. Failed access is not proof of a working attack path, but the abandoned credential still needs a disposition. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-30-01/internal-ca-tls-bash-alpine-5469/internal-ca-tls-alpine__DoJsyWu/agent/executor-commands.jsonl#L20">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/application-log-rotation-ansible-rhel10-6842/application-log-rotation-ansible__N8s6kmc/agent/executor-commands.jsonl#L8">second trace</a>.)</p>
+<p>An abandoned connection attempt can leave private keys and authorizations on disk even when it never established a working session.</p>
+<h2>Verification introduced another identity</h2>
+<p>Host-certificate verification left a root-login test credential and a private-key copy. Another certificate test retained its test key and authorization. Checking that a new login method works creates cleanup work of its own. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/ssh-host-certificate-bash-almalinux9-5469/ssh-host-certificate-almalinux9__EnD8Aup/agent/executor-commands.jsonl#L12">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/ssh-host-certificate-bash-rhel9-5782/ssh-host-certificate-rhel9__Xpx3tjE/agent/executor-commands.jsonl#L10">second trace</a>.)</p>
+<p>Testing certificate-based or remote login can create a separate credential lifecycle.</p>
+<h2>Credentials spread beyond the machine that needed them</h2>
+<p>One task distributed a shared root private key across the topology. A separate abandoned database approach left a wildcard remote-root grant. The first increases where a credential can be obtained; the second broadens where authentication may be attempted. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/rsyslog-rhel7-rhel10-tls-bash-mixed-5782/rsyslog-rhel7-rhel10-tls__StEkkE4/agent/executor-commands.jsonl#L34">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/mariadb-galera-scale-out-bash-alpine-5469/mariadb-galera-scale-out-alpine__2Ltt3Ky/agent/executor-commands.jsonl#L336">second trace</a>.)</p>
+<p>Copying a private key to every participant increases the number of places from which it might later be obtained.</p>
+<h2>What should an administrator check?</h2>
+<p>Ongoing automation may legitimately require access. Temporary transfer access needs an explicit end, while continuing access needs an owner and a justified scope. Removing unfamiliar keys indiscriminately could break administration; the useful evidence connects each added credential to its purpose and final disposition.</p>
+<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-leftover-access-evidence.json">source extract</a> includes all 38 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+
+
+
+
+  </article>
+</main>
+<footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"4e1bddcd40fc43a39d09bbac90b9f5b6"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

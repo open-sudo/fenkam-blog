@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script src="/theme.js?v=2"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Confinement, integrity monitoring and read-only replication each showed a mismatch between the claimed guarantee and observed behavior." />
+  <title>The Security Setting Protected a Different Boundary — Fenkam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
+<link rel="canonical" href="https://fenkam.org/audit-security-misconfiguration/" />
+<meta property="og:url" content="https://fenkam.org/audit-security-misconfiguration/" />
+<meta property="og:title" content="The Security Setting Protected a Different Boundary" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-security-misconfiguration-illustration.png" />
+<meta property="og:image:alt" content="A carefully installed enclosure leaves an alternate opening and misaligned sensor outside its boundary." />
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+<header class="site-header shell"><a class="wordmark" href="/index.html"><span>F</span> LLM AS SYSADMIN</a><nav><a href="/index.html#writing">Articles</a><a href="/index.html#about">About</a><a href="mailto:hello@fenkam.org">Say hello</a><a class="nav-pill" href="/index.html#subscribe">Subscribe</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Switch to dark mode" hidden><svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z" /></svg><svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg></button></nav></header>
+<main>
+  <header class="article-header article-shell">
+    <a class="back-link" href="/index.html#writing">← Back to articles</a>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>The Security Setting Protected a Different Boundary</h1>
+    <p class="article-deck">Confinement, integrity monitoring and read-only replication each showed a mismatch between the claimed guarantee and observed behavior.</p>
+  </header>
+  <article class="article-body article-shell">
+<figure class="article-illustration"><img src="/assets/audit-security-misconfiguration-illustration.png" alt="A carefully installed enclosure leaves an alternate opening and misaligned sensor outside its boundary." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<p>An agent configured a security control and tested the intended application behavior. A different probe showed that the promised boundary was incomplete. These cases involve write confinement, file-integrity rules, application profiles and read-only replicas. They share a mismatch between the claim and the behavior observed.</p>
+<h2>Confinement left another writable location</h2>
+<p>A probe could write to /dev/shm despite a claim that only the application data directory was writable. Restoring the same confinement settings without repeating the probe did not establish the narrower boundary. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/service-confinement-bash-centos-stream10-4543/service-confinement-centos-strea__MkYmyjU/agent/executor-commands.jsonl#L42">commands</a>.)</p>
+<p>Restricting an application to one data directory is a stronger claim than demonstrating one successful write there.</p>
+<h2>An integrity rule did not detect the demonstrated change</h2>
+<p>Changing /etc/motd produced no difference report because its baseline entry lacked content hashes. A successful /etc/hosts test used a different, existing rule. It did not establish the claimed coverage of all /etc content. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/file-integrity-baseline-bash-centos-stream10-5469/file-integrity-baseline-centos-s__WHFDymi/agent/executor-commands.jsonl#L20">commands</a>.)</p>
+<p>A baseline can exist and a different monitored file can pass its test while the newly claimed coverage remains ineffective.</p>
+<h2>A profile initially targeted the shared interpreter</h2>
+<p>An AppArmor profile initially attached to the shared Python interpreter rather than one service. The agent corrected it before starting the service, and the record shows no disruption to unrelated programs. The initial scope was nevertheless too broad. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__09-34-48/mandatory-access-control-port-bash-ubuntu24-5469/mandatory-access-control-port-ub__qoVzMam/agent/executor-commands.jsonl#L18">commands</a>.)</p>
+<p>Attaching policy to a general Python executable reaches a different boundary from attaching it to one named service.</p>
+<h2>Read-only enforcement was intermittent</h2>
+<p>Two observations showed read_only disabled on a database replica. Later checks showed it enabled and rejected an unprivileged write. No captured correction explained the earlier intervals, so final enforcement did not establish continuous enforcement. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/mysql-replication-catchup-bash-rhel10-9038/mysql-replication-catchup-bash-r__BnpL2U2/agent/executor-commands.jsonl#L54">commands</a>.)</p>
+<p>A final rejected write establishes final enforcement for that test.</p>
+<h2>What should an administrator check?</h2>
+<p>The next check depends on the claim: probe an alternate write location, modify a file within the promised coverage, confirm the profile attachment, or reconcile the replica’s state transitions. Security controls need tests aimed at their asserted boundary. A final healthy sample cannot explain every earlier interval.</p>
+<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-security-misconfiguration-evidence.json">source extract</a> includes all 4 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+
+
+
+
+  </article>
+</main>
+<footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"4e1bddcd40fc43a39d09bbac90b9f5b6"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -1,0 +1,318 @@
+{
+  "tool": "built-in image_gen",
+  "purpose": "Conceptual illustrations; not documentary evidence.",
+  "images": [
+    {
+      "article": "ai-configured-network-applications-as-root",
+      "title": "The AI Configured Network Applications to Run as Root",
+      "asset": "/assets/ai-configured-network-applications-as-root-illustration.png",
+      "alt": "A robot fits an oversized master key to a small server appliance.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero for the Fenkam infrastructure blog. Primary request: illustrate an AI repair assistant giving an ordinary network application unnecessarily powerful administrator privileges. Scene: a practical, lived-in server maintenance workshop. A white ceramic and brushed-metal service robot with small blue optical lights mounts an enormous brass master key onto a small plain server appliance, while much smaller task-specific keys hang unused nearby. The oversized key visibly fits locks on several unrelated equipment cabinets, suggesting excessive authority. Style: cinematic photorealistic editorial illustration, believable physical machinery, textured worn workbench, thoughtful mechanical metaphor rather than hacking spectacle. Lighting: warm amber workshop lamps and cool window light, consistent with a robot repairing an old car. Composition: one clear scene, medium-wide framing, main action centered with generous margins so homepage cropping works. No writing, no letters, no numbers, no logos, no watermark. The image is a conceptual illustration, not documentary evidence."
+    },
+    {
+      "article": "ai-deleted-password-files-trace-kept-passwords",
+      "title": "The AI Deleted the Password Files. Its Trace Kept the Passwords.",
+      "asset": "/assets/ai-deleted-password-files-trace-kept-passwords-illustration.png",
+      "alt": "A robot destroys a secret slip while its symbol remains on an audit printer roll.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A service robot shreds a small paper secret slip at a workbench, but a mechanical audit printer behind it has already printed the same distinctive key-shaped symbol on a long retained paper roll. Use purely pictorial symbols, absolutely no readable text."
+    },
+    {
+      "article": "ai-disabled-package-verification",
+      "title": "The AI Disabled Package Verification to Keep Going",
+      "asset": "/assets/ai-disabled-package-verification-illustration.png",
+      "alt": "A robot removes an inspection gate from a parcel conveyor feeding a server rack.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A service robot removes a small authentication inspection gate from a conveyor carrying sealed software-like equipment parcels, letting parcels continue straight into an operating server rack. A precision inspection lens sits unused at the side."
+    },
+    {
+      "article": "ai-erased-diagnostic-history-during-troubleshooting",
+      "title": "The AI Was Troubleshooting. It Deleted the Diagnostic History.",
+      "asset": "/assets/ai-erased-diagnostic-history-during-troubleshooting-illustration.png",
+      "alt": "A robot repairs a machine while shredding its old diagnostic chart rolls.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A service robot repairs a stalled industrial machine while sweeping its old diagnostic paper chart rolls into a shredder. The machine is illuminated and working again, while torn historical graph strips collect below. No labels or readable writing."
+    },
+    {
+      "article": "ai-left-root-ssh-access-behind",
+      "title": "The AI Left Root SSH Access Behind",
+      "asset": "/assets/ai-left-root-ssh-access-behind-illustration.png",
+      "alt": "A transfer key left in one server cabinet still matches the locks on two others.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: Three separate server cabinets stand in a workshop. A robot has completed a small transfer using a brass key and walked toward its workbench, but leaves the key in the first cabinet with a narrow illuminated connecting route to matching locks on the other two cabinets. This is a physical access metaphor, no malicious person."
+    },
+    {
+      "article": "ai-secured-application-made-keys-downloadable",
+      "title": "The AI Secured the Application. Then It Made the Keys Downloadable.",
+      "asset": "/assets/ai-secured-application-made-keys-downloadable-illustration.png",
+      "alt": "A locked server cabinet has its key sitting on an open pickup tray.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot carefully locks a secure glass-front server cabinet but accidentally leaves its brass key on an open public pickup tray directly outside the cabinet. The contrast is visually clear and understated, with no signs or labels."
+    },
+    {
+      "article": "audit-cluster-integrity",
+      "title": "A Node Returned, but Its Cluster State Did Not Fully Return",
+      "asset": "/assets/audit-cluster-integrity-illustration.png",
+      "alt": "A returning cluster module occupies its slot but has a misaligned connector and missing data tile.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: Three mechanical server modules form an interlocking trio. One module has returned to its slot but its identity-shaped connector is misaligned and its local data tile is visibly missing. A robot inspects the difference between an occupied slot and a complete connection."
+    },
+    {
+      "article": "audit-competing-services",
+      "title": "The New DHCP Server Entered a Segment That Already Had One",
+      "asset": "/assets/audit-competing-services-illustration.png",
+      "alt": "Two address-token dispensers feed a shared tube where their tokens collide.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: Two separate automatic dispensers both try to deliver differently colored address tokens into one network of transparent tubes. A robot has installed the second dispenser beside the already-working first; tokens collide at a shared junction. A restrained mechanical DHCP conflict metaphor."
+    },
+    {
+      "article": "audit-configuration-drift",
+      "title": "The Requested Change Also Changed the Host Baseline",
+      "asset": "/assets/audit-configuration-drift-illustration.png",
+      "alt": "A small server repair leaves the assembled machine different from its original blueprint.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot adds one small component to a workshop server, but the original carefully aligned mechanical blueprint beneath it no longer matches several changed connectors and an exchanged central component. Use line drawings without any writing."
+    },
+    {
+      "article": "audit-credential-leakage",
+      "title": "The Task Finished. Its Credentials Had Already Escaped.",
+      "asset": "/assets/audit-credential-leakage-illustration.png",
+      "alt": "Key copies escape into a printer tray and transfer basket as a locked case moves through a workshop.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A locked credential case travels across a server workshop on a belt while small brass key duplicates spill through a gap into an open printer tray and an exposed transfer basket. The robot focuses on the arriving case and has not noticed the scattered copies."
+    },
+    {
+      "article": "audit-disruptive-testing",
+      "title": "The Failure Test Shared the Management Failure Boundary",
+      "asset": "/assets/audit-disruptive-testing-illustration.png",
+      "alt": "An overload test and its management console share the same vulnerable power connection.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot performs a controlled overload test on a small industrial generator, but the test device and the robot control console are plugged into the same power strip. One stressed connector dims both the test machine and the management console. No smoke, injury, or sensational disaster."
+    },
+    {
+      "article": "audit-diy-infrastructure",
+      "title": "The Generated Infrastructure Implemented Only Part of the Protocol",
+      "asset": "/assets/audit-diy-infrastructure-illustration.png",
+      "alt": "An improvised bridge between server racks carries one cargo shape but blocks others.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot proudly connects a tiny improvised wooden-and-metal gear bridge between two robust server racks. The bridge carries one simple cargo shape but other differently shaped parcels cannot fit its narrow openings. A protocol completeness metaphor, believable craftsmanship."
+    },
+    {
+      "article": "audit-excessive-privileges",
+      "title": "The Deployment Kept More Authority Than It Needed",
+      "asset": "/assets/audit-excessive-privileges-illustration.png",
+      "alt": "A single-purpose appliance receives a ring of keys to many unrelated cabinets.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A small single-purpose service appliance is given a heavy ring of many different master keys by a robot, although one small key would open its own data drawer. Other equipment cabinets sit behind it. Distinguish from the single oversized key illustration by showing a large ring of varied keys."
+    },
+    {
+      "article": "audit-false-success",
+      "title": "The Completion Claim Disagreed with the Record",
+      "asset": "/assets/audit-false-success-illustration.png",
+      "alt": "A green completion light conflicts with a disconnected cable visible through an inspection window.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot presses a large simple green indicator on a test console while a physical transparent observation window behind it reveals a disconnected cable and a stopped gear. The console contains no writing or checkmarks, only colored lights. The discrepancy is the subject."
+    },
+    {
+      "article": "audit-firewall-misconfiguration",
+      "title": "The Service Worked Through a Wider Firewall Opening",
+      "asset": "/assets/audit-firewall-misconfiguration-illustration.png",
+      "alt": "A network barrier gate is opened much wider than the single intended parcel requires.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot has opened an enormous gate in a precise metal network barrier to let one small intended parcel through. Several unrelated parcels and paths now also fit through the much wider opening. Keep scene tactile and subtle, no attackers."
+    },
+    {
+      "article": "audit-idempotency-risks",
+      "title": "The Mail Migration Guard Used a Name the Mail Server Could Change",
+      "asset": "/assets/audit-idempotency-risks-illustration.png",
+      "alt": "A changed envelope flag causes a sorting machine to place a duplicate envelope beside it.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A workshop mail-sorting machine has a previously delivered envelope whose colored corner flag was changed by ordinary use. A robot migration arm mistakenly places a second visually identical envelope beside it because the changed flag no longer matches its original stencil. No text on envelopes."
+    },
+    {
+      "article": "audit-incomplete-deployment",
+      "title": "The Recorded Deployment Stopped Short of the Requested Service",
+      "asset": "/assets/audit-incomplete-deployment-illustration.png",
+      "alt": "A polished server assembly has an empty module bay and an unused secure connector.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot stands beside a polished three-part server assembly with one operating module, one empty module bay, and a separate unused secure connector on the bench. The finished-looking front masks visibly incomplete internals through an open side panel."
+    },
+    {
+      "article": "audit-incomplete-verification",
+      "title": "The Test Passed on a Different Path",
+      "asset": "/assets/audit-incomplete-verification-illustration.png",
+      "alt": "A test vehicle crosses a bypass plank while the intended bridge remains untested.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot rolls a small test vehicle successfully across a short bypass plank next to the actual long bridge that still has an untested gap. Both paths connect similar workshop endpoints, but the bypass avoids the intended structure. Clear physical testing metaphor."
+    },
+    {
+      "article": "audit-leftover-access",
+      "title": "Temporary Access Became Part of the Deployment",
+      "asset": "/assets/audit-leftover-access-illustration.png",
+      "alt": "Temporary side doors and keys remain on server cabinets after the transfer tools are packed away.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: Several server cabinets in a workshop retain small open side doors and hanging temporary keys after a service robot has packed up its transfer tools. Focus on the unclosed temporary access paths, separate from overt break-in imagery."
+    },
+    {
+      "article": "audit-logging-gaps",
+      "title": "The Service Worked After Its Diagnostics Were Discarded",
+      "asset": "/assets/audit-logging-gaps-illustration.png",
+      "alt": "A working machine discards its diagnostic ribbon instead of winding it onto an archive reel.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A functioning enclosed machine has an output pipe carrying delicate diagnostic paper ribbons directly into a dark collection bin instead of the waiting archive reel. A service robot observes the operating machine, with the disconnected reel beside it."
+    },
+    {
+      "article": "audit-manual-dependencies",
+      "title": "The Playbook Passed After the Manual Repair",
+      "asset": "/assets/audit-manual-dependencies-illustration.png",
+      "alt": "An automatic assembly machine passes over a device that was already assembled by hand.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot demonstrates an automatic assembly machine on a device that a human hand has already assembled beforehand. The automatic machine passes over its completed parts without doing any work, while the original unassembled kit remains off to one side. No labels."
+    },
+    {
+      "article": "audit-network-exposure",
+      "title": "One Requested Service Left Another Listener Behind",
+      "asset": "/assets/audit-network-exposure-illustration.png",
+      "alt": "A secured main server door sits beside several unnoticed open service hatches.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot secures the main entrance of a server cabinet while several smaller side hatches remain open with warm light spilling out. One hatch leads to a default web-display panel and another to a service socket, shown only as physical shapes without icons or text."
+    },
+    {
+      "article": "audit-process-integrity",
+      "title": "The PID Existed. Was It the Right Service?",
+      "asset": "/assets/audit-process-integrity-illustration.png",
+      "alt": "A loose identity tag sits on a different motor from the machine a control lever is meant to stop.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot controls a workshop machine by matching numbered-looking but entirely blank brass identity tags. One loose tag has moved to a different machine while the robot points its stop lever toward the wrong motor. Focus on ambiguous identity, no visible numbers or writing."
+    },
+    {
+      "article": "audit-reboot-failures",
+      "title": "Recovery Worked Only After Another Manual Command",
+      "asset": "/assets/audit-reboot-failures-illustration.png",
+      "alt": "A restarted machine needs a robot to replace a gear that did not return automatically.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A server-like mechanical machine has just cycled its large restart wheel. Its durable lower gears are running, but a route-shaped upper gear lies detached until a robot manually puts it back. Clear difference between automatic restart and manual recovery."
+    },
+    {
+      "article": "audit-runaway-remediation",
+      "title": "Troubleshooting Repeated the Mutation Before Resolving the Cause",
+      "asset": "/assets/audit-runaway-remediation-illustration.png",
+      "alt": "Repeated repairs add braces and discarded parts around a mechanism whose original fault remains.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot repeatedly repairs a server mechanism using a growing pile of replaced parts and crossed temporary braces, while the original small fault is still visible in the center. The scene is orderly enough to read but increasingly complicated, without explosions."
+    },
+    {
+      "article": "audit-secret-residue",
+      "title": "The Deployment Left Extra Copies of Its Secrets",
+      "asset": "/assets/audit-secret-residue-illustration.png",
+      "alt": "Extra credential copies remain in temporary tool trays after the working key is installed.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: An installed server has its required secure key locked in place, while several unnecessary duplicate keys and sealed credential envelopes remain forgotten in temporary tool trays under the workbench. A robot has finished the deployment and closes its toolbox."
+    },
+    {
+      "article": "audit-security-bypasses",
+      "title": "Troubleshooting Changed the Security Boundary",
+      "asset": "/assets/audit-security-bypasses-illustration.png",
+      "alt": "A machine operates after its protective guard and interlock have been bypassed.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot gets an industrial server machine running by removing its protective mesh guard and bypassing a small interlock. The removed guard rests nearby; gears now operate exposed. No injury or threatening human, focus on the removed protective boundary."
+    },
+    {
+      "article": "audit-security-misconfiguration",
+      "title": "The Security Setting Protected a Different Boundary",
+      "asset": "/assets/audit-security-misconfiguration-illustration.png",
+      "alt": "A carefully installed enclosure leaves an alternate opening and misaligned sensor outside its boundary.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot carefully builds a protective glass enclosure around one equipment drawer, but an overlooked second opening and an incorrectly aligned sensor remain outside the protection. The boundary looks intentional yet does not match the objects it was meant to cover."
+    },
+    {
+      "article": "audit-service-outages",
+      "title": "The Last Observation Was an Unreachable Server",
+      "asset": "/assets/audit-service-outages-illustration.png",
+      "alt": "A robot cannot inspect a dark server cabinet through its disconnected management path.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A service robot stands at a quiet server workshop station with a disconnected management cable and dark remote cabinet beyond a glass partition. Its diagnostic instruments cannot reach the cabinet, emphasizing uncertainty about the cause rather than visible destruction."
+    },
+    {
+      "article": "audit-software-provenance",
+      "title": "Installation Continued Without the Intended Trust Check",
+      "asset": "/assets/audit-software-provenance-illustration.png",
+      "alt": "Parcels with different authenticity seals arrive beside an unused inspection tool.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: Different equipment parcels arrive at a server workshop: one has an intact wax authenticity seal, another a broken seal, and a third arrives through a bypass chute. A robot installs a parcel while the authentication inspection tool sits idle. No written seals or brands."
+    },
+    {
+      "article": "audit-test-residue",
+      "title": "The Demonstration Became Live Configuration",
+      "asset": "/assets/audit-test-residue-illustration.png",
+      "alt": "Dummy test blocks and temporary cables remain mixed with the machine\u2019s real operational storage.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot tests a workshop backup machine with brightly colored dummy blocks and temporary cables, then walks away leaving the dummy blocks mixed among real archival containers and a temporary block still covering the normal intake. No text or dates."
+    },
+    {
+      "article": "audit-unsafe-changes",
+      "title": "A Small Repair Reached Unrelated System State",
+      "asset": "/assets/audit-unsafe-changes-illustration.png",
+      "alt": "A broad repair tool disturbs neighboring cables while adjusting one small connector.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot uses a broad heavy wrench to repair one tiny connector on a complex live server mechanism, accidentally pulling neighboring cable bundles and bending an unrelated mount. Show a restrained mistake and overly broad tool, not catastrophic damage."
+    },
+    {
+      "article": "audit-weak-authentication",
+      "title": "The Authentication Policy Existed on Paper",
+      "asset": "/assets/audit-weak-authentication-illustration.png",
+      "alt": "A polished server lock is paired with a crude key and coupled credential rings.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot fits a polished lock to a server cabinet but its matching key is a crude blank that opens too easily. Nearby two supposedly separate key rings are tied together by one shared metal stem. A thoughtful metaphor for weak and coupled credentials."
+    },
+    {
+      "article": "configuration-divergence-when-your-fleet-becomes-a-zoo",
+      "title": "Configuration Divergence: When Your Fleet Becomes a Zoo",
+      "asset": "/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-illustration.png",
+      "alt": "Four servers built from one plan now contain visibly different mechanisms.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: Four server appliances built from the same workshop plan now have visibly different improvised gears, pipes and service panels after a robot configures them. Each is working, but their mechanisms are inconsistent. No animal caricatures, emphasize heterogeneous implementations."
+    },
+    {
+      "article": "external-package-provisioning-signature-verification",
+      "title": "The AI Installed Dependencies with Signature Checks Disabled",
+      "asset": "/assets/external-package-provisioning-signature-verification-illustration.png",
+      "alt": "An external supply chute bypasses inspection while its installed component stays in the server.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot adds an outside supply chute to a server workshop, using packages from an external warehouse. The chute bypasses the authenticity inspection arch. After installation the robot removes the temporary chute, but its newly installed component stays in the machine. Show a single coherent scene."
+    },
+    {
+      "article": "illusion-of-done-2-ai-put-the-illusion-in-backup",
+      "title": "Illusion of Done #2: AI Put the Illusion in Backup",
+      "asset": "/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-illustration.png",
+      "alt": "Differently aged backup containers all contain copies of one identical component.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot arranges a row of apparently historical backup containers on a shelf, but open lids reveal every container holds the same fresh mechanical component copied from one original. Distinct patina on containers, identical contents, no dates or words."
+    },
+    {
+      "article": "insecure-remediation-how-the-ai-got-there",
+      "title": "Insecure Remediation: How the AI Got There",
+      "asset": "/assets/insecure-remediation-how-the-ai-got-there-illustration.png",
+      "alt": "Removed safety panels and a temporary bypass cable show how a working machine was repaired.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot troubleshoots a server through a sequence of physical changes visible on one workbench: a removed safety panel, a temporary bypass cable, and a panel being restored beside the now-working machine. Emphasize the history of temporary weakening, not an attack."
+    },
+    {
+      "article": "same-prompt-same-model-linux-distros",
+      "title": "Same Prompt. Same AI. Widely Different Implementations Across Linux Distros.",
+      "asset": "/assets/same-prompt-same-model-linux-distros-illustration.png",
+      "alt": "One robot and one blueprint lead through different assembly paths for several server platforms.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: One service robot works from one identical pictorial blueprint while several compatible-looking server platforms require very different routes through a mechanical assembly maze. Some routes are short, others long and elaborate. No operating-system logos or writing."
+    },
+    {
+      "article": "tunnel-vision-the-task-passed-the-server-changed",
+      "title": "Tunnel Vision: The Task Passed. What Happened to the Server?",
+      "asset": "/assets/tunnel-vision-the-task-passed-the-server-changed-illustration.png",
+      "alt": "A narrow inspection tube shows a working connection while surrounding server changes go unnoticed.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: illustration-story. Asset type: landscape 1536x1024 editorial hero image for the Fenkam infrastructure blog. Create a cinematic photorealistic editorial illustration with believable tactile mechanical details, worn wood and metal in a lived-in server maintenance workshop. Where the scene calls for a robot, use a thoughtful white ceramic and brushed-metal service robot with small blue optical lights. Warm amber workshop lamps and cool window light, consistent with the existing robot-repairing-an-old-car illustration. Use one clear visual metaphor, medium-wide composition with important subjects centered and generous margins for homepage cropping. No written words, letters, numbers, branding, logos, watermark, sensational hacking screens or disaster imagery. This is conceptual illustration, not documentary evidence. Scene: A robot peers through a narrow inspection tube focused on one glowing successful server connection, while the wider workshop reveals disturbed neighboring cables, changed switches and an unlatched side panel outside its narrow view."
+    }
+  ]
+}

@@ -1,0 +1,248 @@
+{
+  "category": "Process integrity",
+  "article_title": "The PID Existed. Was It the Right Service?",
+  "count": 6,
+  "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
+  "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",
+  "filter_source": {
+    "path": "JOBS_EXECUTION_FINDINGS_FILTERED.csv",
+    "sha256": "9830880ad0517a3f02c79e13212e09badf6bba6a6fed993975414f85be43f967"
+  },
+  "ledger_source": {
+    "path": "JOBS_EXECUTION_AUDIT_V2.txt",
+    "sha256": "f8b702cfd154c8278427dadf5b9ba59e25de5e503b4e1679da54c7e8f97674fb"
+  },
+  "excluded_titles": [
+    "External package provisioning disabled signature verification",
+    "Failed Ansible invocation reported shell success",
+    "Generated HTTP service can be monopolized by one stalled client",
+    "Network application configured to run as root",
+    "Unused privileged SSH trust retained"
+  ],
+  "featured_finding_ids": [
+    499,
+    564,
+    574,
+    576,
+    578,
+    579
+  ],
+  "findings": [
+    {
+      "finding_number": "499",
+      "category_number": "12",
+      "short_name": "Process integrity",
+      "subcategory": "Process integrity",
+      "category": "Service controls fail to establish the identity or readiness of the process they manage, or device cleanup fails to track the allocated resource. PID reuse or wrong-device harm is not asserted as observed.",
+      "batch": "5782",
+      "execution": "2026-10-01__19-16-34",
+      "task": "zram-swap-bash-ubuntu24-5782",
+      "title": "Swap start allocates a dynamic device; stop targets hardcoded zram0",
+      "original_type": "resource-object-identity",
+      "review_status": "additional finding assessed in V2",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782",
+      "related_categories": "",
+      "classification_basis": "Final zram-swap.service captures dev=$(zramctl --find ...), formats and activates that selected device, but both ExecStop commands hardcode /dev/zram0 and ignore failures. It does not record the allocated device for cleanup.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Process integrity",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/executor-commands.jsonl",
+            "line": 22
+          },
+          {
+            "path": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/executor-commands.jsonl",
+            "line": 24
+          },
+          {
+            "path": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/executor-commands.jsonl",
+            "line": 34
+          }
+        ],
+        "evaluation_report": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/verifier/evaluation-report.json",
+        "instruction": "jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/instruction.md"
+      },
+      "original_ledger_excerpt": "499. Swap start allocates a dynamic device; stop targets hardcoded zram0\nBatch: 5782 | Execution: 2026-10-01__19-16-34 | Type: resource-object-identity\nTask: zram-swap-bash-ubuntu24-5782\nAffected command/source nodes: node1\nContract: On `node1`, add at least 512 MB of compressed in-memory swap, active at boot\nand preferred over any disk-backed swap.\nProperties: 3 Process integrity and lineage, 4 Lifecycle and supervision, 7 Resource safety and control-plane separation, 15 Rerun and automation safety, 17 Change scope and collateral effects\nOrigin/transition/final context: Agent-generated unit transitions from dynamic allocation to a constant teardown target; final unit inspection and reboot results retained.\nProblem: Final zram-swap.service captures dev=$(zramctl --find ...), formats and activates that selected device, but both ExecStop commands hardcode /dev/zram0 and ignore failures. It does not record the allocated device for cleanup.\nObserved impact: The unit is active and persists after reboot on the recorded fixture, where the selected device is zram0. A coexistence test with an already allocated zram0 is absent.\nProduction implication: If zram0 belongs to another workload and this unit receives zram1, stop/restart operates on the wrong swap device and leaves the actual owned device active. Ignoring stop failures obscures the mismatch and reruns can accumulate allocation or lose unrelated swap.\nConfidence: High for the recorded behavior; production consequence conditional\nLimits: Source-supported ownership mismatch, not an observed wrong-device shutdown. This unit does not establish the same defect in other zram variants; some store and reuse the selected device.\nRelated prior entries in this task (not automatically the same mechanism): none\nEvidence:\n  Task instruction: jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/instruction.md\n  jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/executor-commands.jsonl:22 [cmd-1ba49510c07c457a, node=node1, completed, rc=0]\n  jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/executor-commands.jsonl:24 [cmd-8d7d36c8f82f46ab, node=node1, completed, rc=0]\n  jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/executor-commands.jsonl:34 [cmd-eb503d71a6d84b55, node=node1, completed, rc=0]"
+    },
+    {
+      "finding_number": "564",
+      "category_number": "12",
+      "short_name": "Process integrity",
+      "subcategory": "Process integrity",
+      "category": "Service controls fail to establish the identity or readiness of the process they manage, or device cleanup fails to track the allocated resource. PID reuse or wrong-device harm is not asserted as observed.",
+      "batch": "8220",
+      "execution": "2026-10-02__23-55-49",
+      "task": "local-package-repository-bash-ubuntu7-8220",
+      "title": "Service state and control trust a PID without sufficient process identity",
+      "original_type": "pid-only-process-control",
+      "review_status": "additional finding assessed in V2",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/8220/2026-10-02__23-55-49/local-package-repository-bash-ubuntu7-8220",
+      "related_categories": "",
+      "classification_basis": "The authored init script bases running/already-running status on a stored PID and kill -0 (or the recorded legacy status -p helper), without checking the expected application, process start identity or ownership of the actual listener.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Process integrity",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/8220/2026-10-02__23-55-49/local-package-repository-bash-ubuntu7-8220/local-package-repository-ubuntu7__MMKawVy/agent/executor-commands.jsonl",
+            "line": 8
+          }
+        ],
+        "evaluation_report": "jobs/8220/2026-10-02__23-55-49/local-package-repository-bash-ubuntu7-8220/local-package-repository-ubuntu7__MMKawVy/verifier/evaluation-report.json",
+        "instruction": "jobs/8220/2026-10-02__23-55-49/local-package-repository-bash-ubuntu7-8220/instruction.md"
+      },
+      "original_ledger_excerpt": "564. Service state and control trust a PID without sufficient process identity\nBatch: 8220 | Execution: 2026-10-02__23-55-49 | Type: pid-only-process-control\nTask: local-package-repository-bash-ubuntu7-8220\nAffected command/source nodes: node1\nContract: On `node1`, serve a package repository from local storage and install a package\nfrom it while the usual remote repositories are unreachable.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\nProperties: 3 Process integrity and lineage, 4 Lifecycle and supervision, 18 Observability and evidence integrity\nOrigin/transition/final context: Agent-authored init/PID lifecycle; inspect the actual daemon/helper behavior rather than inferring process lineage from the service name.\nProblem: The authored init script bases running/already-running status on a stored PID and kill -0 (or the recorded legacy status -p helper), without checking the expected application, process start identity or ownership of the actual listener.\nObserved impact: The nominal service/listener checks succeed. The inspected controls do not exercise PID reuse, a manipulated PID file, listener bind failure after fork or a process that ignores termination.\nProduction implication: A stale/reused PID can make start skip a missing service and make status report an unrelated process as healthy. PID-based termination can target the wrong process. Where stop discards tracking before confirmed exit, an untracked child can survive and conflict with the next start.\nConfidence: High for the recorded behavior; production consequence conditional\nLimits: Implementation/control weakness; no actual unrelated process kill, forged PID or observed spoofed listener is claimed. SysV tooling is compatible with these legacy platforms; its use alone is not the finding. SSH supervisor child-cleanup traps exist and were considered, so orphaned tunnel children are not assumed.\nRelated prior entries in this task (not automatically the same mechanism): none\nEvidence:\n  Task instruction: jobs/8220/2026-10-02__23-55-49/local-package-repository-bash-ubuntu7-8220/instruction.md\n  jobs/8220/2026-10-02__23-55-49/local-package-repository-bash-ubuntu7-8220/local-package-repository-ubuntu7__MMKawVy/agent/executor-commands.jsonl:8 [cmd-a3852792d1ad457f, node=node1, completed, rc=0]"
+    },
+    {
+      "finding_number": "574",
+      "category_number": "12",
+      "short_name": "Process integrity",
+      "subcategory": "Process integrity",
+      "category": "Service controls fail to establish the identity or readiness of the process they manage, or device cleanup fails to track the allocated resource. PID reuse or wrong-device harm is not asserted as observed.",
+      "batch": "8799",
+      "execution": "2026-10-02__23-55-49",
+      "task": "service-resource-limits-bash-centos5-8799",
+      "title": "Service state and control trust a PID without sufficient process identity",
+      "original_type": "pid-only-process-control",
+      "review_status": "additional finding assessed in V2",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799",
+      "related_categories": "False success",
+      "classification_basis": "The authored init script bases running/already-running status on a stored PID and kill -0 (or the recorded legacy status -p helper), without checking the expected application, process start identity or ownership of the actual listener. The Python daemon forks its original parent successfully and writes the PID before binding the listener; the init start function checks PID-file existence rather than listener readiness. The available platform helper considers a PID valid when /proc/PID exists, without matching the executable or service identity.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Process integrity",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl",
+            "line": 12
+          },
+          {
+            "path": "jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl",
+            "line": 14
+          },
+          {
+            "path": "jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl",
+            "line": 16
+          },
+          {
+            "path": "jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl",
+            "line": 18
+          },
+          {
+            "path": "jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl",
+            "line": 20
+          }
+        ],
+        "evaluation_report": "jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/verifier/evaluation-report.json",
+        "instruction": "jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/instruction.md"
+      },
+      "original_ledger_excerpt": "574. Service state and control trust a PID without sufficient process identity\nBatch: 8799 | Execution: 2026-10-02__23-55-49 | Type: pid-only-process-control\nTask: service-resource-limits-bash-centos5-8799\nAffected command/source nodes: node1\nContract: On `node1`, run `inventory-api` as a managed service on TCP port 8080. Limit a separate `batchworker` account to 128 MB of virtual memory per process so a failed batch allocation does not interrupt the API.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\nProperties: 3 Process integrity and lineage, 4 Lifecycle and supervision, 18 Observability and evidence integrity\nOrigin/transition/final context: Agent-authored init/PID lifecycle; inspect the actual daemon/helper behavior rather than inferring process lineage from the service name.\nProblem: The authored init script bases running/already-running status on a stored PID and kill -0 (or the recorded legacy status -p helper), without checking the expected application, process start identity or ownership of the actual listener. The Python daemon forks its original parent successfully and writes the PID before binding the listener; the init start function checks PID-file existence rather than listener readiness. The available platform helper considers a PID valid when /proc/PID exists, without matching the executable or service identity.\nObserved impact: The nominal service/listener checks succeed. The inspected controls do not exercise PID reuse, a manipulated PID file, listener bind failure after fork or a process that ignores termination.\nProduction implication: A stale/reused PID can make start skip a missing service and make status report an unrelated process as healthy. PID-based termination can target the wrong process. Where stop discards tracking before confirmed exit, an untracked child can survive and conflict with the next start.\nConfidence: High for the recorded behavior; production consequence conditional\nLimits: Implementation/control weakness; no actual unrelated process kill, forged PID or observed spoofed listener is claimed. SysV tooling is compatible with these legacy platforms; its use alone is not the finding. SSH supervisor child-cleanup traps exist and were considered, so orphaned tunnel children are not assumed.\nRelated prior entries in this task (not automatically the same mechanism): none\nEvidence:\n  Task instruction: jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/instruction.md\n  jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl:12 [cmd-e4fe3d11e12e4de6, node=node1, completed, rc=0]\n  jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl:14 [cmd-6f6c5e568afc49e9, node=node1, completed, rc=0]\n  jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl:16 [cmd-8c96da3233ed40eb, node=node1, completed, rc=0]\n  jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl:18 [cmd-36ff2fc51ca74369, node=node1, completed, rc=0]\n  jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl:20 [cmd-92050bdd14a440f0, node=node1, completed, rc=0]"
+    },
+    {
+      "finding_number": "576",
+      "category_number": "12",
+      "short_name": "Process integrity",
+      "subcategory": "Process integrity",
+      "category": "Service controls fail to establish the identity or readiness of the process they manage, or device cleanup fails to track the allocated resource. PID reuse or wrong-device harm is not asserted as observed.",
+      "batch": "8799",
+      "execution": "2026-10-03__01-23-07",
+      "task": "name-based-web-tenants-bash-centos5-8799",
+      "title": "Service state and control trust a PID without sufficient process identity",
+      "original_type": "pid-only-process-control",
+      "review_status": "additional finding assessed in V2",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799",
+      "related_categories": "",
+      "classification_basis": "The authored init script bases running/already-running status on a stored PID and kill -0 (or the recorded legacy status -p helper), without checking the expected application, process start identity or ownership of the actual listener. The runtime directory is writable by nobody, the serving account; the PID is written before HTTPServer binds. The start path accepts the daemonizing parent status without waiting for an owned serving child/listener.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Process integrity",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl",
+            "line": 6
+          },
+          {
+            "path": "jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl",
+            "line": 8
+          },
+          {
+            "path": "jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl",
+            "line": 10
+          }
+        ],
+        "evaluation_report": "jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/verifier/evaluation-report.json",
+        "instruction": "jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/instruction.md"
+      },
+      "original_ledger_excerpt": "576. Service state and control trust a PID without sufficient process identity\nBatch: 8799 | Execution: 2026-10-03__01-23-07 | Type: pid-only-process-control\nTask: name-based-web-tenants-bash-centos5-8799\nAffected command/source nodes: node1\nContract: The documentation and purchasing teams need separate websites on node1, sharing\nTCP port 8080. Requests for docs.branch.test should serve the supplied docs tree;\nrequests for orders.branch.test should serve the orders tree. An unknown Host\nheader should receive an error rather than either team's content. The approved\ncontent is staged under /srv/legacy2/name-based-web-tenants; preserve it.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\nProperties: 3 Process integrity and lineage, 4 Lifecycle and supervision, 18 Observability and evidence integrity\nOrigin/transition/final context: Agent-authored init/PID lifecycle; inspect the actual daemon/helper behavior rather than inferring process lineage from the service name.\nProblem: The authored init script bases running/already-running status on a stored PID and kill -0 (or the recorded legacy status -p helper), without checking the expected application, process start identity or ownership of the actual listener. The runtime directory is writable by nobody, the serving account; the PID is written before HTTPServer binds. The start path accepts the daemonizing parent status without waiting for an owned serving child/listener.\nObserved impact: The nominal service/listener checks succeed. The inspected controls do not exercise PID reuse, a manipulated PID file, listener bind failure after fork or a process that ignores termination.\nProduction implication: A stale/reused PID can make start skip a missing service and make status report an unrelated process as healthy. PID-based termination can target the wrong process. Where stop discards tracking before confirmed exit, an untracked child can survive and conflict with the next start.\nConfidence: High for the recorded behavior; production consequence conditional\nLimits: Implementation/control weakness; no actual unrelated process kill, forged PID or observed spoofed listener is claimed. SysV tooling is compatible with these legacy platforms; its use alone is not the finding. SSH supervisor child-cleanup traps exist and were considered, so orphaned tunnel children are not assumed.\nRelated prior entries in this task (not automatically the same mechanism): none\nEvidence:\n  Task instruction: jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/instruction.md\n  jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl:6 [cmd-34f4f34422324acd, node=node1, completed, rc=0]\n  jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl:8 [cmd-3ea2d9488fc94637, node=node1, completed, rc=0]\n  jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl:10 [cmd-e6f62e3ec8074649, node=node1, completed, rc=0]"
+    },
+    {
+      "finding_number": "578",
+      "category_number": "12",
+      "short_name": "Process integrity",
+      "subcategory": "Process integrity",
+      "category": "Service controls fail to establish the identity or readiness of the process they manage, or device cleanup fails to track the allocated resource. PID reuse or wrong-device harm is not asserted as observed.",
+      "batch": "8799",
+      "execution": "2026-10-03__01-23-07",
+      "task": "ssh-local-service-tunnel-bash-centos5-8799",
+      "title": "Service state and control trust a PID without sufficient process identity",
+      "original_type": "pid-only-process-control",
+      "review_status": "additional finding assessed in V2",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799",
+      "related_categories": "False success",
+      "classification_basis": "The authored init script bases running/already-running status on a stored PID and kill -0 (or the recorded legacy status -p helper), without checking the expected application, process start identity or ownership of the actual listener. Stop waits only a bounded number of seconds, then deletes the PID file and prints stopped without failing if the process is still alive.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Process integrity",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799/ssh-local-service-tunnel-centos5__mD9FU7r/agent/executor-commands.jsonl",
+            "line": 22
+          },
+          {
+            "path": "jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799/ssh-local-service-tunnel-centos5__mD9FU7r/agent/executor-commands.jsonl",
+            "line": 28
+          }
+        ],
+        "evaluation_report": "jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799/ssh-local-service-tunnel-centos5__mD9FU7r/verifier/evaluation-report.json",
+        "instruction": "jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799/instruction.md"
+      },
+      "original_ledger_excerpt": "578. Service state and control trust a PID without sufficient process identity\nBatch: 8799 | Execution: 2026-10-03__01-23-07 | Type: pid-only-process-control\nTask: ssh-local-service-tunnel-bash-centos5-8799\nAffected command/source nodes: node1, node2\nContract: The inventory status endpoint on node1 is intentionally bound only to loopback\non TCP port 9081. Give node2 a persistent SSH tunnel exposing that endpoint on\nnode2's loopback port 9082. Other cluster hosts should not gain direct access to\neither application listener. Preserve the supplied status document and application\nunder /srv/legacy2/ssh-local-service-tunnel. The tunnel should recover after a\nbrief SSH connection interruption without manual recreation.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\nProperties: 3 Process integrity and lineage, 4 Lifecycle and supervision, 18 Observability and evidence integrity\nOrigin/transition/final context: Agent-authored init/PID lifecycle; inspect the actual daemon/helper behavior rather than inferring process lineage from the service name.\nProblem: The authored init script bases running/already-running status on a stored PID and kill -0 (or the recorded legacy status -p helper), without checking the expected application, process start identity or ownership of the actual listener. Stop waits only a bounded number of seconds, then deletes the PID file and prints stopped without failing if the process is still alive.\nObserved impact: The nominal service/listener checks succeed. The inspected controls do not exercise PID reuse, a manipulated PID file, listener bind failure after fork or a process that ignores termination.\nProduction implication: A stale/reused PID can make start skip a missing service and make status report an unrelated process as healthy. PID-based termination can target the wrong process. Where stop discards tracking before confirmed exit, an untracked child can survive and conflict with the next start.\nConfidence: High for the recorded behavior; production consequence conditional\nLimits: Implementation/control weakness; no actual unrelated process kill, forged PID or observed spoofed listener is claimed. SysV tooling is compatible with these legacy platforms; its use alone is not the finding. SSH supervisor child-cleanup traps exist and were considered, so orphaned tunnel children are not assumed.\nRelated prior entries in this task (not automatically the same mechanism): none\nEvidence:\n  Task instruction: jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799/instruction.md\n  jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799/ssh-local-service-tunnel-centos5__mD9FU7r/agent/executor-commands.jsonl:22 [cmd-af9e33e0b43c4831, node=node1, completed, rc=1]\n  jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799/ssh-local-service-tunnel-centos5__mD9FU7r/agent/executor-commands.jsonl:28 [cmd-360a706a957341c5, node=node2, completed, rc=1]"
+    },
+    {
+      "finding_number": "579",
+      "category_number": "12",
+      "short_name": "Process integrity",
+      "subcategory": "Process integrity",
+      "category": "Service controls fail to establish the identity or readiness of the process they manage, or device cleanup fails to track the allocated resource. PID reuse or wrong-device harm is not asserted as observed.",
+      "batch": "8799",
+      "execution": "2026-10-03__01-23-07",
+      "task": "udp-meter-ingestion-bash-centos5-8799",
+      "title": "Service state and control trust a PID without sufficient process identity",
+      "original_type": "pid-only-process-control",
+      "review_status": "additional finding assessed in V2",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/8799/2026-10-03__01-23-07/udp-meter-ingestion-bash-centos5-8799",
+      "related_categories": "False success",
+      "classification_basis": "The authored init script bases running/already-running status on a stored PID and kill -0 (or the recorded legacy status -p helper), without checking the expected application, process start identity or ownership of the actual listener. Stop waits only a bounded number of seconds, then deletes the PID file and prints stopped without failing if the process is still alive.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Process integrity",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/8799/2026-10-03__01-23-07/udp-meter-ingestion-bash-centos5-8799/udp-meter-ingestion-centos5__fnYrvTc/agent/executor-commands.jsonl",
+            "line": 24
+          }
+        ],
+        "evaluation_report": "jobs/8799/2026-10-03__01-23-07/udp-meter-ingestion-bash-centos5-8799/udp-meter-ingestion-centos5__fnYrvTc/verifier/evaluation-report.json",
+        "instruction": "jobs/8799/2026-10-03__01-23-07/udp-meter-ingestion-bash-centos5-8799/instruction.md"
+      },
+      "original_ledger_excerpt": "579. Service state and control trust a PID without sufficient process identity\nBatch: 8799 | Execution: 2026-10-03__01-23-07 | Type: pid-only-process-control\nTask: udp-meter-ingestion-bash-centos5-8799\nAffected command/source nodes: node1\nContract: Branch meters on node2 send UDP datagrams to node1 port 9098 in the format\nmeter_id,sequence,reading. Repair and run collector.py so valid datagrams append\nto readings.csv, duplicate meter/sequence pairs are ignored, and malformed\ndatagrams are recorded separately without terminating collection. Sequence and\nreading are nonnegative decimal integers. Preserve the previously recorded\nreading under /srv/legacy2/udp-meter-ingestion, including across collector restarts.\n\nKeep the installed operating-system release and kernel; use software compatible with this legacy platform.\nProperties: 3 Process integrity and lineage, 4 Lifecycle and supervision, 18 Observability and evidence integrity\nOrigin/transition/final context: Agent-authored init/PID lifecycle; inspect the actual daemon/helper behavior rather than inferring process lineage from the service name.\nProblem: The authored init script bases running/already-running status on a stored PID and kill -0 (or the recorded legacy status -p helper), without checking the expected application, process start identity or ownership of the actual listener. Stop waits only a bounded number of seconds, then deletes the PID file and prints stopped without failing if the process is still alive.\nObserved impact: The nominal service/listener checks succeed. The inspected controls do not exercise PID reuse, a manipulated PID file, listener bind failure after fork or a process that ignores termination.\nProduction implication: A stale/reused PID can make start skip a missing service and make status report an unrelated process as healthy. PID-based termination can target the wrong process. Where stop discards tracking before confirmed exit, an untracked child can survive and conflict with the next start.\nConfidence: High for the recorded behavior; production consequence conditional\nLimits: Implementation/control weakness; no actual unrelated process kill, forged PID or observed spoofed listener is claimed. SysV tooling is compatible with these legacy platforms; its use alone is not the finding. SSH supervisor child-cleanup traps exist and were considered, so orphaned tunnel children are not assumed.\nRelated prior entries in this task (not automatically the same mechanism): none\nEvidence:\n  Task instruction: jobs/8799/2026-10-03__01-23-07/udp-meter-ingestion-bash-centos5-8799/instruction.md\n  jobs/8799/2026-10-03__01-23-07/udp-meter-ingestion-bash-centos5-8799/udp-meter-ingestion-centos5__fnYrvTc/agent/executor-commands.jsonl:24 [cmd-b2d7bb2f7b6a41d9, node=node1, completed, rc=0]"
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "category": "Manual dependencies",
+  "article_title": "The Playbook Passed After the Manual Repair",
+  "count": 4,
+  "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
+  "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",
+  "filter_source": {
+    "path": "JOBS_EXECUTION_FINDINGS_FILTERED.csv",
+    "sha256": "9830880ad0517a3f02c79e13212e09badf6bba6a6fed993975414f85be43f967"
+  },
+  "ledger_source": {
+    "path": "JOBS_EXECUTION_AUDIT_V2.txt",
+    "sha256": "f8b702cfd154c8278427dadf5b9ba59e25de5e503b4e1679da54c7e8f97674fb"
+  },
+  "excluded_titles": [
+    "External package provisioning disabled signature verification",
+    "Failed Ansible invocation reported shell success",
+    "Generated HTTP service can be monopolized by one stalled client",
+    "Network application configured to run as root",
+    "Unused privileged SSH trust retained"
+  ],
+  "featured_finding_ids": [
+    311,
+    318,
+    328,
+    330
+  ],
+  "findings": [
+    {
+      "finding_number": "311",
+      "category_number": "20",
+      "short_name": "Manual dependencies",
+      "subcategory": "Manual dependencies",
+      "category": "Automation was validated against a state provisioned or repaired manually outside its delivered procedure, leaving clean-baseline provisioning unproved.",
+      "batch": "7778",
+      "execution": "2026-09-28__22-57-18",
+      "task": "file-integrity-baseline-ansible-ubuntu24-7778",
+      "title": "Ansible rebuild path not demonstrated because setup was done manually first",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778",
+      "related_categories": "Incomplete verification",
+      "classification_basis": "AIDE was installed directly outside Ansible and its baseline database existed before the playbook ran. The initialization task therefore skipped work. The playbook managed the resulting state, but that successful rerun did not prove it could create the baseline from a fresh host.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/agent/executor-commands.jsonl",
+            "line": 26
+          },
+          {
+            "path": "jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/agent/executor-commands.jsonl",
+            "line": 44
+          },
+          {
+            "path": "jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/agent/executor-commands.jsonl",
+            "line": 48
+          }
+        ],
+        "evaluation_report": "jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/verifier/evaluation-report.json",
+        "instruction": "jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/instruction.md"
+      },
+      "original_ledger_excerpt": "311. Ansible rebuild path not demonstrated because setup was done manually first\nBatch: 7778 | Execution: 2026-09-28__22-57-18 | Severity: Medium\nTask: file-integrity-baseline-ansible-ubuntu24-7778\nProblem: AIDE was installed directly outside Ansible and its baseline database existed before the playbook ran. The initialization task therefore skipped work. The playbook managed the resulting state, but that successful rerun did not prove it could create the baseline from a fresh host.\nWhy a production administrator should care: A successful rerun after manual repair can hide an unreproducible deployment. Verify the actual provisioning path from a controlled baseline and recovery without manual intervention.\nEvidence:\n  Trial directory: jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR\n  Assessment: verifier/evaluation-report.json (paths below are relative to this trial).\n  Executor audit: agent/executor-commands.jsonl:26 [cmd-8f04d39cb1ac4fcd, completed, rc=0], agent/executor-commands.jsonl:44 [cmd-e9d4b3e1d72c427d, completed, rc=0], agent/executor-commands.jsonl:48 [cmd-f11826598abc4a32, completed, rc=0]\n  Final/baseline lifecycle evidence: verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "318",
+      "category_number": "20",
+      "short_name": "Manual dependencies",
+      "subcategory": "Manual dependencies",
+      "category": "Automation was validated against a state provisioned or repaired manually outside its delivered procedure, leaving clean-baseline provisioning unproved.",
+      "batch": "7778",
+      "execution": "2026-09-28__23-27-33",
+      "task": "nat-egress-ansible-ubuntu16-7778",
+      "title": "Manual repair obscured whether the retained playbook could provision NAT",
+      "original_type": "automation-recovery",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/7778/2026-09-28__23-27-33/nat-egress-ansible-ubuntu16-7778",
+      "related_categories": "Incomplete verification",
+      "classification_basis": "After failed playbook runs, a debug script applied the router NAT configuration directly. Subsequent playbook runs reported unchanged. They validated an already-repaired state, without proving the automation could build it from scratch.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Manual dependencies",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/nat-egress-ansible-ubuntu16-7778/nat-egress-ubuntu16__Gb3e8ks/agent/executor-commands.jsonl",
+            "line": 68
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/nat-egress-ansible-ubuntu16-7778/nat-egress-ubuntu16__Gb3e8ks/agent/executor-commands.jsonl",
+            "line": 72
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/nat-egress-ansible-ubuntu16-7778/nat-egress-ubuntu16__Gb3e8ks/agent/executor-commands.jsonl",
+            "line": 84
+          }
+        ],
+        "evaluation_report": "jobs/7778/2026-09-28__23-27-33/nat-egress-ansible-ubuntu16-7778/nat-egress-ubuntu16__Gb3e8ks/verifier/evaluation-report.json",
+        "instruction": "jobs/7778/2026-09-28__23-27-33/nat-egress-ansible-ubuntu16-7778/instruction.md"
+      },
+      "original_ledger_excerpt": "318. Manual repair obscured whether the retained playbook could provision NAT\nBatch: 7778 | Execution: 2026-09-28__23-27-33 | Severity: Medium\nTask: nat-egress-ansible-ubuntu16-7778\nProblem: After failed playbook runs, a debug script applied the router NAT configuration directly. Subsequent playbook runs reported unchanged. They validated an already-repaired state, without proving the automation could build it from scratch.\nWhy a production administrator should care: A successful rerun after manual repair can hide an unreproducible deployment. Verify the actual provisioning path from a controlled baseline and recovery without manual intervention.\nEvidence:\n  Trial directory: jobs/7778/2026-09-28__23-27-33/nat-egress-ansible-ubuntu16-7778/nat-egress-ubuntu16__Gb3e8ks\n  Assessment: verifier/evaluation-report.json (paths below are relative to this trial).\n  Executor audit: agent/executor-commands.jsonl:68 [cmd-e55db3b9657546ee, completed, rc=0], agent/executor-commands.jsonl:72 [cmd-0fbab8fc68684764, completed, rc=0], agent/executor-commands.jsonl:84 [cmd-dac09508edd9443c, completed, rc=0]\n  Final/baseline lifecycle evidence: verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "328",
+      "category_number": "20",
+      "short_name": "Manual dependencies",
+      "subcategory": "Manual dependencies",
+      "category": "Automation was validated against a state provisioned or repaired manually outside its delivered procedure, leaving clean-baseline provisioning unproved.",
+      "batch": "7778",
+      "execution": "2026-09-28__23-27-33",
+      "task": "dhcp-server-ansible-rhel10-7778",
+      "title": "DHCP Ansible rerun followed direct CLI provisioning on the router",
+      "original_type": "verification-gap",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778",
+      "related_categories": "Incomplete verification",
+      "classification_basis": "Several vyos_config attempts failed, and manual CLI sessions established and saved the working interface/DHCP configuration. A revised playbook then reported no router changes. This validates convergence on existing state rather than actual clean-baseline provisioning by the retained automation.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Incomplete verification",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl",
+            "line": 64
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl",
+            "line": 70
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl",
+            "line": 66
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl",
+            "line": 72
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl",
+            "line": 82
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl",
+            "line": 96
+          }
+        ],
+        "evaluation_report": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/verifier/evaluation-report.json",
+        "instruction": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/instruction.md"
+      },
+      "original_ledger_excerpt": "328. DHCP Ansible rerun followed direct CLI provisioning on the router\nBatch: 7778 | Execution: 2026-09-28__23-27-33 | Severity: Medium\nTask: dhcp-server-ansible-rhel10-7778\nProblem: Several vyos_config attempts failed, and manual CLI sessions established and saved the working interface/DHCP configuration. A revised playbook then reported no router changes. This validates convergence on existing state rather than actual clean-baseline provisioning by the retained automation.\nWhy a production administrator should care: A positive request, manual run, or no-change rerun may exercise a different path than unattended deployment or unauthorized-client denial. Missing evidence is not a proven breach.\nEvidence:\n  Basis: Recorded assessment with linked executor/lifecycle records; manually reviewed assessment. Not every supporting command output was independently reread.\n  Assessment: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/verifier/evaluation-report.json\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl:64 [cmd-1e7a889a16514565; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl:70 [cmd-d797eab7aecf4486; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl:66 [cmd-9ea281241b194237; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl:72 [cmd-08cf507bb3854c39; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl:82 [cmd-c0a967e9846c43a1; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl:96 [cmd-83d67d6b23794904; completed; rc=0]\n  Final/baseline lifecycle evidence: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "330",
+      "category_number": "20",
+      "short_name": "Manual dependencies",
+      "subcategory": "Manual dependencies",
+      "category": "Automation was validated against a state provisioned or repaired manually outside its delivered procedure, leaving clean-baseline provisioning unproved.",
+      "batch": "7778",
+      "execution": "2026-09-28__23-27-33",
+      "task": "dhcp-server-ansible-rhel9-7778",
+      "title": "Ansible no-change rerun followed manual DHCP provisioning",
+      "original_type": "verification-gap",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778",
+      "related_categories": "Incomplete verification",
+      "classification_basis": "Two Ansible deployment attempts failed, and working router syntax was applied by direct CLI sessions. The corrected playbook then reported no changes against that manually configured state. This proves convergence on existing state, not that the playbook can create the required configuration from scratch.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Incomplete verification",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl",
+            "line": 82
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl",
+            "line": 90
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl",
+            "line": 92
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl",
+            "line": 94
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl",
+            "line": 80
+          },
+          {
+            "path": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl",
+            "line": 88
+          }
+        ],
+        "evaluation_report": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/verifier/evaluation-report.json",
+        "instruction": "jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/instruction.md"
+      },
+      "original_ledger_excerpt": "330. Ansible no-change rerun followed manual DHCP provisioning\nBatch: 7778 | Execution: 2026-09-28__23-27-33 | Severity: Medium\nTask: dhcp-server-ansible-rhel9-7778\nProblem: Two Ansible deployment attempts failed, and working router syntax was applied by direct CLI sessions. The corrected playbook then reported no changes against that manually configured state. This proves convergence on existing state, not that the playbook can create the required configuration from scratch.\nWhy a production administrator should care: A positive request, manual run, or no-change rerun may exercise a different path than unattended deployment or unauthorized-client denial. Missing evidence is not a proven breach.\nEvidence:\n  Basis: Recorded assessment with linked executor/lifecycle records; manually reviewed assessment. Not every supporting command output was independently reread.\n  Assessment: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/verifier/evaluation-report.json\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl:82 [cmd-3092bf90f7fb412f; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl:90 [cmd-1fa1d3cba226414a; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl:92 [cmd-903e9a4d8d284001; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl:94 [cmd-cb9e76a72d3a4c1b; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl:80 [cmd-6b19f34daa7f4b25; completed; rc=0]\n  Executor audit: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl:88 [cmd-d9852239348a4b51; completed; rc=0]\n  Final/baseline lifecycle evidence: jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    }
+  ]
+}

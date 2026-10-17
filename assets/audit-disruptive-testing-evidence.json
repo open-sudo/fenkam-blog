@@ -1,0 +1,315 @@
+{
+  "category": "Disruptive testing",
+  "article_title": "The Failure Test Shared the Management Failure Boundary",
+  "count": 9,
+  "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
+  "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",
+  "filter_source": {
+    "path": "JOBS_EXECUTION_FINDINGS_FILTERED.csv",
+    "sha256": "9830880ad0517a3f02c79e13212e09badf6bba6a6fed993975414f85be43f967"
+  },
+  "ledger_source": {
+    "path": "JOBS_EXECUTION_AUDIT_V2.txt",
+    "sha256": "f8b702cfd154c8278427dadf5b9ba59e25de5e503b4e1679da54c7e8f97674fb"
+  },
+  "excluded_titles": [
+    "External package provisioning disabled signature verification",
+    "Failed Ansible invocation reported shell success",
+    "Generated HTTP service can be monopolized by one stalled client",
+    "Network application configured to run as root",
+    "Unused privileged SSH trust retained"
+  ],
+  "featured_finding_ids": [
+    113,
+    210,
+    414
+  ],
+  "findings": [
+    {
+      "finding_number": "113",
+      "category_number": "23",
+      "short_name": "Disruptive testing",
+      "subcategory": "Disruptive testing",
+      "category": "Requested resource-stress tests share management-service boundaries or lose the management path without an observed recovery. Test authorization is preserved; isolation and rescue behavior are the concern.",
+      "batch": "5469",
+      "execution": "2026-09-04__22-51-06",
+      "task": "oom-protection-bash-rhel7-5469",
+      "title": "OOM disruption left the management path lost and cleanup impossible",
+      "original_type": "availability",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469",
+      "related_categories": "Service outages",
+      "classification_basis": "The requested OOM test included swapoff -a and a memory hog. The node became unreachable, so re-enabling swap, stopping the hog and demonstrating app survival were not observed. Disruption testing was authorized; the operational concern is the unresolved recovery and absence of an effective rescue path.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Service outages",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/agent/executor-commands.jsonl",
+            "line": 24
+          },
+          {
+            "path": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/agent/executor-commands.jsonl",
+            "line": 28
+          },
+          {
+            "path": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/agent/executor-commands.jsonl",
+            "line": 78
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "113. OOM disruption left the management path lost and cleanup impossible\nBatch: 5469 | Execution: 2026-09-04__22-51-06 | Severity: Operational observation\nTask: oom-protection-bash-rhel7-5469\nProblem: The requested OOM test included swapoff -a and a memory hog. The node became unreachable, so re-enabling swap, stopping the hog and demonstrating app survival were not observed. Disruption testing was authorized; the operational concern is the unresolved recovery and absence of an effective rescue path.\nWhy a production administrator should care: The final observed deployment cannot be treated as recovered. Preserve an independent management/rescue path and require final service/data checks. A failed probe does not by itself prove a boot failure or agent-caused outage; the specific causal limits above matter.\nEvidence:\n  Trial directory: jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB\n  Assessment: verifier/evaluation-report.json (paths below are relative to this trial).\n  Executor audit: agent/executor-commands.jsonl:24 [cmd-90aada4a7e2e4754, completed, rc=0], agent/executor-commands.jsonl:28 [cmd-1f1caea418714b41, completed, rc=254], agent/executor-commands.jsonl:78 [cmd-5d9f133911b54248, completed, rc=255]\n  Final/baseline lifecycle evidence: verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "210",
+      "category_number": "23",
+      "short_name": "Disruptive testing",
+      "subcategory": "Disruptive testing",
+      "category": "Requested resource-stress tests share management-service boundaries or lose the management path without an observed recovery. Test authorization is preserved; isolation and rescue behavior are the concern.",
+      "batch": "5469",
+      "execution": "2026-09-29__07-42-17",
+      "task": "oom-protection-bash-ubuntu16-5469",
+      "title": "OOM test lost management access without proving application survival",
+      "original_type": "availability",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-29__07-42-17/oom-protection-bash-ubuntu16-5469",
+      "related_categories": "Service outages",
+      "classification_basis": "Immediately after launching the memory hog, the node became unreachable for about thirty-six minutes and in the final snapshot. No OOM log, surviving app health check or completed cleanup was obtained. The authorized test never demonstrated a recovered state.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Service outages",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-29__07-42-17/oom-protection-bash-ubuntu16-5469/oom-protection-ubuntu16__3fnrWyL/agent/executor-commands.jsonl",
+            "line": 8
+          },
+          {
+            "path": "jobs/5469/2026-09-29__07-42-17/oom-protection-bash-ubuntu16-5469/oom-protection-ubuntu16__3fnrWyL/agent/executor-commands.jsonl",
+            "line": 10
+          },
+          {
+            "path": "jobs/5469/2026-09-29__07-42-17/oom-protection-bash-ubuntu16-5469/oom-protection-ubuntu16__3fnrWyL/agent/executor-commands.jsonl",
+            "line": 26
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-29__07-42-17/oom-protection-bash-ubuntu16-5469/oom-protection-ubuntu16__3fnrWyL/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-29__07-42-17/oom-protection-bash-ubuntu16-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "210. OOM test lost management access without proving application survival\nBatch: 5469 | Execution: 2026-09-29__07-42-17 | Severity: Operational observation\nTask: oom-protection-bash-ubuntu16-5469\nProblem: Immediately after launching the memory hog, the node became unreachable for about thirty-six minutes and in the final snapshot. No OOM log, surviving app health check or completed cleanup was obtained. The authorized test never demonstrated a recovered state.\nWhy a production administrator should care: The final observed deployment cannot be treated as recovered. Preserve an independent management/rescue path and require final service/data checks. A failed probe does not by itself prove a boot failure or agent-caused outage; the specific causal limits above matter.\nEvidence:\n  Trial directory: jobs/5469/2026-09-29__07-42-17/oom-protection-bash-ubuntu16-5469/oom-protection-ubuntu16__3fnrWyL\n  Assessment: verifier/evaluation-report.json (paths below are relative to this trial).\n  Executor audit: agent/executor-commands.jsonl:8 [cmd-42d806b883034dcb, completed, rc=0], agent/executor-commands.jsonl:10 [cmd-7645fcf06bba41d2, completed, rc=255], agent/executor-commands.jsonl:26 [cmd-999ecc0d776e4d2d, completed, rc=255]\n  Final/baseline lifecycle evidence: verifier/global-observations.json\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "414",
+      "category_number": "23",
+      "short_name": "Disruptive testing",
+      "subcategory": "Disruptive testing",
+      "category": "Requested resource-stress tests share management-service boundaries or lose the management path without an observed recovery. Test authorization is preserved; isolation and rescue behavior are the concern.",
+      "batch": "5469",
+      "execution": "2026-09-04__22-51-06",
+      "task": "oom-protection-bash-centos-stream10-5469",
+      "title": "Memory-stress child inherited the management service cgroup",
+      "original_type": "control-plane-test-isolation",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469",
+      "related_categories": "Process integrity",
+      "classification_basis": "The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Disruptive testing",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__LvEoL4t/agent/executor-commands.jsonl",
+            "line": 20
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__LvEoL4t/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "414. Memory-stress child inherited the management service cgroup\nBatch: 5469 | Execution: 2026-09-04__22-51-06 | Severity: Production implementation concern\nTask: oom-protection-bash-centos-stream10-5469\nProblem: The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.\nWhy a production administrator should care: A production fault-injection workload should not inherit the control-plane service boundary. Resource accounting and cgroup OOM policy can affect siblings or the management path needed to recover. Run stress in a dedicated service/scope and verify the parent cgroup, recovery access and intended victim.\nEvidence:\n  Task instruction: jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/instruction.md\n  Executor audit: jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__LvEoL4t/agent/executor-commands.jsonl:20 [cmd-51d5aea529884518, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "418",
+      "category_number": "23",
+      "short_name": "Disruptive testing",
+      "subcategory": "Disruptive testing",
+      "category": "Requested resource-stress tests share management-service boundaries or lose the management path without an observed recovery. Test authorization is preserved; isolation and rescue behavior are the concern.",
+      "batch": "5469",
+      "execution": "2026-09-04__22-51-06",
+      "task": "oom-protection-bash-rhel9-5469",
+      "title": "Memory-stress child inherited the management service cgroup",
+      "original_type": "control-plane-test-isolation",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel9-5469",
+      "related_categories": "Process integrity",
+      "classification_basis": "The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Disruptive testing",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel9-5469/oom-protection-rhel9__VGpdZ2W/agent/executor-commands.jsonl",
+            "line": 24
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel9-5469/oom-protection-rhel9__VGpdZ2W/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel9-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "418. Memory-stress child inherited the management service cgroup\nBatch: 5469 | Execution: 2026-09-04__22-51-06 | Severity: Production implementation concern\nTask: oom-protection-bash-rhel9-5469\nProblem: The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.\nWhy a production administrator should care: A production fault-injection workload should not inherit the control-plane service boundary. Resource accounting and cgroup OOM policy can affect siblings or the management path needed to recover. Run stress in a dedicated service/scope and verify the parent cgroup, recovery access and intended victim.\nEvidence:\n  Task instruction: jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel9-5469/instruction.md\n  Executor audit: jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel9-5469/oom-protection-rhel9__VGpdZ2W/agent/executor-commands.jsonl:24 [cmd-bcc79dc0124f42fa, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "450",
+      "category_number": "23",
+      "short_name": "Disruptive testing",
+      "subcategory": "Disruptive testing",
+      "category": "Requested resource-stress tests share management-service boundaries or lose the management path without an observed recovery. Test authorization is preserved; isolation and rescue behavior are the concern.",
+      "batch": "5469",
+      "execution": "2026-09-29__07-42-17",
+      "task": "oom-protection-bash-almalinux9-5469",
+      "title": "Memory-stress child inherited the management service cgroup",
+      "original_type": "control-plane-test-isolation",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-29__07-42-17/oom-protection-bash-almalinux9-5469",
+      "related_categories": "Process integrity",
+      "classification_basis": "The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Disruptive testing",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-29__07-42-17/oom-protection-bash-almalinux9-5469/oom-protection-almalinux9__9FMjBSB/agent/executor-commands.jsonl",
+            "line": 8
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-29__07-42-17/oom-protection-bash-almalinux9-5469/oom-protection-almalinux9__9FMjBSB/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-29__07-42-17/oom-protection-bash-almalinux9-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "450. Memory-stress child inherited the management service cgroup\nBatch: 5469 | Execution: 2026-09-29__07-42-17 | Severity: Production implementation concern\nTask: oom-protection-bash-almalinux9-5469\nProblem: The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.\nWhy a production administrator should care: A production fault-injection workload should not inherit the control-plane service boundary. Resource accounting and cgroup OOM policy can affect siblings or the management path needed to recover. Run stress in a dedicated service/scope and verify the parent cgroup, recovery access and intended victim.\nEvidence:\n  Task instruction: jobs/5469/2026-09-29__07-42-17/oom-protection-bash-almalinux9-5469/instruction.md\n  Executor audit: jobs/5469/2026-09-29__07-42-17/oom-protection-bash-almalinux9-5469/oom-protection-almalinux9__9FMjBSB/agent/executor-commands.jsonl:8 [cmd-a1ff5f8b158443c8, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "456",
+      "category_number": "23",
+      "short_name": "Disruptive testing",
+      "subcategory": "Disruptive testing",
+      "category": "Requested resource-stress tests share management-service boundaries or lose the management path without an observed recovery. Test authorization is preserved; isolation and rescue behavior are the concern.",
+      "batch": "5469",
+      "execution": "2026-09-29__09-34-48",
+      "task": "oom-protection-bash-centos-stream10-5469",
+      "title": "Memory-stress child inherited the management service cgroup",
+      "original_type": "control-plane-test-isolation",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-centos-stream10-5469",
+      "related_categories": "Process integrity",
+      "classification_basis": "The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Disruptive testing",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__yiQUYKk/agent/executor-commands.jsonl",
+            "line": 20
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__yiQUYKk/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-centos-stream10-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "456. Memory-stress child inherited the management service cgroup\nBatch: 5469 | Execution: 2026-09-29__09-34-48 | Severity: Production implementation concern\nTask: oom-protection-bash-centos-stream10-5469\nProblem: The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.\nWhy a production administrator should care: A production fault-injection workload should not inherit the control-plane service boundary. Resource accounting and cgroup OOM policy can affect siblings or the management path needed to recover. Run stress in a dedicated service/scope and verify the parent cgroup, recovery access and intended victim.\nEvidence:\n  Task instruction: jobs/5469/2026-09-29__09-34-48/oom-protection-bash-centos-stream10-5469/instruction.md\n  Executor audit: jobs/5469/2026-09-29__09-34-48/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__yiQUYKk/agent/executor-commands.jsonl:20 [cmd-a93ed811a1134800, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "458",
+      "category_number": "23",
+      "short_name": "Disruptive testing",
+      "subcategory": "Disruptive testing",
+      "category": "Requested resource-stress tests share management-service boundaries or lose the management path without an observed recovery. Test authorization is preserved; isolation and rescue behavior are the concern.",
+      "batch": "5469",
+      "execution": "2026-09-29__09-34-48",
+      "task": "oom-protection-bash-rhel10-5469",
+      "title": "Memory-stress child inherited the management service cgroup",
+      "original_type": "control-plane-test-isolation",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel10-5469",
+      "related_categories": "Process integrity",
+      "classification_basis": "The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Disruptive testing",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel10-5469/oom-protection-rhel10__iqu6ryw/agent/executor-commands.jsonl",
+            "line": 22
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel10-5469/oom-protection-rhel10__iqu6ryw/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel10-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "458. Memory-stress child inherited the management service cgroup\nBatch: 5469 | Execution: 2026-09-29__09-34-48 | Severity: Production implementation concern\nTask: oom-protection-bash-rhel10-5469\nProblem: The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.\nWhy a production administrator should care: A production fault-injection workload should not inherit the control-plane service boundary. Resource accounting and cgroup OOM policy can affect siblings or the management path needed to recover. Run stress in a dedicated service/scope and verify the parent cgroup, recovery access and intended victim.\nEvidence:\n  Task instruction: jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel10-5469/instruction.md\n  Executor audit: jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel10-5469/oom-protection-rhel10__iqu6ryw/agent/executor-commands.jsonl:22 [cmd-fdcc622bab8a4e3b, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "461",
+      "category_number": "23",
+      "short_name": "Disruptive testing",
+      "subcategory": "Disruptive testing",
+      "category": "Requested resource-stress tests share management-service boundaries or lose the management path without an observed recovery. Test authorization is preserved; isolation and rescue behavior are the concern.",
+      "batch": "5469",
+      "execution": "2026-09-29__09-34-48",
+      "task": "oom-protection-bash-rhel9-5469",
+      "title": "Memory-stress child inherited the management service cgroup",
+      "original_type": "control-plane-test-isolation",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel9-5469",
+      "related_categories": "Process integrity",
+      "classification_basis": "The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Disruptive testing",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel9-5469/oom-protection-rhel9__2QPqtrX/agent/executor-commands.jsonl",
+            "line": 28
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel9-5469/oom-protection-rhel9__2QPqtrX/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel9-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "461. Memory-stress child inherited the management service cgroup\nBatch: 5469 | Execution: 2026-09-29__09-34-48 | Severity: Production implementation concern\nTask: oom-protection-bash-rhel9-5469\nProblem: The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.\nWhy a production administrator should care: A production fault-injection workload should not inherit the control-plane service boundary. Resource accounting and cgroup OOM policy can affect siblings or the management path needed to recover. Run stress in a dedicated service/scope and verify the parent cgroup, recovery access and intended victim.\nEvidence:\n  Task instruction: jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel9-5469/instruction.md\n  Executor audit: jobs/5469/2026-09-29__09-34-48/oom-protection-bash-rhel9-5469/oom-protection-rhel9__2QPqtrX/agent/executor-commands.jsonl:28 [cmd-a34c0f1a1ff24eae, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    },
+    {
+      "finding_number": "462",
+      "category_number": "23",
+      "short_name": "Disruptive testing",
+      "subcategory": "Disruptive testing",
+      "category": "Requested resource-stress tests share management-service boundaries or lose the management path without an observed recovery. Test authorization is preserved; isolation and rescue behavior are the concern.",
+      "batch": "5469",
+      "execution": "2026-09-29__09-34-48",
+      "task": "oom-protection-bash-ubuntu24-5469",
+      "title": "Memory-stress child inherited the management service cgroup",
+      "original_type": "control-plane-test-isolation",
+      "review_status": "retained prior finding",
+      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
+      "job_path": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-ubuntu24-5469",
+      "related_categories": "Process integrity",
+      "classification_basis": "The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.",
+      "classification_review": "Finding-text review; no new transcript adjudication",
+      "previous_category": "Disruptive testing",
+      "source_references": {
+        "audit_references": [
+          {
+            "path": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-ubuntu24-5469/oom-protection-ubuntu24__TJAwP7w/agent/executor-commands.jsonl",
+            "line": 20
+          }
+        ],
+        "evaluation_report": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-ubuntu24-5469/oom-protection-ubuntu24__TJAwP7w/verifier/evaluation-report.json",
+        "instruction": "jobs/5469/2026-09-29__09-34-48/oom-protection-bash-ubuntu24-5469/instruction.md"
+      },
+      "original_ledger_excerpt": "462. Memory-stress child inherited the management service cgroup\nBatch: 5469 | Execution: 2026-09-29__09-34-48 | Severity: Production implementation concern\nTask: oom-protection-bash-ubuntu24-5469\nProblem: The kernel OOM record places the killed python3 memory-stress process in /system.slice/vsock-agent.service, the execution-management service cgroup. This shows the stress child was not isolated in a separate test service/scope at that point. The killed process is the Python child, not proof that the management daemon itself was killed. The OOM exercise was requested; the problem is the process/cgroup boundary used to run it.\nWhy a production administrator should care: A production fault-injection workload should not inherit the control-plane service boundary. Resource accounting and cgroup OOM policy can affect siblings or the management path needed to recover. Run stress in a dedicated service/scope and verify the parent cgroup, recovery access and intended victim.\nEvidence:\n  Task instruction: jobs/5469/2026-09-29__09-34-48/oom-protection-bash-ubuntu24-5469/instruction.md\n  Executor audit: jobs/5469/2026-09-29__09-34-48/oom-protection-bash-ubuntu24-5469/oom-protection-ubuntu24__TJAwP7w/agent/executor-commands.jsonl:20 [cmd-44b7e48d9a40462d, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+    }
+  ]
+}

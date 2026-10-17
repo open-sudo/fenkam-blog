@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script src="/theme.js?v=2"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Storage reboots, recovery attempts, failed management services and credential cleanup ended without a confirmed usable deployment." />
+  <title>The Last Observation Was an Unreachable Server — Fenkam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
+<link rel="canonical" href="https://fenkam.org/audit-service-outages/" />
+<meta property="og:url" content="https://fenkam.org/audit-service-outages/" />
+<meta property="og:title" content="The Last Observation Was an Unreachable Server" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-service-outages-illustration.png" />
+<meta property="og:image:alt" content="A robot cannot inspect a dark server cabinet through its disconnected management path." />
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+<header class="site-header shell"><a class="wordmark" href="/index.html"><span>F</span> LLM AS SYSADMIN</a><nav><a href="/index.html#writing">Articles</a><a href="/index.html#about">About</a><a href="mailto:hello@fenkam.org">Say hello</a><a class="nav-pill" href="/index.html#subscribe">Subscribe</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Switch to dark mode" hidden><svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z" /></svg><svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg></button></nav></header>
+<main>
+  <header class="article-header article-shell">
+    <a class="back-link" href="/index.html#writing">← Back to articles</a>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>The Last Observation Was an Unreachable Server</h1>
+    <p class="article-deck">Storage reboots, recovery attempts, failed management services and credential cleanup ended without a confirmed usable deployment.</p>
+  </header>
+  <article class="article-body article-shell">
+<figure class="article-illustration"><img src="/assets/audit-service-outages-illustration.png" alt="A robot cannot inspect a dark server cabinet through its disconnected management path." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<p>An agent rebooted a server after storage work. The server never became reachable again during the recorded test. That is an unresolved operational failure, but it does not prove the storage commands caused it. These cases separate what was last observed from explanations the available logs cannot establish.</p>
+<h2>Storage work was followed by an unrecovered reboot</h2>
+<p>A storage task ended with the node unreachable after reboot. In another run, an initial startup-ordering cycle was corrected, but the machine still did not return. Without boot or console evidence, the final outage was clear and its cause remained unproven. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/2935/2026-10-04__15-36-11/filesystem-snapshot-rollback-bash-rhel10-2935/filesystem-snapshot-rollback-bas__2eNWsmK/agent/executor-commands.jsonl#L10">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/lvm-extend-bash-rhel10-9038/lvm-extend-bash-rhel10-9038__4K2qkie/agent/executor-commands.jsonl#L14">second trace</a>.)</p>
+<p>Several tasks introduced or changed loop-backed storage and startup dependencies before reboot.</p>
+<h2>Recovery began from an already unhealthy baseline</h2>
+<p>An encryption prerequisite stalled on a package-manager or kernel blockage that already existed. A separate LDAP task began with package processes blocked in I/O. Recovery reboots did not restore observation, but the records do not show the agent caused the original faults. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/encrypted-volume-bash-centos-stream10-4543/encrypted-volume-centos-stream10__taGWffT/agent/executor-commands.jsonl#L6">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/ldap-attribute-privacy-bash-centos-stream10-4543/ldap-attribute-privacy-centos-st__C4XpGDk/agent/executor-commands.jsonl#L28">second trace</a>.)</p>
+<p>A package manager blocked before the agent acted changes the attribution question.</p>
+<h2>Earlier success conflicted with the final snapshot</h2>
+<p>A gateway passed the agent’s restart checks before a later independent SSH probe failed. Another final observation showed failed SSH units and no port-22 listener after earlier access had worked. The timing discrepancy needed explanation. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/guest-network-isolation-bash-ubuntu24-5469/guest-network-isolation-ubuntu24__iUkDQG3/agent/executor-commands.jsonl#L72">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__19-46-01/network-scoped-firewall-bash-ubuntu24-5469/network-scoped-firewall-ubuntu24__Rt9JXXw/agent/executor-commands.jsonl#L14">second trace</a>.)</p>
+<p>The agent could have a genuine successful probe followed by a later independent observation of failed SSH services.</p>
+<h2>The service was unavailable without a whole-host failure</h2>
+<p>A backup lost its SSH transfer path after reboot. Kerberos cleanup elsewhere deleted the only demonstrated analyst keytab and discarded the generated password, without a later authentication check or credential handoff. The host could exist while the required workflow was unusable. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5018/2026-10-03__17-05-51/scheduled-backup-bash-alpine-5018/scheduled-backup-alpine__ytn9GyW/agent/executor-commands.jsonl#L36">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/kerberos-service-identity-bash-rhel10-9038/kerberos-service-identity-bash-r__Vg2MQNy/agent/executor-commands.jsonl#L32">second trace</a>.)</p>
+<p>A backup can lose its transfer path, a published endpoint can never answer its client, or cleanup can remove the only demonstrated usable credential.</p>
+<h2>What should an administrator check?</h2>
+<p>The handover needs the last observable state, the unresolved dependency and the next recovery evidence required. A rescue console, service logs or a fresh authentication test may resolve different cases. Repeating remote polls cannot establish the cause of an outage when the machine never becomes observable.</p>
+<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-service-outages-evidence.json">source extract</a> includes all 28 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+
+
+
+
+  </article>
+</main>
+<footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"4e1bddcd40fc43a39d09bbac90b9f5b6"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
