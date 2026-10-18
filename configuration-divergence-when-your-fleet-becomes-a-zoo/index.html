@@ -28,20 +28,27 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" alt="Three matching delivery vans reveal different repairs beneath their open hoods." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted a local package repository to keep serving installations while remote repositories were unavailable. I compared three AI executions of that task on RHEL 10.</p>
-<p>All reached a working local installation. They left different software changes behind: one went through core-library repairs, another restored an older RPM stack, and a third used a much smaller prerequisite installation.</p>
-<h2>Three routes to a working repository</h2>
-<p>One agent built a demonstration RPM. Its prerequisites added 33 packages and upgraded nine, breaking RPM and DNF because a new component needed missing OpenSSL symbols. It repaired the system with newer OpenSSL libraries, then reconciled the packages through a transaction that bypassed signature checks. The reboot and <code>dnf check</code> passed, but cryptographic libraries and policies had changed.</p>
-<p>A second run restored a compatible older RPM stack. A third previewed its prerequisite transaction and used an existing tree package for the demonstration. That transaction installed only two packages and avoided the build tools and core-library repair.</p>
-<h2>The instructions were not identical in every respect</h2>
-<p>The task text was the same. Later runs also had instructions to preserve existing state, limit changes and verify security, and they used different reasoning settings. The comparison shows the resulting configurations; it does not isolate why the agents chose differently.</p>
-<h2>Other systems had their own leftovers</h2>
-<p>RHEL 9 used Apache and an existing tree package. AlmaLinux used tree and removed extra downloaded dependencies. Alpine created a signed APK repository, served it through lighttpd and removed its temporary block on remote repositories.</p>
-<p>CentOS Stream left normal remote repositories moved aside. RHEL 7 retained a source with signature checking disabled after installing tools from CentOS Vault. Ubuntu left an APT proxy that still blocked normal HTTP repositories.</p>
-<h2>Record the changes that affect the next update</h2>
-<p>Different distributions need different tools. Blocked update sources, signature exceptions and core-library repairs are additional differences an operator needs to know about.</p>
-<p>Give the agent approved package sources and service choices. Review installed and upgraded packages, repository edits and repairs—not just whether the demonstration worked. No later production patching failure was observed in these lab runs.</p>
+<p>I wanted a local package repository to serve installations while remote repositories were unavailable. I gave that task to an AI agent three times on RHEL 10.</p>
+<p>All three attempts demonstrated a working local installation. The package changes, however, left different configurations to maintain afterward.</p>
+
+<h2>Building a demonstration package led to core-library repairs</h2>
+<p>One agent chose to build an RPM for the demonstration. Installing its prerequisites added 33 packages and upgraded nine. A new RPM cryptography component needed OpenSSL symbols the machine lacked, leaving RPM and DNF unusable.</p>
+<p>The agent recovered by extracting newer OpenSSL libraries into the live system, then reconciling the packages through a transaction that bypassed signature checks. The machine rebooted and <code>dnf check</code> passed. It was not left with unexplained manual library copies, but its cryptographic libraries and policies had changed.</p>
+<p>A second run restored a compatible older RPM stack. A third previewed its prerequisite transaction and demonstrated the repository with an existing tree package. That transaction added only two packages and avoided the build tools and core-library repair.</p>
+
+<h2>The comparison does not isolate a cause</h2>
+<p>The repository request was the same, but later runs also had instructions to preserve state, minimize changes and verify security. The reasoning settings differed too. These were separate executions with different instructions around the task, not an experiment holding every setting constant.</p>
+
+<h2>Other releases left different update arrangements</h2>
+<p>RHEL 9 used Apache and an existing tree package. AlmaLinux used tree and removed extra downloaded dependencies. Alpine built a signed APK repository, served it through lighttpd and removed its temporary block on remote sources.</p>
+<p>Other runs retained changes outside the demonstration: CentOS Stream left normal repositories moved aside; RHEL 7 retained a source with signature checking disabled after using CentOS Vault; Ubuntu kept an APT proxy blocking ordinary HTTP repositories.</p>
+
+<h2>The next administrator needed more than an installation result</h2>
+<p>A later update would encounter those source settings and package versions. No production patching failure was observed here, but the operator still needed an accurate account of the differences.</p>
+<p>Approved package sources and service choices can limit that variation. The final review also needs the packages added or upgraded, repository edits and any repairs to core components.</p>
 <p class="case-sources"><a href="/tunnel-vision-the-task-passed-the-server-changed/">Related article</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-evidence.json">Evidence extract</a></p>

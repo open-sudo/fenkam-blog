@@ -23,33 +23,38 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-18: AI Service Scripts Did Not Verify Start or Stop</h1>
     <p class="article-deck">A saved process number could identify the wrong process, and a successful start command could precede a failed network listener.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-process-integrity-analogy.png" alt="A restaurant signals that it is open while only a cleaner is inside and the kitchen is unprepared." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted a local package repository served over HTTP. Its server needed a reliable way to start and stop, with a useful error when either operation failed.</p>
-<p>On Ubuntu 7, an AI agent wrote a script that read a process number from a file and checked whether that number was alive. It then treated the service as running, without establishing which program owned the number or whether clients could connect.</p>
-<h2>A live process number could belong to something else</h2>
-<p>In an Ubuntu 7 local-repository task, the script trusted a PID file and a <code>kill -0</code> check. Linux can reuse a process number after the original process exits.</p>
-<p>If an old PID file remains, a successful existence check can therefore refer to a different program. This was a risk found in the script; the test did not demonstrate an actual mistaken shutdown caused by PID reuse.</p>
+<p>I wanted a local package repository served over HTTP on Ubuntu 7. The AI agent wrote a script to start, stop and report the status of its web server.</p>
+<p>The script read a PID file and used <code>kill -0</code> to check whether that process number existed. It treated a successful check as evidence that the repository service was running.</p>
+
+<h2>The number did not identify the application</h2>
+<p>Linux can reuse a process number after a program exits. If the original server died and left its PID file behind, an unrelated process could later receive that number.</p>
+<p>The status check could then succeed without finding the expected server or establishing that its port was ready. This was a code risk; the test did not demonstrate an actual mistaken shutdown caused by PID reuse.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/local-package-repository-bash-ubuntu7-8220/local-package-repository-ubuntu7__MMKawVy/agent/executor-commands.jsonl#L8">Recorded commands</a></p>
-<h2>The start command finished before the port was ready</h2>
-<p>Two CentOS 5 service scripts saved a PID before the HTTP process had bound its listening socket. The launching process could exit successfully even if the child later failed to acquire the port.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl#L6">Recorded commands 2</a></p>
-<h2>The stop command could forget a process still running</h2>
-<p>Two other stop scripts waited for a limited time, removed the PID file, and reported completion without treating a surviving process as failure.</p>
-<p>If the process did not exit in time, the script could leave it alive while deleting the information used to manage it. The timeout needed an explicit failure result or another verified cleanup step.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799/ssh-local-service-tunnel-centos5__mD9FU7r/agent/executor-commands.jsonl#L22">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/udp-meter-ingestion-bash-centos5-8799/udp-meter-ingestion-centos5__fnYrvTc/agent/executor-commands.jsonl#L24">Recorded commands 2</a></p>
-<h2>A storage helper stopped the wrong device by assumption</h2>
-<p>A compressed-swap script chose an available zram device at startup but always used <code>/dev/zram0</code> when stopping. It did not save which device it had actually allocated.</p>
-<p>If startup chose another device, cleanup could target a different one. This is the same tracking mistake applied to a resource rather than a process number.</p>
+
+<h2>Other scripts reported completion before checking the result</h2>
+<p>Two CentOS 5 start scripts saved a PID before the HTTP child had bound its socket. The launcher could return success even if the child then failed to acquire the port.</p>
+<p>Two stop scripts waited for a limited time, removed the PID file and reported completion without treating a surviving process as failure. A process that resisted shutdown could remain alive after its management record had been deleted.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl#L6">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799/ssh-local-service-tunnel-centos5__mD9FU7r/agent/executor-commands.jsonl#L22">Recorded commands</a></p>
+
+<h2>The same tracking gap affected a swap device</h2>
+<p>A compressed-swap helper allocated an available zram device at startup, but always selected <code>/dev/zram0</code> when stopping. It did not retain the identity of the device it had actually chosen.</p>
+<p>If startup selected another device, shutdown could target a different resource. No resulting device damage was demonstrated; the mismatch was in the delivered logic.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/executor-commands.jsonl#L22">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Track the actual process or device created, check readiness, and verify that shutdown completed.</p>
+<p>A reliable service script needed to track what it created, check readiness and confirm shutdown. The recorded PID or default device name was only a starting point for those checks.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-process-integrity-evidence.json">Evidence extract</a></p>
+<details class="article-details"><summary>Additional supporting records</summary>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/udp-meter-ingestion-bash-centos5-8799/udp-meter-ingestion-centos5__fnYrvTc/agent/executor-commands.jsonl#L24">Recorded commands 2</a></p>
+</details>
 </div>
 </article>
 </main>

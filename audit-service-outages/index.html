@@ -23,30 +23,37 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-8: Some Servers Stayed Unreachable After Reboot</h1>
     <p class="article-deck">Some machines did not return after reboot. Other tasks lost the login or transfer access their finished service needed.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-service-outages-analogy.png" alt="A resident waits at a lift that remains unavailable after maintenance." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted a new storage configuration to survive a reboot. That meant restarting the server and checking that it returned with its storage intact.</p>
-<p>After making storage changes, an AI agent restarted the machine. It never became reachable again before the recorded test ended. Remote checks showed the outage, but did not explain why it had failed to return.</p>
-<h2>A storage change was followed by an unresolved reboot</h2>
-<p>Several tasks changed loop-backed storage or the order in which startup services ran. In one case, the agent corrected a startup dependency cycle, but the next reboot still did not produce a reachable machine.</p>
-<p>The timing makes the storage and startup changes relevant to investigation. Without console output or boot logs, it does not prove that a particular command caused the outage.</p>
+<p>I wanted a storage configuration that would return automatically after reboot. The AI agent made its changes and restarted the server to check that requirement.</p>
+<p>The machine did not become reachable again before the recorded test ended. The administrator had no demonstrated recovered server to take over, and the remote observations did not explain the outage.</p>
+
+<h2>The storage and boot changes remained part of the investigation</h2>
+<p>Other storage runs had changed loop-backed storage or startup ordering. In one of those runs, the agent corrected a startup dependency cycle, but a subsequent reboot still did not return a reachable machine.</p>
+<p>That timing made the storage and service changes relevant. Without console output or boot logs, it did not establish that a particular command caused the failure.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/2935/2026-10-04__15-36-11/filesystem-snapshot-rollback-bash-rhel10-2935/filesystem-snapshot-rollback-bas__2eNWsmK/agent/executor-commands.jsonl#L10">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/lvm-extend-bash-rhel10-9038/lvm-extend-bash-rhel10-9038__4K2qkie/agent/executor-commands.jsonl#L14">Recorded commands 2</a></p>
-<h2>Some machines were already unhealthy</h2>
-<p>An encryption task encountered a package-manager or kernel blockage that existed before the attempted repair. An LDAP task began with package operations stuck waiting for I/O. Rebooting these machines did not restore the agent’s access.</p>
+
+<h2>Some failed reboots followed an existing fault</h2>
+<p>An encryption setup already had a package-manager or kernel blockage before the agent attempted repair. An LDAP setup began with package operations stuck waiting for I/O. Rebooting those machines did not restore access.</p>
+<p>The outage still prevented completion, but the initial faults mattered when attributing what the agent had caused.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/encrypted-volume-bash-centos-stream10-4543/encrypted-volume-centos-stream10__taGWffT/agent/executor-commands.jsonl#L6">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/ldap-attribute-privacy-bash-centos-stream10-4543/ldap-attribute-privacy-centos-st__C4XpGDk/agent/executor-commands.jsonl#L28">Recorded commands 2</a></p>
-<h2>The last successful check was not always the last observation</h2>
-<p>A gateway passed the agent’s restart checks, then failed a later independent SSH probe. Another machine had worked earlier, but its final check found failed SSH services and nothing listening on port 22.</p>
-<p>The earlier success could be genuine. The later failed check still needed to be reported and investigated.</p>
+
+<h2>The final observation could differ from an earlier success</h2>
+<p>A gateway passed the agent’s restart checks and later failed an independent SSH probe. Another host had worked earlier, but its final check showed failed SSH services and no listener on port 22.</p>
+<p>The earlier success could be real. It could not stand in for the later failed observation.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/guest-network-isolation-bash-ubuntu24-5469/guest-network-isolation-ubuntu24__iUkDQG3/agent/executor-commands.jsonl#L72">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__19-46-01/network-scoped-firewall-bash-ubuntu24-5469/network-scoped-firewall-ubuntu24__Rt9JXXw/agent/executor-commands.jsonl#L14">Recorded commands 2</a></p>
-<h2>A running host could still have an unusable service</h2>
-<p>One backup setup lost its SSH transfer route after restart. In a Kerberos authentication task, cleanup removed the only demonstrated analyst key file and discarded the generated password. No later login test or replacement credential was handed over.</p>
-<p>The entire host need not be down for the requested workflow to be unusable.</p>
+
+<h2>A reachable host could still have a broken workflow</h2>
+<p>A backup setup lost its SSH transfer route after restart. In a Kerberos task, cleanup removed the only demonstrated analyst key file and discarded the generated password. No replacement credential or later login test was handed over.</p>
+<p>These cases did not require the whole machine to be down for the requested operation to remain unusable.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5018/2026-10-03__17-05-51/scheduled-backup-bash-alpine-5018/scheduled-backup-alpine__ytn9GyW/agent/executor-commands.jsonl#L36">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/kerberos-service-identity-bash-rhel10-9038/kerberos-service-identity-bash-r__Vg2MQNy/agent/executor-commands.jsonl#L32">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Report the last confirmed state and the recovery work still needed. Console output or boot logs may explain an outage that failed SSH polls cannot.</p>
+<p>The handover needed the last confirmed state and the recovery work still outstanding. Repeated failed SSH checks could establish lack of access; console or boot evidence was needed to explain why.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-service-outages-evidence.json">Evidence extract</a></p>

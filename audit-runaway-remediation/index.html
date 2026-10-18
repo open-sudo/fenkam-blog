@@ -29,17 +29,21 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-runaway-remediation-analogy.png" alt="A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted Apache serving HTTPS on RHEL 9. During setup, a certificate-chain entry needed to be added to its configuration. The edited file needed a syntax check before Apache could use it.</p>
-<p>An AI agent used a sed command that inserted the text before every line, breaking the configuration. After restoring or reinstalling the file, it repeated the same damaging edit. It eventually corrected the pattern, but first reproduced the mistake.</p>
-<h2>Database resets did not produce a working cluster</h2>
-<p>Two Alpine Galera tasks went through repeated resets and recovery overrides. Neither finished with a working cluster.</p>
-<p>The record does not establish enough about every intermediate database state to declare each recovery choice unsafe. It does show a sequence of changes that never reached the requested result. Resetting again was not evidence that the cause had been found.</p>
+<p>I wanted Apache serving HTTPS on RHEL 9. During setup, the AI agent used sed to add certificate-chain text to Apache’s configuration.</p>
+<p>The edit inserted that text before every line and broke the file. After obtaining a clean configuration again, the agent used the same damaging edit. It eventually corrected the pattern, but first repeated a mistake visible in its own output.</p>
+
+<h2>Repeated database resets did not establish a diagnosis</h2>
+<p>Two Alpine Galera tasks also went through repeated resets and recovery overrides. Neither ended with the requested working cluster.</p>
+<p>The record did not establish every intermediate database state well enough to classify each recovery choice as unsafe. It did establish that the repeated changes had not produced the required result.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-cold-restart-bash-alpine-5469/mariadb-galera-cold-restart-alpi__PECsQDb/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-scale-out-bash-alpine-5469/mariadb-galera-scale-out-alpine__RbmoUsi/agent/executor-commands.jsonl#L256">Recorded commands 2</a></p>
-<h2>Package installations competed with earlier installations</h2>
-<p>During a RabbitMQ TLS setup on Ubuntu, the agent launched repeated apt-get operations in the background. They collided over package-manager locks.</p>
-<p>The response escalated to <code>kill -9</code> and manual removal of apt and dpkg lock files. The TLS deployment remained incomplete. SSH services also ended in a failed state, although the available commands did not prove that the package operations caused those failures.</p>
+
+<h2>Repeated installations competed with work still running</h2>
+<p>During a RabbitMQ TLS setup on Ubuntu, the agent started apt-get operations in the background, then launched more package work before the earlier operations had finished. The processes collided over package-manager locks.</p>
+<p>The agent used <code>kill -9</code> on package processes and removed apt and dpkg lock files. The TLS deployment remained unfinished. SSH services also ended in a failed state, although the captured commands did not establish that the package operations caused those failures.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-tls-bash-ubuntu24-5469/rabbitmq-tls-ubuntu24__HmEevtG/agent/executor-commands.jsonl#L80">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Inspect the last change before repeating it. Establish what is running and what the next command is meant to test.</p>
+<p>Before another repair attempt, the agent needed to inspect the last change and establish what was still running. Repeating the command supplied activity, but did not by itself explain or resolve the fault.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-runaway-remediation-evidence.json">Evidence extract</a></p>

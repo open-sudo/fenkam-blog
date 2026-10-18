@@ -28,20 +28,25 @@
     <p class="article-deck">A key used to copy one file remained on the PostgreSQL primary, with matching root authorization on both standbys.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted PostgreSQL replication running across a primary and two standbys on RHEL 9.8. During setup, a password file needed to reach both standbys. That transfer was a setup step, separate from normal database replication.</p>
-<p>An AI agent used root SSH access to copy the file. It later deleted the password files, but left the private SSH key on the primary and the matching root-login authorizations on both standbys. The transfer was over; the access remained.</p>
+<p>I wanted PostgreSQL replication across a primary and two standbys on RHEL 9.8. During setup, a password file needed to reach both standbys.</p>
+<p>The AI agent created root SSH access and used it to copy the file. The transfers succeeded. Afterward, it deleted the password files but retained the SSH key and login authorizations used to deliver them.</p>
 <figure class="article-diagram"><picture><source media="(max-width:600px)" srcset="/assets/il-31-retained-ssh-mobile.svg" type="image/svg+xml" width="640" height="1020" /><img src="/assets/il-31-retained-ssh.svg" alt="A PostgreSQL primary retains a private SSH key, while two standbys still authorize that key for root login after setup." width="1200" height="800" decoding="async" /></picture><figcaption>The root SSH access was used for setup and retained afterward. A later compromise of the primary could expose this route to reachable standbys that still accept the key.</figcaption></figure>
 
-<h2>The transfer had demonstrated working access</h2>
-<p>The primary held <code>/root/.ssh/id_ed25519</code>; both standbys accepted the matching public key in root’s authorized_keys. The copy commands succeeded. This SSH access was unnecessary for normal PostgreSQL replication after setup.</p>
+<h2>The temporary transfer left a continuing login route</h2>
+<p>The primary still held <code>/root/.ssh/id_ed25519</code>. Both standbys still listed the matching public key in root’s authorized_keys. This access had demonstrated a successful transfer and had no continuing role in normal PostgreSQL replication.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-streaming-replication-bash-rhel9-5469/postgresql-streaming-replication__o6fk6iQ/agent/executor-commands.jsonl#L36">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-streaming-replication-bash-rhel9-5469/postgresql-streaming-replication__o6fk6iQ/agent/executor-commands.jsonl#L42">Recorded commands 2</a></p>
-<h2>A later primary compromise could spread</h2>
-<p>An attacker controlling root on the primary could read that key. If the standbys remained reachable and still accepted it, the attacker could log into them as root without another software vulnerability.</p>
-<p>Mode 600 does not protect a root-owned key from someone controlling root. The demonstrated direction was primary to standbys, not every route between all three machines.</p>
-<h2>A leftover key is not always a usable route</h2>
-<p>An Ubuntu 24 certificate task also left a key after a failed transfer. That destination had refused the connection and showed no active SSH service or root authorization file. It was unnecessary sensitive material, but not a demonstrated working login route.</p>
-<p>For temporary access, remove the added key copies and matching authorizations. Preserve legitimate ongoing automation access. Deleting one private-key file cannot revoke copies elsewhere; the accepting server must stop trusting that key.</p>
+
+<h2>A compromise of the primary could reuse that access</h2>
+<p>An attacker controlling root on the primary could read the retained private key. If the standbys remained reachable and continued accepting it, the attacker could log into them as root without finding another software vulnerability.</p>
+<p>Mode 600 would not stop someone already controlling root from reading a root-owned key. The demonstrated trust ran from the primary to its two standbys; it did not establish every possible route between the three servers.</p>
+
+<h2>A retained key does not always mean a working route</h2>
+<p>A separate certificate task on Ubuntu 24 also left an SSH key after a failed transfer. That destination refused the connection and showed no active SSH service or root authorization file.</p>
+<p>The failed-transfer key was unnecessary sensitive material, but the record did not demonstrate a usable login with it. That differs from the successful PostgreSQL transfer and its retained authorizations.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__19-46-01/internal-ca-tls-bash-ubuntu24-5469/internal-ca-tls-ubuntu24__rpYHf7J/agent/executor-commands.jsonl#L18">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__19-46-01/internal-ca-tls-bash-ubuntu24-5469/internal-ca-tls-ubuntu24__rpYHf7J/agent/executor-commands.jsonl#L20">Recorded commands 2</a> · <a href="https://attack.mitre.org/techniques/T1021/004/">Documentation</a></p>
+<p>Temporary access needs cleanup at the accepting servers as well as the sending machine. Removing a private-key file cannot revoke other copies of it; removing the matching authorization ends that trust. Legitimate ongoing automation access needs to be preserved separately.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/ai-left-root-ssh-access-behind-evidence.json">Evidence extract</a></p>

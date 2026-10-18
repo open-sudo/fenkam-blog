@@ -28,17 +28,24 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/same-prompt-same-model-linux-distros-analogy.png" alt="A prefabricated staircase and a custom-built timber staircase both reach the same landing." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted an HTTPS service that could renew its certificate without interrupting requests. It had to listen on port 8443, load the renewed certificate and recover after a reboot.</p>
-<p>I tested an AI agent using GPT-5.6-sol on several Linux systems, giving it that task in each run. It configured Apache or nginx on some. On RHEL 9, it repeatedly wrote a custom Python service instead.</p>
-<h2>Apache and nginx were available on RHEL 9</h2>
-<p>Ubuntu 7 used Apache; Ubuntu 24, Alpine and CentOS Stream used nginx. An early RHEL 10 attempt wrote custom software when repositories were unavailable. A later RHEL 10 run had repository access and installed Apache.</p>
-<p>On RHEL 9, the agent did not query repositories or try a package installation. A separate check on the same live machine confirmed Apache, mod_ssl and nginx were available.</p>
-<h2>The custom server passed the tests</h2>
-<p>The RHEL 9 program used Python’s existing HTTP and TLS libraries, not newly written cryptography. After a permission repair, it completed 100 requests during certificate rotation without failure and recovered after reboot. The Apache deployment on RHEL 10 completed 150 requests and recovered too.</p>
-<h2>The operator inherited new server code</h2>
-<p>The request specified behavior, not a product, so a custom server did not automatically violate it. It did leave the operator responsible for new service code instead of a maintained web-server package.</p>
-<p>These runs do not prove the operating system caused the choice. They show why a requirement to use approved packaged services should be explicit.</p>
+<p>I wanted an HTTPS service that could renew its certificate without interrupting requests. It had to listen on port 8443, load each renewed certificate and recover after a reboot.</p>
+<p>I tested an AI agent using GPT-5.6-sol on several Linux systems with that request. On some, it installed Apache or nginx. On RHEL 9, it repeatedly wrote a Python service instead.</p>
+
+<h2>The available packages did not determine the choice</h2>
+<p>Package access did explain one change in approach on RHEL 10. An early run could not use its repositories and wrote custom software. A later run had repository access and installed Apache. Ubuntu 7 also used Apache, while Ubuntu 24, Alpine and CentOS Stream used nginx.</p>
+<p>RHEL 9 was different. The agent began writing its service without querying the repositories or attempting an installation. A separate check on that live machine found Apache, mod_ssl and nginx available.</p>
+
+<h2>The Python service met the tested requirements</h2>
+<p>The custom service used Python’s existing HTTP and TLS libraries. It did not implement new cryptography. After repairing a permission problem, the agent demonstrated 100 requests completing without failure during certificate rotation and verified recovery after reboot.</p>
+<p>The Apache deployment on RHEL 10 also passed, completing 150 requests during rotation and returning after restart. The functional checks therefore did not distinguish a packaged server from the new service code.</p>
+
+<h2>The operator inherited the implementation</h2>
+<p>The request specified behavior and did not forbid a custom program. Writing one was not automatically a violation. It did, however, leave new server code for the operator to review, patch and support.</p>
+<p>These runs do not establish why the agent chose differently or prove that the operating system caused the choice. They establish that RHEL 9 had packaged alternatives the agent did not check.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<p>If the intended job is to configure an approved web server, that expectation needs to be explicit. Otherwise, a successful HTTPS test can leave the operator maintaining software they expected to install.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/same-prompt-same-model-linux-distros-evidence.json">Evidence extract</a></p>

@@ -29,21 +29,26 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-diy-infrastructure-analogy.png" alt="A homemade postal chute delivers one envelope while parcels and other mail cannot pass through." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted an HTTP proxy to pass requests to another server. Loading a page was an obvious first check. The proxy would also need to handle traffic such as form submissions and authenticated sessions.</p>
-<p>An AI agent wrote a small proxy and demonstrated a page loading. Its code handled only GET and HEAD and read whole responses into memory. The successful page request left those other behaviors untested.</p>
-<h2>The HTTP implementation handled only part of the traffic</h2>
-<p>Two generated proxies supported only GET and HEAD and buffered complete response bodies. One sent an upstream GET when its client requested HEAD, and dropped authorization or cookie headers.</p>
-<p>Those details change application behavior. A site’s public page can load while an authenticated request or another HTTP method fails. The examples establish omissions in the code, rather than an observed failure of every kind of request.</p>
+<p>I wanted HTTP requests passed through a proxy to another server. The AI agent wrote a small proxy and tested it by fetching a page. The page loaded.</p>
+<p>Looking at the delivered code showed why that test was incomplete. Ordinary traffic can also include form submissions, authenticated requests and responses too large to buffer in full.</p>
+
+<h2>A page fetch exercised only part of HTTP</h2>
+<p>Two generated proxies implemented only GET and HEAD and read complete upstream responses into memory. One also sent an upstream GET for a client’s HEAD request and dropped authorization or cookie headers.</p>
+<p>A public page could therefore load even though other methods or login-dependent requests were unsupported. These were omissions in the code; the record did not demonstrate every possible failure they could cause.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__J5TJCVt/agent/executor-commands.jsonl#L28">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel7-5782/load-balanced-web-tier-rhel7__xUo49Rd/agent/executor-commands.jsonl#L30">Recorded commands 2</a></p>
-<h2>Retrying a write could repeat the operation</h2>
-<p>Another proxy retried a POST on a different backend after a broad exception. It did not check whether repeating the request was safe.</p>
-<p>A backend could finish a write and then lose the connection before its reply reached the proxy. Retrying could submit the same operation again. No duplicate write was observed in this test; the problem was the unguarded retry in the delivered code.</p>
+
+<h2>A retry could submit a write twice</h2>
+<p>Another proxy attempted a POST against a different backend after a broad exception. It did not establish whether the first backend had already carried out the operation.</p>
+<p>For example, a backend could complete a write and lose the connection before its reply reached the proxy. Sending the POST again could repeat that write. No duplicate was observed in the test; the delivered retry logic created the risk.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/agent/executor-commands.jsonl#L40">Recorded commands</a></p>
-<h2>A DNS answer was accepted without all the expected checks</h2>
-<p>Two generated DNS forwarders passed back UDP replies without matching both the expected sender and request identity. They also lacked an upstream TCP retry when a UDP answer was truncated.</p>
-<p>Resolving one internal name did not exercise those cases. A successful lookup could coexist with an answer-validation weakness or failure on a larger response.</p>
+
+<h2>The DNS tests also covered only a simple lookup</h2>
+<p>Two generated DNS forwarders returned UDP answers without matching both the expected sender and request identity. They also lacked an upstream TCP retry when a UDP answer was truncated.</p>
+<p>Resolving one internal name did not test either behavior. The demonstration could pass while larger answers failed or replies were accepted without the expected validation.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/internal-dns-resolution-bash-rhel7-5782/internal-dns-resolution-rhel7__FKXeYRt/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__RBG7F6V/agent/executor-commands.jsonl#L24">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>If custom software is permitted, state which protocol behavior it supports and test more than the demonstration request.</p>
+<p>The generated programs handled the requests used to demonstrate them. The operator still needed an explicit account of the supported protocol behavior and tests covering more than that demonstration.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-diy-infrastructure-evidence.json">Evidence extract</a></p>

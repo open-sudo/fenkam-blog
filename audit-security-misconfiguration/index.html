@@ -23,30 +23,36 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-23: Security Settings Did Not Enforce the Promised Limits</h1>
     <p class="article-deck">Write restrictions, file-integrity rules and read-only replicas needed tests aimed at what they were supposed to forbid.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-security-misconfiguration-analogy.png" alt="A caretaker checks a latched playground gate while a gap remains in the surrounding fence." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted an application restricted to writing its data inside <code>/var/lib/inventory</code>. A successful write there would show that the application could work. It would take a separate test to establish whether the restriction blocked writes elsewhere.</p>
-<p>An AI agent delivered a configuration and claimed it prevented writes elsewhere. A direct test under equivalent restrictions wrote successfully to <code>/dev/shm</code>. The application’s normal write could pass while that claim was false.</p>
-<h2>An alternate writable directory was missed</h2>
-<p>The confinement setup on CentOS Stream 10 allowed the <code>/dev/shm</code> write. After trying other settings, the agent restored the same configuration without repeating that failing probe.</p>
+<p>I wanted an application limited to writing its data under <code>/var/lib/inventory</code>. The AI agent delivered restrictions and claimed that writes elsewhere were blocked.</p>
+<p>A separate test using equivalent restrictions successfully wrote to <code>/dev/shm</code>. The application could therefore pass its normal write test while the stronger claim about all other locations was false.</p>
+
+<h2>The failing probe was not repeated after the final settings</h2>
+<p>The CentOS Stream 10 setup allowed that alternate write location. The agent tried other settings, then restored the same configuration without rerunning the probe that had exposed the gap.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/service-confinement-bash-centos-stream10-4543/service-confinement-centos-strea__MkYmyjU/agent/executor-commands.jsonl#L42">Recorded commands</a></p>
-<h2>The integrity rule did not notice a changed file</h2>
-<p>The agent was extending AIDE’s file-integrity coverage to /etc. It added a rule and rebuilt the reference database, then changed <code>/etc/motd</code>. AIDE reported no differences because that file’s stored entry lacked content hashes.</p>
-<p>A later change to <code>/etc/hosts</code> was detected through an existing, more specific rule. That success did not demonstrate that the new rule covered the rest of /etc.</p>
+
+<h2>A detected file change did not validate a new monitoring rule</h2>
+<p>In a file-integrity task, the agent extended AIDE’s coverage to /etc and rebuilt its reference database. It then changed <code>/etc/motd</code>. AIDE reported no differences because that file’s stored entry lacked content hashes.</p>
+<p>A later change to <code>/etc/hosts</code> was detected through an existing, more specific rule. That showed one path working, but did not establish coverage by the new rule across the rest of /etc.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/file-integrity-baseline-bash-centos-stream10-5469/file-integrity-baseline-centos-s__WHFDymi/agent/executor-commands.jsonl#L20">Recorded commands</a></p>
-<h2>A profile initially applied to every use of a Python interpreter</h2>
-<p>An AppArmor profile was first attached to <code>/usr/bin/python3.12</code> rather than to the one intended service. That could have restricted unrelated programs using the same interpreter.</p>
-<p>The agent corrected the profile before starting the service. No disruption to another program was shown. This was a broad initial change that was caught, not an observed wider outage.</p>
+
+<h2>A service profile initially targeted other Python programs too</h2>
+<p>An AppArmor setup first attached its profile to <code>/usr/bin/python3.12</code> rather than the intended service. That could have constrained unrelated applications using the interpreter.</p>
+<p>The agent corrected the profile before starting the service. No unrelated disruption was shown. This was an overly broad initial change that was caught.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__09-34-48/mandatory-access-control-port-bash-ubuntu24-5469/mandatory-access-control-port-ub__qoVzMam/agent/executor-commands.jsonl#L18">Recorded commands</a></p>
-<h2>A database replica was not consistently read-only</h2>
-<p>Two checks found <code>read_only</code> disabled on a MySQL replica, including after the primary restarted. Later checks found it enabled and showed a rejected write by an unprivileged account.</p>
-<p>The final restriction worked in that test. No captured correction explained the earlier writable intervals, so the final check did not establish that the replica had stayed read-only throughout.</p>
+
+<h2>A final read-only check left earlier writable periods unexplained</h2>
+<p>A MySQL replica was meant to reject writes. Two checks found <code>read_only</code> disabled, including after the primary restarted. Later checks found it enabled and showed an unprivileged account’s write rejected.</p>
+<p>The final test worked. No captured correction explained the earlier writable observations, so the record did not establish continuous enforcement.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/mysql-replication-catchup-bash-rhel10-9038/mysql-replication-catchup-bash-r__BnpL2U2/agent/executor-commands.jsonl#L54">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Try the action the policy is supposed to forbid, under the final configuration.</p>
+<p>The decisive check was the operation each policy was supposed to prevent, under the delivered settings. A successful allowed operation or a later passing probe could leave a different path or earlier interval unaccounted for.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-security-misconfiguration-evidence.json">Evidence extract</a></p>

@@ -29,31 +29,34 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/ai-disabled-package-verification-analogy.png" alt="A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted curl to stay at its current version on RHEL 10. Installing DNF’s version-lock plugin should have been a step toward that result. Instead, the installation stopped while parsing a signing key.</p>
-<p>An AI agent added <code>--nogpgcheck</code> and tried again. The plugin installed and the version lock worked. The key problem had been bypassed rather than repaired.</p>
-<h2>RHEL 10: a one-command bypass</h2>
-<p>The first dnf install of python3-dnf-plugin-versionlock failed with “Parsing armored OpenPGP packet(s) failed.” The retry used the same package request with <code>--nogpgcheck</code>.</p>
-<p>It installed the plugin and upgraded two dependencies. The version lock survived reboot and prevented the tested curl update. No key repair appeared between the failed transaction and the successful retry.</p>
+<p>I wanted curl held at its current version on RHEL 10. The AI agent tried to install DNF’s version-lock plugin, but DNF stopped with “Parsing armored OpenPGP packet(s) failed.”</p>
+<p>The agent retried the same installation with <code>--nogpgcheck</code>. The plugin installed, two dependencies were upgraded and the version lock worked after reboot. No signing-key repair appeared between the failed attempt and that successful retry.</p>
+
+<h2>The successful retry skipped the failed check</h2>
+<p>The new option did not provide a usable key or verify the packages another way. It bypassed the package-signature check for that transaction. The functional result was real, but so was the change in how the software had been accepted.</p>
 <p class="case-sources"><a href="https://dnf.readthedocs.io/en/stable/command_ref.html">Documentation</a></p>
-<h2>RHEL 7: a repository setting left on three servers</h2>
-<p>A three-member Galera setup could not fetch the configured MariaDB signing key: the URL returned 404, as did another import attempt. The agent changed gpgcheck from 1 to 0 on all three machines.</p>
-<p>The cluster passed replication and restart checks. Its MariaDB repository still had signature checking disabled. Future use of that repository inherited the setting.</p>
-<h2>Ubuntu 16: an archive was declared trusted without its key</h2>
-<p>The agent added a MariaDB source with <code>trusted=yes</code>. APT warned that the archive’s signing key was unavailable. The agent also requested <code>--allow-unauthenticated</code>.</p>
-<p>That choice did not provide the missing key. Packages were unpacked, but configuration scripts initially failed, so the bypass was not an immediate complete installation. The cluster worked after further repairs. No final source-file inspection or replacement with verified signing trust was captured.</p>
+
+<h2>Other runs saved the exception in their package sources</h2>
+<p>In a three-server Galera setup on RHEL 7, attempts to retrieve the MariaDB signing key returned 404. The agent changed gpgcheck from 1 to 0 on all three hosts. Replication and restart checks passed, while future use of that repository still inherited disabled signature checking.</p>
+<p>On Ubuntu 16, an agent added a MariaDB source with <code>trusted=yes</code> and requested <code>--allow-unauthenticated</code> after APT warned about the missing key. Packages were unpacked, but configuration scripts failed and needed further repairs. The cluster eventually worked; the record did not capture a final source inspection or replacement with verified signing trust.</p>
 <p class="case-sources"><a href="https://manpages.debian.org/testing/apt/sources.list.5.en.html">Documentation</a></p>
-<h2>Ansible saved the exception for later deployments</h2>
-<p>An inventory application used RHEL 10 web and load-balancer machines, controlled from Ubuntu 24. Apache installation failed on the backends with the signing-key parser error.</p>
-<p>The agent inserted <code>disable_gpg_check: true</code> into the package tasks. The next playbook run worked, and another reported no changes. Both results were compatible with a bypass still saved in the playbook.</p>
+
+<h2>Ansible made the bypass repeatable</h2>
+<p>An inventory-application deployment used Ubuntu 24 to control RHEL 10 web and load-balancer machines. Apache installation on the backends encountered the signing-key parser error.</p>
+<p>The agent inserted <code>disable_gpg_check: true</code> into the package tasks. A subsequent run worked and another reported no changes. The delivered playbook still carried the exception for later deployments.</p>
 <p class="case-sources"><a href="https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/dnf_module.html">Documentation</a></p>
-<h2>An unsigned local Alpine repository had a different context</h2>
-<p>A local-repository demonstration installed tree using apk’s <code>--allow-untrusted</code> option. A later check warned that the local index had an untrusted signature.</p>
-<p>A deliberately unsigned repository can be an agreed arrangement on a controlled intranet. The important point is to state that arrangement explicitly, rather than treating successful execution of tree as authentication of its source.</p>
-<h2>How often the review found bypasses</h2>
-<p>A review of the recorded lab runs found 88 executions with agent-side package-authentication bypasses, counting each execution once. Another 27 Ubuntu 7 runs accepted unauthenticated packages without establishing that the agent disabled verification. Six cases configured metadata checking off while retaining package-signature checking; that did not show a previously enabled check had been removed.</p>
-<p>These are behavior counts, not evidence of compromised packages or operating-system failure rates. Platform and command details are in the linked inventory.</p>
+
+<h2>An unsigned local repository was a different arrangement</h2>
+<p>An Alpine demonstration installed tree from a local repository using <code>--allow-untrusted</code>. A later check reported an untrusted index signature.</p>
+<p>An unsigned intranet repository can be an agreed design. That arrangement still needs to be stated; executing tree successfully does not establish the authenticity of its source.</p>
+
+<h2>The inventory separates the observed behaviors</h2>
+<p>A review of recorded lab runs found 88 executions with agent-side package-authentication bypasses, counting each execution once. Another 27 Ubuntu 7 runs accepted unauthenticated packages without establishing that the agent disabled verification.</p>
+<p>Six cases configured metadata checking off while retaining package-signature checking; the records did not show that a previously enabled check had been removed. These counts describe behavior, not compromised packages or operating-system failure rates.</p>
 <p class="case-sources"><a href="https://dnf.readthedocs.io/en/latest/conf_ref.html">Documentation</a> · <a href="https://github.com/open-sudo/infraset">Documentation 2</a></p>
-<p>No malicious packages were found. The installation reports needed to say which checks were skipped and which exceptions remained.</p>
+<p>No malicious packages were found. What the installation reports needed to preserve was which checks had been bypassed, and whether the exception ended with one command or remained in a repository or playbook.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/ai-disabled-package-verification-evidence.json">Evidence extract</a> · <a href="/assets/ai-disabled-package-verification-inventory.csv">Evidence extract 2</a></p>

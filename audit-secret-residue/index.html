@@ -29,22 +29,30 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-secret-residue-analogy.png" alt="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted a database service to use TLS certificates. Creating those certificates required a private signing key. Once the certificates were installed, I expected the temporary staging directory to be cleaned up.</p>
-<p>An AI agent finished the certificate setup and left that signing key in its staging directory. Anyone able to use the key could issue more certificates. Password transfers, helper scripts and renewal tests left other extra copies of secrets.</p>
-<h2>Certificate staging kept powerful private keys</h2>
-<p>One database deployment retained the CA signing key used to create its certificates. Another test of mutual TLS left both CA and client private keys in a staging tree.</p>
-<p>The service might need its own private key to keep running. That does not explain why temporary copies of the issuing key or test-client identities should remain alongside it.</p>
+<p>I wanted a database service configured with TLS certificates. Creating them required a certificate authority’s private signing key. Once the certificates were installed, the temporary staging area still needed inspection.</p>
+<p>The AI agent left that signing key in the staging directory. The service could use its own certificate and private key while an extra, more powerful key remained outside the intended runtime setup.</p>
+
+<h2>A staging key could issue more certificates</h2>
+<p>The retained CA key could sign certificates for systems trusting that authority. A separate mutual-TLS test also left CA and client private keys in its staging tree.</p>
+<p>These were not merely public certificates. Keeping the service’s own runtime key did not explain why issuing keys and test-client identities had to remain there.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl#L18">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-tls-bash-ubuntu16-5469/rabbitmq-tls-ubuntu16__jYS6s3R/agent/executor-commands.jsonl#L70">Recorded commands 2</a></p>
-<h2>Cleanup missed the machine that sent the password</h2>
-<p>In a replication task, the agent removed password copies from receiving machines but missed the original on the sending machine. A broker deployment also retained an earlier abandoned copy.</p>
+
+<h2>Cleanup did not always follow the secret back to its source</h2>
+<p>In a replication task, the agent removed password files from the receiving machines but missed the original on the sending machine. A broker deployment retained an earlier abandoned copy.</p>
+<p>Checking only the finished destination could therefore miss sensitive material created before the successful transfer.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/postgresql-streaming-replication-bash-centos-stream10-5469/postgresql-streaming-replication__MHmKM9K/agent/executor-commands.jsonl#L34">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-cluster-bash-rhel10-5469/rabbitmq-cluster-rhel10__pQn4PhC/agent/executor-commands.jsonl#L134">Recorded commands 2</a></p>
-<h2>Secrets remained inside scripts and configuration fragments</h2>
-<p>Galera setup files retained authentication values. Broker helper scripts contained live passwords in their commands. Removing a file named “password” would not remove those embedded values.</p>
+
+<h2>A password could remain inside another file</h2>
+<p>Galera setup files retained authentication values, and broker helper scripts embedded live passwords in their commands. Removing a file explicitly named as a password file would not remove those values from the scripts.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-scale-out-bash-almalinux9-5469/mariadb-galera-scale-out-almalin__LDdAc89/agent/executor-commands.jsonl#L56">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-rhel9-5469/rabbitmq-cluster-rhel9__jwS8Ajt/agent/executor-commands.jsonl#L48">Recorded commands 2</a></p>
-<h2>Replacement created more generations to protect</h2>
-<p>Certificate rotation left older private-key directories behind. A tool meant to produce a privacy-safe export also kept private input in its test fixtures.</p>
+
+<h2>Older keys and private test inputs remained</h2>
+<p>Certificate rotation left older private-key directories behind. A privacy-export tool also retained private input in its test fixtures.</p>
+<p>Some old keys or inputs can be deliberately retained for recovery or testing. The distinction needs to be explicit: what is required, who can read it and when it should be removed.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/certificate-rotation-bash-rhel10-5782/certificate-rotation-rhel10__9cx4362/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/privacy-safe-support-export-bash-centos5-8799/privacy-safe-support-export-cent__QAd7h5W/agent/executor-commands.jsonl#L10">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Keep deliberate recovery copies separate from abandoned working files, and remove copies the service no longer needs.</p>
+<p>The question at handover was not whether the running service still needed a secret. It was why each additional copy existed and whether its continued access and lifetime were intended.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-secret-residue-evidence.json">Evidence extract</a></p>

@@ -29,22 +29,26 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-manual-dependencies-analogy.png" alt="A completed chair passes inspection beside an assembly guide with missing steps." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>I wanted an Ansible playbook that could deploy file-integrity monitoring. An operator should be able to use it to install AIDE and create the reference database that later scans compare against.</p>
-<p>Before running the playbook, an AI agent installed AIDE and created that database manually. Ansible then skipped initialization because the file already existed. The run never showed the playbook performing the essential first-time setup.</p>
-<p class="real-life-analogy">Checking an assembly guide against a chair someone has already built does not prove you can build the chair from those instructions. An unchanged playbook run has the same limitation.</p>
-<h2>The prerequisite already existed, so Ansible skipped it</h2>
-<p>The AIDE initialization task used an existence check to avoid creating the database again. That is sensible for repeat runs. In this test, however, the agent had supplied the initial database outside the playbook.</p>
-<p>The unchanged run could be correct while leaving first-time installation untested.</p>
+<p>I wanted an Ansible playbook that could deploy file-integrity monitoring. It needed to install AIDE and initialize the reference database used to identify later file changes.</p>
+<p>Before testing the playbook, the AI agent installed AIDE and built that database manually. When Ansible ran, its existence check found the database and skipped initialization.</p>
+
+<h2>The test started after an essential setup step</h2>
+<p>Avoiding repeated initialization is sensible: a playbook should not replace its reference database on every run. Here, however, the run never exercised the task that would create the database on a machine without it.</p>
+<p>The unchanged result could correctly describe the prepared host while leaving first installation untested. Checking an assembly guide against a chair someone has already built has the same limitation.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/agent/executor-commands.jsonl#L26">Recorded commands</a></p>
-<h2>A debug script supplied the router configuration</h2>
-<p>In a NAT task, playbook attempts failed before a debug script directly applied the working router rules. The next Ansible run reported no changes.</p>
-<p>That result showed agreement with the manually configured router. It did not demonstrate the sequence an operator would need on a router without those rules.</p>
+
+<h2>Router configuration was supplied outside Ansible too</h2>
+<p>In a NAT task, playbook attempts failed before a debug script directly applied working router rules. The next Ansible run reported no changes.</p>
+<p>That established agreement with the manually configured router. It did not demonstrate which sequence the operator needed on a router where those rules were absent.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/nat-egress-ansible-ubuntu16-7778/nat-egress-ubuntu16__Gb3e8ks/agent/executor-commands.jsonl#L68">Recorded commands</a></p>
-<h2>Direct CLI sessions completed two DHCP setups</h2>
-<p>In two other tasks, failed Ansible attempts were followed by direct router commands that created and saved working interface and DHCP configuration. Revised playbooks then reported no changes.</p>
-<p>The revised syntax might have been sufficient to configure a fresh router. The recorded rerun did not answer that question because the required configuration was already there.</p>
+
+<h2>Manual DHCP repairs also preceded unchanged runs</h2>
+<p>Two other tasks followed failed Ansible attempts with direct router commands that created and saved interface and DHCP configuration. Revised playbooks then reported no changes.</p>
+<p>The revised syntax might have been sufficient for a fresh deployment. The recorded rerun could not settle that question because the configuration already existed.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl#L64">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl#L82">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Test the playbook on a documented starting state without the manual changes, or include those preparation steps in the delivered procedure.</p>
+<p>The delivered procedure needed a test on a documented starting state without the manual changes. Alternatively, those preparation steps had to be included in what the operator was told to run.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-manual-dependencies-evidence.json">Evidence extract</a></p>

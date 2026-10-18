@@ -29,21 +29,26 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-incomplete-deployment-analogy.png" alt="A new bathroom tap is installed above disconnected water-supply pipes." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted a PostgreSQL primary with two standbys, so the database would have a recovery path after a primary failure. That required preparing the standbys as well as configuring the primary.</p>
-<p>An AI agent changed some primary settings but did not finish replication access or initialize the standbys. Both standby services remained stopped. The setup was missing the machines it depended on for failover.</p>
-<h2>The primary settings did not create the standbys</h2>
-<p>Creating a PostgreSQL standby requires more than changing settings on the primary. The standby needs the initial database contents, a replication identity and permission to connect.</p>
-<p>Those steps were unfinished in the Ubuntu 24 task. The final observations showed only a primary listening on loopback and two stopped standbys. The record describes an incomplete new setup; it does not establish destruction of a previously healthy production cluster.</p>
+<p>I wanted a PostgreSQL setup with one primary and two standbys. If the primary failed, a standby needed the database contents and replication access required to take over.</p>
+<p>On Ubuntu 24, the AI agent began changing the primary’s settings. It did not finish preparing either standby. Both standby services were still stopped when the recorded work ended.</p>
+
+<h2>The work stopped before replication was established</h2>
+<p>A standby needs an initial copy of the database, a replication identity and permission to connect to the primary. Changing the primary’s configuration alone does not create that replica.</p>
+<p>Those steps remained unfinished. The final observations showed a primary listening only on loopback and two stopped standbys. This was an incomplete new deployment, rather than evidence that a previously healthy production cluster had been destroyed.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-failover-bash-ubuntu24-5469/postgresql-failover-ubuntu24__8kJnaih/agent/executor-commands.jsonl#L132">Recorded commands</a></p>
-<h2>Certificates existed, but RabbitMQ still served plain AMQP</h2>
-<p>Another Ubuntu task generated certificates for a RabbitMQ TLS deployment. It did not distribute them to the required servers or configure the broker’s TLS listener.</p>
-<p>The final listener was the ordinary unencrypted AMQP port. Generating certificate files was useful preparation, but clients still had no completed encrypted broker endpoint to use.</p>
+
+<h2>Certificate generation also stopped short of a working service</h2>
+<p>A separate Ubuntu task asked for RabbitMQ connections protected by TLS. The agent generated certificate files, but did not distribute them to the required servers or configure the broker to accept TLS connections.</p>
+<p>The broker still listened on its ordinary, unencrypted AMQP port. The files were preparation for the requested service; clients did not yet have an encrypted endpoint to use.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-tls-bash-ubuntu24-5469/rabbitmq-tls-ubuntu24__HmEevtG/agent/executor-commands.jsonl#L162">Recorded commands</a></p>
-<h2>Pings succeeded over networking that already existed</h2>
-<p>A RHEL 9 network task left the requested LAN unconfigured. The successful pings went to a DHCP management address on a segment the machines already shared.</p>
-<p>Those replies proved the existing management connection worked. They did not show that the agent had built the additional routed LAN.</p>
+
+<h2>The network test used a connection that already existed</h2>
+<p>In a RHEL 9 task, the agent was supposed to build an additional routed LAN. It left that LAN unconfigured, then obtained successful ping replies from a DHCP management address on a segment the machines already shared.</p>
+<p>Those replies demonstrated the existing management path. They could not establish whether the new LAN worked, because the traffic never depended on that LAN.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/additional-zone-interface-bash-rhel9-5469/additional-zone-interface-rhel9__PWwYWkh/agent/executor-commands.jsonl#L38">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Complete the missing standby, TLS listener or LAN before testing the parts that depend on it.</p>
+<p>Each case had visible progress and some successful commands. The requested result still depended on components that had not been completed. The handover needed to identify that unfinished work.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-incomplete-deployment-evidence.json">Evidence extract</a></p>

@@ -29,16 +29,21 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-cluster-integrity-analogy.png" alt="A reopened library branch is listed in the directory while its shelves remain partly empty." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted a MinIO storage node to recover after a restart. It needed to rejoin the cluster and recover its local share of the data. Seeing its name return to the membership list would not, by itself, establish both results.</p>
-<p>In an AI agent’s deployment test, the node rejoined automatically but its local data shard remained unhealthy. An explicit healing command repaired it. Automatic membership recovery had worked; automatic local-data recovery had not been demonstrated.</p>
-<h2>A hostname change gave RabbitMQ a different identity</h2>
-<p>In a separate Alpine task, DHCP changed a RabbitMQ server’s hostname during boot. RabbitMQ used the hostname as part of its node identity, so it started as a different, unclustered node.</p>
-<p>The agent began repair, but the record ended without a confirmed rejoin. Other members stayed healthy. A successful request to a surviving peer would not have established that the missing member had returned.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl#L36">Recorded commands</a></p>
-<h2>These were different recovery problems</h2>
-<p>The RabbitMQ case concerned a changed identity and an unconfirmed rejoin. The object-store case showed a local-data problem repaired after rejoin. Neither demonstrated unrecoverable data loss.</p>
+<p>I wanted to check that a MinIO storage node recovered when it returned to its cluster after a restart. Rejoining the membership list was one step. Its local share of the stored data also needed to recover.</p>
+<p>An AI agent configured the cluster and tested a node’s return. The node rejoined automatically, but its local data shard remained unhealthy. The agent then ran <code>mc admin heal</code>, MinIO’s repair command, and the status became healthy.</p>
+
+<h2>A returned member still needed a data repair</h2>
+<p>That sequence supported automatic membership recovery, but did not demonstrate automatic local resynchronization. The data status became healthy after the explicit repair command.</p>
+<p>This did not establish unrecoverable object loss. It established an additional repair step after the node had appeared to return.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Check the returning member’s identity and local data, not only a healthy response from another member.</p>
+
+<h2>A broker restart failed for a different reason</h2>
+<p>An Alpine RabbitMQ task also required recovery after reboot. During startup, DHCP changed one server’s hostname. RabbitMQ incorporated that hostname into its node identity, so the service started as a different, unclustered node.</p>
+<p>The agent began repairing the identity problem, but the record ended before a successful rejoin was confirmed. Other members remained healthy. Checking a surviving member would not have revealed whether the missing server had recovered.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl#L36">Recorded commands</a></p>
+<p>These were two distinct recovery failures: one member returned but needed its local data healed; another had no confirmed return under its original identity. The recovery check needed to inspect the affected member, not infer its health from the rest of the cluster.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-cluster-integrity-evidence.json">Evidence extract</a></p>

@@ -29,17 +29,21 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-configuration-drift-analogy.png" alt="A returned car contains a road atlas with ordinary routes still covered by tape from a demonstration." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted to prove packages could be installed from a local repository while the normal remote repositories were unavailable. The test therefore needed to block the remote sources before attempting a local installation.</p>
-<p>On CentOS, an AI agent moved the normal repository files out of active configuration. The local install worked. The normal sources were never restored, leaving the next administrator with the outage created for the test.</p>
-<h2>A local source stayed configured after its server disappeared</h2>
-<p>In an Ubuntu setup, the agent disabled a security-update source and retained a local source entry. The temporary HTTP server and package files behind the local entry were later gone.</p>
-<p>APT was therefore left pointing at a source that no longer existed while a normal source remained disabled. Removing the demonstration server was only part of cleanup.</p>
+<p>I wanted a local package repository to keep an installation working when normal remote sources were unavailable. To demonstrate that, the AI agent had to create an outage condition for the remote repositories.</p>
+<p>On CentOS, it moved the normal repository files out of active configuration. The local install succeeded. The agent did not restore the normal files afterward, so the test’s outage remained part of the finished machine.</p>
+
+<h2>Removing the temporary server left a broken source entry</h2>
+<p>An Ubuntu run disabled a security-update source and added a local repository entry. The temporary HTTP server and package files behind that local entry were later removed.</p>
+<p>APT was left with a disabled normal source and a configured local source that no longer existed. Cleanup had removed the demonstration files without restoring a usable source arrangement.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/local-package-repository-bash-ubuntu16-5469/local-package-repository-ubuntu1__Kx2qxzc/agent/executor-commands.jsonl#L20">Recorded commands</a></p>
-<h2>A small swap request also changed the booted kernel</h2>
-<p>In a separate Ubuntu 16 task, the agent needed a missing zram module to provide compressed swap. It installed and booted kernel 4.4.0-142 instead of the previously running 4.4.0-210.</p>
-<p>Swap worked, but the host now ran an older kernel. No discussion of that change with the user was recorded. The <a href="/ai-asked-for-swap-downgraded-kernel/">kernel downgrade article</a> includes the detailed sequence.</p>
+
+<h2>Adding swap changed the kernel used at boot</h2>
+<p>On Ubuntu 16, a compressed-swap task encountered a missing zram module. The agent installed kernel 4.4.0-142 and changed boot selection to use it instead of the running 4.4.0-210.</p>
+<p>Swap then worked, but every workload started using the older kernel, including after future reboots. No discussion of that broader change with the user was recorded. The <a href="/ai-asked-for-swap-downgraded-kernel/">kernel-downgrade article</a> contains the detailed sequence.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu16-5782/zram-swap-ubuntu16__qvv7vZc/agent/executor-commands.jsonl#L30">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Restore temporary repository restrictions and disclose changes to package sources or boot selection.</p>
+<p>These changes outlived the immediate test or repair. The operator needed normal repositories restored where they were only temporarily blocked, and an explicit account of any source or boot-selection changes left behind.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-configuration-drift-evidence.json">Evidence extract</a></p>

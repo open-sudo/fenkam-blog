@@ -29,27 +29,35 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-unsafe-changes-analogy.png" alt="A plumber reaches for the building-wide water manifold to fix a small leak on one branch." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted database roles configured with generated passwords. Those account changes depended on password generation succeeding first. If that preparation failed, the existing authentication settings still needed to be preserved.</p>
-<p>An AI agent’s generation command failed because OpenSSL was missing. The account-update commands still ran and temporarily cleared the passwords. Other repairs also changed authentication, networking or storage beyond the intended operation.</p>
-<h2>Account changes ran before their inputs were checked</h2>
-<p>The database-role passwords were later corrected. A separate LDAP task activated a malformed administrator-password hash before repairing it. In both cases, a failed preparation step reached live authentication settings.</p>
+<p>I wanted database roles configured with generated passwords. The AI agent’s password-generation command failed because OpenSSL was missing, but the following account-update commands still ran.</p>
+<p>The role passwords were temporarily cleared before being corrected. A failed preparation step had reached live authentication settings. Other repairs showed how a narrow task could change unrelated parts of a machine.</p>
+
+<h2>Account updates used invalid inputs</h2>
+<p>A separate LDAP task activated a malformed administrator-password hash before repairing it. Another root-password update also ran after credential generation failed and was later corrected.</p>
+<p>The final accounts could be healthy while the command sequence still exposed an avoidable failure interval. Each update needed its input validated before activation.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/database-reader-writer-roles-bash-rhel10-3922/database-reader-writer-roles-rhe__eceSZep/agent/executor-commands.jsonl#L18">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/ldap-directory-import-bash-rhel10-9038/ldap-directory-import-bash-rhel1__rXbBf6j/agent/executor-commands.jsonl#L28">Recorded commands 2</a></p>
-<h2>Package recovery replaced libraries used by the whole machine</h2>
-<p>A local-repository task copied an incompatible RPM library over the live version, then reversed that attempt. It also manually replaced OpenSSL libraries before reconciling them through package management.</p>
-<p>Another agent force-killed apt and dpkg processes and removed lock files. That machine eventually had consistent package state, but interrupting an installation could leave partial changes or allow conflicting transactions.</p>
+
+<h2>Package repairs changed shared libraries</h2>
+<p>A local-repository task copied an incompatible RPM library over the live version and then reversed that attempt. It also manually replaced OpenSSL libraries before reconciling them through package management.</p>
+<p>Another agent force-killed apt and dpkg processes and removed lock files. That machine eventually had consistent package state, but interrupting installations risked partial changes or overlapping transactions.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/local-package-repository-bash-rhel10-3922/local-package-repository-rhel10__zrgjpk7/agent/executor-commands.jsonl#L32">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/etcd-member-replacement-bash-ubuntu24-5469/etcd-member-replacement-ubuntu24__jEHLCMU/agent/executor-commands.jsonl#L36">Recorded commands 2</a></p>
-<h2>A narrow task changed unrelated access</h2>
-<p>BGP configuration work removed the address from an existing Docker bridge and forced it down on two routers. The record did not establish a resulting container outage or show that BGP required the change.</p>
-<p>On Alpine, a cron restriction also limited access to a shared privileged helper used by su, passwd and other tools. The agent had seen those other uses but did not test or report their loss for ordinary users.</p>
+
+<h2>The effect of an edit extended beyond the requested service</h2>
+<p>BGP work removed an existing Docker bridge address and forced the bridge down on two routers. The record did not establish a resulting container outage or show that the BGP task required that change.</p>
+<p>On Alpine, a cron restriction limited a shared privileged helper also used by su, passwd and other tools. The agent had seen those uses but did not test or report the effect on ordinary users.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl#L60">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-29__13-57-25/cron-access-control-ansible-alpine-7778/cron-access-control-alpine__a4c7qC8/agent/executor-commands.jsonl#L16">Recorded commands 2</a></p>
-<h2>Storage scripts handled failure badly</h2>
-<p>Generated boot code for loop-backed storage was followed by observed filesystem corruption. A separate snapshot helper could exit after a failed operation without unfreezing the filesystem.</p>
-<p>The second problem is a failure path in the script: a snapshot error could leave applications unable to write until someone unfreezes the filesystem.</p>
+
+<h2>Storage scripts did not recover safely from errors</h2>
+<p>Filesystem corruption was observed after generated boot code for loop-backed storage. In a separate snapshot helper, an error could make the script exit without unfreezing the filesystem.</p>
+<p>The snapshot issue was a code path, not a demonstrated frozen production filesystem. If triggered, it could leave applications unable to write until someone unfroze it.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/lvm-extend-bash-alpine-5469/lvm-extend-alpine__tF9N3hi/agent/executor-commands.jsonl#L14">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/filesystem-snapshot-rollback-bash-rhel7-8350/filesystem-snapshot-rollback-bas__JYx4sH6/agent/executor-commands.jsonl#L20">Recorded commands 2</a></p>
-<h2>Credential cleanup also changed what the operator would receive</h2>
-<p>A root password was changed after its generation step failed, before a corrective update restored a healthy machine. An FTP setup introduced an unnecessary password relay and rotation, changed the handover credentials, and left earlier SSH keys behind.</p>
+
+<h2>Credential repairs also changed the handover</h2>
+<p>An FTP setup introduced an unnecessary password relay and rotation, changed the credentials being handed over and retained earlier SSH keys. The operator therefore needed more than confirmation that the final service worked: they needed the correct credentials and an account of the access left behind.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/child-process-reaping-ansible-rhel10-6842/child-process-reaping-ansible-rh__Robpe9Z/agent/executor-commands.jsonl#L18">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/ftp-dropbox-confinement-bash-centos5-8799/ftp-dropbox-confinement-centos5__wpmyQCJ/agent/executor-commands.jsonl#L34">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Inspect the changed accounts, files and services after each repair. A command’s exit status does not validate everything it changed.</p>
+<p>A repair’s exit status could not validate every account, file or service it touched. The final review needed to follow those changes far enough to distinguish repaired state from side effects still present.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-unsafe-changes-evidence.json">Evidence extract</a></p>

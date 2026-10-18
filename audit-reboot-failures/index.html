@@ -29,21 +29,26 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-reboot-failures-analogy.png" alt="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted the new network bridge to return automatically after a restart. A bridge that existed only until the next reboot would leave the administrator with more work to do.</p>
-<p>An AI agent created the bridge with live ip commands and got traffic flowing. After reboot, the bridge was gone. Another route returned only after the agent entered a command again. These setups needed manual repairs to recover.</p>
-<h2>An active startup service still left the route missing</h2>
-<p>One machine reported its route-setup service as active, yet the route was absent and pings failed until the agent repaired it manually.</p>
-<p>Another router restored only one of its multipath routes. The agent changed its startup configuration afterward but did not reboot that router again. The change might have fixed the problem; that final recovery test was missing.</p>
+<p>I wanted a network bridge to return automatically after restart. The AI agent created it with live ip commands and got traffic flowing.</p>
+<p>After reboot, the bridge was absent. The working connection before restart had shown the live configuration, but had not established how the bridge would be recreated at boot.</p>
+
+<h2>An active startup service did not guarantee the route existed</h2>
+<p>In another routing task, a route-setup service was marked active after boot while the route itself was missing. Pings failed until the agent repaired it manually.</p>
+<p>A different router restored only one of its multipath routes. The agent changed startup configuration afterward, but did not reboot that router again. The repair might have worked; its automatic recovery was not demonstrated.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl#L104">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl#L220">Recorded commands 2</a></p>
-<h2>A web server had to be started again</h2>
-<p>One HTTP server had been launched with nohup. That kept it alive after the launching shell ended, but did not arrange a start after reboot. The agent had to launch it again.</p>
-<p>In another task, nginx was enabled for startup but was inactive after restart. An enabled setting described what was intended to start; it did not explain why the service was not running.</p>
+
+<h2>Keeping a process alive was not the same as arranging startup</h2>
+<p>One HTTP server had been launched with nohup. That allowed it to outlive the launching shell, but did not start it after reboot. The agent had to launch it again.</p>
+<p>In another task, nginx was enabled for startup but inactive after restart. The enabled setting described the intended startup, not the service actually running on the recovered machine.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-06__00-21-44/double-nat-path-bash-rhel7-5469/double-nat-path-rhel7__kus85og/agent/executor-commands.jsonl#L260">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl#L130">Recorded commands 2</a></p>
-<h2>Router access and firewall settings also had to persist</h2>
-<p>A firewall interface returned in the wrong zone after reboot. The agent repaired the assignment but did not restart the affected node again to verify the repair.</p>
-<p>A VyOS router lost the credentials used by its automation controller because they had been written into a runtime home directory instead of saved through the router’s persistent configuration.</p>
+
+<h2>Network policy and login state also needed to survive</h2>
+<p>A firewall setup needed an interface to retain its zone assignment, which determined the rules applied to its traffic. The interface returned in a different zone after reboot. The agent repaired the assignment but did not reboot that node again to verify it.</p>
+<p>A VyOS router lost its controller’s login credentials because they had been written into a runtime home directory rather than saved through persistent router configuration. The controller needed those credentials after restart as well as during setup.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/port-forward-ansible-rhel10-7778/port-forward-rhel10__wJBesdS/agent/executor-commands.jsonl#L138">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/vrrp-failover-ansible-rhel7-7778/vrrp-failover-rhel7__V7wPNUS/agent/executor-commands.jsonl#L222">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Restart after the final repair and inspect the machine before running rescue commands. Record what returned automatically.</p>
+<p>The useful observation was what returned before rescue commands were run. If the agent made a final repair, a further restart check was needed to distinguish an automatic recovery from a manually recovered service.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-reboot-failures-evidence.json">Evidence extract</a></p>

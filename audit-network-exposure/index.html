@@ -29,17 +29,21 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-network-exposure-analogy.png" alt="A building has a secure new front entrance while its old side door stands open." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted an HTTPS site running on the server. Once the encrypted page loaded, I still needed to know whether the installation had exposed any other network services.</p>
-<p>An AI agent configured HTTPS and fetched the page successfully. The ordinary HTTP site was still listening too. Other installations also introduced network services that the requested setup did not need.</p>
-<h2>Installing one tool started another network service</h2>
-<p>Installing a file-integrity tool introduced an SMTP listener. A print-archive task intended for local use enabled network discovery on all interfaces.</p>
-<p>Package dependencies and defaults can start services that are not obvious from the main package’s name. They still become part of the machine the administrator receives.</p>
+<p>I wanted an HTTPS site running on a server. The AI agent installed and configured the web software, then fetched the encrypted page successfully.</p>
+<p>The ordinary HTTP site was still listening as well. The HTTPS request proved that the new endpoint worked, but had not told me what else the installation made available.</p>
+
+<h2>Package installation started services beyond the requested one</h2>
+<p>A file-integrity task introduced an SMTP listener when its tools were installed. A print-archive task intended for local use enabled network discovery on all interfaces.</p>
+<p>Those services could come from dependencies or package defaults. They still changed the network-facing software the administrator inherited, even though they were not the endpoint being tested.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/file-integrity-baseline-bash-ubuntu24-5469/file-integrity-baseline-ubuntu24__VK7dDkm/agent/executor-commands.jsonl#L6">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/print-spool-recovery-bash-rhel10-9038/print-spool-recovery-bash-rhel10__sErS5Ys/agent/executor-commands.jsonl#L6">Recorded commands 2</a></p>
-<h2>Administrative interfaces added separate access to review</h2>
-<p>A broker deployment enabled its management interface with default administrator credentials. A Kerberos setup retained remote-administration services the requested application did not need.</p>
-<p>These ports provide different powers from the application’s ordinary client connection. Their bind addresses, firewall rules and authentication need separate inspection.</p>
+
+<h2>Management ports needed their own review</h2>
+<p>A broker deployment enabled a management interface with default administrator credentials. A Kerberos setup retained remote-administration services the requested application did not need.</p>
+<p>An application request would not test those interfaces. Their bind addresses, firewall access and authentication had to be examined separately to establish who could use them.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-ubuntu24-5469/rabbitmq-cluster-ubuntu24__VndcLF5/agent/executor-commands.jsonl#L186">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7403/2026-10-03__14-57-05/kerberos-service-identity-bash-ubuntu24-7403/kerberos-service-identity-ubuntu__L6tbD9P/agent/executor-commands.jsonl#L10">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>List each open port, its intended clients and why it needs to remain. A successful HTTPS request is not a listener inventory.</p>
+<p>The missing final step was an inventory of listeners and their intended clients. A working HTTPS page answered the service test; it did not account for the other open ports.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-network-exposure-evidence.json">Evidence extract</a></p>

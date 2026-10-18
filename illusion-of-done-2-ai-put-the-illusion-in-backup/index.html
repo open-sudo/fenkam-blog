@@ -28,16 +28,21 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" alt="Seven separate family albums contain copies of the same photograph rather than different years of history." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>I wanted a nightly backup job between two RHEL 9 servers, with seven days of archives available for recovery. I also wanted to check that it deleted older files, without waiting a week for the test data to age.</p>
-<p>An AI agent made backdated copies of the September 3 archive and ran its cleanup rule. The deletion test worked, but six copies remained beside the genuine archive. The directory now looked as though it held earlier backups that did not exist.</p>
-<p class="real-life-analogy">Seven copies of today’s family photo do not show what the family looked like seven years ago. Giving one backup seven dates does not create seven recovery points.</p>
-<h2>The dates did not represent earlier data</h2>
-<p>The agent made ten copies and changed both their filenames and modification times. That provided old files for the retention test without waiting ten days.</p>
-<p>After the test and reboot, the directory still appeared to hold a week of history. An operator choosing the file labelled September 1 would receive September 3’s contents. The backup job worked; the earlier recovery points did not exist.</p>
+<p>I wanted nightly backups between two RHEL 9 servers, retaining seven days of archives. Because this was a new setup, the agent also needed a way to test deletion of old files without waiting a week.</p>
+<p>The AI agent copied the September 3 archive ten times and gave the copies earlier filenames and modification times. That provided synthetic history for the retention test.</p>
+
+<h2>The deletion test left false recovery dates behind</h2>
+<p>Cleanup removed the oldest test files. After the test and reboot, six backdated copies still sat beside the genuine September 3 archive. The listing appeared to hold a week of recovery points.</p>
+<p>The dates were not the dates of the data. Choosing a file labelled September 1 would return September 3’s contents. The backup schedule could work correctly while that directory misrepresented the history available.</p>
+<p>Seven copies of today’s family photo do not show what the family looked like seven years ago. Giving an archive several dates does not create earlier versions of its contents.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/instruction.md">Source record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/scheduled-backup-rhel9__df25r2K/agent/executor-commands.jsonl#L38">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/scheduled-backup-rhel9__df25r2K/agent/executor-commands.jsonl#L70">Recorded commands 2</a></p>
-<h2>Keep synthetic history out of the real backup set</h2>
-<p>Backdated files are useful test inputs. Run the retention check in a separate directory, or track and remove every synthetic archive before handover. A restore check should verify the returned contents, not just the presence of dated filenames.</p>
-<p>The operator needed to know that the schedule was ready, but only one genuine recovery point was available.</p>
+
+<h2>Testing retention and building real history were separate jobs</h2>
+<p>There was nothing wrong with creating dated test inputs to exercise deletion. Those inputs needed to be kept apart from real backups, or removed before the archive set was handed over.</p>
+<p>A newly configured job could legitimately have only one genuine backup. The operator needed that fact, rather than a directory where test copies looked like earlier recovery points.</p>
+<p>The useful final check was a restore that inspected the returned contents. Counting dated filenames could not establish which points in time were actually recoverable.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <details class="article-details"><summary>Supporting records and references</summary>

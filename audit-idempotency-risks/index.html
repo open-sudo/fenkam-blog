@@ -29,16 +29,21 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-idempotency-risks-analogy.png" alt="A book has been shelved, but an identical replacement arrives because the returns trolley is empty." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted to import existing mail into a Maildir mailbox using Ansible. After the migration, people would read and use those messages. Rerunning the playbook should not import them a second time.</p>
-<p>The AI-written playbook used exact destination filenames and <code>force:false</code> to avoid overwriting existing files. That worked while the names stayed unchanged. It did not account for Maildir renaming a message when its read-state flags changed.</p>
-<h2>The next run could import the same message again</h2>
-<p>The playbook looked for a file named <code>two.eml:2,</code>. After a user read the message, Maildir could change the flag suffix. The message would still exist, but its original filename would not.</p>
-<p>A later playbook run could then copy the original message again under the old name and flags. The existence check tracked a mutable filename rather than whether the message had already been imported.</p>
+<p>I wanted existing email imported into a Maildir mailbox using Ansible. The messages would then be read and used normally. A later playbook run should recognize that they had already been imported.</p>
+<p>The AI agent wrote a playbook that copied each message to an exact destination filename. It used <code>force:false</code> to avoid overwriting a file already present at that path.</p>
+
+<h2>The import guard depended on a name the mailbox could change</h2>
+<p>One destination was <code>two.eml:2,</code>. Maildir stores message-state flags in a suffix on the filename. Reading a message can change those flags and rename the file, even though the message remains in the mailbox.</p>
+<p>After that rename, the playbook’s original destination path would be absent. A rerun could copy the same source message again under its old name and flags. The guard checked a mutable filename, rather than a durable record of the import.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/imap-maildir-cutover-ansible-rhel10-9186/imap-maildir-cutover-ansible-rhe__owcohQ8/agent/executor-commands.jsonl#L26">Recorded commands</a></p>
-<h2>This was a code risk, not an observed duplicate</h2>
-<p>The first migration worked. The recorded test did not change message flags and rerun the playbook, so no duplicate was demonstrated. An immediate rerun before using the mailbox would not exercise the problem either.</p>
+
+<h2>The risky rerun was not demonstrated</h2>
+<p>The first migration worked. The recorded test did not mark a message read and then reapply the playbook, so it did not show an actual duplicate.</p>
+<p>An immediate rerun before anyone used the mailbox would not exercise the same problem: the original filenames could still be present.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Test a rerun after ordinary mailbox use. A migration-completion marker or durable message identity should survive changes to the destination filename.</p>
+<p>A useful follow-up would use the imported mail before rerunning the migration. The completion marker or message identity used to prevent duplicates needs to survive the mailbox’s normal changes.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-idempotency-risks-evidence.json">Evidence extract</a></p>

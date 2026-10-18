@@ -23,30 +23,37 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-13: AI Left Test Files and Services Behind</h1>
     <p class="article-deck">Fake backup history, temporary listeners and blocked repositories remained after their demonstrations ended.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-test-residue-analogy.png" alt="Rehearsal props remain mixed with genuine emergency equipment backstage." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted to check that a backup script deleted archives older than its retention period. Dated copies could exercise that rule immediately, instead of waiting for real backups to become old enough.</p>
-<p>An AI agent made those copies, ran the test and left them beside genuine archives. The deletion rule could work while the directory overstated the recovery history available. Other tests also left files, listeners and simulated outages behind.</p>
-<h2>Backdated files looked like historical backups</h2>
-<p>Two retention tests left synthetic dated archives in the final backup listing. One retained four such copies.</p>
-<p>Artificial dates can help test when a cleanup rule deletes a file. They do not give a copied archive the contents the system had on that earlier date. Leaving those files with real archives makes that distinction harder to see.</p>
+<p>I wanted to check that a backup script deleted old archives. Rather than wait for backups to age, the AI agent copied an archive under earlier dates and ran the retention rule against those files.</p>
+<p>The deletion test could then complete immediately. It also created a cleanup obligation: the backdated copies were test inputs, not genuine snapshots of earlier data.</p>
+
+<h2>The test archives remained beside the real backups</h2>
+<p>Two retention tests left synthetic dated archives in the final backup listing; one retained four copies. Their filenames suggested historical recovery points even though the contents came from a later archive.</p>
+<p>An operator selecting an old date could therefore restore the wrong point in time. Checking that the cleanup rule deleted some files did not establish that the remaining archive set represented real history.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl#L14">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-29__18-27-50/scheduled-backup-ansible-rhel7-7778/scheduled-backup-rhel7__KtGvn2g/agent/executor-commands.jsonl#L50">Recorded commands 2</a></p>
-<h2>Application configuration was used as test material</h2>
-<p>A synchronization test replaced the authoritative application configuration with test data. Another added debug settings and markers that the synchronization system copied to other machines.</p>
+
+<h2>Other tests changed the data they were meant to protect</h2>
+<p>A configuration-synchronization task needed an authoritative file distributed to other machines. During verification, the agent replaced that source configuration with test data. Another synchronization test added debug settings and markers that were then copied to peers.</p>
+<p>Those inputs were no longer confined to a disposable test location. The synchronization machinery could work correctly while distributing changes introduced only for the demonstration.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__09-35-35/config-sync-bash-ubuntu24-5469/config-sync-ubuntu24__g9Js8ry/agent/executor-commands.jsonl#L52">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__20-14-54/config-sync-bash-ubuntu24-5469/config-sync-ubuntu24__kk4y4dT/agent/executor-commands.jsonl#L34">Recorded commands 2</a></p>
-<h2>Temporary listeners remained on familiar service ports</h2>
-<p>A firewall test started a simple TCP listener on PostgreSQL’s port and left it running. A separate network-alias policy test retained a Python listener.</p>
-<p>A port number alone does not identify the application behind it. A later administrator could find an open port that belonged to the demonstration rather than the intended service.</p>
+
+<h2>An open port could belong to the test program</h2>
+<p>A firewall test started a simple TCP listener on PostgreSQL’s port and left it running. A network-alias policy test also retained a Python listener.</p>
+<p>An administrator checking the port later could see a successful connection to the demonstration process. The familiar port number did not establish that the intended application was behind it.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__15-54-16/cross-lan-firewall-bash-rhel9-5469/cross-lan-firewall-rhel9__KvRG5dc/agent/executor-commands.jsonl#L16">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/alias-based-policy-bash-rhel7-5469/alias-based-policy-rhel7__4kCMH6m/agent/executor-commands.jsonl#L50">Recorded commands 2</a></p>
-<h2>The simulated repository outage became a real restriction</h2>
-<p>On Alpine, the agent blocked the normal package CDN through the hosts file to test a local repository. That block remained afterward.</p>
-<p>On Ubuntu, an APT proxy pointed at a local port with no proxy server. An exception allowed the local repository to work, but ordinary HTTP repositories stayed blocked after the demonstration.</p>
+
+<h2>A simulated repository outage outlived its test</h2>
+<p>To prove local package installation worked without remote sources, an Alpine run blocked the package CDN through the hosts file. An Ubuntu run sent ordinary APT HTTP requests to a nonexistent local proxy while exempting the local repository.</p>
+<p>The local installations worked, but those blocks remained afterward. Future package operations still encountered an outage mechanism introduced for verification.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/local-package-repository-bash-alpine-5782/local-package-repository-alpine__gTBeGcZ/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/local-package-repository-bash-ubuntu16-5782/local-package-repository-ubuntu1__gG7fZQB/agent/executor-commands.jsonl#L4">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Remove test listeners and outage settings, restore the original inputs, and keep synthetic archives separate from genuine backups.</p>
+<p>A test changes the machine too. Before handover, the archive set, authoritative inputs, listeners and repository settings needed inspection for changes that served only the test.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-test-residue-evidence.json">Evidence extract</a></p>

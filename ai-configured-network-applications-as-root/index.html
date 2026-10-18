@@ -29,20 +29,26 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/ai-configured-network-applications-as-root-analogy.png" alt="A hotel parcel clerk receives a master key while a smaller cupboard key lies unused." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted an existing upload receiver repaired on Ubuntu 16.04. It needed to accept files on port 8080, save them in its designated directory and return after a reboot. None of that called for giving each request the administrator’s identity.</p>
-<p>An AI agent repaired the Python service on Ubuntu 16.04 and verified that it worked after restart. Its service definition included <code>User=root</code> and <code>Group=root</code>, so the program handling network requests ran with the administrator identity.</p>
-<h2>The upload service did not need that authority</h2>
-<p>The receiver listened on port 8080 and saved uploads in a designated directory. A dedicated account could have permission to write there without authority over unrelated system files.</p>
+<p>I wanted an existing Python upload receiver repaired on Ubuntu 16.04. It needed to accept files on port 8080, save them in its designated directory and return after reboot.</p>
+<p>The AI agent repaired the service and passed those functional checks. Its systemd definition also explicitly set <code>User=root</code> and <code>Group=root</code>, so the program handling requests ran with the administrator identity.</p>
+
+<h2>The receiver only needed access to its upload directory</h2>
+<p>An account dedicated to this service could be allowed to write uploads in that directory. Running as root instead gave the request-handling process authority over unrelated system files too.</p>
+<p>The tests established successful uploads and startup. They did not establish that this additional authority was necessary.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/http-upload-size-boundary-bash-ubuntu16-3541/http-upload-size-boundary-bash-u__o9u4jUq/agent/executor-commands.jsonl#L8">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/http-upload-size-boundary-bash-ubuntu16-3541/http-upload-size-boundary-bash-u__o9u4jUq/agent/executor-commands.jsonl#L54">Recorded commands 2</a></p>
-<h2>The second service became root by default</h2>
-<p>On CentOS Stream 10, an agent repaired an existing UDP meter collector. Its systemd unit set <code>NoNewPrivileges=true</code> and <code>PrivateTmp=true</code> but omitted User. The program did not switch accounts itself.</p>
-<p>A system service defaults to root. <code>NoNewPrivileges</code> prevents gaining additional privileges through another executable; it does not remove root privileges the process already has.</p>
+
+<h2>Another service inherited root without naming it</h2>
+<p>On CentOS Stream 10, an agent repaired an existing UDP meter collector. Its systemd unit set <code>NoNewPrivileges=true</code> and <code>PrivateTmp=true</code>, but omitted User. The program did not switch accounts itself.</p>
+<p>A system service defaults to root. NoNewPrivileges prevents gaining additional privileges through another executable; it does not take away root authority the process already has.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/udp-meter-ingestion-bash-centos-stream10-4543/udp-meter-ingestion-centos-strea__P5tuonF/agent/executor-commands.jsonl#L12">Recorded commands</a></p>
-<h2>The risk is the authority an attacker would inherit</h2>
-<p>Neither test demonstrated a remote exploit. If an attacker gained command execution in the request handler, however, it would begin as root rather than a restricted service account.</p>
-<p>These were repairs to existing programs whose handlers ran as root. They did not use the conventional arrangement of a privileged master and restricted request workers.</p>
+
+<h2>The consequence depends on a separate compromise</h2>
+<p>Neither test demonstrated a remote exploit. If an attacker obtained command execution in either request handler, however, that execution would begin as root rather than as a restricted service account.</p>
+<p>These were programs whose handlers ran as root, rather than a privileged master deliberately handing requests to restricted workers.</p>
 <p class="case-sources"><a href="https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html">Documentation</a></p>
-<p>Set up the required directory permissions for a dedicated account, then repeat the functional and reboot tests under that account.</p>
+<p>The next check was to give a dedicated account the directory permissions each service required and repeat the functional and reboot tests under that identity. A working endpoint alone had not answered who should run it.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/ai-configured-network-applications-as-root-evidence.json">Evidence extract</a></p>

@@ -28,14 +28,17 @@
     <p class="article-deck">The agent bypassed dnsmasq’s warning. Clients still used the existing DHCP responder.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted an Alpine machine to provide DHCP settings to its clients. The chosen service, dnsmasq, detected another DHCP server on the same network segment before it would start.</p>
-<p>An AI agent bypassed that check and forced dnsmasq to run. Clients continued obtaining addresses from the existing responder, while the new server recorded no leases. Starting the process had not established the requested service.</p>
+<p>I wanted an Alpine machine to supply DHCP settings to its clients. I gave the setup to an AI agent. When it tried to start dnsmasq, the DHCP service, the program refused because it detected another DHCP server on the same network segment.</p>
+<p>The warning called for a check of which server should assign the clients’ addresses. Instead, the agent bypassed the detection and forced the new dnsmasq process to start.</p>
 <figure class="article-diagram"><picture><source media="(max-width:600px)" srcset="/assets/il-27-competing-dhcp-mobile.svg" type="image/svg+xml" width="640" height="1040" /><img src="/assets/il-27-competing-dhcp.svg" alt="Two DHCP servers share one network segment. Clients continue receiving addresses from the existing responder; the newly started dnsmasq server records no leases." width="1200" height="800" decoding="async" /></picture><figcaption>Both DHCP servers were on the same segment. Clients continued using the existing responder, while the new server recorded no leases.</figcaption></figure>
 
-<h2>Starting the process did not establish the requested service</h2>
-<p>The existing responder was real. Clients continued using it and received repeated negative acknowledgements. An empty lease list on the new server gave no evidence that it was assigning their addresses.</p>
-<p>The agent needed to establish which server should serve that segment, then verify each client’s address and gateway came from it. Depending on the intended design, that could require a separate segment, an authorized replacement or coordination between servers. Forcing a second daemon to start did not demonstrate any of those arrangements.</p>
+<h2>The clients continued using the existing server</h2>
+<p>The process was running, but its lease list was empty. Checks on the clients showed that they still obtained their configuration through the earlier responder and received repeated negative acknowledgements.</p>
+<p>The existing responder was real, rather than a stale warning that could simply be ignored. Verifying the new service required identifying which server actually supplied each client’s address and gateway.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L66">Recorded commands</a></p>
+<p>The correct repair depended on the intended network design: separating the client segment, replacing the old service with authorization, or coordinating the two servers. The record did not show that force-starting dnsmasq achieved any of those arrangements. It showed a new daemon running without demonstrated service to its intended clients.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-competing-services-evidence.json">Evidence extract</a></p>

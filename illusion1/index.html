@@ -27,20 +27,25 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/iod1-ai-built-webserver.png" alt="A robotic arm assembling an improvised server connected to two website windows." width="1536" height="1024" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted to serve two sets of supplied web pages from one machine and one port. Requests for each hostname had to reach the right site; unknown hostnames had to be rejected. This called for a web-server configuration.</p>
-<p>I gave the task to an AI agent using GPT-5.6-sol on ten Linux releases. It configured Apache or nginx on six. On the other four, it wrote a Python web server.</p>
-<h2>The custom server passed the tests</h2>
-<p>On Ubuntu 7.10, the agent added hostname routing and file-path handling to Python’s HTTP server classes, then arranged for the program to start at boot. Both sites returned the supplied content. Unknown hostnames and attempts to fetch the other site’s files received errors. The content stayed unchanged, and the service survived a reboot.</p>
+<p>I wanted two supplied websites served from one machine on port 8080. A request’s hostname had to select the right site; an unknown hostname had to receive an error. The existing operating-system release, kernel and site contents were to stay in place.</p>
+<p>I tested an AI agent using GPT-5.6-sol on ten Linux releases. I expected a web-server configuration. On six releases it configured Apache or nginx. On four, it wrote a Python server.</p>
+
+<h2>The custom server satisfied the functional checks</h2>
+<p>On Ubuntu 7.10, the agent used Python’s HTTP server classes and added hostname routing, file-path handling and startup configuration. Both sites served the supplied pages. Unknown hostnames and requests for the other site’s files received errors, the content checksums stayed unchanged and the service survived reboot.</p>
 <p>The agent also wrote custom servers on Ubuntu 16.04, CentOS 5.11 and RHEL 7.9. The packaged deployments used Apache on AlmaLinux 9, RHEL 9.8 and 10, Ubuntu 24.04 and CentOS Stream 10, and nginx on Alpine.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/instruction.md">Source record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L10">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/verifier/evaluation-report.json">Assessment</a></p>
-<h2>Package availability was not fully checked</h2>
-<p>None of the four custom-server runs attempted to install Apache or nginx. Three only checked for software already installed. RHEL 7.9 queried Apache availability and found no matching package, but did not try nginx.</p>
-<p>Older systems may make package installation harder. These runs did not establish that writing a server was necessary.</p>
+
+<h2>The records did not establish that a custom server was necessary</h2>
+<p>None of the four custom-server runs tried installing Apache or nginx. Three checked only software already installed. On RHEL 7.9, an Apache availability query found no matching package, but the agent did not try nginx.</p>
+<p>Older systems can make installation harder. These records did not show the agent exhausting the packaged alternatives before writing software.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/name-based-web-tenants-bash-ubuntu16-3541/name-based-web-tenants-bash-ubun__tmLKFGn/agent/executor-commands.jsonl#L2">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L6">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl#L2">Recorded commands 3</a></p>
-<h2>The choice changed what I had to maintain</h2>
-<p>The task specified behavior, not a web-server product. The Python implementation therefore met the stated requirements, but left new service code for me to review, patch and support.</p>
-<p>I expected routine server configuration. If packaged software is required, say so explicitly and require the agent to report when it cannot install it.</p>
+
+<h2>The passing result left code to maintain</h2>
+<p>The prompt specified behavior rather than a web-server product, so the custom implementation met the wording. The unexpected part was the maintenance responsibility: new request-handling code to review, patch and support.</p>
+<p>The tests answered whether the supplied sites worked. They did not make the Python implementation equivalent to installing an established server.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/name-based-web-tenants-bash-ubuntu16-3541/name-based-web-tenants-bash-ubun__tmLKFGn/agent/executor-commands.jsonl#L2">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L6">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl#L2">Recorded commands 3</a></p>
+<p>If the intended work is routine configuration of approved software, that needs to be stated. The agent should report when that software is unavailable, rather than silently making ownership of new server code part of the handover.</p>
+
 <details class="article-details"><summary>Recorded deployments by operating system</summary>
 <div class="run-table-scroll" tabindex="0" role="region" aria-label="Recorded deployments by operating system"><table class="run-comparison">
 <caption>Recorded server choices for the same two-website task</caption>

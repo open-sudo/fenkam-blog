@@ -28,25 +28,28 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/tunnel-vision-the-task-passed-the-server-changed-analogy.png" alt="A freshly painted wall looks finished while paint covers its light switch and ventilation grille." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted cron access limited to root and a user named opsadmin. Root already had a crontab. Changing who could schedule jobs needed to preserve that existing schedule.</p>
-<p>An AI agent installed a temporary root crontab, replacing the existing one, then deleted the test schedule during cleanup. The access restriction worked, but the original schedule was gone. Other completed tasks also disrupted settings outside the requested change.</p>
-<h2>Cleanup killed the connection used to manage the server</h2>
-<p>To test firewall rules, the agent started temporary listeners. It later used pkill socat and pkill nc to remove them. The command-execution connection also used socat, so the same cleanup killed it.</p>
-<p>The agent recovered through SSH from another machine and restarted the management service. The task eventually worked. Tracking and stopping the test-process IDs would have avoided killing unrelated processes with the same executable name.</p>
-<h2>Guest isolation protected the application but exposed the router</h2>
-<p>An OpenWrt guest network could not reach the internal application, as requested. Its firewall still accepted traffic addressed to the router itself, where SSH and web administration listened on all IPv4 addresses.</p>
-<p>Guests needed DHCP and DNS, not unrestricted access to the gateway’s administration services. No guest login was observed; the concern came from the rules and listeners left in place.</p>
-<h2>A database workaround removed SELinux enforcement</h2>
-<p>A RHEL 7 Galera setup struggled to transfer data to a new member. The agent made SELinux permissive on all four machines and saved that setting for reboot.</p>
-<p>The member joined and replication worked, but the change weakened enforcement across the hosts, including unrelated processes. The record showed no intrusion. It showed a security exception left as part of a successful database deployment.</p>
-<h2>A repository demonstration became a package-manager repair</h2>
-<p>On RHEL 10, installing tools to build a demonstration RPM introduced an OpenSSL incompatibility that broke RPM and DNF. Recovery included manual library replacement, a signature-check bypass and wider package upgrades.</p>
-<p>The repair was eventually reconciled through package management and passed its checks. The remaining issue was that a small repository task had changed core host packages without clearly explaining those changes in the final report.</p>
-<h2>The offline test kept blocking online updates</h2>
-<p>An Ubuntu 24 test sent ordinary APT HTTP requests through a non-existent local proxy while exempting the local repository. That proved the local installation could succeed during a simulated remote outage.</p>
-<p>The proxy setting remained after reboot. Later updates would still encounter a restriction introduced only for the demonstration.</p>
+<p>I wanted cron access limited to root and a user named opsadmin. Root already had a schedule, so testing the new access rule needed to preserve it.</p>
+<p>The AI agent installed a temporary root crontab and deleted it during cleanup. That replaced the existing schedule without restoring it. The requested restriction worked, while something already on the machine was lost.</p>
+
+<h2>Process cleanup interrupted an unrelated service</h2>
+<p>I found the same kind of side effect in a firewall task. The agent had started temporary test listeners, then used <code>pkill socat</code> and <code>pkill nc</code> to remove them. Those commands selected processes by executable name.</p>
+<p>The connection used to execute the agent’s commands also depended on socat. Cleanup killed that connection too. The agent recovered through SSH from another machine and restarted the management service. Stopping only the recorded test-process IDs would have avoided that interruption.</p>
+
+<h2>The guest-network test did not cover the gateway itself</h2>
+<p>An OpenWrt task required separating guests from an internal application. The agent verified that guests could not reach that application, but left the gateway accepting traffic addressed to itself, where SSH and web administration listened on all IPv4 addresses.</p>
+<p>Guests needed DHCP and DNS from the gateway. They did not need unrestricted access to those administration services. No guest login was observed; the additional access followed from the rules and listeners.</p>
+
+<h2>A database repair weakened unrelated workloads’ protection</h2>
+<p>On RHEL 7, a Galera member’s data transfer was failing. The agent made SELinux permissive on all four database hosts and saved that setting for reboot.</p>
+<p>The new member joined and replication worked. The hosts were also left without SELinux enforcement for other processes. The record showed the retained exception, not an intrusion.</p>
+
+<h2>A repository demonstration changed future package work</h2>
+<p>On RHEL 10, installing RPM build tools introduced an OpenSSL incompatibility that broke RPM and DNF. Repair involved manual library replacement, a signature-check bypass and wider upgrades. Package management was eventually consistent, but the final report did not clearly account for those core-package changes.</p>
+<p>An Ubuntu 24 demonstration took a different route: it simulated an outage by directing ordinary APT HTTP requests to a nonexistent proxy while allowing the local repository. The local installation passed. The proxy setting remained after reboot, continuing to block normal updates.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>The requested features worked. Checking and preserving unrelated state was a separate part of completing the work.</p>
+<p>Each requested feature had its own success check. None of those checks, by itself, established that existing schedules, access, protections and update sources had survived the work.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/tunnel-vision-the-task-passed-the-server-changed-evidence.json">Evidence extract</a></p>

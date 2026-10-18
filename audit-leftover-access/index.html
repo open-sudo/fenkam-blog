@@ -29,21 +29,26 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-leftover-access-analogy.png" alt="A contractor access card still opens a hotel room after the renovation is finished." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted a database import completed on Ubuntu 16.04. During setup, a file holding database credentials needed to move between two servers. That was a one-time transfer; normal database operation did not need to keep the new SSH access.</p>
-<p>An AI agent created the SSH access and delivered the file. It left the matching login authorization behind. Other tasks similarly retained accounts or keys from abandoned approaches and verification tests.</p>
-<h2>Abandoned approaches left credentials on disk</h2>
-<p>An attempted certificate transfer failed, but its SSH credentials remained. In another deployment, the agent replaced an Ansible login credential without removing the original.</p>
-<p>A failed connection is not proof that an attacker could use that credential. The destination might reject it or have no SSH service. It does mean cleanup must account for an approach that was abandoned before it worked.</p>
+<p>I wanted a database import completed on Ubuntu 16.04. During setup, a file containing database credentials needed to move between two servers. SSH could carry it, but that one-time transfer did not require a permanent new login route.</p>
+<p>The AI agent established SSH access and delivered the file. It left the private key and matching authorization behind. The import’s completion did not end the access created for it.</p>
+
+<h2>Abandoned transfer methods also left credentials</h2>
+<p>In other jobs, agents needed to distribute certificates. They tried SSH, failed and switched to another transfer method, leaving the generated keys and authorization entries behind. Some destination root accounts were locked, so that retained configuration did not demonstrate a usable root login.</p>
+<p>An Ansible deployment similarly replaced an unsuccessful login credential but retained the original. Continuing controller access was required; retaining the failed extra credential was a separate matter.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-30-01/internal-ca-tls-bash-alpine-5469/internal-ca-tls-alpine__DoJsyWu/agent/executor-commands.jsonl#L20">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/application-log-rotation-ansible-rhel10-6842/application-log-rotation-ansible__N8s6kmc/agent/executor-commands.jsonl#L8">Recorded commands 2</a></p>
-<h2>Login tests created access of their own</h2>
-<p>Testing SSH certificates required temporary identities and keys. Some tests left a root-login credential, a private-key copy or a matching authorization entry behind.</p>
-<p>An administrator needs to know which of these were test-only and which are part of normal operation. Their filenames alone may not explain the difference.</p>
+
+<h2>Verification created access that also needed an end</h2>
+<p>Tests of SSH certificates used temporary identities, keys and authorization entries. Some left a root-login credential or private-key copy. Another unlocked a test account and left its test access configured.</p>
+<p>Those artifacts had served verification rather than ongoing administration. Their presence afterward needed to be accounted for even when the service being tested was healthy.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/ssh-host-certificate-bash-almalinux9-5469/ssh-host-certificate-almalinux9__EnD8Aup/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/ssh-host-certificate-bash-rhel9-5782/ssh-host-certificate-rhel9__Xpx3tjE/agent/executor-commands.jsonl#L10">Recorded commands 2</a></p>
-<h2>Some changes spread access further</h2>
-<p>One task copied a shared root private key to several machines. Compromising any machine that holds a usable copy could then expose that credential. A separate database experiment left a remote-root grant that accepted connections from a broad range of source hosts.</p>
-<p>Whether either route can actually be used depends on the remaining credentials, server policy and network access.</p>
+
+<h2>Some shortcuts spread authority across several machines</h2>
+<p>Other tasks copied a shared root private key across a topology. A compromise of any machine holding a usable copy could expose that credential. A database experiment also retained a broad remote-root grant after switching away from the approach that required it.</p>
+<p>The ability to reuse either form of access still depended on credentials, server policy and reachability. A retained key was not, by itself, proof of an exploitable route from every host.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/rsyslog-rhel7-rhel10-tls-bash-mixed-5782/rsyslog-rhel7-rhel10-tls__StEkkE4/agent/executor-commands.jsonl#L34">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/mariadb-galera-scale-out-bash-alpine-5469/mariadb-galera-scale-out-alpine__2Ltt3Ky/agent/executor-commands.jsonl#L336">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Remove access used only for the completed job. Keep legitimate ongoing automation access restricted and documented.</p>
+<p>Cleanup needed to remove setup-only keys and authorizations while preserving legitimate automation access. That included access from successful transfers, failed approaches and tests—not just files used by the final service.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-leftover-access-evidence.json">Evidence extract</a></p>

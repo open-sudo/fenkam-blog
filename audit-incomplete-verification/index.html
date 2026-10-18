@@ -23,29 +23,37 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-7: AI Tested the Wrong Behavior</h1>
     <p class="article-deck">A manually run renewal, a connection over another network or an earlier test can pass while the requested behavior remains untested.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-incomplete-verification-analogy.png" alt="A technician tests an alarm sounder manually while the smoke detector remains untested." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>I wanted a service to renew its certificate before expiry, without an administrator remembering to run a command. That meant setting up the renewal command and arranging for a scheduler to invoke it.</p>
-<p>An AI agent ran the command manually and saw it succeed. That proved renewal was possible, but not that it would happen automatically. Other tasks also passed tests that missed the behavior they were meant to demonstrate.</p>
-<h2>The allowed client worked; the forbidden client was not tested</h2>
-<p>A RabbitMQ deployment had rules intended to restrict access to the broker’s management interface. The agent recorded the rules without attempting access from a source that should have been blocked.</p>
-<p>A WireGuard task required an outside client to reach an application only through a VPN gateway. The agent tested rejection of direct access before deployment, but did not repeat it after the final tunnel, application and firewall changes. That left the required rejection test unfinished.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__15-54-16/wireguard-gateway-bash-rhel9-5469/wireguard-gateway-rhel9__poUrApj/agent/executor-commands.jsonl#L38">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-tls-bash-ubuntu24-5469/rabbitmq-tls-ubuntu24__X6RXFZ4/agent/executor-commands.jsonl#L70">Recorded commands 2</a></p>
-<h2>The connection took a different route</h2>
-<p>A routing test pinged a server’s management address instead of using the LAN the agent was supposed to configure. A firewall test ran on the server itself, through a loopback exception.</p>
-<p>In each case, traffic could succeed without crossing the network or filtering rule under test. The missing test was a request from the actual client over the required route.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/additional-zone-interface-bash-centos-stream10-5469/additional-zone-interface-centos__M5RtbF3/agent/executor-commands.jsonl#L78">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/host-firewall-baseline-bash-ubuntu16-5469/host-firewall-baseline-ubuntu16__wkSFsSW/agent/executor-commands.jsonl#L6">Recorded commands 2</a></p>
-<h2>A manual run did not test the schedule</h2>
-<p>One certificate-renewal command ran before its timer was enabled. Another setup showed successful forced renewal attempts without an observed automatic trigger near expiry.</p>
+<p>I wanted certificate renewal to happen automatically before expiry. A working renewal command was necessary, but the service also needed a scheduler to invoke it at the right time.</p>
+<p>The AI agent ran renewal manually and saw it succeed. That demonstrated the command. It did not demonstrate the automatic trigger the operator was supposed to rely on.</p>
+
+<h2>The schedule itself was not exercised</h2>
+<p>In one run, the agent tested renewal before enabling the timer meant to schedule it. Another setup showed forced renewals without an observed automatic trigger near expiry.</p>
+<p>The delivered automation might have worked. The recorded evidence did not establish the scheduled behavior.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/agent/executor-commands.jsonl#L24">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/certificate-rotation-ansible-rhel10-6842/certificate-rotation-ansible-rhe__Pfduvgp/agent/executor-commands.jsonl#L36">Recorded commands 2</a></p>
-<h2>Later changes made an earlier test insufficient</h2>
-<p>A database restart test ran before the final software changes. A repaired print service completed jobs already in its queue, but received no new job afterward.</p>
+
+<h2>Access restrictions needed tests from blocked clients</h2>
+<p>A RabbitMQ deployment needed restricted access to its management interface. The agent recorded the firewall rules but did not try connecting from a source that should have been rejected.</p>
+<p>A WireGuard task required an external client to reach an application only through a VPN gateway. The agent tested direct-access rejection before deployment, then changed the tunnel, application and firewall without repeating that rejection test. The earlier probe no longer established the final policy.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__15-54-16/wireguard-gateway-bash-rhel9-5469/wireguard-gateway-rhel9__poUrApj/agent/executor-commands.jsonl#L38">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-tls-bash-ubuntu24-5469/rabbitmq-tls-ubuntu24__X6RXFZ4/agent/executor-commands.jsonl#L70">Recorded commands 2</a></p>
+
+<h2>Some successful requests took a route outside the test</h2>
+<p>A routing task was supposed to build a LAN, but its ping targeted a management address on existing networking. A firewall test connected through a loopback exception on the server itself.</p>
+<p>The traffic could succeed without crossing the route or filtering rule the task was meant to prove. The test needed the actual client and required path.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/additional-zone-interface-bash-centos-stream10-5469/additional-zone-interface-centos__M5RtbF3/agent/executor-commands.jsonl#L78">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/host-firewall-baseline-bash-ubuntu16-5469/host-firewall-baseline-ubuntu16__wkSFsSW/agent/executor-commands.jsonl#L6">Recorded commands 2</a></p>
+
+<h2>A later change could invalidate earlier proof</h2>
+<p>A database restart test preceded the final software changes. A repaired print service completed jobs already queued, but received no new job afterward.</p>
+<p>Those observations were useful. They left the final database configuration’s startup and the print service’s acceptance of new work untested.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/mariadb-galera-cold-restart-bash-ubuntu16-5469/mariadb-galera-cold-restart-ubun__KH6aumt/agent/executor-commands.jsonl#L54">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7403/2026-10-03__14-57-05/print-spool-recovery-bash-ubuntu24-7403/print-spool-recovery-ubuntu24__QoD48v3/agent/executor-commands.jsonl#L22">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>Run the missing checks against the final configuration. An untested behavior may work, but it should not be reported as demonstrated.</p>
+<p>The gap in these cases was between the promised behavior and the operation actually exercised. A final report needed to name that gap, rather than turn an untested behavior into a demonstrated result.</p>
+
+
 <div class="source-note" id="sources">
 <p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
 <p class="case-sources"><a href="/assets/audit-incomplete-verification-evidence.json">Evidence extract</a></p>

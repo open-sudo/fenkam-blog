@@ -121,3 +121,10 @@ IL-31 and IL-39. Each has a wide layout and a mobile layout with larger labels.
 PNG exports support social previews. Homepage diagrams use the full image
 without cropping, and still alternate sides with the other article cards.
 The original illustration files and prompts remain as asset history.
+
+Review the whole article for continuity, including section starts and endings.
+Introduce both ends of a connection before saying it failed. Explain the first
+attempt before a retry, and introduce a new task before describing its result.
+Read the paragraphs in order: an improved opening cannot establish that the
+rest of the story flows. Preserve the difference between observed results and
+possible consequences when simplifying the text.
