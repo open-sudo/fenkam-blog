@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">IL-22: The ping record included an interruption</title>
+<desc id="desc">Event timeline, not a scaled packet-loss chart. Approximate counts and duration come from the saved test record.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="1200" height="800" fill="#f7fafc"/>
+<text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-22  /  EVENT TIMELINE</text>
+<text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">The ping record included an interruption</text>
+<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">Observed sequence in the network-failover example.</text>
+<path d="M100 545 L1100 545" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#muted)"/>
+<g data-node="Route interrupted" data-bounds="64,275,244,230">
+<rect x="64" y="275" width="244" height="230" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="186" y="343.36" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Route</text>
+<text x="186" y="374.95" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">interrupted</text>
+<text x="186" y="418.54" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Failover test</text>
+<text x="186" y="448.54" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">begins</text>
+</g>
+<path d="M186 506 L186 537" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="186" cy="545" r="9" fill="#175c88"/>
+<text x="186" y="592" font-size="22" fill="#546574" style="fill:#546574" text-anchor="middle">1</text>
+<g data-node="About 245 replies missing" data-bounds="340,275,244,230">
+<rect x="340" y="275" width="244" height="230" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="462" y="328.36" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">About 245</text>
+<text x="462" y="359.95" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">replies missing</text>
+<text x="462" y="403.54" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Traffic does not</text>
+<text x="462" y="433.54" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">recover</text>
+<text x="462" y="463.54" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">automatically</text>
+</g>
+<path d="M462 506 L462 537" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="462" cy="545" r="9" fill="#a3342c"/>
+<text x="462" y="592" font-size="22" fill="#546574" style="fill:#546574" text-anchor="middle">2</text>
+<g data-node="Manual route correction" data-bounds="616,275,244,230">
+<rect x="616" y="275" width="244" height="230" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="738" y="343.36" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Manual route</text>
+<text x="738" y="374.95" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">correction</text>
+<text x="738" y="418.54" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Roughly two</text>
+<text x="738" y="448.54" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">minutes later</text>
+</g>
+<path d="M738 506 L738 537" fill="none" stroke="#8d580d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="738" cy="545" r="9" fill="#8d580d"/>
+<text x="738" y="592" font-size="22" fill="#546574" style="fill:#546574" text-anchor="middle">3</text>
+<g data-node="Traffic returns" data-bounds="892,275,244,230">
+<rect x="892" y="275" width="244" height="230" rx="10" fill="#edf8f2" stroke="#176b50" stroke-width="2"/>
+<text x="1014" y="343.36" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Traffic</text>
+<text x="1014" y="374.95" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">returns</text>
+<text x="1014" y="418.54" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Report says: no</text>
+<text x="1014" y="448.54" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">packet loss</text>
+</g>
+<path d="M1014 506 L1014 537" fill="none" stroke="#176b50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1014" cy="545" r="9" fill="#176b50"/>
+<text x="1014" y="592" font-size="22" fill="#546574" style="fill:#546574" text-anchor="middle">4</text>
+<text x="64" y="737" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start">The recovery and manual repair were real. The report did not describe the recorded interruption.</text>
+</svg>

@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-leftover-access/" />
 <meta property="og:url" content="https://fenkam.org/audit-leftover-access/" />
 <meta property="og:title" content="IL-6: AI Left Temporary Login Access Behind" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-leftover-access-analogy.png" />
-<meta property="og:image:alt" content="A contractor access card still opens a hotel room after the renovation is finished." />
+<meta property="og:image" content="https://fenkam.org/assets/il-6-technical-diagram.png" />
+<meta property="og:image:alt" content="Interaction sequence for the successful transfer example. The completed import did not revoke the SSH access created during setup." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,9 +28,10 @@
     <p class="article-deck">Access created for a transfer, a failed experiment or a login test sometimes remained after its purpose had ended.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-leftover-access-analogy.png" alt="A contractor access card still opens a hotel room after the renovation is finished." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted a database import completed on Ubuntu 16.04. During setup, a file containing database credentials needed to move between two servers. SSH could carry it, but that one-time transfer did not require a permanent new login route.</p>
 <p>The AI agent established SSH access and delivered the file. It left the private key and matching authorization behind. The import’s completion did not end the access created for it.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-6-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-6-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1042" /><img src="/assets/il-6-technical-diagram.svg" alt="Interaction sequence for the successful transfer example. The completed import did not revoke the SSH access created during setup." width="1200" height="800" decoding="async" /></picture></a><figcaption>Interaction sequence for the successful transfer example. The completed import did not revoke the SSH access created during setup.</figcaption></figure>
+
 
 <h2>Abandoned transfer methods also left credentials</h2>
 <p>In other jobs, agents needed to distribute certificates. They tried SSH, failed and switched to another transfer method, leaving the generated keys and authorization entries behind. Some destination root accounts were locked, so that retained configuration did not demonstrate a usable root login.</p>

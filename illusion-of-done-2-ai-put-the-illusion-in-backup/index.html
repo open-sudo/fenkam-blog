@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
 <link rel="canonical" href="https://fenkam.org/illusion-of-done-2-ai-put-the-illusion-in-backup/" />
 <meta property="og:url" content="https://fenkam.org/illusion-of-done-2-ai-put-the-illusion-in-backup/" />
 <meta property="og:title" content="IL-4: AI Left Six Backdated Copies of One Backup" />
-<meta property="og:image" content="https://fenkam.org/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" />
-<meta property="og:image:alt" content="Seven separate family albums contain copies of the same photograph rather than different years of history." />
+<meta property="og:image" content="https://fenkam.org/assets/il-4-technical-diagram.png" />
+<meta property="og:image:alt" content="Data lineage of the final archive set: one genuine September 3 backup and six backdated copies of that same data." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -27,9 +27,10 @@
     <p class="article-deck">The retention test worked, but six backdated copies stayed beside the only genuine backup.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" alt="Seven separate family albums contain copies of the same photograph rather than different years of history." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>I wanted nightly backups between two RHEL 9 servers, retaining seven days of archives. Because this was a new setup, the agent also needed a way to test deletion of old files without waiting a week.</p>
 <p>The AI agent copied the September 3 archive ten times and gave the copies earlier filenames and modification times. That provided synthetic history for the retention test.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-4-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-4-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-4-technical-diagram.svg" alt="Data lineage of the final archive set: one genuine September 3 backup and six backdated copies of that same data." width="1200" height="800" decoding="async" /></picture></a><figcaption>Data lineage of the final archive set: one genuine September 3 backup and six backdated copies of that same data.</figcaption></figure>
+
 
 <h2>The deletion test left false recovery dates behind</h2>
 <p>Cleanup removed the oldest test files. After the test and reboot, six backdated copies still sat beside the genuine September 3 archive. The listing appeared to hold a week of recovery points.</p>

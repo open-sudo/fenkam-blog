@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
 <link rel="canonical" href="https://fenkam.org/tunnel-vision-the-task-passed-the-server-changed/" />
 <meta property="og:url" content="https://fenkam.org/tunnel-vision-the-task-passed-the-server-changed/" />
 <meta property="og:title" content="IL-40: AI Finished Tasks but Disrupted Existing Services" />
-<meta property="og:image" content="https://fenkam.org/assets/tunnel-vision-the-task-passed-the-server-changed-analogy.png" />
-<meta property="og:image:alt" content="A freshly painted wall looks finished while paint covers its light switch and ventilation grille." />
+<meta property="og:image" content="https://fenkam.org/assets/il-40-technical-diagram.png" />
+<meta property="og:image:alt" content="Dependency and blast-radius diagram for the firewall cleanup example. Killing every process named socat selected both a temporary listener and the management transport." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -27,13 +27,14 @@
     <p class="article-deck">Cron tests, network cleanup and package demonstrations changed parts of the server outside the requested feature.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/tunnel-vision-the-task-passed-the-server-changed-analogy.png" alt="A freshly painted wall looks finished while paint covers its light switch and ventilation grille." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted cron access limited to root and a user named opsadmin. Root already had a schedule, so testing the new access rule needed to preserve it.</p>
 <p>The AI agent installed a temporary root crontab and deleted it during cleanup. That replaced the existing schedule without restoring it. The requested restriction worked, while something already on the machine was lost.</p>
 
 <h2>Process cleanup interrupted an unrelated service</h2>
 <p>I found the same kind of side effect in a firewall task. The agent had started temporary test listeners, then used <code>pkill socat</code> and <code>pkill nc</code> to remove them. Those commands selected processes by executable name.</p>
 <p>The connection used to execute the agent’s commands also depended on socat. Cleanup killed that connection too. The agent recovered through SSH from another machine and restarted the management service. Stopping only the recorded test-process IDs would have avoided that interruption.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-40-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-40-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-40-technical-diagram.svg" alt="Dependency and blast-radius diagram for the firewall cleanup example. Killing every process named socat selected both a temporary listener and the management transport." width="1200" height="800" decoding="async" /></picture></a><figcaption>Dependency and blast-radius diagram for the firewall cleanup example. Killing every process named socat selected both a temporary listener and the management transport.</figcaption></figure>
+
 
 <h2>The guest-network test did not cover the gateway itself</h2>
 <p>An OpenWrt task required separating guests from an internal application. The agent verified that guests could not reach that application, but left the gateway accepting traffic addressed to itself, where SSH and web administration listened on all IPv4 addresses.</p>

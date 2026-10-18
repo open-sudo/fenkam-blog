@@ -9,13 +9,13 @@
   <meta property="og:url" content="https://fenkam.org/ai-tested-cron-access-and-deleted-existing-configuration/" />
   <meta property="og:title" content="IL-3: AI Deleted Root’s Crontab While Testing Permissions" />
   <meta property="og:description" content="The new permission rule worked. Its verification replaced an existing schedule, and cleanup deleted the replacement without restoring the original." />
-  <meta property="og:image" content="https://fenkam.org/assets/cron-brownfield-robot-old-car.png" />
-  <meta property="og:image:alt" content="A futuristic robot studies an old component while repairing a weathered car." />
+  <meta property="og:image" content="https://fenkam.org/assets/il-3-technical-diagram.png" />
+  <meta property="og:image:alt" content="State transitions of root’s crontab. Installing the test replaced the entire schedule, and deleting the test did not restore the earlier contents." />
   <title>IL-3: AI Deleted Root’s Crontab While Testing Permissions | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,9 +28,10 @@
     <p class="article-deck">The new permission rule worked. Its verification replaced an existing schedule, and cleanup deleted the replacement without restoring the original.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/cron-brownfield-robot-old-car.png" alt="A futuristic robot studies an old mechanical component while repairing a weathered car in a workshop." width="1536" height="1024" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted cron access restricted to root and a user named opsadmin on an Alpine server. Root already had a crontab. Changing who could schedule jobs did not require replacing that existing schedule.</p>
 <p>I gave the task to an AI agent using GPT-5.6-sol. It wrote the permitted names into <code>/etc/cron.allow</code>, then tested whether root could install a crontab.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-3-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-3-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-3-technical-diagram.svg" alt="State transitions of root’s crontab. Installing the test replaced the entire schedule, and deleting the test did not restore the earlier contents." width="1200" height="800" decoding="async" /></picture></a><figcaption>State transitions of root’s crontab. Installing the test replaced the entire schedule, and deleting the test did not restore the earlier contents.</figcaption></figure>
+
 
 <h2>The permission test replaced the existing schedule</h2>
 <p>The agent ran <code>crontab /tmp/cron-access-test</code>, installing a dummy schedule as root’s entire crontab. It had not saved the previous contents. During cleanup it ran <code>crontab -r</code>, which removed the dummy without restoring the original.</p>

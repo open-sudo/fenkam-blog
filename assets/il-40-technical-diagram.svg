@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">IL-40: Process-name cleanup crossed service boundaries</title>
+<desc id="desc">Dependency and blast-radius diagram for the firewall cleanup example. Killing every process named socat selected both a temporary listener and the management transport.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="1200" height="800" fill="#f7fafc"/>
+<text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-40  /  DEPENDENCY GRAPH</text>
+<text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">Process-name cleanup crossed service boundaries</text>
+<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">Selected firewall-test example: both workloads used socat.</text>
+<g data-node="pkill socat" data-bounds="400,210,400,110">
+<rect x="400" y="210" width="400" height="110" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="600" y="249.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">pkill socat</text>
+<text x="600" y="294.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Select by executable name</text>
+</g>
+<g data-node="Temporary test listener" data-bounds="64,430,450,140">
+<rect x="64" y="430" width="450" height="140" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="289" y="484.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Temporary test listener</text>
+<text x="289" y="529.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">socat process</text>
+</g>
+<g data-node="Management transport" data-bounds="686,430,450,140">
+<rect x="686" y="430" width="450" height="140" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="911" y="484.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Management transport</text>
+<text x="911" y="529.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">socat process</text>
+</g>
+<path d="M520 321 L520 375 L289 375 L289 429" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<path d="M680 321 L680 375 L911 375 L911 429" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<g data-node="Management connection lost" data-bounds="686,615,450,76">
+<rect x="686" y="615" width="450" height="76" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="911" y="659.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Management connection lost</text>
+</g>
+<path d="M911 571 L911 614" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<text x="64" y="737" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start">The management connection was interrupted. SSH from another machine was used to restore service.</text>
+</svg>

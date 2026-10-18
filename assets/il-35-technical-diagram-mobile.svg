@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1230" viewBox="0 0 640 1230" role="img" aria-labelledby="title desc">
+<title id="title">IL-35: Log deletion preceded the network fix</title>
+<desc id="desc">Diagnostic event timeline. The router repair restored DHCP; deleting the archived journal files had not resolved the fault.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="640" height="1230" fill="#f7fafc"/>
+<text x="40" y="47" font-size="18" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-35  /  EVENT TIMELINE</text>
+<text x="40" y="98" font-size="36" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">Log deletion preceded the network</text>
+<text x="40" y="141" font-size="36" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">fix</text>
+<text x="40" y="178" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">RHEL 9.8 DHCP troubleshooting.</text>
+<path d="M70 236 L70 996" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="70" cy="278" r="9" fill="#175c88"/>
+<g data-node="Enable DHCP diagnostics" data-bounds="108,216,484,142">
+<rect x="108" y="216" width="484" height="142" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="350" y="269.92" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Enable DHCP diagnostics</text>
+<text x="350" y="314.68" font-size="26" fill="#546574" style="fill:#546574" text-anchor="middle">NetworkManager debug logging</text>
+</g>
+<circle cx="70" cy="482" r="9" fill="#a3342c"/>
+<g data-node="Rotate and vacuum journal" data-bounds="108,420,484,142">
+<rect x="108" y="420" width="484" height="142" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="350" y="473.92" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Rotate and vacuum journal</text>
+<text x="350" y="518.68" font-size="26" fill="#546574" style="fill:#546574" text-anchor="middle">1 MB of archived history removed</text>
+</g>
+<circle cx="70" cy="686" r="9" fill="#8d580d"/>
+<g data-node="Retry DHCP" data-bounds="108,624,484,142">
+<rect x="108" y="624" width="484" height="142" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="350" y="677.92" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Retry DHCP</text>
+<text x="350" y="722.68" font-size="26" fill="#546574" style="fill:#546574" text-anchor="middle">Connection still fails</text>
+</g>
+<circle cx="70" cy="890" r="9" fill="#176b50"/>
+<g data-node="Fix router interface setup" data-bounds="108,828,484,142">
+<rect x="108" y="828" width="484" height="142" rx="10" fill="#edf8f2" stroke="#176b50" stroke-width="2"/>
+<text x="350" y="881.92" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Fix router interface setup</text>
+<text x="350" y="926.68" font-size="26" fill="#546574" style="fill:#546574" text-anchor="middle">Address allocation works</text>
+</g>
+<text x="40" y="1128" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">The deleted files were volatile journal history.</text>
+<text x="40" y="1160" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">The record did not establish months of lost</text>
+<text x="40" y="1192" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">archives.</text>
+</svg>

@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-reboot-failures/" />
 <meta property="og:url" content="https://fenkam.org/audit-reboot-failures/" />
 <meta property="og:title" content="IL-14: AI Setups Needed Repairs After Reboot" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-reboot-failures-analogy.png" />
-<meta property="og:image:alt" content="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." />
+<meta property="og:image" content="https://fenkam.org/assets/il-14-technical-diagram.png" />
+<meta property="og:image:alt" content="Lifecycle state diagram for the bridge example. The missing bridge after restart distinguished runtime configuration from persistent setup." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,9 +28,10 @@
     <p class="article-deck">Routes, services and router credentials sometimes disappeared after restart, even though they had worked beforehand.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-reboot-failures-analogy.png" alt="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted a network bridge to return automatically after restart. The AI agent created it with live ip commands and got traffic flowing.</p>
 <p>After reboot, the bridge was absent. The working connection before restart had shown the live configuration, but had not established how the bridge would be recreated at boot.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-14-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-14-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-14-technical-diagram.svg" alt="Lifecycle state diagram for the bridge example. The missing bridge after restart distinguished runtime configuration from persistent setup." width="1200" height="800" decoding="async" /></picture></a><figcaption>Lifecycle state diagram for the bridge example. The missing bridge after restart distinguished runtime configuration from persistent setup.</figcaption></figure>
+
 
 <h2>An active startup service did not guarantee the route existed</h2>
 <p>In another routing task, a route-setup service was marked active after boot while the route itself was missing. Pings failed until the agent repaired it manually.</p>

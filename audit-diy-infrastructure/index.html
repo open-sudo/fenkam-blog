@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-diy-infrastructure/" />
 <meta property="og:url" content="https://fenkam.org/audit-diy-infrastructure/" />
 <meta property="og:title" content="IL-17: AI Proxies Passed Simple Tests but Missed Protocol Features" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-diy-infrastructure-analogy.png" />
-<meta property="og:image:alt" content="A homemade postal chute delivers one envelope while parcels and other mail cannot pass through." />
+<meta property="og:image" content="https://fenkam.org/assets/il-17-technical-diagram.png" />
+<meta property="og:image:alt" content="Sequence diagram of a conditional retry risk. If the first backend commits before a connection failure, a retry can repeat the operation; the lab did not demonstrate a duplicate." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,7 +28,6 @@
     <p class="article-deck">Generated HTTP proxies and DNS forwarders omitted behavior that a simple successful request did not exercise.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-diy-infrastructure-analogy.png" alt="A homemade postal chute delivers one envelope while parcels and other mail cannot pass through." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted HTTP requests passed through a proxy to another server. The AI agent wrote a small proxy and tested it by fetching a page. The page loaded.</p>
 <p>Looking at the delivered code showed why that test was incomplete. Ordinary traffic can also include form submissions, authenticated requests and responses too large to buffer in full.</p>
 
@@ -40,6 +39,8 @@
 <h2>A retry could submit a write twice</h2>
 <p>Another proxy attempted a POST against a different backend after a broad exception. It did not establish whether the first backend had already carried out the operation.</p>
 <p>For example, a backend could complete a write and lose the connection before its reply reached the proxy. Sending the POST again could repeat that write. No duplicate was observed in the test; the delivered retry logic created the risk.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-17-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-17-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1200" /><img src="/assets/il-17-technical-diagram.svg" alt="Sequence diagram of a conditional retry risk. If the first backend commits before a connection failure, a retry can repeat the operation; the lab did not demonstrate a duplicate." width="1200" height="800" decoding="async" /></picture></a><figcaption>Sequence diagram of a conditional retry risk. If the first backend commits before a connection failure, a retry can repeat the operation; the lab did not demonstrate a duplicate.</figcaption></figure>
+
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/agent/executor-commands.jsonl#L40">Recorded commands</a></p>
 
 <h2>The DNS tests also covered only a simple lookup</h2>

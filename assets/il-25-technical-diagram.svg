@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">IL-25: The allowed-write claim had another path</title>
+<desc id="desc">Filesystem access diagram. The promised write scope was /var/lib/inventory, but the equivalent-restriction probe also wrote outside it.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="1200" height="800" fill="#f7fafc"/>
+<text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-25  /  ACCESS-CONTROL DIAGRAM</text>
+<text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">The allowed-write claim had another path</text>
+<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">A separate probe used restrictions equivalent to the delivered service settings.</text>
+<rect x="64" y="210" width="1072" height="440" rx="14" fill="#eef3f7" stroke="#a7b8c7" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="84" y="245" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">Delivered policy · separate equivalent-restriction probe</text>
+<g data-node="Probe process" data-bounds="96,365,360,170">
+<ellipse cx="276.0" cy="450.0" rx="180.0" ry="85.0" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="276" y="434.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Probe process</text>
+<text x="276" y="479.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Equivalent restrictions</text>
+</g>
+<g data-node="/var/lib/inventory" data-bounds="680,290,424,120">
+<path d="M680 303 H836.88 L862.3199999999999 320 H1104 V410 H680 Z" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="892" y="350.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">/var/lib/inventory</text>
+<text x="892" y="395.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Promised write scope</text>
+</g>
+<g data-node="/dev/shm" data-bounds="680,490,424,120">
+<path d="M680 503 H836.88 L862.3199999999999 520 H1104 V610 H680 Z" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="892" y="550.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">/dev/shm</text>
+<text x="892" y="595.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Probe write succeeds</text>
+</g>
+<path d="M457 450 L570 450 L570 550 L679 550" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<rect x="450" y="378" width="260" height="35.28" rx="4" fill="#f7fafc"/>
+<text x="580" y="404" font-size="22" fill="#a3342c" style="fill:#a3342c" text-anchor="middle" class="edge">Observed write</text>
+<text x="64" y="737" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start">The probe wrote to /dev/shm. It was not evidence of an attacker or of every possible write path.</text>
+</svg>

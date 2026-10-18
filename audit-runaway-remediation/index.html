@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-runaway-remediation/" />
 <meta property="og:url" content="https://fenkam.org/audit-runaway-remediation/" />
 <meta property="og:title" content="IL-24: AI Repeated Repairs That Were Not Working" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-runaway-remediation-analogy.png" />
-<meta property="og:image:alt" content="A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table." />
+<meta property="og:image" content="https://fenkam.org/assets/il-24-technical-diagram.png" />
+<meta property="og:image:alt" content="Control-flow loop reconstructed from the Apache setup. Restoring the file did not change the command that had broken it." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,9 +28,10 @@
     <p class="article-deck">Repeated edits, cluster resets and overlapping package installations sometimes added problems instead of producing a working service.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-runaway-remediation-analogy.png" alt="A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted Apache serving HTTPS on RHEL 9. During setup, the AI agent used sed to add certificate-chain text to Apache’s configuration.</p>
 <p>The edit inserted that text before every line and broke the file. After obtaining a clean configuration again, the agent used the same damaging edit. It eventually corrected the pattern, but first repeated a mistake visible in its own output.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-24-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-24-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1230" /><img src="/assets/il-24-technical-diagram.svg" alt="Control-flow loop reconstructed from the Apache setup. Restoring the file did not change the command that had broken it." width="1200" height="800" decoding="async" /></picture></a><figcaption>Control-flow loop reconstructed from the Apache setup. Restoring the file did not change the command that had broken it.</figcaption></figure>
+
 
 <h2>Repeated database resets did not establish a diagnosis</h2>
 <p>Two Alpine Galera tasks also went through repeated resets and recovery overrides. Neither ended with the requested working cluster.</p>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">IL-12: The database fix changed the whole host</title>
+<desc id="desc">Security boundary diagram. A service-specific transfer problem led to a host-wide enforcement change retained across reboot.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="1200" height="800" fill="#f7fafc"/>
+<text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-12  /  TRUST BOUNDARY</text>
+<text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">The database fix changed the whole host</text>
+<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">The joining Galera member worked after SELinux became permissive.</text>
+<rect x="64" y="210" width="1072" height="430" rx="14" fill="#eef3f7" stroke="#a7b8c7" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="84" y="245" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">Database hosts · persistent SELinux permissive mode</text>
+<g data-node="Galera transfer" data-bounds="96,355,450,190">
+<rect x="96" y="355" width="450" height="190" rx="10" fill="#edf8f2" stroke="#176b50" stroke-width="2"/>
+<text x="321" y="434.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Galera transfer</text>
+<text x="321" y="479.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Member joins the cluster</text>
+</g>
+<g data-node="Other host processes" data-bounds="654,355,450,190">
+<rect x="654" y="355" width="450" height="190" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="879" y="419.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Other host processes</text>
+<text x="879" y="464.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Policy violations are logged but no</text>
+<text x="879" y="494.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">longer blocked</text>
+</g>
+<rect x="105" y="294" width="430" height="35.28" rx="4" fill="#f7fafc"/>
+<text x="320" y="320" font-size="22" fill="#546574" style="fill:#546574" text-anchor="middle" class="edge">Requested outcome</text>
+<rect x="665" y="294" width="430" height="35.28" rx="4" fill="#f7fafc"/>
+<text x="880" y="320" font-size="22" fill="#8d580d" style="fill:#8d580d" text-anchor="middle" class="edge">Host-wide effect</text>
+<text x="64" y="737" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start">The saved setting affected unrelated processes too. No intrusion was demonstrated.</text>
+</svg>

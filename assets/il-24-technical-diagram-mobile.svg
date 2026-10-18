@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1230" viewBox="0 0 640 1230" role="img" aria-labelledby="title desc">
+<title id="title">IL-24: The repair loop repeated the damaging edit</title>
+<desc id="desc">Control-flow loop reconstructed from the Apache setup. Restoring the file did not change the command that had broken it.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="640" height="1230" fill="#f7fafc"/>
+<text x="40" y="47" font-size="18" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-24  /  FLOWCHART</text>
+<text x="40" y="98" font-size="36" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">The repair loop repeated the</text>
+<text x="40" y="141" font-size="36" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">damaging edit</text>
+<text x="40" y="178" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">RHEL 9 Apache configuration during HTTPS</text>
+<text x="40" y="210" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">setup.</text>
+<g data-node="Start with clean configuration" data-bounds="96,248,496,132">
+<rect x="96" y="248" width="496" height="132" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="344" y="321.685" font-size="29" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Start with clean configuration</text>
+</g>
+<path d="M344 381 L344 454" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<g data-node="sed inserts text before every line" data-bounds="96,455,496,132">
+<rect x="96" y="455" width="496" height="132" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="344" y="528.685" font-size="29" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">sed inserts text before every line</text>
+</g>
+<path d="M344 588 L344 661" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<g data-node="Apache configuration is broken" data-bounds="96,662,496,132">
+<rect x="96" y="662" width="496" height="132" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="344" y="735.685" font-size="29" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Apache configuration is broken</text>
+</g>
+<path d="M344 795 L344 868" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<g data-node="Restore clean configuration" data-bounds="96,869,496,132">
+<rect x="96" y="869" width="496" height="132" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="344" y="942.685" font-size="29" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Restore clean configuration</text>
+</g>
+<path d="M95 935 L44 935 L44 521 L95 521" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<text x="40" y="1128" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">The same damaging edit was retried before the</text>
+<text x="40" y="1160" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">agent finally corrected the pattern.</text>
+</svg>

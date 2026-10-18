@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1200" viewBox="0 0 640 1200" role="img" aria-labelledby="title desc">
+<title id="title">IL-30: Maildir use can invalidate a filename guard</title>
+<desc id="desc">Sequence diagram of the import guard’s code risk. The message can still exist even after its original destination filename has changed.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="640" height="1200" fill="#f7fafc"/>
+<text x="40" y="47" font-size="18" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-30  /  SEQUENCE DIAGRAM</text>
+<text x="40" y="98" font-size="36" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">Maildir use can invalidate a</text>
+<text x="40" y="141" font-size="36" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">filename guard</text>
+<text x="40" y="178" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">Illustrative rerun after a normal message-state</text>
+<text x="40" y="210" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">change.</text>
+<rect x="48" y="248" width="544" height="130" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="70" y="279" font-size="24" fill="#546574" style="fill:#546574" text-anchor="start">Ansible → Maildir</text>
+<text x="70" y="326" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">Import two.eml:2, with force:false</text>
+<text x="570" y="279" font-size="20" fill="#546574" style="fill:#546574" text-anchor="end">1</text>
+<path d="M320 379 L320 405" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#muted)"/>
+<rect x="48" y="406" width="544" height="130" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="70" y="437" font-size="24" fill="#546574" style="fill:#546574" text-anchor="start">Mail client → Maildir</text>
+<text x="70" y="484" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">Read message: flags can rename file</text>
+<text x="570" y="437" font-size="20" fill="#546574" style="fill:#546574" text-anchor="end">2</text>
+<path d="M320 537 L320 563" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#muted)"/>
+<rect x="48" y="564" width="544" height="130" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="70" y="595" font-size="24" fill="#546574" style="fill:#546574" text-anchor="start">Ansible → Maildir</text>
+<text x="70" y="642" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">Rerun checks the original pathname</text>
+<text x="570" y="595" font-size="20" fill="#546574" style="fill:#546574" text-anchor="end">3</text>
+<path d="M320 695 L320 721" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#muted)"/>
+<rect x="48" y="722" width="544" height="130" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="70" y="753" font-size="24" fill="#546574" style="fill:#546574" text-anchor="start">Maildir → Ansible</text>
+<text x="70" y="800" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">Original name is now absent</text>
+<text x="570" y="753" font-size="20" fill="#546574" style="fill:#546574" text-anchor="end">4</text>
+<path d="M320 853 L320 879" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#muted)"/>
+<rect x="48" y="880" width="544" height="130" rx="10" fill="#f3f6f8" stroke="#b8c7d3" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="70" y="911" font-size="24" fill="#546574" style="fill:#546574" text-anchor="start">Ansible → Maildir</text>
+<text x="70" y="958" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">Could import the same message again</text>
+<text x="570" y="911" font-size="20" fill="#546574" style="fill:#546574" text-anchor="end">5</text>
+<text x="40" y="1098" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">The initial migration worked. A read-then-rerun</text>
+<text x="40" y="1130" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">test and an actual duplicate were not recorded.</text>
+</svg>

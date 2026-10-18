@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
 <link rel="canonical" href="https://fenkam.org/configuration-divergence-when-your-fleet-becomes-a-zoo/" />
 <meta property="og:url" content="https://fenkam.org/configuration-divergence-when-your-fleet-becomes-a-zoo/" />
 <meta property="og:title" content="IL-39: The Same Task Left Different Server Configurations" />
-<meta property="og:image" content="https://fenkam.org/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" />
-<meta property="og:image:alt" content="Three matching delivery vans reveal different repairs beneath their open hoods." />
+<meta property="og:image" content="https://fenkam.org/assets/il-39-technical-diagram.png" />
+<meta property="og:image:alt" content="Comparison of the three recorded approaches. Every run demonstrated a local installation, while the resulting software stacks differed." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -27,9 +27,10 @@
     <p class="article-deck">The same repository demonstration led to core-library upgrades, an older RPM stack, or a much smaller installation.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" alt="Three matching delivery vans reveal different repairs beneath their open hoods." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted a local package repository to serve installations while remote repositories were unavailable. I gave that task to an AI agent three times on RHEL 10.</p>
 <p>All three attempts demonstrated a working local installation. The package changes, however, left different configurations to maintain afterward.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-39-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-39-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1560" /><img src="/assets/il-39-technical-diagram.svg" alt="Comparison of the three recorded approaches. Every run demonstrated a local installation, while the resulting software stacks differed." width="1200" height="800" decoding="async" /></picture></a><figcaption>Comparison of the three recorded approaches. Every run demonstrated a local installation, while the resulting software stacks differed.</figcaption></figure>
+
 
 <h2>Building a demonstration package led to core-library repairs</h2>
 <p>One agent chose to build an RPM for the demonstration. Installing its prerequisites added 33 packages and upgraded nine. A new RPM cryptography component needed OpenSSL symbols the machine lacked, leaving RPM and DNF unusable.</p>

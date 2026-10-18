@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-security-misconfiguration/" />
 <meta property="og:url" content="https://fenkam.org/audit-security-misconfiguration/" />
 <meta property="og:title" content="IL-25: Security Settings Did Not Enforce the Promised Limits" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-security-misconfiguration-analogy.png" />
-<meta property="og:image:alt" content="A caretaker checks a latched playground gate while a gap remains in the surrounding fence." />
+<meta property="og:image" content="https://fenkam.org/assets/il-25-technical-diagram.png" />
+<meta property="og:image:alt" content="Filesystem access diagram. The promised write scope was /var/lib/inventory, but the equivalent-restriction probe also wrote outside it." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,9 +28,10 @@
     <p class="article-deck">Write restrictions, file-integrity rules and read-only replicas needed tests aimed at what they were supposed to forbid.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-security-misconfiguration-analogy.png" alt="A caretaker checks a latched playground gate while a gap remains in the surrounding fence." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted an application limited to writing its data under <code>/var/lib/inventory</code>. The AI agent delivered restrictions and claimed that writes elsewhere were blocked.</p>
 <p>A separate test using equivalent restrictions successfully wrote to <code>/dev/shm</code>. The application could therefore pass its normal write test while the stronger claim about all other locations was false.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-25-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-25-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-25-technical-diagram.svg" alt="Filesystem access diagram. The promised write scope was /var/lib/inventory, but the equivalent-restriction probe also wrote outside it." width="1200" height="800" decoding="async" /></picture></a><figcaption>Filesystem access diagram. The promised write scope was /var/lib/inventory, but the equivalent-restriction probe also wrote outside it.</figcaption></figure>
+
 
 <h2>The failing probe was not repeated after the final settings</h2>
 <p>The CentOS Stream 10 setup allowed that alternate write location. The agent tried other settings, then restored the same configuration without rerunning the probe that had exposed the gap.</p>

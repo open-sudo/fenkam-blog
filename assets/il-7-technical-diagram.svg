@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">IL-7: An issuing key stayed in staging</title>
+<desc id="desc">PKI dependency diagram: a certificate authority signs the service certificate. Retaining the CA private key adds authority beyond the installed service key.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="1200" height="800" fill="#f7fafc"/>
+<text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-7  /  PKI TRUST HIERARCHY</text>
+<text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">An issuing key stayed in staging</text>
+<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">The database needed its runtime credentials; the staging CA key had a different role.</text>
+<g data-node="CA signing key" data-bounds="440,210,320,140">
+<path d="M440 227 C440 205,760 205,760 227 V333 C760 355,440 355,440 333 Z M440 227 C440 249,760 249,760 227" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="600" y="280.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">CA signing key</text>
+<text x="600" y="325.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Issues certificates</text>
+</g>
+<g data-node="Runtime certificate + key" data-bounds="64,475,450,160">
+<rect x="64" y="475" width="450" height="160" rx="10" fill="#edf8f2" stroke="#176b50" stroke-width="2"/>
+<text x="289" y="539.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Runtime certificate + key</text>
+<text x="289" y="584.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Needed by the database</text>
+</g>
+<g data-node="CA key in staging" data-bounds="686,475,450,160">
+<path d="M686 492 C686 470,1136 470,1136 492 V618 C1136 640,686 640,686 618 Z M686 492 C686 514,1136 514,1136 492" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="911" y="555.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">CA key in staging</text>
+<text x="911" y="600.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Issuing authority retained</text>
+</g>
+<path d="M500 350 L500 400 L289 400 L289 474" fill="none" stroke="#176b50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#green)"/>
+<path d="M700 350 L700 400 L911 400 L911 474" fill="none" stroke="#8d580d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#amber)"/>
+<rect x="105" y="414" width="360" height="35.28" rx="4" fill="#f7fafc"/>
+<text x="285" y="440" font-size="22" fill="#546574" style="fill:#546574" text-anchor="middle" class="edge">Sign service identity</text>
+<rect x="735" y="414" width="360" height="35.28" rx="4" fill="#f7fafc"/>
+<text x="915" y="440" font-size="22" fill="#8d580d" style="fill:#8d580d" text-anchor="middle" class="edge">Private key retained</text>
+<text x="64" y="737" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start">The retained CA key could sign more certificates for systems trusting that CA. No misuse was observed.</text>
+</svg>

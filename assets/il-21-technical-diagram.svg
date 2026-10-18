@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">IL-21: The test path changed the result</title>
+<desc id="desc">Comparison of two password-policy test paths. Rejection by a scoring tool did not establish enforcement by the commands that actually set the password.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="1200" height="800" fill="#f7fafc"/>
+<text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-21  /  DEPLOYMENT COMPARISON</text>
+<text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">The test path changed the result</text>
+<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">CentOS Stream 10: a 12-character minimum was requested.</text>
+<text x="325" y="234" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Scoring-tool test</text>
+<g data-node="Supply an 11-character password" data-bounds="64.0,298,522.0,100">
+<rect x="64.0" y="298" width="522.0" height="100" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="325" y="355.155" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Supply an 11-character password</text>
+</g>
+<path d="M325 398 L325 424" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g data-node="Tool rejects it" data-bounds="64.0,425,522.0,100">
+<rect x="64.0" y="425" width="522.0" height="100" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="325" y="482.155" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Tool rejects it</text>
+</g>
+<path d="M325 525 L325 551" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g data-node="Policy appears effective" data-bounds="64.0,552,522.0,100">
+<rect x="64.0" y="552" width="522.0" height="100" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="325" y="609.155" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Policy appears effective</text>
+</g>
+<text x="875" y="234" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Administrative update</text>
+<g data-node="Use chpasswd / passwd --stdin" data-bounds="614.0,298,522.0,100">
+<rect x="614.0" y="298" width="522.0" height="100" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="875" y="355.155" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Use chpasswd / passwd --stdin</text>
+</g>
+<path d="M875 398 L875 424" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g data-node="11-character password accepted" data-bounds="614.0,425,522.0,100">
+<rect x="614.0" y="425" width="522.0" height="100" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="875" y="482.155" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">11-character password accepted</text>
+</g>
+<path d="M875 525 L875 551" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g data-node="Actual setting path differs" data-bounds="614.0,552,522.0,100">
+<rect x="614.0" y="552" width="522.0" height="100" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="875" y="609.155" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Actual setting path differs</text>
+</g>
+<text x="64" y="737" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start">These observations concern the administrative commands tested, not every ordinary-user login path.</text>
+</svg>

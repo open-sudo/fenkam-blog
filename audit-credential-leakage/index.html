@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-credential-leakage/" />
 <meta property="og:url" content="https://fenkam.org/audit-credential-leakage/" />
 <meta property="og:title" content="IL-5: AI Exposed Passwords in Logs and Transfers" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-credential-leakage-analogy.png" />
-<meta property="og:image:alt" content="A sealed confidential envelope sits beside exposed copies in a shared printer tray and outgoing basket." />
+<meta property="og:image" content="https://fenkam.org/assets/il-5-technical-diagram.png" />
+<meta property="og:image:alt" content="Data flow in the Galera credential example. File cleanup addressed one copy; it did not erase the execution tool’s saved output." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,9 +28,10 @@
     <p class="article-deck">Temporary files were deleted, but passwords had already been copied into saved command output or exposed by the transfer method.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-credential-leakage-analogy.png" alt="A sealed confidential envelope sits beside exposed copies in a shared printer tray and outgoing basket." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I was reviewing a MariaDB Galera setup in which a password was used to copy data between database servers. The AI agent displayed that password during its work. The tool executing its commands retained the output.</p>
 <p>The agent later deleted the password file. That cleaned the server file, but left the separate copy already saved in the command log. Other tasks exposed credentials through different paths.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-5-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-5-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-5-technical-diagram.svg" alt="Data flow in the Galera credential example. File cleanup addressed one copy; it did not erase the execution tool’s saved output." width="1200" height="800" decoding="async" /></picture></a><figcaption>Data flow in the Galera credential example. File cleanup addressed one copy; it did not erase the execution tool’s saved output.</figcaption></figure>
+
 
 <h2>Commands printed the passwords they were setting</h2>
 <p>In a separate LDAP task, a command that replaced the administrator password also printed the new value. Like the Galera transfer password, it became part of the saved execution record.</p>

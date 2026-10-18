@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">IL-4: Six dates, one source of backup data</title>
+<desc id="desc">Data lineage of the final archive set: one genuine September 3 backup and six backdated copies of that same data.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="1200" height="800" fill="#f7fafc"/>
+<text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-4  /  DATA LINEAGE</text>
+<text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">Six dates, one source of backup data</text>
+<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">The retained test copies inherited September 3’s contents.</text>
+<g data-node="Genuine September 3 archive" data-bounds="64,350,350,190">
+<path d="M64 367 C64 345,414 345,414 367 V523 C414 545,64 545,64 523 Z M64 367 C64 389,414 389,414 367" fill="#edf8f2" stroke="#176b50" stroke-width="2"/>
+<text x="239" y="452.04" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Genuine September 3</text>
+<text x="239" y="484.8" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">archive</text>
+</g>
+<path d="M416 445 L470 445" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M470 188 L470 625" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<g data-node="Backdated copy 1" data-bounds="520,210,292,122">
+<path d="M520 227 C520 205,812 205,812 227 V315 C812 337,520 337,520 315 Z M520 227 C520 249,812 249,812 227" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="666" y="270.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Backdated copy 1</text>
+<text x="666" y="311.875" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">September 3 data</text>
+</g>
+<path d="M470 271 L519 271" fill="none" stroke="#8d580d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#amber)"/>
+<g data-node="Backdated copy 2" data-bounds="840,210,292,122">
+<path d="M840 227 C840 205,1132 205,1132 227 V315 C1132 337,840 337,840 315 Z M840 227 C840 249,1132 249,1132 227" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="986" y="270.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Backdated copy 2</text>
+<text x="986" y="311.875" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">September 3 data</text>
+</g>
+<path d="M470 188 L986 188 L986 209" fill="none" stroke="#8d580d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#amber)"/>
+<g data-node="Backdated copy 3" data-bounds="520,365,292,122">
+<path d="M520 382 C520 360,812 360,812 382 V470 C812 492,520 492,520 470 Z M520 382 C520 404,812 404,812 382" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="666" y="425.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Backdated copy 3</text>
+<text x="666" y="466.875" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">September 3 data</text>
+</g>
+<path d="M470 426 L519 426" fill="none" stroke="#8d580d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#amber)"/>
+<g data-node="Backdated copy 4" data-bounds="840,365,292,122">
+<path d="M840 382 C840 360,1132 360,1132 382 V470 C1132 492,840 492,840 470 Z M840 382 C840 404,1132 404,1132 382" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="986" y="425.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Backdated copy 4</text>
+<text x="986" y="466.875" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">September 3 data</text>
+</g>
+<path d="M470 343 L986 343 L986 364" fill="none" stroke="#8d580d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#amber)"/>
+<g data-node="Backdated copy 5" data-bounds="520,520,292,122">
+<path d="M520 537 C520 515,812 515,812 537 V625 C812 647,520 647,520 625 Z M520 537 C520 559,812 559,812 537" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="666" y="580.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Backdated copy 5</text>
+<text x="666" y="621.875" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">September 3 data</text>
+</g>
+<path d="M470 581 L519 581" fill="none" stroke="#8d580d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#amber)"/>
+<g data-node="Backdated copy 6" data-bounds="840,520,292,122">
+<path d="M840 537 C840 515,1132 515,1132 537 V625 C1132 647,840 647,840 625 Z M840 537 C840 559,1132 559,1132 537" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="986" y="580.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Backdated copy 6</text>
+<text x="986" y="621.875" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">September 3 data</text>
+</g>
+<path d="M470 498 L986 498 L986 519" fill="none" stroke="#8d580d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#amber)"/>
+<text x="64" y="737" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start">An earlier filename or modification time did not create an earlier recovery point.</text>
+</svg>

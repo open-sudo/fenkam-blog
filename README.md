@@ -54,8 +54,8 @@ main-site routes.
 
 `assets/article-illustration-prompts.json` records the prompt and alt text for
 each of the 39 original illustrations generated with the built-in image tool.
-Some have since been replaced by architecture diagrams. The remaining images
-are conceptual illustrations and are labeled as AI-generated in the articles.
+The 42 numbered stories now use authored technical diagrams instead. The
+original conceptual illustrations remain in the repository as asset history.
 
 The real-life scenes are editorial cover art; they do not require a matching
 analogy in the prose. Keep a written analogy only when it clarifies something
@@ -117,11 +117,19 @@ connections, permissions or a sequence of copies. Place the diagram after the
 opening gives those objects a purpose. Show the requested setup or the recorded
 actions; mark hypothetical access separately from observed traffic.
 
-`assets/article-diagrams.json` lists the authored SVG diagrams for IL-8, IL-29,
-IL-33 and IL-41. Each has a wide layout and a mobile layout with larger labels.
-PNG exports support social previews. Homepage diagrams use the full image
-without cropping, and still alternate sides with the other article cards.
-The original illustration files and prompts remain as asset history.
+`assets/article-diagrams.json` lists the technical diagrams for all 42 numbered
+stories and records the diagram type, caption, accessible description and assets.
+Choose the type that explains the case: sequence diagrams for interactions and
+retries; state machines for lifecycle changes; data-flow and lineage diagrams
+for copied data; dependency graphs for shared components; deployment and network
+diagrams for machines and listeners; trust boundaries and access matrices for
+permissions; activity diagrams for branches; timelines for recorded events.
+Keep observed behavior distinct from conditional risks and untested paths.
+
+Every diagram has a wide SVG and a narrow layout with larger labels. PNG
+exports support social previews. New article diagrams open at full size.
+Homepage diagrams show the full image without cropping and keep the existing
+alternating-card layout. Original illustrations and prompts remain as history.
 
 Review the whole article for continuity, including section starts and endings.
 Introduce both ends of a connection before saying it failed. Explain the first

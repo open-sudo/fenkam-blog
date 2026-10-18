@@ -174,3 +174,12 @@ h1 em { color:var(--muted); }
 .article-diagram figcaption { margin-top:12px; color:var(--muted); font:12px/1.6 'DM Mono',monospace; }
 .feature-art.art-diagram { display:grid; place-items:center; padding:16px; background:#f7f9fb; }
 .art-diagram .feature-image { position:static; width:100%; height:auto; object-fit:contain; mix-blend-mode:normal; opacity:1; filter:none; }
+
+/* Technical diagrams have separate narrow layouts and can be opened at full size. */
+.article-diagram .diagram-link { display:block; cursor:zoom-in; text-decoration:none; }
+.article-diagram .diagram-link:focus-visible { outline:3px solid var(--ink); outline-offset:5px; }
+.feature-art.art-diagram picture { display:block; width:100%; min-width:0; }
+.art-diagram .feature-image { display:block; }
+@media (min-width:1000px) {
+  .article-body .article-diagram { width:900px; max-width:none; margin-left:calc((100% - 900px) / 2); margin-right:calc((100% - 900px) / 2); }
+}

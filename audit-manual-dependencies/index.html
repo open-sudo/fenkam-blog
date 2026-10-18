@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-manual-dependencies/" />
 <meta property="og:url" content="https://fenkam.org/audit-manual-dependencies/" />
 <meta property="og:title" content="IL-23: Ansible Passed After Manual Setup" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-manual-dependencies-analogy.png" />
-<meta property="og:image:alt" content="A completed chair passes inspection beside an assembly guide with missing steps." />
+<meta property="og:image" content="https://fenkam.org/assets/il-23-technical-diagram.png" />
+<meta property="og:image:alt" content="Activity diagram of the initialization guard. The recorded run took the “already exists” branch; the dashed branch was not exercised." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,9 +28,10 @@
     <p class="article-deck">A no-change playbook run showed that an already repaired machine matched the automation, not that the automation could build it.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-manual-dependencies-analogy.png" alt="A completed chair passes inspection beside an assembly guide with missing steps." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>I wanted an Ansible playbook that could deploy file-integrity monitoring. It needed to install AIDE and initialize the reference database used to identify later file changes.</p>
 <p>Before testing the playbook, the AI agent installed AIDE and built that database manually. When Ansible ran, its existence check found the database and skipped initialization.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-23-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-23-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1320" /><img src="/assets/il-23-technical-diagram.svg" alt="Activity diagram of the initialization guard. The recorded run took the “already exists” branch; the dashed branch was not exercised." width="1200" height="800" decoding="async" /></picture></a><figcaption>Activity diagram of the initialization guard. The recorded run took the “already exists” branch; the dashed branch was not exercised.</figcaption></figure>
+
 
 <h2>The test started after an essential setup step</h2>
 <p>Avoiding repeated initialization is sensible: a playbook should not replace its reference database on every run. Here, however, the run never exercised the task that would create the database on a machine without it.</p>

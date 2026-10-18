@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">IL-13: A failed input step reached live accounts</title>
+<desc id="desc">Control flow of the credential-generation failure. Updating the accounts was not conditional on successfully creating a password.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="1200" height="800" fill="#f7fafc"/>
+<text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-13  /  FLOWCHART</text>
+<text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">A failed input step reached live accounts</text>
+<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">Database role setup continued after password generation failed.</text>
+<g data-node="Generate password with OpenSSL" data-bounds="64,320,244,190">
+<rect x="64" y="320" width="244" height="190" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="186" y="390.565" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Generate</text>
+<text x="186" y="422.155" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">password with</text>
+<text x="186" y="453.745" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">OpenSSL</text>
+</g>
+<path d="M309 415 L339 415" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<rect x="199" y="562" width="250" height="35.28" rx="4" fill="#f7fafc"/>
+<text x="324" y="588" font-size="22" fill="#546574" style="fill:#546574" text-anchor="middle" class="edge">Failure</text>
+<g data-node="OpenSSL missing: generation fails" data-bounds="340,320,244,190">
+<rect x="340" y="320" width="244" height="190" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="462" y="390.565" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">OpenSSL</text>
+<text x="462" y="422.155" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">missing:</text>
+<text x="462" y="453.745" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">generation fails</text>
+</g>
+<path d="M585 415 L615 415" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<rect x="475" y="562" width="250" height="35.28" rx="4" fill="#f7fafc"/>
+<text x="600" y="588" font-size="22" fill="#546574" style="fill:#546574" text-anchor="middle" class="edge">No validation stop</text>
+<g data-node="Account update still executes" data-bounds="616,320,244,190">
+<rect x="616" y="320" width="244" height="190" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="738" y="406.36" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Account update</text>
+<text x="738" y="437.95" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">still executes</text>
+</g>
+<path d="M861 415 L891 415" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<rect x="751" y="562" width="250" height="35.28" rx="4" fill="#f7fafc"/>
+<text x="876" y="588" font-size="22" fill="#546574" style="fill:#546574" text-anchor="middle" class="edge">Repair afterward</text>
+<g data-node="Passwords cleared, then corrected" data-bounds="892,320,244,190">
+<rect x="892" y="320" width="244" height="190" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="1014" y="390.565" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Passwords</text>
+<text x="1014" y="422.155" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">cleared, then</text>
+<text x="1014" y="453.745" font-size="27" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">corrected</text>
+</g>
+<text x="64" y="737" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start">The observed problem was the command sequence. The final passwords were repaired.</text>
+</svg>

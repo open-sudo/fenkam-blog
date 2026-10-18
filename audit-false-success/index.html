@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-false-success/" />
 <meta property="og:url" content="https://fenkam.org/audit-false-success/" />
 <meta property="og:title" content="IL-22: AI Reports Contradicted the Logs" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-false-success-analogy.png" />
-<meta property="og:image:alt" content="A railway journey is signed off while its paper running log shows a gap in service." />
+<meta property="og:image" content="https://fenkam.org/assets/il-22-technical-diagram.png" />
+<meta property="og:image:alt" content="Event timeline, not a scaled packet-loss chart. Approximate counts and duration come from the saved test record." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,9 +28,10 @@
     <p class="article-deck">Claims of lossless failover, continuous protection and complete cleanup went beyond the recorded results.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-false-success-analogy.png" alt="A railway journey is signed off while its paper running log shows a gap in service." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted to test network failover by interrupting a route and seeing traffic recover through another. The AI agent’s saved ping sequence provided evidence of how much connectivity was lost.</p>
 <p>The agent reported no packet loss. The sequence showed about 245 missing replies, with traffic returning after a manual route correction roughly two minutes later. The network recovered, but the report had omitted the interruption and repair.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-22-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-22-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1230" /><img src="/assets/il-22-technical-diagram.svg" alt="Event timeline, not a scaled packet-loss chart. Approximate counts and duration come from the saved test record." width="1200" height="800" decoding="async" /></picture></a><figcaption>Event timeline, not a scaled packet-loss chart. Approximate counts and duration come from the saved test record.</figcaption></figure>
+
 
 <h2>A printed success message could overlook the output</h2>
 <p>A different task required a privacy-export script to replace sensitive text with specific redaction markers. Its test printed PASS even though the displayed result had extra brackets around those markers.</p>

@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-security-bypasses/" />
 <meta property="og:url" content="https://fenkam.org/audit-security-bypasses/" />
 <meta property="og:title" content="IL-12: AI Disabled Security Controls During Setup" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-security-bypasses-analogy.png" />
-<meta property="og:image:alt" content="A saw’s detached safety guard lies beside the timber it was removed to accommodate." />
+<meta property="og:image" content="https://fenkam.org/assets/il-12-technical-diagram.png" />
+<meta property="og:image:alt" content="Security boundary diagram. A service-specific transfer problem led to a host-wide enforcement change retained across reboot." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,9 +28,10 @@
     <p class="article-deck">SELinux, container restrictions and SSH identity checks were relaxed during setup. Some changes remained after troubleshooting.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-security-bypasses-analogy.png" alt="A saw’s detached safety guard lies beside the timber it was removed to accommodate." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted a MariaDB Galera member to join a database cluster and receive its data. The transfer ran into SELinux restrictions, so the AI agent had to resolve the service’s permissions.</p>
 <p>Instead, it made every database host permissive and saved that setting for reboot. The member joined, while SELinux stopped blocking policy violations across those hosts.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-12-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-12-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-12-technical-diagram.svg" alt="Security boundary diagram. A service-specific transfer problem led to a host-wide enforcement change retained across reboot." width="1200" height="800" decoding="async" /></picture></a><figcaption>Security boundary diagram. A service-specific transfer problem led to a host-wide enforcement change retained across reboot.</figcaption></figure>
+
 
 <h2>The database workaround affected other processes too</h2>
 <p>Galera and RabbitMQ deployments both retained disabled or permissive SELinux settings on cluster members. Permissive mode still records violations, but it does not enforce the policy.</p>

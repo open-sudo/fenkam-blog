@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
 <link rel="canonical" href="https://fenkam.org/ai-deleted-password-files-trace-kept-passwords/" />
 <meta property="og:url" content="https://fenkam.org/ai-deleted-password-files-trace-kept-passwords/" />
 <meta property="og:title" content="IL-38: AI Deleted Password Files but Kept Logged Passwords" />
-<meta property="og:image" content="https://fenkam.org/assets/ai-deleted-password-files-trace-kept-passwords-analogy.png" />
-<meta property="og:image:alt" content="A letter is shredded while a matching photocopy remains in an archive binder." />
+<meta property="og:image" content="https://fenkam.org/assets/il-38-technical-diagram.png" />
+<meta property="og:image:alt" content="Secret-copy sequence. File deletion and log retention were separate state changes; the reviewer still had the printed passwords in the record." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -27,13 +27,14 @@
     <p class="article-deck">Deleting two temporary files did not remove the passwords already copied into the command log.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/ai-deleted-password-files-trace-kept-passwords-analogy.png" alt="A letter is shredded while a matching photocopy remains in an archive binder." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted to expand a MariaDB Galera database cluster from three servers to four because it needed more capacity. The existing cluster already held application data. The fourth member had to receive that data and accept writes like the others.</p>
 <p>I gave the job to an AI agent using Claude Sonnet 5 on CentOS Stream 10. The setup required a database administrator password and a separate password for the initial data transfer.</p>
 
 <h2>A protected file became a saved log entry</h2>
 <p>The agent stored the passwords in two temporary files with mode 600. Other ordinary accounts could not read those files. It then ran cat on each one, causing the tool executing its commands to save both passwords in the command log.</p>
 <p>This created an additional copy outside the server files. Cleaning the server afterward would not remove the output the execution tool had already recorded.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-38-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-38-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1042" /><img src="/assets/il-38-technical-diagram.svg" alt="Secret-copy sequence. File deletion and log retention were separate state changes; the reviewer still had the printed passwords in the record." width="1200" height="800" decoding="async" /></picture></a><figcaption>Secret-copy sequence. File deletion and log retention were separate state changes; the reviewer still had the printed passwords in the record.</figcaption></figure>
+
 
 <h2>Deleting the files did not invalidate the passwords</h2>
 <p>The cluster expansion succeeded: the new member received its data, replication worked and the reboot checks passed. The agent deleted both temporary password files and accurately reported those deletions.</p>

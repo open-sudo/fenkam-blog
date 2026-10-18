@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">IL-39: The same repository task left different stacks</title>
+<desc id="desc">Comparison of the three recorded approaches. Every run demonstrated a local installation, while the resulting software stacks differed.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="1200" height="800" fill="#f7fafc"/>
+<text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-39  /  DEPLOYMENT COMPARISON</text>
+<text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">The same repository task left different stacks</text>
+<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">Three RHEL 10 runs; surrounding instructions and reasoning settings also differed.</text>
+<text x="233.333" y="234" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Run A</text>
+<g data-node="Build a demo RPM" data-bounds="64.0,298,338.6666666666667,100">
+<rect x="64.0" y="298" width="338.6666666666667" height="100" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="233.333" y="354.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Build a demo RPM</text>
+</g>
+<path d="M233.333 398 L233.333 424" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g data-node="33 packages added; 9 upgraded" data-bounds="64.0,425,338.6666666666667,100">
+<rect x="64.0" y="425" width="338.6666666666667" height="100" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="233.333" y="467" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">33 packages added; 9</text>
+<text x="233.333" y="496.25" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">upgraded</text>
+</g>
+<path d="M233.333 525 L233.333 551" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g data-node="OpenSSL/RPM repair required" data-bounds="64.0,552,338.6666666666667,100">
+<rect x="64.0" y="552" width="338.6666666666667" height="100" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="233.333" y="594" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">OpenSSL/RPM repair</text>
+<text x="233.333" y="623.25" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">required</text>
+</g>
+<text x="600" y="234" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Run B</text>
+<g data-node="Attempt package-stack repair" data-bounds="430.6666666666667,298,338.6666666666667,100">
+<rect x="430.6666666666667" y="298" width="338.6666666666667" height="100" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="600" y="340" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Attempt package-stack</text>
+<text x="600" y="369.25" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">repair</text>
+</g>
+<path d="M600 398 L600 424" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g data-node="Restore an older compatible stack" data-bounds="430.6666666666667,425,338.6666666666667,100">
+<rect x="430.6666666666667" y="425" width="338.6666666666667" height="100" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="600" y="467" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Restore an older</text>
+<text x="600" y="496.25" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">compatible stack</text>
+</g>
+<path d="M600 525 L600 551" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g data-node="Local installation works" data-bounds="430.6666666666667,552,338.6666666666667,100">
+<rect x="430.6666666666667" y="552" width="338.6666666666667" height="100" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="600" y="608.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Local installation works</text>
+</g>
+<text x="966.667" y="234" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Run C</text>
+<g data-node="Use an existing tree package" data-bounds="797.3333333333334,298,338.6666666666667,100">
+<rect x="797.3333333333334" y="298" width="338.6666666666667" height="100" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="966.667" y="340" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Use an existing tree</text>
+<text x="966.667" y="369.25" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">package</text>
+</g>
+<path d="M966.667 398 L966.667 424" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g data-node="Only 2 packages added" data-bounds="797.3333333333334,425,338.6666666666667,100">
+<rect x="797.3333333333334" y="425" width="338.6666666666667" height="100" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="966.667" y="481.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Only 2 packages added</text>
+</g>
+<path d="M966.667 525 L966.667 551" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g data-node="Avoid build-tool repairs" data-bounds="797.3333333333334,552,338.6666666666667,100">
+<rect x="797.3333333333334" y="552" width="338.6666666666667" height="100" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="966.667" y="608.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Avoid build-tool repairs</text>
+</g>
+<text x="64" y="737" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start">This is a deployment comparison, not a controlled experiment isolating the cause of the choices.</text>
+</svg>

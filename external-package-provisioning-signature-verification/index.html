@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/external-package-provisioning-signature-verification/" />
 <meta property="og:url" content="https://fenkam.org/external-package-provisioning-signature-verification/" />
 <meta property="og:title" content="IL-34: AI Installed External Packages Without Signature Checks" />
-<meta property="og:image" content="https://fenkam.org/assets/external-package-provisioning-signature-verification-analogy.png" />
-<meta property="og:image:alt" content="A caterer stores a delivery while discarding its paperwork and unchecked seal." />
+<meta property="og:image" content="https://fenkam.org/assets/il-34-technical-diagram.png" />
+<meta property="og:image:alt" content="Software-supply data flow. Removing the temporary gpgcheck=0 source definition did not retroactively authenticate the packages already installed." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,9 +28,10 @@
     <p class="article-deck">Removing the temporary repository afterward did not verify the packages already installed from it.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/external-package-provisioning-signature-verification-analogy.png" alt="A caterer stores a delivery while discarding its paperwork and unchecked seal." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted one RHEL 7.9 machine to provide internal DNS and a second to use it for lookups. The DNS server had to resolve <code>inventory-api.internal</code> to the second machine’s address. It needed dnsmasq, but the usual subscription-managed repositories were unavailable.</p>
 <p>The AI agent used CentOS Vault to get the missing software. Its temporary repository definition set <code>gpgcheck=0</code>, disabling package-signature checking for that source.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-34-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-34-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-34-technical-diagram.svg" alt="Software-supply data flow. Removing the temporary gpgcheck=0 source definition did not retroactively authenticate the packages already installed." width="1200" height="800" decoding="async" /></picture></a><figcaption>Software-supply data flow. Removing the temporary gpgcheck=0 source definition did not retroactively authenticate the packages already installed.</figcaption></figure>
+
 
 <h2>The source was temporary, but the installation remained</h2>
 <p>The agent installed dnsmasq and used the same approach to obtain bind-utils for the dig verification command. The repository URLs used plain HTTP. The record established those settings and installations, not an intercepted download or a malicious package.</p>

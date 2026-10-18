@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">IL-14: Live network state did not survive boot</title>
+<desc id="desc">Lifecycle state diagram for the bridge example. The missing bridge after restart distinguished runtime configuration from persistent setup.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="1200" height="800" fill="#f7fafc"/>
+<text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-14  /  STATE MACHINE</text>
+<text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">Live network state did not survive boot</text>
+<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">A bridge created with ip commands worked before restart.</text>
+<g data-node="Bridge exists" data-bounds="64,301,320,178">
+<rect x="64" y="301" width="320" height="178" rx="26" fill="#edf8f2" stroke="#176b50" stroke-width="2"/>
+<text x="224" y="374.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Bridge exists</text>
+<text x="224" y="419.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Live traffic works</text>
+</g>
+<path d="M384 390 L439 390" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<rect x="277" y="517" width="270" height="35.28" rx="4" fill="#f7fafc"/>
+<text x="412" y="543" font-size="22" fill="#546574" style="fill:#546574" text-anchor="middle" class="edge">Restart</text>
+<g data-node="Host reboots" data-bounds="440,301,320,178">
+<rect x="440" y="301" width="320" height="178" rx="26" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="600" y="374.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Host reboots</text>
+<text x="600" y="419.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Runtime state is lost</text>
+</g>
+<path d="M760 390 L815 390" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<rect x="653" y="517" width="270" height="35.28" rx="4" fill="#f7fafc"/>
+<text x="788" y="543" font-size="22" fill="#546574" style="fill:#546574" text-anchor="middle" class="edge">Inspect recovered host</text>
+<g data-node="Bridge absent" data-bounds="816,301,320,178">
+<rect x="816" y="301" width="320" height="178" rx="26" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="976" y="359.42" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Bridge absent</text>
+<text x="976" y="404.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Automatic setup</text>
+<text x="976" y="434.18" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">unproven</text>
+</g>
+<circle cx="48" cy="390" r="7" fill="#17212b"/>
+<path d="M55 390 L64 390" fill="none" stroke="#17212b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ink)"/>
+<text x="64" y="737" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start">A successful connection before reboot did not show how the bridge would be recreated.</text>
+</svg>

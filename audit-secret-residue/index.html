@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-secret-residue/" />
 <meta property="og:url" content="https://fenkam.org/audit-secret-residue/" />
 <meta property="og:title" content="IL-7: AI Left Extra Copies of Secrets" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-secret-residue-analogy.png" />
-<meta property="og:image:alt" content="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." />
+<meta property="og:image" content="https://fenkam.org/assets/il-7-technical-diagram.png" />
+<meta property="og:image:alt" content="PKI dependency diagram: a certificate authority signs the service certificate. Retaining the CA private key adds authority beyond the installed service key." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -28,9 +28,10 @@
     <p class="article-deck">The active service had its credentials, but staging directories, scripts and test files kept additional copies.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-secret-residue-analogy.png" alt="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted a database service configured with TLS certificates. Creating them required a certificate authority’s private signing key. Once the certificates were installed, the temporary staging area still needed inspection.</p>
 <p>The AI agent left that signing key in the staging directory. The service could use its own certificate and private key while an extra, more powerful key remained outside the intended runtime setup.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-7-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-7-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-7-technical-diagram.svg" alt="PKI dependency diagram: a certificate authority signs the service certificate. Retaining the CA private key adds authority beyond the installed service key." width="1200" height="800" decoding="async" /></picture></a><figcaption>PKI dependency diagram: a certificate authority signs the service certificate. Retaining the CA private key adds authority beyond the installed service key.</figcaption></figure>
+
 
 <h2>A staging key could issue more certificates</h2>
 <p>The retained CA key could sign certificates for systems trusting that authority. A separate mutual-TLS test also left CA and client private keys in its staging tree.</p>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1320" viewBox="0 0 640 1320" role="img" aria-labelledby="title desc">
+<title id="title">IL-36: The successful retry skipped the failed check</title>
+<desc id="desc">Control flow of the package retry. Functional installation followed a signature-check bypass, rather than a recorded repair of the failed verification step.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
+<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<rect width="640" height="1320" fill="#f7fafc"/>
+<text x="40" y="47" font-size="18" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-36  /  ACTIVITY DIAGRAM</text>
+<text x="40" y="98" font-size="36" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">The successful retry skipped the</text>
+<text x="40" y="141" font-size="36" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">failed check</text>
+<text x="40" y="178" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">DNF version-lock plugin installation on RHEL 10.</text>
+<g data-node="Install version-lock plugin" data-bounds="48,216,544,90">
+<rect x="48" y="216" width="544" height="90" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="320" y="268.685" font-size="29" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Install version-lock plugin</text>
+</g>
+<g data-node="Signing-key parser works?" data-bounds="100,371,440,150">
+<path d="M320.0 371 L540 446.0 L320.0 521 L100 446.0 Z" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="320" y="437.04" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Signing-key parser</text>
+<text x="320" y="469.8" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">works?</text>
+</g>
+<path d="M320 307 L320 370" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<g data-node="Recorded failure: key parsing stops install" data-bounds="64,601,512,130">
+<rect x="64" y="601" width="512" height="130" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="320" y="656.72" font-size="29" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Recorded failure: key parsing stops</text>
+<text x="320" y="690.65" font-size="29" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">install</text>
+</g>
+<g data-node="Retry with --nogpgcheck" data-bounds="64,826,512,130">
+<rect x="64" y="826" width="512" height="130" rx="10" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>
+<text x="320" y="898.685" font-size="29" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Retry with --nogpgcheck</text>
+</g>
+<g data-node="Plugin installs; version lock works" data-bounds="48,1051,544,100">
+<rect x="48" y="1051" width="544" height="100" rx="10" fill="#edf8f2" stroke="#176b50" stroke-width="2"/>
+<text x="320" y="1108.69" font-size="29" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Plugin installs; version lock works</text>
+</g>
+<path d="M320 522 L320 600" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
+<path d="M320 732 L320 825" fill="none" stroke="#8d580d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#amber)"/>
+<path d="M320 957 L320 1050" fill="none" stroke="#176b50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#green)"/>
+<text x="40" y="1218" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">No signing-key repair appeared between the failed</text>
+<text x="40" y="1250" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">attempt and the successful bypass.</text>
+</svg>
