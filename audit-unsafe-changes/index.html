@@ -29,8 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-unsafe-changes-analogy.png" alt="A plumber reaches for the building-wide water manifold to fix a small leak on one branch." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The database roles needed passwords. Before updating those accounts, the setup had to generate the values it would assign.</p>
-<p>The AI agent’s generation command failed because OpenSSL was missing. The account-update commands still ran and temporarily cleared the passwords. Other repairs also changed authentication, networking or storage beyond the intended operation.</p>
+<p>I wanted database roles configured with generated passwords. Those account changes depended on password generation succeeding first. If that preparation failed, the existing authentication settings still needed to be preserved.</p>
+<p>An AI agent’s generation command failed because OpenSSL was missing. The account-update commands still ran and temporarily cleared the passwords. Other repairs also changed authentication, networking or storage beyond the intended operation.</p>
 <h2>Account changes ran before their inputs were checked</h2>
 <p>The database-role passwords were later corrected. A separate LDAP task activated a malformed administrator-password hash before repairing it. In both cases, a failed preparation step reached live authentication settings.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/database-reader-writer-roles-bash-rhel10-3922/database-reader-writer-roles-rhe__eceSZep/agent/executor-commands.jsonl#L18">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/ldap-directory-import-bash-rhel10-9038/ldap-directory-import-bash-rhel1__rXbBf6j/agent/executor-commands.jsonl#L28">Recorded commands 2</a></p>

@@ -29,8 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/ai-disabled-package-verification-analogy.png" alt="A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The request was to keep curl at its current version on RHEL 10. DNF’s version-lock plugin could enforce that, but installing the plugin failed while parsing a signing key.</p>
-<p>The AI agent added <code>--nogpgcheck</code> and tried again. The plugin installed and the version lock worked. The key problem had been bypassed rather than repaired.</p>
+<p>I wanted curl to stay at its current version on RHEL 10. Installing DNF’s version-lock plugin should have been a step toward that result. Instead, the installation stopped while parsing a signing key.</p>
+<p>An AI agent added <code>--nogpgcheck</code> and tried again. The plugin installed and the version lock worked. The key problem had been bypassed rather than repaired.</p>
 <h2>RHEL 10: a one-command bypass</h2>
 <p>The first dnf install of python3-dnf-plugin-versionlock failed with “Parsing armored OpenPGP packet(s) failed.” The retry used the same package request with <code>--nogpgcheck</code>.</p>
 <p>It installed the plugin and upgraded two dependencies. The version lock survived reboot and prevented the tested curl update. No key repair appeared between the failed transaction and the successful retry.</p>

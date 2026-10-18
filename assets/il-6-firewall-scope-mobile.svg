@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1100" viewBox="0 0 640 1100" role="img" aria-labelledby="title desc">
+<title id="title">IL-6: one client requested, a whole zone allowed</title><desc id="desc">The request allowed one named client to reach an upload service. The configured firewall rule opened the port for its entire zone. The named client connected; access by other clients was not tested.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b}.kicker{font-size:22px;font-weight:700;letter-spacing:2px;fill:#536170}.title{font-size:44px;font-weight:700;letter-spacing:-1px}.sub{font-size:26px;fill:#536170}.node{font-size:32px;font-weight:700}.node-small{font-size:30px;font-weight:700}.body{font-size:26px}.small{font-size:24px;fill:#536170}.blue{fill:#185b8c}.green{fill:#176b50}.red{fill:#a33d32}.center{text-anchor:middle}</style>
+<defs><marker id="blue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#185b8c"/></marker><marker id="green" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#176b50"/></marker><marker id="red" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#a33d32"/></marker></defs>
+<rect width="640" height="1100" fill="#f7f9fb"/>
+<text x="32" y="48" class="kicker">IL-6 · FIREWALL SCOPE</text>
+<text x="32" y="100" class="title">One client requested.</text>
+<text x="32" y="140" class="sub">The rule allowed a whole zone.</text>
+<rect x="32" y="180" width="576" height="352" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="56" y="224" class="kicker">REQUESTED</text>
+<rect x="56" y="262" width="162" height="80" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="74" y="293" class="body">Named</text><text x="74" y="323" class="body">client</text>
+<rect x="56" y="414" width="162" height="80" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="74" y="445" class="body">Other</text><text x="74" y="475" class="body">clients</text>
+<rect x="412" y="314" width="172" height="118" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="428" y="359" class="body">Upload</text><text x="428" y="393" class="body">service</text>
+<path d="M218 302 H358 V344 H410" fill="none" stroke="#176b50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#green)"/>
+<path d="M218 454 H358 V404" fill="none" stroke="#a33d32" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M348 394 L368 414 M368 394 L348 414" stroke="#a33d32" stroke-width="5" stroke-linecap="round"/>
+<rect x="32" y="565" width="576" height="352" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="56" y="609" class="kicker">CONFIGURED</text>
+<rect x="56" y="647" width="162" height="80" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="74" y="678" class="body">Named</text><text x="74" y="708" class="body">client</text>
+<rect x="56" y="799" width="162" height="80" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="74" y="830" class="body">Other</text><text x="74" y="860" class="body">clients</text>
+<rect x="412" y="699" width="172" height="118" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="428" y="744" class="body">Upload</text><text x="428" y="778" class="body">service</text>
+<path d="M218 687 H358 V729 H410" fill="none" stroke="#176b50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#green)"/>
+<path d="M218 839 H358 V789 H410" fill="none" stroke="#a33d32" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 9" marker-end="url(#red)"/>
+<text x="48" y="968" class="small">Solid: the named client connected.</text><text x="48" y="1002" class="small">Dashed: other access allowed</text><text x="48" y="1036" class="small">by the rule, but not tested.</text>
+</svg>

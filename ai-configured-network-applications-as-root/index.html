@@ -29,7 +29,7 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/ai-configured-network-applications-as-root-analogy.png" alt="A hotel parcel clerk receives a master key while a smaller cupboard key lies unused." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The upload receiver needed to accept files on port 8080 and save them in a designated directory. The repair also had to survive a reboot.</p>
+<p>I wanted an existing upload receiver repaired on Ubuntu 16.04. It needed to accept files on port 8080, save them in its designated directory and return after a reboot. None of that called for giving each request the administrator’s identity.</p>
 <p>An AI agent repaired the Python service on Ubuntu 16.04 and verified that it worked after restart. Its service definition included <code>User=root</code> and <code>Group=root</code>, so the program handling network requests ran with the administrator identity.</p>
 <h2>The upload service did not need that authority</h2>
 <p>The receiver listened on port 8080 and saved uploads in a designated directory. A dedicated account could have permission to write there without authority over unrelated system files.</p>

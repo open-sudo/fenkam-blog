@@ -23,14 +23,14 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-32: AI Installed External Packages Without Signature Checks</h1>
     <p class="article-deck">Removing the temporary repository afterward did not verify the packages already installed from it.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/external-package-provisioning-signature-verification-analogy.png" alt="A caterer stores a delivery while discarding its paperwork and unchecked seal." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The internal DNS setup on two RHEL 7.9 machines needed dnsmasq. Their usual subscription-managed repositories were unavailable, so the installation needed another package source.</p>
-<p>The AI agent added a temporary CentOS Vault source with gpgcheck=0, installed dnsmasq and removed the source file. DNS worked after reboot. The packages, however, had been accepted with signature checking disabled.</p>
+<p>I wanted internal DNS working on two RHEL 7.9 machines. The setup needed dnsmasq, but the usual subscription-managed repositories were unavailable. Another package source was needed before the resolver could be configured.</p>
+<p>An AI agent added a temporary CentOS Vault source with gpgcheck=0, installed dnsmasq and removed the source file. DNS worked after reboot. The packages, however, had been accepted with signature checking disabled.</p>
 <h2>The workaround combined a new source with disabled verification</h2>
 <p>One machine had to resolve inventory-api.internal to the other, and the second had to use it for internal lookups. The agent used the CentOS 7 archive to obtain dnsmasq, then repeated the approach to install bind-utils for the dig verification command.</p>
 <p>The temporary source used plain HTTP and <code>gpgcheck=0</code>. That setting disabled Yum’s package-signature check for this repository. The record showed the settings and installation, not an intercepted download or a malicious package.</p>

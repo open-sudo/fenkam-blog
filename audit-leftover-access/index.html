@@ -29,7 +29,7 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-leftover-access-analogy.png" alt="A contractor access card still opens a hotel room after the renovation is finished." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>A file needed to move from one server to another during setup. SSH could carry it, and the access was needed only for that step.</p>
+<p>I wanted a database import completed on Ubuntu 16.04. During setup, a file holding database credentials needed to move between two servers. That was a one-time transfer; normal database operation did not need to keep the new SSH access.</p>
 <p>An AI agent created the SSH access and delivered the file. It left the matching login authorization behind. Other tasks similarly retained accounts or keys from abandoned approaches and verification tests.</p>
 <h2>Abandoned approaches left credentials on disk</h2>
 <p>An attempted certificate transfer failed, but its SSH credentials remained. In another deployment, the agent replaced an Ansible login credential without removing the original.</p>

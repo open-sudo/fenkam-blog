@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1120" viewBox="0 0 640 1120" role="img" aria-labelledby="title desc">
+<title id="title">IL-39: the keytab transfer</title><desc id="desc">The login server serves a secret keytab over temporary HTTPS port 9443. The application server downloaded it without client authentication. Another reachable client knowing the URL could download it too; no theft was observed.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b}.kicker{font-size:22px;font-weight:700;letter-spacing:2px;fill:#536170}.title{font-size:44px;font-weight:700;letter-spacing:-1px}.sub{font-size:26px;fill:#536170}.node{font-size:32px;font-weight:700}.node-small{font-size:30px;font-weight:700}.body{font-size:26px}.small{font-size:24px;fill:#536170}.blue{fill:#185b8c}.green{fill:#176b50}.red{fill:#a33d32}.center{text-anchor:middle}</style>
+<defs><marker id="blue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#185b8c"/></marker><marker id="green" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#176b50"/></marker><marker id="red" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#a33d32"/></marker></defs>
+<rect width="640" height="1120" fill="#f7f9fb"/>
+<text x="32" y="48" class="kicker">IL-39 · SECRET TRANSFER</text>
+<text x="32" y="100" class="title">The keytab transfer</text>
+<text x="32" y="140" class="sub">A keytab contains secret keys.</text>
+<rect x="48" y="180" width="544" height="172" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="72" y="225" class="node">Login server</text>
+<text x="72" y="271" class="body">Issues login tickets</text>
+<text x="72" y="316" class="small">Temporary HTTPS · port 9443</text>
+<path d="M320 352 V510" fill="none" stroke="#176b50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#green)"/>
+<text x="350" y="404" class="body green">Keytab</text>
+<text x="350" y="440" class="body">over HTTPS</text>
+<text x="350" y="476" class="small red">No client login</text>
+<rect x="48" y="512" width="544" height="144" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="72" y="558" class="node">Application server</text>
+<text x="72" y="607" class="body green">Download succeeded</text>
+<rect x="48" y="866" width="544" height="150" rx="14" fill="#fff3ef" stroke="#dbada5" stroke-width="2"/>
+<text x="72" y="912" class="node">Another reachable client</text>
+<text x="72" y="959" class="body">Knows the file URL</text>
+<path d="M592 266 H620 V941 H594" fill="none" stroke="#a33d32" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 9" marker-end="url(#red)"/>
+<text x="64" y="727" class="body red">No client authentication:</text><text x="64" y="763" class="body red">this client could request</text><text x="64" y="799" class="body red">the same secret file.</text>
+<text x="48" y="1060" class="small">Dashed = possible access.</text><text x="48" y="1092" class="small">No theft was observed.</text>
+</svg>

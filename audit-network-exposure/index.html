@@ -29,7 +29,7 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-network-exposure-analogy.png" alt="A building has a secure new front entrance while its old side door stands open." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The job was to provide an HTTPS site. Fetching the encrypted page would check that it worked, but would not reveal everything else listening on the server.</p>
+<p>I wanted an HTTPS site running on the server. Once the encrypted page loaded, I still needed to know whether the installation had exposed any other network services.</p>
 <p>An AI agent configured HTTPS and fetched the page successfully. The ordinary HTTP site was still listening too. Other installations also introduced network services that the requested setup did not need.</p>
 <h2>Installing one tool started another network service</h2>
 <p>Installing a file-integrity tool introduced an SMTP listener. A print-archive task intended for local use enabled network discovery on all interfaces.</p>

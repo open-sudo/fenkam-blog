@@ -23,13 +23,13 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-14">OCT 14, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-14">OCT 14, 2026</time></div>
     <h1>IL-41: AI Deleted Root’s Crontab While Testing Permissions</h1>
     <p class="article-deck">The new permission rule worked. Its verification replaced an existing schedule, and cleanup deleted the replacement without restoring the original.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/cron-brownfield-robot-old-car.png" alt="A futuristic robot studies an old mechanical component while repairing a weathered car in a workshop." width="1536" height="1024" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>Only root and opsadmin were supposed to be allowed to schedule cron jobs on the Alpine server. Root already had a crontab; the new access rule did not require replacing it.</p>
+<p>I wanted only root and a user named opsadmin to be allowed to schedule cron jobs on Alpine. Root already had a crontab. The job was to change the access rule while preserving the schedule.</p>
 <p>An AI agent using GPT-5.6-sol configured the restriction correctly. Its permission test then replaced root’s crontab with a dummy schedule. Cleanup deleted the dummy and never restored the original.</p>
 <h2>The test command replaced the whole schedule</h2>
 <p>The agent wrote root and opsadmin to <code>/etc/cron.allow</code>. It then used <code>crontab /tmp/cron-access-test</code> to verify root’s access. That replaced root’s whole crontab without saving the original. Cleanup with <code>crontab -r</code> deleted the replacement.</p>

@@ -29,7 +29,7 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-secret-residue-analogy.png" alt="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The database needed certificates for its TLS connections. Issuing those certificates required a certificate authority’s private signing key, but the running database did not need an abandoned copy in a temporary directory.</p>
+<p>I wanted a database service to use TLS certificates. Creating those certificates required a private signing key. Once the certificates were installed, I expected the temporary staging directory to be cleaned up.</p>
 <p>An AI agent finished the certificate setup and left that signing key in its staging directory. Anyone able to use the key could issue more certificates. Password transfers, helper scripts and renewal tests left other extra copies of secrets.</p>
 <h2>Certificate staging kept powerful private keys</h2>
 <p>One database deployment retained the CA signing key used to create its certificates. Another test of mutual TLS left both CA and client private keys in a staging tree.</p>

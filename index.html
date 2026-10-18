@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=editorial-2" />
+    <link rel="stylesheet" href="styles.css?v=diagrams-1" />
       <script src="/article-filter.js?v=2" defer></script>
   </head>
   <body>
@@ -87,7 +87,7 @@
         <article class="feature-card reverse" data-os="ubuntu-16 ubuntu-24 almalinux-9 alpine ubuntu almalinux">
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/cron-brownfield-robot-old-car.png" alt="A futuristic robot studies an old component while repairing a weathered car." width="1536" height="1024" loading="lazy" /></div>
           <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-14">OCT 14, 2026</time></div>
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-14">OCT 14, 2026</time></div>
             <h2><a href="/ai-tested-cron-access-and-deleted-existing-configuration/">IL-41: AI Deleted Root’s Crontab While Testing Permissions</a></h2>
             <p>The new permission rule worked. Its verification replaced an existing schedule, and cleanup deleted the replacement without restoring the original.</p>
             <a class="read-link" href="/ai-tested-cron-access-and-deleted-existing-configuration/">Read the field note <span>↗</span></a>
@@ -103,7 +103,7 @@
           </div>
         </article>
         <article class="feature-card reverse" data-os="centos-stream-10 centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-secured-application-made-keys-downloadable-analogy.png" alt="A shop has a new door lock, but matching spare keys sit on an unattended pavement table." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-art art-diagram"><img class="feature-image" src="/assets/il-39-keytab-transfer.svg" alt="The login server sends a secret keytab to the application server over HTTPS without client authentication. A dashed route shows that another reachable client knowing the URL could obtain it too." width="1200" height="800" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
             <h2><a href="/ai-secured-application-made-keys-downloadable/">IL-39: AI Made Authentication Keys Downloadable Without Login</a></h2>
@@ -168,14 +168,14 @@
         <article class="feature-card" data-os="rhel-7 rhel">
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/external-package-provisioning-signature-verification-analogy.png" alt="A caterer stores a delivery while discarding its paperwork and unchecked seal." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
             <h2><a href="/external-package-provisioning-signature-verification/">IL-32: AI Installed External Packages Without Signature Checks</a></h2>
             <p>Removing the temporary repository afterward did not verify the packages already installed from it.</p>
             <a class="read-link" href="/external-package-provisioning-signature-verification/">Read the article <span>↗</span></a>
           </div>
         </article>
         <article class="feature-card reverse" data-os="ubuntu-24 rhel-9 ubuntu rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-left-root-ssh-access-behind-analogy.png" alt="A moving contractor keeps a building key after the equipment delivery has finished." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-art art-diagram"><img class="feature-image" src="/assets/il-31-retained-ssh.svg" alt="A PostgreSQL primary retains a private SSH key, while two standbys still authorize that key for root login after setup." width="1200" height="800" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
             <h2><a href="/ai-left-root-ssh-access-behind/">IL-31: AI Left Root SSH Access After a Transfer</a></h2>
@@ -211,7 +211,7 @@
           </div>
         </article>
         <article class="feature-card reverse" data-os="alpine">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-competing-services-analogy.png" alt="A new ticket counter opens, but every customer remains in the queue for the original counter." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-art art-diagram"><img class="feature-image" src="/assets/il-27-competing-dhcp.svg" alt="Two DHCP servers share one network segment. Clients continue receiving addresses from the existing responder; the newly started dnsmasq server records no leases." width="1200" height="800" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
             <h2><a href="/audit-competing-services/">IL-27: AI Started a Competing DHCP Server</a></h2>
@@ -249,7 +249,7 @@
         <article class="feature-card reverse" data-os="ubuntu-24 rhel-10 centos-stream-10 ubuntu rhel centos">
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-security-misconfiguration-analogy.png" alt="A caretaker checks a latched playground gate while a gap remains in the surrounding fence." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
             <h2><a href="/audit-security-misconfiguration/">IL-23: Security Settings Did Not Enforce the Promised Limits</a></h2>
             <p>Write restrictions, file-integrity rules and read-only replicas needed tests aimed at what they were supposed to forbid.</p>
             <a class="read-link" href="/audit-security-misconfiguration/">Read the article <span>↗</span></a>
@@ -400,7 +400,7 @@
           </div>
         </article>
         <article class="feature-card" data-os="ubuntu-16 ubuntu-24 rhel-10 centos-stream-10 almalinux-9 openwrt ubuntu rhel centos almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-firewall-misconfiguration-analogy.png" alt="A delivery bicycle passes through a fence opening much wider than it needs." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-art art-diagram"><img class="feature-image" src="/assets/il-6-firewall-scope.svg" alt="Requested access allows one named client to reach an upload service. The configured rule admits the whole firewall zone, including other clients whose access was not tested." width="1200" height="800" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
             <h2><a href="/audit-firewall-misconfiguration/">IL-6: AI Opened More Firewall Access Than Requested</a></h2>

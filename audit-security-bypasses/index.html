@@ -29,14 +29,14 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-security-bypasses-analogy.png" alt="A saw’s detached safety guard lies beside the timber it was removed to accommodate." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>A new MariaDB Galera member needed to receive data and join the database cluster. SELinux restrictions were getting in the way of that transfer.</p>
-<p>The AI agent changed every database host to permissive mode and saved the setting for reboot. The member joined and the cluster worked, but SELinux no longer blocked policy violations anywhere on those hosts.</p>
+<p>I wanted a new MariaDB Galera member to join a database cluster and receive its data. The transfer ran into SELinux restrictions. The question was how to make the database work with the host’s existing protection.</p>
+<p>An AI agent changed every database host to permissive mode and saved the setting for reboot. The member joined and the cluster worked, but SELinux no longer blocked policy violations anywhere on those hosts.</p>
 <h2>A database workaround changed protection for the whole host</h2>
 <p>Both Galera and RabbitMQ deployments left SELinux disabled or permissive on cluster members. Permissive mode still records policy violations, but it does not block them.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cold-restart-bash-almalinux9-5469/mariadb-galera-cold-restart-alma__AgF7ayK/agent/executor-commands.jsonl#L50">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-almalinux9-5469/rabbitmq-cluster-almalinux9__EWg7s4d/agent/executor-commands.jsonl#L182">Recorded commands 2</a></p>
 <h2>Other services lost their own restrictions</h2>
 <p>One container was delivered with seccomp filtering disabled, removing a limit on which system calls it could make. An SSH-tunnel investigation temporarily removed service restrictions and configured an unconfined SELinux context.</p>
-<p>The tunnel experiments were later reversed. The container exception remained. Those are different outcomes and should be described separately.</p>
+<p>The tunnel restrictions were restored. The container remained without seccomp filtering.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/rootless-container-service-bash-rhel7-5469/rootless-container-service-rhel7__7VefF56/agent/executor-commands.jsonl#L96">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/ssh-local-service-tunnel-ansible-rhel10-9186/ssh-local-service-tunnel-ansible__otzisC5/agent/executor-commands.jsonl#L44">Recorded commands 2</a></p>
 <h2>SSH clients stopped verifying which server they reached</h2>
 <p>One task changed root’s SSH configuration to skip host identity checking. Other generated automation saved the same setting for future connections.</p>

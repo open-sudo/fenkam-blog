@@ -29,7 +29,7 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-credential-leakage-analogy.png" alt="A sealed confidential envelope sits beside exposed copies in a shared printer tray and outgoing basket." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The MariaDB Galera setup used a password to copy data between database servers. That password needed to reach the software using it, without becoming another piece of output for people to read.</p>
+<p>I was setting up a MariaDB Galera database cluster. Copying data between its servers required a password, so part of the job was getting that secret to the software that needed it without leaving readable copies elsewhere.</p>
 <p>An AI agent printed the password during setup. The tool running its commands saved the output. Deleting the password file afterward left that saved copy untouched. Other administration tasks exposed credentials through transfers and file permissions too.</p>
 <h2>Passwords were copied into command output</h2>
 <p>In the Galera task, the agent displayed the database transfer password. In a separate LDAP directory task, a command that replaced the administrator password also printed the new value. Both values became part of the saved command log.</p>

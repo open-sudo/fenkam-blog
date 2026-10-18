@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1020" viewBox="0 0 640 1020" role="img" aria-labelledby="title desc">
+<title id="title">IL-31: root SSH trust left after a transfer</title><desc id="desc">A PostgreSQL primary retained a private SSH key. Both standbys retained the matching root authorization after a file transfer. A later root compromise of the primary could permit root logins to reachable standbys that still accept the key.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b}.kicker{font-size:22px;font-weight:700;letter-spacing:2px;fill:#536170}.title{font-size:44px;font-weight:700;letter-spacing:-1px}.sub{font-size:26px;fill:#536170}.node{font-size:32px;font-weight:700}.node-small{font-size:30px;font-weight:700}.body{font-size:26px}.small{font-size:24px;fill:#536170}.blue{fill:#185b8c}.green{fill:#176b50}.red{fill:#a33d32}.center{text-anchor:middle}</style>
+<defs><marker id="blue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#185b8c"/></marker><marker id="green" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#176b50"/></marker><marker id="red" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#a33d32"/></marker></defs>
+<rect width="640" height="1020" fill="#f7f9fb"/>
+<text x="32" y="48" class="kicker">IL-31 · RETAINED ACCESS</text>
+<text x="32" y="100" class="title">The SSH trust stayed</text>
+<text x="32" y="140" class="sub">One private key; two root authorizations.</text>
+<rect x="48" y="185" width="544" height="180" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="72" y="233" class="node-small">PostgreSQL primary</text>
+<text x="72" y="281" class="body">Private SSH key retained</text>
+<text x="72" y="329" class="small">/root/.ssh/id_ed25519</text>
+<path d="M320 365 V455 H176 V512" fill="none" stroke="#185b8c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M320 455 H464 V512" fill="none" stroke="#185b8c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
+<text x="346" y="413" class="body blue">Root SSH</text>
+<rect x="48" y="515" width="240" height="174" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="72" y="562" class="node">Standby 1</text>
+<text x="72" y="611" class="body">Accepts key</text>
+<text x="72" y="652" class="body">for root</text>
+<rect x="352" y="515" width="240" height="174" rx="14" fill="#ffffff" stroke="#c9d2db" stroke-width="2"/>
+<text x="376" y="562" class="node">Standby 2</text>
+<text x="376" y="611" class="body">Accepts key</text>
+<text x="376" y="652" class="body">for root</text>
+<text x="48" y="755" class="body">Both standbys kept the matching</text><text x="48" y="791" class="body">key in root’s authorized_keys.</text>
+<rect x="48" y="853" width="544" height="122" rx="14" fill="#fff3ef" stroke="#dbada5" stroke-width="2"/>
+<text x="72" y="895" class="body red">If the primary is compromised,</text><text x="72" y="931" class="body red">this access could be reused.</text>
+</svg>

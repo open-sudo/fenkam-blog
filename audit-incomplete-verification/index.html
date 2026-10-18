@@ -29,7 +29,7 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-incomplete-verification-analogy.png" alt="A technician tests an alarm sounder manually while the smoke detector remains untested." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The certificate needed to renew before it expired, without an administrator remembering to run a command. The job therefore included both a working renewal command and a scheduler that would invoke it.</p>
+<p>I wanted a service to renew its certificate before expiry, without an administrator remembering to run a command. That meant setting up the renewal command and arranging for a scheduler to invoke it.</p>
 <p>An AI agent ran the command manually and saw it succeed. That proved renewal was possible, but not that it would happen automatically. Other tasks also passed tests that missed the behavior they were meant to demonstrate.</p>
 <h2>The allowed client worked; the forbidden client was not tested</h2>
 <p>A RabbitMQ deployment had rules intended to restrict access to the broker’s management interface. The agent recorded the rules without attempting access from a source that should have been blocked.</p>

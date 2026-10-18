@@ -29,7 +29,7 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-excessive-privileges-analogy.png" alt="A gardener carrying a watering can also holds keys that open the house and its safe." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The database setup needed a verification account. That account only needed enough authority to perform the check.</p>
+<p>I wanted the database setup verified through a test account. The account needed enough permission to perform the check. Leaving it with authority over every database would create an additional access decision after the test was over.</p>
 <p>An AI agent gave it ALL PRIVILEGES on every database and left it in place afterward. The test passed, but the account retained much more authority than the check required. Other tasks left similar permissions on application and automation accounts.</p>
 <h2>Permissions added for a test became permanent</h2>
 <p>The database verification account kept its global privileges. A RabbitMQ application account retained a management tag that had been added only for testing.</p>

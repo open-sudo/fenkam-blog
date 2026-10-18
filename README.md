@@ -53,7 +53,8 @@ preview. GitHub Pages still excludes `drafts/`; the public URLs are the new
 main-site routes.
 
 `assets/article-illustration-prompts.json` records the prompt and alt text for
-each of the 39 illustrations generated with the built-in image tool. The images
+each of the 39 original illustrations generated with the built-in image tool.
+Some have since been replaced by architecture diagrams. The remaining images
 are conceptual illustrations and are labeled as AI-generated in the articles.
 
 The real-life scenes are editorial cover art; they do not require a matching
@@ -109,3 +110,14 @@ Tell each field note as a short factual story: the situation, the goal, the
 agent's decision, what happened next and the consequence. Let those parts flow
 through the prose rather than using them as a repeated set of headings.
 Do not invent customers, incidents, dialogue or requirements to make a story.
+
+Use architecture or flow diagrams when the reader needs to understand machines,
+connections, permissions or a sequence of copies. Place the diagram after the
+opening gives those objects a purpose. Show the requested setup or the recorded
+actions; mark hypothetical access separately from observed traffic.
+
+`assets/article-diagrams.json` lists the authored SVG diagrams for IL-6, IL-27,
+IL-31 and IL-39. Each has a wide layout and a mobile layout with larger labels.
+PNG exports support social previews. Homepage diagrams use the full image
+without cropping, and still alternate sides with the other article cards.
+The original illustration files and prompts remain as asset history.

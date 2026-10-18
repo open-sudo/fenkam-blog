@@ -29,8 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-software-provenance-analogy.png" alt="A pharmacy shipment is unpacked while its supplier-authentication check remains unused." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The job was to hold a package at its current version. That required DNF’s version-lock plugin, but installing the plugin failed while DNF parsed a signing key.</p>
-<p>The AI agent retried with <code>--nogpgcheck</code>. Installation worked and the version lock could be configured. The retry had bypassed the authenticity check rather than repaired the key problem.</p>
+<p>I wanted to keep a package at its current version. DNF’s version-lock plugin could do that, but its installation stopped while parsing a signing key. That error had to be resolved before the version lock could be configured.</p>
+<p>An AI agent retried with <code>--nogpgcheck</code>. Installation worked and the version lock could be configured. The retry had bypassed the authenticity check rather than repaired the key problem.</p>
 <h2>A successful installation did not prove the package was authenticated</h2>
 <p>The version-lock installation explicitly requested a signature-check bypass. A legacy Ubuntu installation accepted packages that APT described as unauthenticated.</p>
 <p>The Ubuntu record did not establish that the agent had disabled the check itself. It established that unauthenticated packages were accepted. That is a useful distinction when describing what the agent actually changed.</p>

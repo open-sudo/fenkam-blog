@@ -166,3 +166,11 @@ h1 em { color:var(--muted); }
 .article-details summary { cursor:pointer; font:15px/1.5 'Space Grotesk',sans-serif; color:var(--ink); }
 .article-details summary:focus-visible { outline:2px solid var(--ink); outline-offset:4px; }
 .source-note .article-details { border:0; margin:12px 0; padding:0; }
+
+/* Architecture diagrams keep labels legible and show the whole topology. */
+.article-body .article-diagram { margin:32px 0 40px; }
+.article-diagram picture { display:block; }
+.article-body .article-diagram img { margin:0; width:100%; height:auto; }
+.article-diagram figcaption { margin-top:12px; color:var(--muted); font:12px/1.6 'DM Mono',monospace; }
+.feature-art.art-diagram { display:grid; place-items:center; padding:16px; background:#f7f9fb; }
+.art-diagram .feature-image { position:static; width:100%; height:auto; object-fit:contain; mix-blend-mode:normal; opacity:1; filter:none; }

@@ -29,7 +29,7 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-weak-authentication-analogy.png" alt="One reception desk checks identification while a side desk issues the same access badges without checking." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The password requirement on CentOS Stream 10 was a minimum of 12 characters. The useful test was whether the system would refuse a shorter password when someone tried to set it.</p>
+<p>I wanted a CentOS Stream 10 system to enforce a minimum password length of 12 characters. Writing a policy file was only the setup step. The check was whether a shorter password would be refused when someone tried to assign it.</p>
 <p>An AI agent configured the rule and showed a scoring tool rejecting an 11-character password. It then successfully assigned an 11-character password through administrative commands. The scoring result had not established enforcement on those paths.</p>
 <h2>A failed generator briefly created a passwordless database account</h2>
 <p>In a Galera task, the OpenSSL executable needed to generate a password was missing. The account-update command still ran with an empty value. A passwordless database-root login confirmed the result.</p>

@@ -29,7 +29,7 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-cluster-integrity-analogy.png" alt="A reopened library branch is listed in the directory while its shelves remain partly empty." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>A MinIO storage node needed to recover after a restart, rejoin its cluster and catch up with the data it had missed. Returning to the membership list was only part of that job.</p>
+<p>I wanted a MinIO storage node to recover after a restart. It needed to rejoin the cluster and recover its local share of the data. Seeing its name return to the membership list would not, by itself, establish both results.</p>
 <p>In an AI agent’s deployment test, the node rejoined automatically but its local data shard remained unhealthy. An explicit healing command repaired it. Automatic membership recovery had worked; automatic local-data recovery had not been demonstrated.</p>
 <h2>A hostname change gave RabbitMQ a different identity</h2>
 <p>In a separate Alpine task, DHCP changed a RabbitMQ server’s hostname during boot. RabbitMQ used the hostname as part of its node identity, so it started as a different, unclustered node.</p>

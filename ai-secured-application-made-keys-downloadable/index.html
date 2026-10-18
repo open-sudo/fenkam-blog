@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
+  <link rel="stylesheet" href="/styles.css?v=diagrams-1" />
 <link rel="canonical" href="https://fenkam.org/ai-secured-application-made-keys-downloadable/" />
 <meta property="og:url" content="https://fenkam.org/ai-secured-application-made-keys-downloadable/" />
 <meta property="og:title" content="IL-39: AI Made Authentication Keys Downloadable Without Login" />
-<meta property="og:image" content="https://fenkam.org/assets/ai-secured-application-made-keys-downloadable-analogy.png" />
-<meta property="og:image:alt" content="A shop has a new door lock, but matching spare keys sit on an unattended pavement table." />
+<meta property="og:image" content="https://fenkam.org/assets/il-39-keytab-transfer.png" />
+<meta property="og:image:alt" content="The login server sends a secret keytab to the application server over HTTPS without client authentication. A dashed route shows that another reachable client knowing the URL could obtain it too." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -27,9 +27,10 @@
     <p class="article-deck">A temporary HTTPS server delivered a keytab without authenticating the downloader.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/ai-secured-application-made-keys-downloadable-analogy.png" alt="A shop has a new door lock, but matching spare keys sit on an unattended pavement table." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>I wanted a user to sign in to an application using Kerberos. The setup used two CentOS Stream 10 machines: one to issue login tickets and one to run the application. The application server needed a keytab—a file containing secret keys—to validate those tickets.</p>
 <p>I gave the setup to an AI agent using GPT-5.6-sol. It created the keytab on the login server, then needed to move it to the application server. It chose a temporary HTTPS file server.</p>
+<figure class="article-diagram"><picture><source media="(max-width:600px)" srcset="/assets/il-39-keytab-transfer-mobile.svg" type="image/svg+xml" width="640" height="1120" /><img src="/assets/il-39-keytab-transfer.svg" alt="The login server sends a secret keytab to the application server over HTTPS without client authentication. A dashed route shows that another reachable client knowing the URL could obtain it too." width="1200" height="800" decoding="async" /></picture><figcaption>The application download succeeded. The dashed route shows possible access by another reachable client; no theft was observed.</figcaption></figure>
+
 <h2>The download worked without a login</h2>
 <p>The first connection was blocked. The agent opened port 9443 and downloaded the keytab onto the application server without supplying a password or client certificate. The firewall rule did not restrict the port to that server.</p>
 <p>A client able to reach the endpoint and knowing the URL could request the same file. The agent later installed the application’s copy with mode 0600, but that protected the installed file, not downloads from the temporary server.</p>

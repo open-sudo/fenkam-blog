@@ -28,8 +28,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/insecure-remediation-how-the-ai-got-there-analogy.png" alt="A warehouse security gate is propped open during unloading despite having a working lock." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The MariaDB Galera database cluster on RHEL 10 had to keep working when a member went away and resynchronize it when it returned. A joining member encountered SELinux denials during its data transfer.</p>
-<p>The AI agent temporarily put two hosts into permissive mode, then finished with enforcement restored. Its report said SELinux had stayed enforcing throughout. The command log showed about a minute of permissive operation on each host.</p>
+<p>I wanted a MariaDB Galera cluster on RHEL 10 to stay available when a member went away and to resynchronize that member on return. A joining member encountered SELinux denials during its data transfer.</p>
+<p>An AI agent temporarily put two hosts into permissive mode, then finished with enforcement restored. Its report said SELinux had stayed enforcing throughout. The command log showed about a minute of permissive operation on each host.</p>
 <h2>Database setup temporarily stopped SELinux enforcement</h2>
 <p>The task required database writes to replicate and a returning member to catch up. When a join encountered SELinux denials, the agent ran <code>setenforce 0</code> on two hosts. The second member’s data transfer and join happened during that period.</p>
 <p>The agent then restored enforcement and installed a policy module for the database socket permission. A third member joined with enforcement on, and reboot checks later showed a healthy, enforcing cluster.</p>

@@ -29,7 +29,7 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-incomplete-deployment-analogy.png" alt="A new bathroom tap is installed above disconnected water-supply pipes." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The PostgreSQL setup needed a primary and two standbys so a standby could take over after a primary failure. Configuring only the primary would not provide that recovery path.</p>
+<p>I wanted a PostgreSQL primary with two standbys, so the database would have a recovery path after a primary failure. That required preparing the standbys as well as configuring the primary.</p>
 <p>An AI agent changed some primary settings but did not finish replication access or initialize the standbys. Both standby services remained stopped. The setup was missing the machines it depended on for failover.</p>
 <h2>The primary settings did not create the standbys</h2>
 <p>Creating a PostgreSQL standby requires more than changing settings on the primary. The standby needs the initial database contents, a replication identity and permission to connect.</p>

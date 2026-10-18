@@ -29,7 +29,7 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-diy-infrastructure-analogy.png" alt="A homemade postal chute delivers one envelope while parcels and other mail cannot pass through." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>The HTTP proxy needed to receive requests from clients and pass them to another server. Loading a page was an obvious first check, but real traffic could also include form submissions, authenticated requests and large responses.</p>
+<p>I wanted an HTTP proxy to pass requests to another server. Loading a page was an obvious first check. The proxy would also need to handle traffic such as form submissions and authenticated sessions.</p>
 <p>An AI agent wrote a small proxy and demonstrated a page loading. Its code handled only GET and HEAD and read whole responses into memory. The successful page request left those other behaviors untested.</p>
 <h2>The HTTP implementation handled only part of the traffic</h2>
 <p>Two generated proxies supported only GET and HEAD and buffered complete response bodies. One sent an upstream GET when its client requested HEAD, and dropped authorization or cookie headers.</p>
