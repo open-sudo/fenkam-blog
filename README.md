@@ -89,8 +89,11 @@ All articles remain readable when JavaScript is disabled.
 
 ## Editorial standard
 
-Write for Linux administrators who have never used the test platform. Start
-with the requested job and the concrete action or failure. Explain each case
+Write for Linux users who know nothing about the platform or test harness.
+Explain the agent's access to the machine and how the results were checked.
+Introduce case-specific accounts, files and unfamiliar terms before relying on
+them. Use plain language and short paragraphs without losing technical precision.
+Start with the requested job and the concrete action or failure. Explain each case
 before drawing a lesson from it. Name the machine, service, file or command
 instead of relying on phrases such as “the boundary” or “the retained state.”
 Explain the case directly. Add a short analogy only when it makes a difficult
@@ -144,7 +147,10 @@ next section will explain. Begin each section by naming its subject and how
 it follows from the preceding section. Use concrete terms such as "web-server
 software" so readers can identify the decision or component being discussed.
 
-Review the whole article for continuity, including section starts and endings.
+Before publishing, reread the entire article yourself from beginning to end.
+Check that it is coherent in reading order: the context is sufficient, terms
+are introduced, sections connect, and the evidence supports the consequence.
+Review section starts and endings as part of that complete read.
 Introduce both ends of a connection before saying it failed. Explain the first
 attempt before a retry, and introduce a new task before describing its result.
 Read the paragraphs in order: an improved opening cannot establish that the
