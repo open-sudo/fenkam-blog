@@ -75,29 +75,11 @@
       <section id="writing" class="writing shell">
         <div class="section-heading"><p class="eyebrow">01 / Articles</p><p class="section-note" id="article-count" role="status" aria-live="polite" aria-atomic="true">44 articles</p></div>
 <p><a href="/remaining-audit-categories/">Browse 27 Linux administration field notes →</a></p>
-        <article class="feature-card" data-os="ubuntu-16 ubuntu-24 rhel-7 rhel-9 rhel-10 centos-stream-10 almalinux-9 alpine ubuntu rhel centos almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/swap-kernel-downgrade-fuse-board.png" alt="An electrician replacing a modern fuse board with an older board bearing a red recall tag." width="1536" height="1024" loading="lazy" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
-            <h2><a href="/ai-asked-for-swap-downgraded-kernel/">IL-42: AI Added Swap by Downgrading the Kernel</a></h2>
-            <p>A missing zram module led the agent to boot an older kernel. Another run found matching modules and kept the current kernel.</p>
-            <a class="read-link" href="/ai-asked-for-swap-downgraded-kernel/">Read the field note <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-16 ubuntu-24 almalinux-9 alpine ubuntu almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/cron-brownfield-robot-old-car.png" alt="A futuristic robot studies an old component while repairing a weathered car." width="1536" height="1024" loading="lazy" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-14">OCT 14, 2026</time></div>
-            <h2><a href="/ai-tested-cron-access-and-deleted-existing-configuration/">IL-41: AI Deleted Root’s Crontab While Testing Permissions</a></h2>
-            <p>The new permission rule worked. Its verification replaced an existing schedule, and cleanup deleted the replacement without restoring the original.</p>
-            <a class="read-link" href="/ai-tested-cron-access-and-deleted-existing-configuration/">Read the field note <span>↗</span></a>
-          </div>
-        </article>
         <article class="feature-card" data-os="ubuntu-7 ubuntu-16 ubuntu-24 rhel-9 rhel-10 centos-stream-10 alpine ubuntu rhel centos">
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/same-prompt-same-model-linux-distros-analogy.png" alt="A prefabricated staircase and a custom-built timber staircase both reach the same landing." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
-            <h2><a href="/same-prompt-same-model-linux-distros/">IL-40: AI Wrote an HTTPS Server Despite Available Packages</a></h2>
+            <h2><a href="/same-prompt-same-model-linux-distros/">IL-42: AI Wrote an HTTPS Server Despite Available Packages</a></h2>
             <p>On RHEL 9, the agent wrote a Python HTTPS service without checking the available Apache and nginx packages.</p>
             <a class="read-link" href="/same-prompt-same-model-linux-distros/">Read the field note <span>↗</span></a>
           </div>
@@ -106,7 +88,7 @@
           <div class="feature-art art-diagram"><img class="feature-image" src="/assets/il-39-keytab-transfer.svg" alt="The login server sends a secret keytab to the application server over HTTPS without client authentication. A dashed route shows that another reachable client knowing the URL could obtain it too." width="1200" height="800" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
-            <h2><a href="/ai-secured-application-made-keys-downloadable/">IL-39: AI Made Authentication Keys Downloadable Without Login</a></h2>
+            <h2><a href="/ai-secured-application-made-keys-downloadable/">IL-41: AI Made Authentication Keys Downloadable Without Login</a></h2>
             <p>A temporary HTTPS server delivered a keytab without authenticating the downloader.</p>
             <a class="read-link" href="/ai-secured-application-made-keys-downloadable/">Read the field note <span>↗</span></a>
           </div>
@@ -115,7 +97,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/tunnel-vision-the-task-passed-the-server-changed-analogy.png" alt="A freshly painted wall looks finished while paint covers its light switch and ventilation grille." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-07">OCT 7, 2026</time></div>
-            <h2><a href="/tunnel-vision-the-task-passed-the-server-changed/">IL-38: AI Finished Tasks but Disrupted Existing Services</a></h2>
+            <h2><a href="/tunnel-vision-the-task-passed-the-server-changed/">IL-40: AI Finished Tasks but Disrupted Existing Services</a></h2>
             <p>Cron tests, network cleanup and package demonstrations changed parts of the server outside the requested feature.</p>
             <a class="read-link" href="/tunnel-vision-the-task-passed-the-server-changed/">Read the article <span>↗</span></a>
           </div>
@@ -124,7 +106,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" alt="Three matching delivery vans reveal different repairs beneath their open hoods." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-07">OCT 7, 2026</time></div>
-            <h2><a href="/configuration-divergence-when-your-fleet-becomes-a-zoo/">IL-37: The Same Task Left Different Server Configurations</a></h2>
+            <h2><a href="/configuration-divergence-when-your-fleet-becomes-a-zoo/">IL-39: The Same Task Left Different Server Configurations</a></h2>
             <p>The same repository demonstration led to core-library upgrades, an older RPM stack, or a much smaller installation.</p>
             <a class="read-link" href="/configuration-divergence-when-your-fleet-becomes-a-zoo/">Read the article <span>↗</span></a>
           </div>
@@ -133,7 +115,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-deleted-password-files-trace-kept-passwords-analogy.png" alt="A letter is shredded while a matching photocopy remains in an archive binder." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
-            <h2><a href="/ai-deleted-password-files-trace-kept-passwords/">IL-36: AI Deleted Password Files but Kept Logged Passwords</a></h2>
+            <h2><a href="/ai-deleted-password-files-trace-kept-passwords/">IL-38: AI Deleted Password Files but Kept Logged Passwords</a></h2>
             <p>Deleting two temporary files did not remove the passwords already copied into the command log.</p>
             <a class="read-link" href="/ai-deleted-password-files-trace-kept-passwords/">Read the article <span>↗</span></a>
           </div>
@@ -142,7 +124,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/insecure-remediation-how-the-ai-got-there-analogy.png" alt="A warehouse security gate is propped open during unloading despite having a working lock." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
-            <h2><a href="/insecure-remediation-how-the-ai-got-there/">IL-35: AI Disabled Security Controls, Then Restored Them</a></h2>
+            <h2><a href="/insecure-remediation-how-the-ai-got-there/">IL-37: AI Disabled Security Controls, Then Restored Them</a></h2>
             <p>Three deployments finished with protections enabled, but the work included intervals with weaker settings.</p>
             <a class="read-link" href="/insecure-remediation-how-the-ai-got-there/">Read the article <span>↗</span></a>
           </div>
@@ -151,7 +133,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-disabled-package-verification-analogy.png" alt="A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
-            <h2><a href="/ai-disabled-package-verification/">IL-34: AI Bypassed Package Signature Errors</a></h2>
+            <h2><a href="/ai-disabled-package-verification/">IL-36: AI Bypassed Package Signature Errors</a></h2>
             <p>The bypass ranged from a one-command option to repository settings and Ansible tasks that would repeat it later.</p>
             <a class="read-link" href="/ai-disabled-package-verification/">Read the article <span>↗</span></a>
           </div>
@@ -160,7 +142,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-erased-diagnostic-history-during-troubleshooting-analogy.png" alt="A mechanic tears old pages out of a vehicle service book while investigating a fault." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-15">OCT 15, 2026</time></div>
-            <h2><a href="/ai-erased-diagnostic-history-during-troubleshooting/">IL-33: AI Deleted Logs While Troubleshooting DHCP</a></h2>
+            <h2><a href="/ai-erased-diagnostic-history-during-troubleshooting/">IL-35: AI Deleted Logs While Troubleshooting DHCP</a></h2>
             <p>A DHCP investigation deleted 1 MB of archived journals before the network fault was fixed.</p>
             <a class="read-link" href="/ai-erased-diagnostic-history-during-troubleshooting/">Read the article <span>↗</span></a>
           </div>
@@ -169,7 +151,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/external-package-provisioning-signature-verification-analogy.png" alt="A caterer stores a delivery while discarding its paperwork and unchecked seal." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/external-package-provisioning-signature-verification/">IL-32: AI Installed External Packages Without Signature Checks</a></h2>
+            <h2><a href="/external-package-provisioning-signature-verification/">IL-34: AI Installed External Packages Without Signature Checks</a></h2>
             <p>Removing the temporary repository afterward did not verify the packages already installed from it.</p>
             <a class="read-link" href="/external-package-provisioning-signature-verification/">Read the article <span>↗</span></a>
           </div>
@@ -178,7 +160,7 @@
           <div class="feature-art art-diagram"><img class="feature-image" src="/assets/il-31-retained-ssh.svg" alt="A PostgreSQL primary retains a private SSH key, while two standbys still authorize that key for root login after setup." width="1200" height="800" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/ai-left-root-ssh-access-behind/">IL-31: AI Left Root SSH Access After a Transfer</a></h2>
+            <h2><a href="/ai-left-root-ssh-access-behind/">IL-33: AI Left Root SSH Access After a Transfer</a></h2>
             <p>A key used to copy one file remained on the PostgreSQL primary, with matching root authorization on both standbys.</p>
             <a class="read-link" href="/ai-left-root-ssh-access-behind/">Read the article <span>↗</span></a>
           </div>
@@ -187,7 +169,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-configured-network-applications-as-root-analogy.png" alt="A hotel parcel clerk receives a master key while a smaller cupboard key lies unused." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/ai-configured-network-applications-as-root/">IL-30: AI Ran Network Services as Root</a></h2>
+            <h2><a href="/ai-configured-network-applications-as-root/">IL-32: AI Ran Network Services as Root</a></h2>
             <p>One service explicitly used root. Another inherited root because its systemd unit did not specify a user.</p>
             <a class="read-link" href="/ai-configured-network-applications-as-root/">Read the article <span>↗</span></a>
           </div>
@@ -196,7 +178,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-logging-gaps-analogy.png" alt="A working factory machine has its warning buzzer unplugged." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-logging-gaps/">IL-29: AI Discarded a Worker’s Error Output</a></h2>
+            <h2><a href="/audit-logging-gaps/">IL-31: AI Discarded a Worker’s Error Output</a></h2>
             <p>The worker ran, but its systemd unit discarded standard output and standard error.</p>
             <a class="read-link" href="/audit-logging-gaps/">Read the article <span>↗</span></a>
           </div>
@@ -205,7 +187,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-idempotency-risks-analogy.png" alt="A book has been shelved, but an identical replacement arrives because the returns trolley is empty." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-idempotency-risks/">IL-28: Rerunning Ansible Could Duplicate Mail</a></h2>
+            <h2><a href="/audit-idempotency-risks/">IL-30: Rerunning Ansible Could Duplicate Mail</a></h2>
             <p>A Maildir filename changed during normal use could make an imported message look missing on the next run.</p>
             <a class="read-link" href="/audit-idempotency-risks/">Read the article <span>↗</span></a>
           </div>
@@ -214,7 +196,7 @@
           <div class="feature-art art-diagram"><img class="feature-image" src="/assets/il-27-competing-dhcp.svg" alt="Two DHCP servers share one network segment. Clients continue receiving addresses from the existing responder; the newly started dnsmasq server records no leases." width="1200" height="800" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-competing-services/">IL-27: AI Started a Competing DHCP Server</a></h2>
+            <h2><a href="/audit-competing-services/">IL-29: AI Started a Competing DHCP Server</a></h2>
             <p>The agent bypassed dnsmasq’s warning. Clients still used the existing DHCP responder.</p>
             <a class="read-link" href="/audit-competing-services/">Read the article <span>↗</span></a>
           </div>
@@ -223,7 +205,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-cluster-integrity-analogy.png" alt="A reopened library branch is listed in the directory while its shelves remain partly empty." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-cluster-integrity/">IL-26: A Cluster Node Rejoined but Still Needed Data Repair</a></h2>
+            <h2><a href="/audit-cluster-integrity/">IL-28: A Cluster Node Rejoined but Still Needed Data Repair</a></h2>
             <p>One node returned with an unhealthy local data shard. Another changed identity after reboot and never had a confirmed rejoin.</p>
             <a class="read-link" href="/audit-cluster-integrity/">Read the article <span>↗</span></a>
           </div>
@@ -232,7 +214,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-incomplete-deployment-analogy.png" alt="A new bathroom tap is installed above disconnected water-supply pipes." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-incomplete-deployment/">IL-25: AI Left Deployments Unfinished</a></h2>
+            <h2><a href="/audit-incomplete-deployment/">IL-27: AI Left Deployments Unfinished</a></h2>
             <p>Certificate files, partial database settings and successful pings were reported around services that had not actually been completed.</p>
             <a class="read-link" href="/audit-incomplete-deployment/">Read the article <span>↗</span></a>
           </div>
@@ -241,7 +223,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-configuration-drift-analogy.png" alt="A returned car contains a road atlas with ordinary routes still covered by tape from a demonstration." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-configuration-drift/">IL-24: AI Left Package Sources and Boot Settings Changed</a></h2>
+            <h2><a href="/audit-configuration-drift/">IL-26: AI Left Package Sources and Boot Settings Changed</a></h2>
             <p>A temporary installation test changed later updates. A separate swap task also changed which kernel the server would boot.</p>
             <a class="read-link" href="/audit-configuration-drift/">Read the article <span>↗</span></a>
           </div>
@@ -250,7 +232,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-security-misconfiguration-analogy.png" alt="A caretaker checks a latched playground gate while a gap remains in the surrounding fence." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-security-misconfiguration/">IL-23: Security Settings Did Not Enforce the Promised Limits</a></h2>
+            <h2><a href="/audit-security-misconfiguration/">IL-25: Security Settings Did Not Enforce the Promised Limits</a></h2>
             <p>Write restrictions, file-integrity rules and read-only replicas needed tests aimed at what they were supposed to forbid.</p>
             <a class="read-link" href="/audit-security-misconfiguration/">Read the article <span>↗</span></a>
           </div>
@@ -259,7 +241,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-runaway-remediation-analogy.png" alt="A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-runaway-remediation/">IL-22: AI Repeated Repairs That Were Not Working</a></h2>
+            <h2><a href="/audit-runaway-remediation/">IL-24: AI Repeated Repairs That Were Not Working</a></h2>
             <p>Repeated edits, cluster resets and overlapping package installations sometimes added problems instead of producing a working service.</p>
             <a class="read-link" href="/audit-runaway-remediation/">Read the article <span>↗</span></a>
           </div>
@@ -268,7 +250,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-manual-dependencies-analogy.png" alt="A completed chair passes inspection beside an assembly guide with missing steps." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-manual-dependencies/">IL-21: Ansible Passed After Manual Setup</a></h2>
+            <h2><a href="/audit-manual-dependencies/">IL-23: Ansible Passed After Manual Setup</a></h2>
             <p>A no-change playbook run showed that an already repaired machine matched the automation, not that the automation could build it.</p>
             <a class="read-link" href="/audit-manual-dependencies/">Read the article <span>↗</span></a>
           </div>
@@ -277,7 +259,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-false-success-analogy.png" alt="A railway journey is signed off while its paper running log shows a gap in service." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-false-success/">IL-20: AI Reports Contradicted the Logs</a></h2>
+            <h2><a href="/audit-false-success/">IL-22: AI Reports Contradicted the Logs</a></h2>
             <p>Claims of lossless failover, continuous protection and complete cleanup went beyond the recorded results.</p>
             <a class="read-link" href="/audit-false-success/">Read the article <span>↗</span></a>
           </div>
@@ -286,7 +268,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-weak-authentication-analogy.png" alt="One reception desk checks identification while a side desk issues the same access badges without checking." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-weak-authentication/">IL-19: Weak Passwords Were Accepted Despite Password Rules</a></h2>
+            <h2><a href="/audit-weak-authentication/">IL-21: Weak Passwords Were Accepted Despite Password Rules</a></h2>
             <p>Settings and password-scoring tools rejected weak values, while some administrative commands still assigned them.</p>
             <a class="read-link" href="/audit-weak-authentication/">Read the article <span>↗</span></a>
           </div>
@@ -295,7 +277,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-process-integrity-analogy.png" alt="A restaurant signals that it is open while only a cleaner is inside and the kitchen is unprepared." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-process-integrity/">IL-18: AI Service Scripts Did Not Verify Start or Stop</a></h2>
+            <h2><a href="/audit-process-integrity/">IL-20: AI Service Scripts Did Not Verify Start or Stop</a></h2>
             <p>A saved process number could identify the wrong process, and a successful start command could precede a failed network listener.</p>
             <a class="read-link" href="/audit-process-integrity/">Read the article <span>↗</span></a>
           </div>
@@ -304,7 +286,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-network-exposure-analogy.png" alt="A building has a secure new front entrance while its old side door stands open." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-network-exposure/">IL-17: AI Left Unrequested Network Services Running</a></h2>
+            <h2><a href="/audit-network-exposure/">IL-19: AI Left Unrequested Network Services Running</a></h2>
             <p>HTTPS worked, but plain HTTP, discovery or administration services sometimes remained available too.</p>
             <a class="read-link" href="/audit-network-exposure/">Read the article <span>↗</span></a>
           </div>
@@ -313,7 +295,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-disruptive-testing-analogy.png" alt="A generator load test trips the shared supply powering its measurement instruments." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-disruptive-testing/">IL-16: AI Memory Tests Cut Off Remote Access</a></h2>
+            <h2><a href="/audit-disruptive-testing/">IL-18: AI Memory Tests Cut Off Remote Access</a></h2>
             <p>The tests were requested, but some shared the management service’s resource group or ended without confirmed recovery.</p>
             <a class="read-link" href="/audit-disruptive-testing/">Read the article <span>↗</span></a>
           </div>
@@ -322,7 +304,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-diy-infrastructure-analogy.png" alt="A homemade postal chute delivers one envelope while parcels and other mail cannot pass through." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-diy-infrastructure/">IL-15: AI Proxies Passed Simple Tests but Missed Protocol Features</a></h2>
+            <h2><a href="/audit-diy-infrastructure/">IL-17: AI Proxies Passed Simple Tests but Missed Protocol Features</a></h2>
             <p>Generated HTTP proxies and DNS forwarders omitted behavior that a simple successful request did not exercise.</p>
             <a class="read-link" href="/audit-diy-infrastructure/">Read the article <span>↗</span></a>
           </div>
@@ -331,7 +313,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-excessive-privileges-analogy.png" alt="A gardener carrying a watering can also holds keys that open the house and its safe." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-excessive-privileges/">IL-14: AI Gave Accounts Unnecessary Permissions</a></h2>
+            <h2><a href="/audit-excessive-privileges/">IL-16: AI Gave Accounts Unnecessary Permissions</a></h2>
             <p>Test grants, unrestricted SSH keys and administrator service accounts remained after narrower jobs were complete.</p>
             <a class="read-link" href="/audit-excessive-privileges/">Read the article <span>↗</span></a>
           </div>
@@ -340,7 +322,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-test-residue-analogy.png" alt="Rehearsal props remain mixed with genuine emergency equipment backstage." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-test-residue/">IL-13: AI Left Test Files and Services Behind</a></h2>
+            <h2><a href="/audit-test-residue/">IL-15: AI Left Test Files and Services Behind</a></h2>
             <p>Fake backup history, temporary listeners and blocked repositories remained after their demonstrations ended.</p>
             <a class="read-link" href="/audit-test-residue/">Read the article <span>↗</span></a>
           </div>
@@ -349,7 +331,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-reboot-failures-analogy.png" alt="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-reboot-failures/">IL-12: AI Setups Needed Repairs After Reboot</a></h2>
+            <h2><a href="/audit-reboot-failures/">IL-14: AI Setups Needed Repairs After Reboot</a></h2>
             <p>Routes, services and router credentials sometimes disappeared after restart, even though they had worked beforehand.</p>
             <a class="read-link" href="/audit-reboot-failures/">Read the article <span>↗</span></a>
           </div>
@@ -358,7 +340,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-unsafe-changes-analogy.png" alt="A plumber reaches for the building-wide water manifold to fix a small leak on one branch." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-unsafe-changes/">IL-11: AI Repairs Changed Unrelated Accounts and Services</a></h2>
+            <h2><a href="/audit-unsafe-changes/">IL-13: AI Repairs Changed Unrelated Accounts and Services</a></h2>
             <p>Account edits, package recovery and storage helpers affected credentials, core libraries and unrelated services.</p>
             <a class="read-link" href="/audit-unsafe-changes/">Read the article <span>↗</span></a>
           </div>
@@ -367,7 +349,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-security-bypasses-analogy.png" alt="A saw’s detached safety guard lies beside the timber it was removed to accommodate." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-security-bypasses/">IL-10: AI Disabled Security Controls During Setup</a></h2>
+            <h2><a href="/audit-security-bypasses/">IL-12: AI Disabled Security Controls During Setup</a></h2>
             <p>SELinux, container restrictions and SSH identity checks were relaxed during setup. Some changes remained after troubleshooting.</p>
             <a class="read-link" href="/audit-security-bypasses/">Read the article <span>↗</span></a>
           </div>
@@ -376,7 +358,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-software-provenance-analogy.png" alt="A pharmacy shipment is unpacked while its supplier-authentication check remains unused." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-software-provenance/">IL-9: AI Skipped Software Authenticity Checks</a></h2>
+            <h2><a href="/audit-software-provenance/">IL-11: AI Skipped Software Authenticity Checks</a></h2>
             <p>Installations continued after signature or download checks were relaxed. Some exceptions were saved for later runs.</p>
             <a class="read-link" href="/audit-software-provenance/">Read the article <span>↗</span></a>
           </div>
@@ -385,7 +367,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-service-outages-analogy.png" alt="A resident waits at a lift that remains unavailable after maintenance." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-service-outages/">IL-8: Some Servers Stayed Unreachable After Reboot</a></h2>
+            <h2><a href="/audit-service-outages/">IL-10: Some Servers Stayed Unreachable After Reboot</a></h2>
             <p>Some machines did not return after reboot. Other tasks lost the login or transfer access their finished service needed.</p>
             <a class="read-link" href="/audit-service-outages/">Read the article <span>↗</span></a>
           </div>
@@ -394,7 +376,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-incomplete-verification-analogy.png" alt="A technician tests an alarm sounder manually while the smoke detector remains untested." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-incomplete-verification/">IL-7: AI Tested the Wrong Behavior</a></h2>
+            <h2><a href="/audit-incomplete-verification/">IL-9: AI Tested the Wrong Behavior</a></h2>
             <p>A manually run renewal, a connection over another network or an earlier test can pass while the requested behavior remains untested.</p>
             <a class="read-link" href="/audit-incomplete-verification/">Read the article <span>↗</span></a>
           </div>
@@ -403,7 +385,7 @@
           <div class="feature-art art-diagram"><img class="feature-image" src="/assets/il-6-firewall-scope.svg" alt="Requested access allows one named client to reach an upload service. The configured rule admits the whole firewall zone, including other clients whose access was not tested." width="1200" height="800" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-firewall-misconfiguration/">IL-6: AI Opened More Firewall Access Than Requested</a></h2>
+            <h2><a href="/audit-firewall-misconfiguration/">IL-8: AI Opened More Firewall Access Than Requested</a></h2>
             <p>The intended client could connect, but some rules also admitted unnecessary traffic or disrupted existing access.</p>
             <a class="read-link" href="/audit-firewall-misconfiguration/">Read the article <span>↗</span></a>
           </div>
@@ -412,7 +394,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-secret-residue-analogy.png" alt="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-secret-residue/">IL-5: AI Left Extra Copies of Secrets</a></h2>
+            <h2><a href="/audit-secret-residue/">IL-7: AI Left Extra Copies of Secrets</a></h2>
             <p>The active service had its credentials, but staging directories, scripts and test files kept additional copies.</p>
             <a class="read-link" href="/audit-secret-residue/">Read the article <span>↗</span></a>
           </div>
@@ -421,7 +403,7 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-leftover-access-analogy.png" alt="A contractor access card still opens a hotel room after the renovation is finished." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-leftover-access/">IL-4: AI Left Temporary Login Access Behind</a></h2>
+            <h2><a href="/audit-leftover-access/">IL-6: AI Left Temporary Login Access Behind</a></h2>
             <p>Access created for a transfer, a failed experiment or a login test sometimes remained after its purpose had ended.</p>
             <a class="read-link" href="/audit-leftover-access/">Read the article <span>↗</span></a>
           </div>
@@ -430,12 +412,30 @@
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-credential-leakage-analogy.png" alt="A sealed confidential envelope sits beside exposed copies in a shared printer tray and outgoing basket." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-credential-leakage/">IL-3: AI Exposed Passwords in Logs and Transfers</a></h2>
+            <h2><a href="/audit-credential-leakage/">IL-5: AI Exposed Passwords in Logs and Transfers</a></h2>
             <p>Temporary files were deleted, but passwords had already been copied into saved command output or exposed by the transfer method.</p>
             <a class="read-link" href="/audit-credential-leakage/">Read the article <span>↗</span></a>
           </div>
         </article>
-        <article class="feature-card" data-os="rhel-9 rhel"><div class="feature-art art-illustration"><img class="feature-image" src="/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" alt="Seven separate family albums contain copies of the same photograph rather than different years of history." width="1536" height="1024" loading="lazy" decoding="async" /></div><div class="feature-copy"><div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span></div><h2><a href="/illusion-of-done-2-ai-put-the-illusion-in-backup/">IL-2: AI Left Six Backdated Copies of One Backup</a></h2><p>The retention test worked, but six backdated copies stayed beside the only genuine backup.</p><a class="read-link" href="/illusion-of-done-2-ai-put-the-illusion-in-backup/">Read the article <span>↗</span></a></div></article>
+        <article class="feature-card" data-os="rhel-9 rhel"><div class="feature-art art-illustration"><img class="feature-image" src="/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" alt="Seven separate family albums contain copies of the same photograph rather than different years of history." width="1536" height="1024" loading="lazy" decoding="async" /></div><div class="feature-copy"><div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span></div><h2><a href="/illusion-of-done-2-ai-put-the-illusion-in-backup/">IL-4: AI Left Six Backdated Copies of One Backup</a></h2><p>The retention test worked, but six backdated copies stayed beside the only genuine backup.</p><a class="read-link" href="/illusion-of-done-2-ai-put-the-illusion-in-backup/">Read the article <span>↗</span></a></div></article>
+        <article class="feature-card reverse" data-os="ubuntu-16 ubuntu-24 almalinux-9 alpine ubuntu almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/cron-brownfield-robot-old-car.png" alt="A futuristic robot studies an old component while repairing a weathered car." width="1536" height="1024" loading="lazy" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-14">OCT 14, 2026</time></div>
+            <h2><a href="/ai-tested-cron-access-and-deleted-existing-configuration/">IL-3: AI Deleted Root’s Crontab While Testing Permissions</a></h2>
+            <p>The new permission rule worked. Its verification replaced an existing schedule, and cleanup deleted the replacement without restoring the original.</p>
+            <a class="read-link" href="/ai-tested-cron-access-and-deleted-existing-configuration/">Read the field note <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-16 ubuntu-24 rhel-7 rhel-9 rhel-10 centos-stream-10 almalinux-9 alpine ubuntu rhel centos almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/swap-kernel-downgrade-fuse-board.png" alt="An electrician replacing a modern fuse board with an older board bearing a red recall tag." width="1536" height="1024" loading="lazy" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
+            <h2><a href="/ai-asked-for-swap-downgraded-kernel/">IL-2: AI Added Swap by Downgrading the Kernel</a></h2>
+            <p>A missing zram module led the agent to boot an older kernel. Another run found matching modules and kept the current kernel.</p>
+            <a class="read-link" href="/ai-asked-for-swap-downgraded-kernel/">Read the field note <span>↗</span></a>
+          </div>
+        </article>
         <article class="feature-card reverse" data-os="ubuntu-7 ubuntu-16 ubuntu-24 rhel-7 rhel-9 rhel-10 centos-5 centos-stream-10 almalinux-9 alpine ubuntu rhel centos almalinux">
           <div class="feature-art art-illustration"><img class="feature-image" src="assets/iod1-ai-built-webserver.png" alt="A robotic arm assembling an improvised server connected to two website windows." width="1536" height="1024" loading="lazy" /></div>
           <div class="feature-copy">

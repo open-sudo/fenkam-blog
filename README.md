@@ -66,8 +66,9 @@ Image filenames retain the `-analogy.png` suffix used when they were generated.
 
 Illusion article titles use stable `IL-N: Title` identifiers. Assignments live in
 `assets/illusion-index.json`; use its `next_number` for a new illusion and then
-increment it. Never renumber existing articles when sorting or adding posts.
-The original first and second stories retain `IL-1` and `IL-2`. The experiment
+increment it. Keep existing identifiers when sorting or adding posts.
+The opening sequence is `IL-1` (web server), `IL-2` (swap/kernel downgrade),
+`IL-3` (cron verification) and `IL-4` (backup copies). The experiment
 overview and evaluation guide are separate from the numbered illusion stories.
 Keep the article heading, browser title, social title, homepage card and topic
 index consistent. Existing article URLs stay unchanged.
@@ -116,8 +117,8 @@ connections, permissions or a sequence of copies. Place the diagram after the
 opening gives those objects a purpose. Show the requested setup or the recorded
 actions; mark hypothetical access separately from observed traffic.
 
-`assets/article-diagrams.json` lists the authored SVG diagrams for IL-6, IL-27,
-IL-31 and IL-39. Each has a wide layout and a mobile layout with larger labels.
+`assets/article-diagrams.json` lists the authored SVG diagrams for IL-8, IL-29,
+IL-33 and IL-41. Each has a wide layout and a mobile layout with larger labels.
 PNG exports support social previews. Homepage diagrams use the full image
 without cropping, and still alternate sides with the other article cards.
 The original illustration files and prompts remain as asset history.
