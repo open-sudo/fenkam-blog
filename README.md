@@ -101,6 +101,13 @@ Distinguish an observed failure, a code risk and a behavior that was not tested.
 Keep internal finding IDs and batch labels in the evidence, not in the narrative.
 Link recorded commands next to the case and detailed evidence at the end.
 
+Always include the task prompt verbatim near the beginning of each story,
+with a link to its recorded source. Preserve the exact wording, punctuation,
+constraints and paragraph breaks, and label it clearly as the task prompt.
+Copy it from the recorded input rather than reconstructing it from a summary
+or the agent's report. For cases with different prompts, identify which prompt
+belongs to each case. If the original is unavailable, state that explicitly.
+
 Every article must stand on its own. Assume the reader opened this page first.
 Introduce the task and its purpose before describing the agent's actions.
 Name the model before comparing its behavior across runs. Introduce reviewers,

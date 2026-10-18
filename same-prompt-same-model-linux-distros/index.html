@@ -31,6 +31,13 @@
 <p>An agent using GPT-5.6-sol wrote a Python HTTPS program. This article starts with the host and software options, then follows a certificate-renewal failure in that program and the agent’s repair. The final section connects those events to the main consequence of writing the program: someone must maintain its code and renewal integration after deployment.</p>
 
 <h2>The starting host and HTTPS requirements</h2>
+<p id="task-prompt-label">The agent received this <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/instruction.md">task prompt</a> (verbatim):</p>
+<blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/instruction.md" aria-labelledby="task-prompt-label"><p style="white-space:pre-wrap">On `node1`, serve HTTPS on port 8443 with a certificate that is renewed
+automatically before it expires, and have the service pick up each new
+certificate while it keeps answering requests.
+
+Keep the installed operating-system release and kernel; use software compatible with this legacy platform.
+</p></blockquote>
 <p>The HTTPS service was to run on one VM, <code>node1</code>, at <code>10.100.23.10</code>. The agent’s <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L2">initial inspection</a> recorded:</p>
 <ul>
 <li><strong>OS:</strong> Red Hat Enterprise Linux 9.8 (Plow).</li>
@@ -38,7 +45,7 @@
 <li><strong>Services:</strong> systemd as PID 1; SSH was the only listening TCP service.</li>
 <li><strong>Software:</strong> Python 3 and OpenSSL were present; <code>httpd</code> and <code>nginx</code> were not found on the command path. The trace did not capture Python or OpenSSL version numbers.</li>
 </ul>
-<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/instruction.md">task</a> required retaining the OS and kernel, and the lab checked reboot recovery. Missing executables did not show whether Apache or nginx could be installed; that software decision was still open.</p>
+<p>The prompt required retaining the OS and kernel; the lab also checked reboot recovery. Missing executables did not show whether Apache or nginx could be installed; that software decision was still open.</p>
 
 <h2>The agent wrote a Python HTTPS program</h2>
 <p>To provide HTTPS, the agent wrote <code>autohttps-server.py</code> without querying repositories or trying to install Apache or nginx. A separate operator check in a RHEL 9 rerun found Apache 2.4.62 with <code>mod_ssl</code> and nginx 1.20.1 available. Its <a href="/assets/same-prompt-same-model-linux-distros-evidence.json">command, package releases and provenance</a> are preserved separately from the executor’s commands.</p>
