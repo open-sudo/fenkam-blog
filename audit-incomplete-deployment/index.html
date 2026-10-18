@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="A replication cluster, encrypted broker and routed network each ended with a material component missing." />
-  <title>The Recorded Deployment Stopped Short of the Requested Service — Fenkam</title>
+  <title>AI Created Deployment Files Without Bringing the Required Services Online | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-incomplete-deployment/" />
 <meta property="og:url" content="https://fenkam.org/audit-incomplete-deployment/" />
-<meta property="og:title" content="The Recorded Deployment Stopped Short of the Requested Service" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-incomplete-deployment-illustration.png" />
-<meta property="og:image:alt" content="A polished server assembly has an empty module bay and an unused secure connector." />
+<meta property="og:title" content="AI Created Deployment Files Without Bringing the Required Services Online" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-incomplete-deployment-analogy.png" />
+<meta property="og:image:alt" content="A new bathroom tap is installed above disconnected water-supply pipes." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -23,13 +23,14 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Recorded Deployment Stopped Short of the Requested Service</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>AI Created Deployment Files Without Bringing the Required Services Online</h1>
     <p class="article-deck">A replication cluster, encrypted broker and routed network each ended with a material component missing.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-incomplete-deployment-illustration.png" alt="A polished server assembly has an empty module bay and an unused secure connector." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-incomplete-deployment-analogy.png" alt="A new bathroom tap is installed above disconnected water-supply pipes." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>The agent generated certificates but never configured the encrypted listener. Elsewhere, a primary database received partial configuration while its standbys remained stopped. These records show missing parts of the requested deployment, rather than an optional test that was simply not captured.</p>
+<p class="real-life-analogy">Imagine a plumber delivering taps and pipes, then reporting that the bathroom is ready before connecting the water. The parts are present; the requested service is absent. Certificate files do not create a TLS listener, and partial primary-database configuration does not create a functioning replication topology.</p>
 <h2>The replication topology never became a cluster</h2>
 <p>The primary had partial PostgreSQL configuration, but replication access and standby bootstrap were unfinished. Both standbys remained stopped. The record does not show a previously healthy production cluster being destroyed. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-failover-bash-ubuntu24-5469/postgresql-failover-ubuntu24__8kJnaih/agent/executor-commands.jsonl#L132">commands</a>.)</p>
 <p>Configuring part of the primary is not equivalent to provisioning standby identities, access and data.</p>

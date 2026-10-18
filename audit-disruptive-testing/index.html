@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Requested memory-pressure exercises sometimes ran inside the management cgroup or ended without a recovered control path." />
-  <title>The Failure Test Shared the Management Failure Boundary — Fenkam</title>
+  <title>AI Stress Tests Disrupted the Connection Needed for Recovery | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-disruptive-testing/" />
 <meta property="og:url" content="https://fenkam.org/audit-disruptive-testing/" />
-<meta property="og:title" content="The Failure Test Shared the Management Failure Boundary" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-disruptive-testing-illustration.png" />
-<meta property="og:image:alt" content="An overload test and its management console share the same vulnerable power connection." />
+<meta property="og:title" content="AI Stress Tests Disrupted the Connection Needed for Recovery" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-disruptive-testing-analogy.png" />
+<meta property="og:image:alt" content="A generator load test trips the shared supply powering its measurement instruments." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Failure Test Shared the Management Failure Boundary</h1>
+    <h1>AI Stress Tests Disrupted the Connection Needed for Recovery</h1>
     <p class="article-deck">Requested memory-pressure exercises sometimes ran inside the management cgroup or ended without a recovered control path.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-disruptive-testing-illustration.png" alt="An overload test and its management console share the same vulnerable power connection." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-disruptive-testing-analogy.png" alt="A generator load test trips the shared supply powering its measurement instruments." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>An agent was asked to test behavior under memory pressure. It launched a stress process, then lost the management path needed to observe and clean up the test. In other runs, the stress child shared the management service’s cgroup. The exercise was authorized; its isolation and recovery were the concern.</p>
+<p class="real-life-analogy">Imagine testing an emergency generator by unplugging the circuit that also powers the test instruments. The load test starts, then the readings disappear just when they matter. A stress process that shares the management service’s resource boundary can disable the connection needed to observe, stop and recover from the experiment.</p>
 <h2>The stress process inherited the management cgroup</h2>
 <p>Seven entries placed the Python memory-stress child in the management service’s cgroup. That shows the test process was not isolated in its own service or scope at that point. It does not prove the management daemon itself was killed. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__LvEoL4t/agent/executor-commands.jsonl#L20">commands</a>.)</p>
 <p>Seven entries place the memory-hog child in the execution-management service cgroup.</p>

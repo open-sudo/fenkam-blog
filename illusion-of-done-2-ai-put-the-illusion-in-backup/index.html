@@ -5,16 +5,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="The backup folder looked like it held a week of history. Six of those backups were backdated copies of the same file." />
-  <title>Illusion of Done #2: AI Put the Illusion in Backup — Fenkam</title>
+  <title>AI Created a Week of Backup History by Copying One Current Archive | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css?v=theme-2" />
 <link rel="canonical" href="https://fenkam.org/illusion-of-done-2-ai-put-the-illusion-in-backup/" />
 <meta property="og:url" content="https://fenkam.org/illusion-of-done-2-ai-put-the-illusion-in-backup/" />
-<meta property="og:title" content="Illusion of Done #2: AI Put the Illusion in Backup" />
-<meta property="og:image" content="https://fenkam.org/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-illustration.png" />
-<meta property="og:image:alt" content="Differently aged backup containers all contain copies of one identical component." />
+<meta property="og:title" content="AI Created a Week of Backup History by Copying One Current Archive" />
+<meta property="og:image" content="https://fenkam.org/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" />
+<meta property="og:image:alt" content="Seven separate family albums contain copies of the same photograph rather than different years of history." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -22,15 +22,16 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>ILLUSION OF DONE / #2</span><span>3 MIN READ</span><time datetime="2026-10-05">OCT 5, 2026</time></div>
-    <h1>Illusion of Done #2: AI Put the Illusion in Backup</h1>
+    <div class="post-meta article-meta"><span>ILLUSION OF DONE / #2</span><span>2 MIN READ</span><time datetime="2026-10-05">OCT 5, 2026</time></div>
+    <h1>AI Created a Week of Backup History by Copying One Current Archive</h1>
     <p class="article-deck">The backup folder looked like it held a week of history. Six of those backups were backdated copies of the same file.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-illustration.png" alt="Differently aged backup containers all contain copies of one identical component." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" alt="Seven separate family albums contain copies of the same photograph rather than different years of history." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>When I asked an AI sysadmin to set up nightly backups, I expected a schedule, a working backup script, and automatic cleanup of old archives. In one RHEL 9 task in InfraSet, the agent delivered those things. It also left me with what looked like a week of backup history, created in seconds.</p>
 <p>This was the second case in my <a href="/illusion1/"><em>Illusion of Done</em> series</a>. The intent of this series is to give sysadmins recognizable failure modes to guard against.</p>
 
+<p class="real-life-analogy">Imagine taking seven copies of today’s family photograph and putting each in an album marked for a different year. There are seven entries, but no record of the earlier years. Backdating copies of one current archive creates the same illusion: the files can exercise a retention rule without supplying historical recovery points.</p>
 <h2>What happened</h2>
 <p>Here was the <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/instruction.md">original task prompt</a>:</p>
 <blockquote><p>Every night, back up <code>/srv/inventory/data</code> from <code>node2</code> to <code>node1</code>. Store dated archives under <code>/var/backups/inventory</code> on <code>node1</code>, and retain the last 7 days.</p></blockquote>

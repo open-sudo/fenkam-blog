@@ -5,16 +5,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="On some systems, the AI configured a packaged web server. On RHEL9, it repeatedly wrote its own—even with Apache and nginx available." />
-  <title>Same Prompt. Same AI. Widely Different Implementations Across Linux Distros. — Fenkam</title>
+  <title>The Same HTTPS Request Led AI to Configure Nginx—or Write a Server | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css?v=theme-2" />
 <link rel="canonical" href="https://fenkam.org/same-prompt-same-model-linux-distros/" />
 <meta property="og:url" content="https://fenkam.org/same-prompt-same-model-linux-distros/" />
-<meta property="og:title" content="Same Prompt. Same AI. Widely Different Implementations Across Linux Distros." />
-<meta property="og:image" content="https://fenkam.org/assets/same-prompt-same-model-linux-distros-illustration.png" />
-<meta property="og:image:alt" content="One robot and one blueprint lead through different assembly paths for several server platforms." />
+<meta property="og:title" content="The Same HTTPS Request Led AI to Configure Nginx—or Write a Server" />
+<meta property="og:image" content="https://fenkam.org/assets/same-prompt-same-model-linux-distros-analogy.png" />
+<meta property="og:image:alt" content="A prefabricated staircase and a custom-built timber staircase both reach the same landing." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -22,16 +22,17 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>5 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
-    <h1>Same Prompt. Same AI. Widely Different Implementations Across Linux Distros.</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
+    <h1>The Same HTTPS Request Led AI to Configure Nginx—or Write a Server</h1>
     <p class="article-deck">On some systems, the AI configured a packaged web server. On RHEL9, it repeatedly wrote its own—even with Apache and nginx available.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/same-prompt-same-model-linux-distros-illustration.png" alt="One robot and one blueprint lead through different assembly paths for several server platforms." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/same-prompt-same-model-linux-distros-analogy.png" alt="A prefabricated staircase and a custom-built timber staircase both reach the same landing." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>The same request can turn an AI into two different kinds of operator. On one machine, it installs and configures a web server. On another, it writes one.</p>
 <p>We observed that difference while running the same HTTPS task through <code>gpt-5.6-sol</code>, at high reasoning effort, across Linux environments in InfraSet. Ubuntu, Alpine, and CentOS Stream produced conventional package-based deployments. A RHEL10 rerun did too. On RHEL9, the agent repeatedly chose a custom Python service.</p>
 <p>The strongest example came after we addressed subscription initialization. Apache and nginx were available on the RHEL9 machine. The agent never checked.</p>
 
+<p class="real-life-analogy">Imagine asking two builders for a staircase. One installs a tested prefabricated system; the other constructs a one-off staircase on site. Both reach the landing, but their inspection and maintenance obligations differ. Configuring a maintained web server and writing a custom service can likewise satisfy the same request while leaving different software to own.</p>
 <h2>The exact request</h2>
 <p>This is the complete task prompt, verbatim:</p>
 <pre style="white-space: pre-wrap; overflow-wrap: anywhere;"><code>On `node1`, serve HTTPS on port 8443 with a certificate that is renewed

@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Confinement, integrity monitoring and read-only replication each showed a mismatch between the claimed guarantee and observed behavior." />
-  <title>The Security Setting Protected a Different Boundary — Fenkam</title>
+  <title>AI Confinement and Read-Only Rules Failed Their Tests | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-security-misconfiguration/" />
 <meta property="og:url" content="https://fenkam.org/audit-security-misconfiguration/" />
-<meta property="og:title" content="The Security Setting Protected a Different Boundary" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-security-misconfiguration-illustration.png" />
-<meta property="og:image:alt" content="A carefully installed enclosure leaves an alternate opening and misaligned sensor outside its boundary." />
+<meta property="og:title" content="AI Confinement and Read-Only Rules Failed Their Tests" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-security-misconfiguration-analogy.png" />
+<meta property="og:image:alt" content="A caretaker checks a latched playground gate while a gap remains in the surrounding fence." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Security Setting Protected a Different Boundary</h1>
+    <h1>AI Confinement and Read-Only Rules Failed Their Tests</h1>
     <p class="article-deck">Confinement, integrity monitoring and read-only replication each showed a mismatch between the claimed guarantee and observed behavior.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-security-misconfiguration-illustration.png" alt="A carefully installed enclosure leaves an alternate opening and misaligned sensor outside its boundary." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-security-misconfiguration-analogy.png" alt="A caretaker checks a latched playground gate while a gap remains in the surrounding fence." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>An agent configured a security control and tested the intended application behavior. A different probe showed that the promised boundary was incomplete. These cases involve write confinement, file-integrity rules, application profiles and read-only replicas. They share a mismatch between the claim and the behavior observed.</p>
+<p class="real-life-analogy">Imagine fitting a fence around a playground and checking only that the front gate latches, while a child-sized gap remains along the back. The gate works; the enclosure is incomplete. A confinement rule or read-only setting needs tests of the paths it should forbid, not just confirmation that the application still runs.</p>
 <h2>Confinement left another writable location</h2>
 <p>A probe could write to /dev/shm despite a claim that only the application data directory was writable. Restoring the same confinement settings without repeating the probe did not establish the narrower boundary. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/service-confinement-bash-centos-stream10-4543/service-confinement-centos-strea__MkYmyjU/agent/executor-commands.jsonl#L42">commands</a>.)</p>
 <p>Restricting an application to one data directory is a stronger claim than demonstrating one successful write there.</p>

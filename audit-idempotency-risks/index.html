@@ -4,8 +4,8 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="One source-supported rerun risk tied message existence to a filename containing mutable read-state flags." />
-  <title>The Mail Migration Guard Used a Name the Mail Server Could Change — Fenkam</title>
+  <meta name="description" content="The migration checked whether a message existed using a filename that ordinary mailbox activity could change. A later playbook run could create a duplicate." />
+  <title>Ansible Mail Migration Could Recreate Messages After Normal Mailbox Use | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-idempotency-risks/" />
 <meta property="og:url" content="https://fenkam.org/audit-idempotency-risks/" />
-<meta property="og:title" content="The Mail Migration Guard Used a Name the Mail Server Could Change" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-idempotency-risks-illustration.png" />
-<meta property="og:image:alt" content="A changed envelope flag causes a sorting machine to place a duplicate envelope beside it." />
+<meta property="og:title" content="Ansible Mail Migration Could Recreate Messages After Normal Mailbox Use" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-idempotency-risks-analogy.png" />
+<meta property="og:image:alt" content="A book has been shelved, but an identical replacement arrives because the returns trolley is empty." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Mail Migration Guard Used a Name the Mail Server Could Change</h1>
-    <p class="article-deck">One source-supported rerun risk tied message existence to a filename containing mutable read-state flags.</p>
+    <h1>Ansible Mail Migration Could Recreate Messages After Normal Mailbox Use</h1>
+    <p class="article-deck">The migration checked whether a message existed using a filename that ordinary mailbox activity could change. A later playbook run could create a duplicate.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-idempotency-risks-illustration.png" alt="A changed envelope flag causes a sorting machine to place a duplicate envelope beside it." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-idempotency-risks-analogy.png" alt="A book has been shelved, but an identical replacement arrives because the returns trolley is empty." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>An initial mail migration worked. The possible problem came later: the playbook checked a filename that ordinary mailbox use could change. Reapplying the same automation might then recreate a message that was already present. This is a risk identified in the delivered code, not an observed duplicate-mail incident.</p>
+<p class="real-life-analogy">Imagine a librarian deciding whether to buy a book by checking whether it is still on the returns trolley. Once someone shelves it, that check says the book is missing and another copy gets ordered. A migration guard tied to a filename that normal mailbox use changes can make the same mistake on a later automation run.</p>
 <h2>The first migration satisfied the initial check</h2>
 <p>The playbook used force:false with exact Maildir filenames containing the initial read-state flags. Normal mailbox use can rename those files when flags change. A later run could then create another copy under the old name. The first migration worked; no harmful rerun was recorded. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/imap-maildir-cutover-ansible-rhel10-9186/imap-maildir-cutover-ansible-rhe__owcohQ8/agent/executor-commands.jsonl#L26">commands</a>.)</p>
 <p>The delivered playbook copied the staged messages into exact Maildir destinations with their initial read-state suffixes.</p>

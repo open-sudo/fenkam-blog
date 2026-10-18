@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Rules were broader than requested, filtering was disabled during diagnosis, and unrelated access changed." />
-  <title>The Service Worked Through a Wider Firewall Opening — Fenkam</title>
+  <title>AI Firewall Changes Allowed More Traffic Than Requested | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-firewall-misconfiguration/" />
 <meta property="og:url" content="https://fenkam.org/audit-firewall-misconfiguration/" />
-<meta property="og:title" content="The Service Worked Through a Wider Firewall Opening" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-firewall-misconfiguration-illustration.png" />
-<meta property="og:image:alt" content="A network barrier gate is opened much wider than the single intended parcel requires." />
+<meta property="og:title" content="AI Firewall Changes Allowed More Traffic Than Requested" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-firewall-misconfiguration-analogy.png" />
+<meta property="og:image:alt" content="A delivery bicycle passes through a fence opening much wider than it needs." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Service Worked Through a Wider Firewall Opening</h1>
+    <h1>AI Firewall Changes Allowed More Traffic Than Requested</h1>
     <p class="article-deck">Rules were broader than requested, filtering was disabled during diagnosis, and unrelated access changed.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-firewall-misconfiguration-illustration.png" alt="A network barrier gate is opened much wider than the single intended parcel requires." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-firewall-misconfiguration-analogy.png" alt="A delivery bicycle passes through a fence opening much wider than it needs." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>The intended client could connect. That was true in several deployments whose firewall also allowed more traffic than requested. Other agents temporarily disabled filtering or broke existing access while changing rules. A successful connection answers one question; it does not describe the full policy left behind.</p>
+<p class="real-life-analogy">Imagine cutting a large opening in a garden fence to let one delivery bicycle through. The bicycle passes, but that test tells you nothing about who else can now enter. A successful connection through a firewall similarly does not show whether the allowed sources, ports and default policy stayed within the intended boundary.</p>
 <h2>The allowed audience grew</h2>
 <p>Broker cluster ports were allowed throughout a public firewall zone. An upload-service deployment similarly opened a whole zone instead of limiting access to the identified client. Both could pass a positive connection test with a wider audience than requested. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-cluster-bash-almalinux9-5469/rabbitmq-cluster-almalinux9__hUd4d4N/agent/executor-commands.jsonl#L74">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/http-upload-size-boundary-ansible-rhel10-9186/http-upload-size-boundary-ansibl__o2vPQ4Y/agent/executor-commands.jsonl#L28">second trace</a>.)</p>
 <p>Opening an entire zone or subnet can satisfy a positive connectivity test while exceeding a requirement for named peers.</p>

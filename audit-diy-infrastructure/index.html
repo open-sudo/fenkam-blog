@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Custom HTTP proxies and DNS forwarders met narrow demonstrations while leaving production behavior incomplete." />
-  <title>The Generated Infrastructure Implemented Only Part of the Protocol — Fenkam</title>
+  <title>AI Built Proxies That Passed Simple Tests but Missed Protocol Behavior | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-diy-infrastructure/" />
 <meta property="og:url" content="https://fenkam.org/audit-diy-infrastructure/" />
-<meta property="og:title" content="The Generated Infrastructure Implemented Only Part of the Protocol" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-diy-infrastructure-illustration.png" />
-<meta property="og:image:alt" content="An improvised bridge between server racks carries one cargo shape but blocks others." />
+<meta property="og:title" content="AI Built Proxies That Passed Simple Tests but Missed Protocol Behavior" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-diy-infrastructure-analogy.png" />
+<meta property="og:image:alt" content="A homemade postal chute delivers one envelope while parcels and other mail cannot pass through." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Generated Infrastructure Implemented Only Part of the Protocol</h1>
+    <h1>AI Built Proxies That Passed Simple Tests but Missed Protocol Behavior</h1>
     <p class="article-deck">Custom HTTP proxies and DNS forwarders met narrow demonstrations while leaving production behavior incomplete.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-diy-infrastructure-illustration.png" alt="An improvised bridge between server racks carries one cargo shape but blocks others." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-diy-infrastructure-analogy.png" alt="A homemade postal chute delivers one envelope while parcels and other mail cannot pass through." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>A generated proxy forwarded the demonstration request, but did not implement every behavior a client might expect from a load balancer. A generated DNS forwarder resolved an internal name while omitting important validation. The narrow demonstration and the completeness of the implementation were different questions.</p>
+<p class="real-life-analogy">Imagine replacing a town’s postal sorting service with a homemade chute that delivers one standard envelope. The demonstration succeeds, but parcels, signed deliveries and returned mail still need handling. Generated proxies and forwarders can have the same gap: a simple request works while less visible protocol obligations remain unimplemented.</p>
 <h2>HTTP proxying narrowed the supported behavior</h2>
 <p>Two generated HTTP proxies supported only GET and HEAD and buffered entire response bodies. One also turned HEAD into an upstream GET and dropped end-user authorization or cookie headers. A simple successful GET did not exercise those behaviors. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__J5TJCVt/agent/executor-commands.jsonl#L28">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel7-5782/load-balanced-web-tier-rhel7__xUo49Rd/agent/executor-commands.jsonl#L30">second trace</a>.)</p>
 <p>A proxy that handles the demonstration GET can still omit other methods, change HEAD semantics or lose authorization and cookie headers.</p>

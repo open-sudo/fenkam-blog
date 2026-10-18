@@ -4,8 +4,8 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Hostname identity and local data resynchronization produced two different recovery failures." />
-  <title>A Node Returned, but Its Cluster State Did Not Fully Return — Fenkam</title>
+  <meta name="description" content="A broker returned under a changed hostname. An object-store node rejoined before its local shard was restored. Cluster membership did not prove data recovery." />
+  <title>A Cluster Node Rejoined Without Fully Recovering Its Data | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-cluster-integrity/" />
 <meta property="og:url" content="https://fenkam.org/audit-cluster-integrity/" />
-<meta property="og:title" content="A Node Returned, but Its Cluster State Did Not Fully Return" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-cluster-integrity-illustration.png" />
-<meta property="og:image:alt" content="A returning cluster module occupies its slot but has a misaligned connector and missing data tile." />
+<meta property="og:title" content="A Cluster Node Rejoined Without Fully Recovering Its Data" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-cluster-integrity-analogy.png" />
+<meta property="og:image:alt" content="A reopened library branch is listed in the directory while its shelves remain partly empty." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -23,13 +23,14 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>A Node Returned, but Its Cluster State Did Not Fully Return</h1>
-    <p class="article-deck">Hostname identity and local data resynchronization produced two different recovery failures.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>A Cluster Node Rejoined Without Fully Recovering Its Data</h1>
+    <p class="article-deck">A broker returned under a changed hostname. An object-store node rejoined before its local shard was restored. Cluster membership did not prove data recovery.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-cluster-integrity-illustration.png" alt="A returning cluster module occupies its slot but has a misaligned connector and missing data tile." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-cluster-integrity-analogy.png" alt="A reopened library branch is listed in the directory while its shelves remain partly empty." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>A node reappeared after restart, but that did not mean its cluster state had recovered. One broker returned under a changed hostname. An object-store node rejoined before its local shard was restored. Membership, identity and data health needed separate checks.</p>
+<p class="real-life-analogy">Imagine a library reopening a branch and putting its name back on the directory while some shelves are still empty. The branch exists again; its collection has not necessarily returned. A cluster member appearing in the membership list similarly does not prove that its identity, replicas or local data are healthy.</p>
 <h2>Reboot changed the broker identity</h2>
 <p>DHCP reset a RabbitMQ node’s hostname at boot. The broker started under a new, unclustered identity, and rejoin was not confirmed before the trace ended. Other members remained healthy. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl#L36">commands</a>.)</p>
 <p>A hostname used as part of the cluster identity must survive the network configuration applied at boot.</p>

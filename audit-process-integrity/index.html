@@ -4,8 +4,8 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Generated control scripts confused a process number, a running service and ownership of the resource to stop." />
-  <title>The PID Existed. Was It the Right Service? — Fenkam</title>
+  <meta name="description" content="Service scripts treated a live process number or a successful launch as proof that the intended service was ready for clients." />
+  <title>AI Service Scripts Mistook Process IDs for Working Services | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-process-integrity/" />
 <meta property="og:url" content="https://fenkam.org/audit-process-integrity/" />
-<meta property="og:title" content="The PID Existed. Was It the Right Service?" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-process-integrity-illustration.png" />
-<meta property="og:image:alt" content="A loose identity tag sits on a different motor from the machine a control lever is meant to stop." />
+<meta property="og:title" content="AI Service Scripts Mistook Process IDs for Working Services" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-process-integrity-analogy.png" />
+<meta property="og:image:alt" content="A restaurant signals that it is open while only a cleaner is inside and the kitchen is unprepared." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The PID Existed. Was It the Right Service?</h1>
-    <p class="article-deck">Generated control scripts confused a process number, a running service and ownership of the resource to stop.</p>
+    <h1>AI Service Scripts Mistook Process IDs for Working Services</h1>
+    <p class="article-deck">Service scripts treated a live process number or a successful launch as proof that the intended service was ready for clients.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-process-integrity-illustration.png" alt="A loose identity tag sits on a different motor from the machine a control lever is meant to stop." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-process-integrity-analogy.png" alt="A restaurant signals that it is open while only a cleaner is inside and the kitchen is unprepared." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>An init script found a live PID and called the service running. Another start script reported success before the application bound its port. Process existence, process identity and readiness are different things. The control logic needs to know which one it has actually established.</p>
+<p class="real-life-analogy">Imagine a restaurant marking itself open because someone is inside, even though the person is the cleaner and the kitchen is cold. Presence does not establish identity or readiness. A live PID can belong to another process, and a launched process may still fail before it binds the port clients need.</p>
 <h2>A live PID stood in for service identity</h2>
 <p>An init script trusted a stored PID and kill -0 without matching the expected application, start identity or listener. The code supported a mistaken-identity risk; the test did not demonstrate every possible PID-reuse failure. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/local-package-repository-bash-ubuntu7-8220/local-package-repository-ubuntu7__MMKawVy/agent/executor-commands.jsonl#L8">commands</a>.)</p>
 <p>A PID file and a successful existence check do not establish the expected executable, process start identity or ownership of the listening socket.</p>

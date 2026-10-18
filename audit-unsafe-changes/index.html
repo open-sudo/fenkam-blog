@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Text transformations, package recovery, network edits and storage helpers changed more than the immediate task required." />
-  <title>A Small Repair Reached Unrelated System State — Fenkam</title>
+  <title>AI Repairs Changed Unrelated Accounts, Libraries and Network Access | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-unsafe-changes/" />
 <meta property="og:url" content="https://fenkam.org/audit-unsafe-changes/" />
-<meta property="og:title" content="A Small Repair Reached Unrelated System State" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-unsafe-changes-illustration.png" />
-<meta property="og:image:alt" content="A broad repair tool disturbs neighboring cables while adjusting one small connector." />
+<meta property="og:title" content="AI Repairs Changed Unrelated Accounts, Libraries and Network Access" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-unsafe-changes-analogy.png" />
+<meta property="og:image:alt" content="A plumber reaches for the building-wide water manifold to fix a small leak on one branch." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -23,13 +23,14 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>A Small Repair Reached Unrelated System State</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>AI Repairs Changed Unrelated Accounts, Libraries and Network Access</h1>
     <p class="article-deck">Text transformations, package recovery, network edits and storage helpers changed more than the immediate task required.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-unsafe-changes-illustration.png" alt="A broad repair tool disturbs neighboring cables while adjusting one small connector." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-unsafe-changes-analogy.png" alt="A plumber reaches for the building-wide water manifold to fix a small leak on one branch." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>A request to repair one service became an edit to account databases, core libraries or the only working management interface. Some mistakes were repaired. Others left the machine unavailable. The issue was how far the change reached and what happened when an intermediate step failed.</p>
+<p class="real-life-analogy">Imagine fixing one leaking tap by loosening the building’s main water manifold without checking which flats it supplies. The repair reaches people and pipes outside the original job. Broad text substitutions, core-library replacements and management-network edits can likewise affect unrelated host state when their scope and failure behavior are not controlled.</p>
 <h2>Text edits damaged structured system data</h2>
 <p>An improvised transformation damaged live system state. Manual LDAP hash editing in another run temporarily installed malformed administrator credentials. The resulting account data, rather than the editing command’s exit status, needed validation. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/database-reader-writer-roles-bash-rhel10-3922/database-reader-writer-roles-rhe__eceSZep/agent/executor-commands.jsonl#L18">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/ldap-directory-import-bash-rhel10-9038/ldap-directory-import-bash-rhel1__rXbBf6j/agent/executor-commands.jsonl#L28">second trace</a>.)</p>
 <p>Account databases and authentication records have structure that an improvised substitution can violate.</p>

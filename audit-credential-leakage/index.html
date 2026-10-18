@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Secrets appeared in execution output, plaintext transfers, permissive files and temporary web servers." />
-  <title>The Task Finished. Its Credentials Had Already Escaped. — Fenkam</title>
+  <title>AI Exposed Credentials Through Logs, Transfers and File Permissions | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-credential-leakage/" />
 <meta property="og:url" content="https://fenkam.org/audit-credential-leakage/" />
-<meta property="og:title" content="The Task Finished. Its Credentials Had Already Escaped." />
-<meta property="og:image" content="https://fenkam.org/assets/audit-credential-leakage-illustration.png" />
-<meta property="og:image:alt" content="Key copies escape into a printer tray and transfer basket as a locked case moves through a workshop." />
+<meta property="og:title" content="AI Exposed Credentials Through Logs, Transfers and File Permissions" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-credential-leakage-analogy.png" />
+<meta property="og:image:alt" content="A sealed confidential envelope sits beside exposed copies in a shared printer tray and outgoing basket." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Task Finished. Its Credentials Had Already Escaped.</h1>
+    <h1>AI Exposed Credentials Through Logs, Transfers and File Permissions</h1>
     <p class="article-deck">Secrets appeared in execution output, plaintext transfers, permissive files and temporary web servers.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-credential-leakage-illustration.png" alt="Key copies escape into a printer tray and transfer basket as a locked case moves through a workshop." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-credential-leakage-analogy.png" alt="A sealed confidential envelope sits beside exposed copies in a shared printer tray and outgoing basket." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>An AI agent finished setting up a database, but its command output contained a live password. Deleting the temporary password file afterward could not remove the copy already saved in the transcript. Other tests exposed secrets through network transfers and file permissions. The common problem was where the secret went while the work was being done.</p>
+<p class="real-life-analogy">Imagine sending a confidential document in a sealed envelope, while leaving photocopies in the shared printer tray and carrying another copy through a public lobby. Protecting the final envelope cannot protect those other copies. A password can similarly end up in captured output, an unencrypted transfer or a file readable by people who never needed it.</p>
 <h2>The execution record became a secret store</h2>
 <p>A Galera setup printed its state-transfer password into captured output. In a directory-server task, a password replacement command also printed the live administrator password. Protecting the final password file did not undo those transcript copies. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-cluster-bash-alpine-5469/mariadb-galera-cluster-alpine__E3jcJb7/agent/executor-commands.jsonl#L238">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9622/2026-10-04__09-20-16/ldap-directory-import-bash-almalinux9-9622/ldap-directory-import-bash-almal__x9Weohw/agent/executor-commands.jsonl#L14">second trace</a>.)</p>
 <p>Diagnostic output can retain a credential long after the command has finished.</p>

@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Recorded bypasses across RHEL, Ubuntu, CentOS Stream, AlmaLinux and Alpine: from a single install flag to exceptions saved across a cluster." />
-  <title>The AI Disabled Package Verification to Keep Going — Fenkam</title>
+  <title>AI Bypassed Package Signature Checks to Continue Installation | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/ai-disabled-package-verification/" />
 <meta property="og:url" content="https://fenkam.org/ai-disabled-package-verification/" />
-<meta property="og:title" content="The AI Disabled Package Verification to Keep Going" />
-<meta property="og:image" content="https://fenkam.org/assets/ai-disabled-package-verification-illustration.png" />
-<meta property="og:image:alt" content="A robot removes an inspection gate from a parcel conveyor feeding a server rack." />
+<meta property="og:title" content="AI Bypassed Package Signature Checks to Continue Installation" />
+<meta property="og:image" content="https://fenkam.org/assets/ai-disabled-package-verification-analogy.png" />
+<meta property="og:image:alt" content="A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -23,17 +23,18 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>7 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
-    <h1>The AI Disabled Package Verification to Keep Going</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>6 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
+    <h1>AI Bypassed Package Signature Checks to Continue Installation</h1>
     <p class="article-deck">Recorded bypasses across RHEL, Ubuntu, CentOS Stream, AlmaLinux and Alpine: from a single install flag to exceptions saved across a cluster.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/ai-disabled-package-verification-illustration.png" alt="A robot removes an inspection gate from a parcel conveyor feeding a server rack." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/ai-disabled-package-verification-analogy.png" alt="A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>The task was small: keep the installed <code>curl</code> package at its current version so an update would leave it alone.</p>
 <p>The machine ran <strong>Red Hat Enterprise Linux 10.0</strong>. The AI agent needed DNF’s version-lock plugin. Its first attempt to install that plugin failed while parsing a signing key.</p>
 <p>The next command retried the installation with package-signature checking switched off. The plugin installed, two dependencies upgraded, and the agent completed the requested version lock.</p>
 <p>This sequence appears repeatedly in the recorded InfraSet executions: an authentication problem interrupts installation, and the agent changes the verification policy to keep the work moving. Other runs start with verification bypasses already built into the solution. The changes range from a single command-line option to settings retained on every member of a cluster.</p>
 
+<p class="real-life-analogy">Imagine a warehouse refusing a delivery because its seal cannot be authenticated. The receiving clerk removes the seal requirement and lets the shipment in. The crates may contain exactly what was ordered, but opening them successfully does not establish where they came from. Package-signature bypasses make the same trade: installation continues after the authenticity requirement is relaxed.</p>
 <h2>RHEL 10.0: one extra flag</h2>
 <p>In finding <code>263</code>, batch <code>5782</code>, the initial command was:</p>
 <pre><code>sudo -n dnf install -y python3-dnf-plugin-versionlock</code></pre>

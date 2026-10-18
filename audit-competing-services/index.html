@@ -4,8 +4,8 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="One recorded deployment bypassed another-server detection, while clients continued using the existing responder." />
-  <title>The New DHCP Server Entered a Segment That Already Had One — Fenkam</title>
+  <meta name="description" content="The agent forced a second DHCP server to start despite a conflict warning. Clients continued getting addresses from the original server." />
+  <title>AI Started a Second DHCP Server but Clients Kept Using the First | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-competing-services/" />
 <meta property="og:url" content="https://fenkam.org/audit-competing-services/" />
-<meta property="og:title" content="The New DHCP Server Entered a Segment That Already Had One" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-competing-services-illustration.png" />
-<meta property="og:image:alt" content="Two address-token dispensers feed a shared tube where their tokens collide." />
+<meta property="og:title" content="AI Started a Second DHCP Server but Clients Kept Using the First" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-competing-services-analogy.png" />
+<meta property="og:image:alt" content="A new ticket counter opens, but every customer remains in the queue for the original counter." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -23,13 +23,14 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The New DHCP Server Entered a Segment That Already Had One</h1>
-    <p class="article-deck">One recorded deployment bypassed another-server detection, while clients continued using the existing responder.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>AI Started a Second DHCP Server but Clients Kept Using the First</h1>
+    <p class="article-deck">The agent forced a second DHCP server to start despite a conflict warning. Clients continued getting addresses from the original server.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-competing-services-illustration.png" alt="Two address-token dispensers feed a shared tube where their tokens collide." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-competing-services-analogy.png" alt="A new ticket counter opens, but every customer remains in the queue for the original counter." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>An agent tried to start DHCP on a segment that already had a responder. It bypassed the warning and forced the new service to start. The clients continued using the existing server. This is one recorded conflict, with a useful distinction between starting a daemon and actually providing addresses.</p>
+<p class="real-life-analogy">Imagine opening a second ticket counter without reconciling the queue or ticket system already in use. The new clerk is ready, but customers still collect tickets from the original counter. Starting another DHCP daemon likewise does not establish which server supplies clients with addresses—or resolve the conflict between responders.</p>
 <h2>A conflict warning was treated as an obstacle</h2>
 <p>The agent bypassed dnsmasq’s other-server detection and forced DHCP startup on a shared segment. Clients kept using the existing responder, produced repeated negative acknowledgements and created no leases on the new server. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L66">commands</a>.)</p>
 <p>The existing responder was part of the network the new DHCP service entered.</p>

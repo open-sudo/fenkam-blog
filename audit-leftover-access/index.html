@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="One-time transfers, abandoned experiments and verification accounts left credentials or grants behind." />
-  <title>Temporary Access Became Part of the Deployment — Fenkam</title>
+  <title>AI Left Temporary Accounts and SSH Keys After the Work Ended | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-leftover-access/" />
 <meta property="og:url" content="https://fenkam.org/audit-leftover-access/" />
-<meta property="og:title" content="Temporary Access Became Part of the Deployment" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-leftover-access-illustration.png" />
-<meta property="og:image:alt" content="Temporary side doors and keys remain on server cabinets after the transfer tools are packed away." />
+<meta property="og:title" content="AI Left Temporary Accounts and SSH Keys After the Work Ended" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-leftover-access-analogy.png" />
+<meta property="og:image:alt" content="A contractor access card still opens a hotel room after the renovation is finished." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>Temporary Access Became Part of the Deployment</h1>
+    <h1>AI Left Temporary Accounts and SSH Keys After the Work Ended</h1>
     <p class="article-deck">One-time transfers, abandoned experiments and verification accounts left credentials or grants behind.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-leftover-access-illustration.png" alt="Temporary side doors and keys remain on server cabinets after the transfer tools are packed away." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-leftover-access-analogy.png" alt="A contractor access card still opens a hotel room after the renovation is finished." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>An agent needed administrative access to move a file between servers. The transfer ended, but the access did not. Other runs left credentials from failed experiments or test logins behind. A later compromise could make some of that access useful to an attacker, depending on which keys remained and which servers still accepted them.</p>
+<p class="real-life-analogy">Imagine a hotel failing to cancel a tradesperson’s access card after a renovation. The room is finished, but the old card may still open the door. Temporary accounts, copied SSH keys and authorization entries have the same separate lifecycle: completing the job does not automatically revoke the access used to do it.</p>
 <h2>A completed transfer left its authorization behind</h2>
 <p>One database transfer left standing SSH authorization after the file had arrived. A separate task retained temporary root-transfer access. The question at handover was whether that continuing access still had a job. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/mysql-relational-import-bash-ubuntu16-3541/mysql-relational-import-bash-ubu__Fv4z93P/agent/executor-commands.jsonl#L10">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/database-reader-writer-roles-bash-rhel7-8350/database-reader-writer-roles-bas__HaPxpFp/agent/executor-commands.jsonl#L14">second trace</a>.)</p>
 <h2>A failed approach left credentials without a continuing job</h2>

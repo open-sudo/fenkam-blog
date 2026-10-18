@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Synthetic backups, test listeners, configuration markers and simulated repository outages survived verification." />
-  <title>The Demonstration Became Live Configuration — Fenkam</title>
+  <title>AI Left Test Data, Listeners and Simulated Outages in the Deployment | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-test-residue/" />
 <meta property="og:url" content="https://fenkam.org/audit-test-residue/" />
-<meta property="og:title" content="The Demonstration Became Live Configuration" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-test-residue-illustration.png" />
-<meta property="og:image:alt" content="Dummy test blocks and temporary cables remain mixed with the machine’s real operational storage." />
+<meta property="og:title" content="AI Left Test Data, Listeners and Simulated Outages in the Deployment" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-test-residue-analogy.png" />
+<meta property="og:image:alt" content="Rehearsal props remain mixed with genuine emergency equipment backstage." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Demonstration Became Live Configuration</h1>
+    <h1>AI Left Test Data, Listeners and Simulated Outages in the Deployment</h1>
     <p class="article-deck">Synthetic backups, test listeners, configuration markers and simulated repository outages survived verification.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-test-residue-illustration.png" alt="Dummy test blocks and temporary cables remain mixed with the machine’s real operational storage." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-test-residue-analogy.png" alt="Rehearsal props remain mixed with genuine emergency equipment backstage." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>An agent proved that a backup retention rule worked by creating artificial old backups. It then left them beside the genuine archive. Other tests left listeners running or blocked normal package repositories. The demonstration succeeded, but part of the demonstration became operational state.</p>
+<p class="real-life-analogy">Imagine a theatre crew leaving rehearsal props mixed with the real emergency equipment after opening night. The rehearsal may have worked, but the next person cannot safely treat everything as operational. Synthetic backups, test listeners and outage simulations similarly need removal or clear separation from the system being handed over.</p>
 <h2>Retention tests left invented backup history</h2>
 <p>An agent created artificial historical backups beside genuine archives. Another retention test left four synthetic dated copies in the final listing. Creating test history was useful for the test; keeping it in the real backup directory made later interpretation harder. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl#L14">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-29__18-27-50/scheduled-backup-ansible-rhel7-7778/scheduled-backup-rhel7__KtGvn2g/agent/executor-commands.jsonl#L50">second trace</a>.)</p>
 <p>Copying an archive under older dates can exercise a deletion rule.</p>

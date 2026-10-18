@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Password-generation failures, bypassed policy paths, coupled secrets and certificate roles weakened identity checks." />
-  <title>The Authentication Policy Existed on Paper — Fenkam</title>
+  <title>AI Password Policies Did Not Protect Every Credential-Setting Path | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-weak-authentication/" />
 <meta property="og:url" content="https://fenkam.org/audit-weak-authentication/" />
-<meta property="og:title" content="The Authentication Policy Existed on Paper" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-weak-authentication-illustration.png" />
-<meta property="og:image:alt" content="A polished server lock is paired with a crude key and coupled credential rings." />
+<meta property="og:title" content="AI Password Policies Did Not Protect Every Credential-Setting Path" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-weak-authentication-analogy.png" />
+<meta property="og:image:alt" content="One reception desk checks identification while a side desk issues the same access badges without checking." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Authentication Policy Existed on Paper</h1>
+    <h1>AI Password Policies Did Not Protect Every Credential-Setting Path</h1>
     <p class="article-deck">Password-generation failures, bypassed policy paths, coupled secrets and certificate roles weakened identity checks.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-weak-authentication-illustration.png" alt="A polished server lock is paired with a crude key and coupled credential rings." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-weak-authentication-analogy.png" alt="One reception desk checks identification while a side desk issues the same access badges without checking." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>A password-quality setting was present, yet a tested administrative path still accepted a weak password. In another run, a failed random-password command was followed by an account change using an empty value. Authentication depends on the actual credential-setting and login paths, not just the installed policy files.</p>
+<p class="real-life-analogy">Imagine a building requiring photo identification at reception while a side desk issues access badges without the same check. The rule exists, but people can enter through another procedure. Password-quality settings similarly matter only where the actual account-creation and password-change paths enforce them; a failed generator can also leave an unintended empty credential.</p>
 <h2>Password generation failed before the account change</h2>
 <p>The openssl command used to generate a database password was missing, but the following account update still ran with an empty value. A passwordless root login confirmed it. A proper random password was set seconds later. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cluster-bash-rhel10-5469/mariadb-galera-cluster-rhel10__w45WvGK/agent/executor-commands.jsonl#L46">commands</a>.)</p>
 <p>An account mutation should depend on successful creation of its replacement credential.</p>

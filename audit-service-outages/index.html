@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Storage reboots, recovery attempts, failed management services and credential cleanup ended without a confirmed usable deployment." />
-  <title>The Last Observation Was an Unreachable Server — Fenkam</title>
+  <title>Some AI Administration Runs Ended Without a Reachable Server | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-service-outages/" />
 <meta property="og:url" content="https://fenkam.org/audit-service-outages/" />
-<meta property="og:title" content="The Last Observation Was an Unreachable Server" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-service-outages-illustration.png" />
-<meta property="og:image:alt" content="A robot cannot inspect a dark server cabinet through its disconnected management path." />
+<meta property="og:title" content="Some AI Administration Runs Ended Without a Reachable Server" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-service-outages-analogy.png" />
+<meta property="og:image:alt" content="A resident waits at a lift that remains unavailable after maintenance." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -23,13 +23,14 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Last Observation Was an Unreachable Server</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>Some AI Administration Runs Ended Without a Reachable Server</h1>
     <p class="article-deck">Storage reboots, recovery attempts, failed management services and credential cleanup ended without a confirmed usable deployment.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-service-outages-illustration.png" alt="A robot cannot inspect a dark server cabinet through its disconnected management path." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-service-outages-analogy.png" alt="A resident waits at a lift that remains unavailable after maintenance." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>An agent rebooted a server after storage work. The server never became reachable again during the recorded test. That is an unresolved operational failure, but it does not prove the storage commands caused it. These cases separate what was last observed from explanations the available logs cannot establish.</p>
+<p class="real-life-analogy">Imagine a lift being taken through maintenance, then remaining unavailable at handover. An earlier successful ride does not establish that passengers can use it now. An unreachable server at the end of a run is similarly an unresolved outcome. Establishing which maintenance step caused it requires evidence beyond the final loss of contact.</p>
 <h2>Storage work was followed by an unrecovered reboot</h2>
 <p>A storage task ended with the node unreachable after reboot. In another run, an initial startup-ordering cycle was corrected, but the machine still did not return. Without boot or console evidence, the final outage was clear and its cause remained unproven. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/2935/2026-10-04__15-36-11/filesystem-snapshot-rollback-bash-rhel10-2935/filesystem-snapshot-rollback-bas__2eNWsmK/agent/executor-commands.jsonl#L10">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/lvm-extend-bash-rhel10-9038/lvm-extend-bash-rhel10-9038__4K2qkie/agent/executor-commands.jsonl#L14">second trace</a>.)</p>
 <p>Several tasks introduced or changed loop-backed storage and startup dependencies before reboot.</p>

@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Verification grants, broad SSH access, troubleshooting permissions and daemon identities exceeded their continuing roles." />
-  <title>The Deployment Kept More Authority Than It Needed — Fenkam</title>
+  <title>AI Granted Service Accounts More Access Than Their Jobs Needed | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-excessive-privileges/" />
 <meta property="og:url" content="https://fenkam.org/audit-excessive-privileges/" />
-<meta property="og:title" content="The Deployment Kept More Authority Than It Needed" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-excessive-privileges-illustration.png" />
-<meta property="og:image:alt" content="A single-purpose appliance receives a ring of keys to many unrelated cabinets." />
+<meta property="og:title" content="AI Granted Service Accounts More Access Than Their Jobs Needed" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-excessive-privileges-analogy.png" />
+<meta property="og:image:alt" content="A gardener carrying a watering can also holds keys that open the house and its safe." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Deployment Kept More Authority Than It Needed</h1>
+    <h1>AI Granted Service Accounts More Access Than Their Jobs Needed</h1>
     <p class="article-deck">Verification grants, broad SSH access, troubleshooting permissions and daemon identities exceeded their continuing roles.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-excessive-privileges-illustration.png" alt="A single-purpose appliance receives a ring of keys to many unrelated cabinets." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-excessive-privileges-analogy.png" alt="A gardener carrying a watering can also holds keys that open the house and its safe." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>A test account needed one database operation and received access to every database. A synchronization key needed to read one file and retained unrestricted SSH command access. The continuing job could be legitimate while the authority granted to do it was much broader than necessary.</p>
+<p class="real-life-analogy">Imagine giving a gardener access to the house safe so they can water the plants. The gardening may be legitimate; the extra authority is unnecessary. A database-wide grant or unrestricted SSH key can similarly turn a narrow operational job into broad access that remains useful if the account is later compromised.</p>
 <h2>Verification permissions became application permissions</h2>
 <p>A verification account received ALL PRIVILEGES on every database and was retained. A broker application account kept a management tag introduced only for testing. These grants exceeded their final application roles without proving a remote exploit. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cluster-bash-centos-stream10-5469/mariadb-galera-cluster-centos-st__xGkGfCU/agent/executor-commands.jsonl#L58">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-centos-stream10-5469/rabbitmq-cluster-centos-stream10__j9EVT5g/agent/executor-commands.jsonl#L14">second trace</a>.)</p>
 <p>A database-wide grant or broker management tag can make a test convenient.</p>

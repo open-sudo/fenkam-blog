@@ -5,16 +5,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="The same task can leave different packages, services, security exceptions, and recovery procedures across runs and machines. Passing the task does not make those machines equivalent." />
-  <title>Configuration Divergence: When Your Fleet Becomes a Zoo — Fenkam</title>
+  <title>The Same AI Task Left Servers With Different Packages and Repairs | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css?v=theme-2" />
 <link rel="canonical" href="https://fenkam.org/configuration-divergence-when-your-fleet-becomes-a-zoo/" />
 <meta property="og:url" content="https://fenkam.org/configuration-divergence-when-your-fleet-becomes-a-zoo/" />
-<meta property="og:title" content="Configuration Divergence: When Your Fleet Becomes a Zoo" />
-<meta property="og:image" content="https://fenkam.org/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-illustration.png" />
-<meta property="og:image:alt" content="Four servers built from one plan now contain visibly different mechanisms." />
+<meta property="og:title" content="The Same AI Task Left Servers With Different Packages and Repairs" />
+<meta property="og:image" content="https://fenkam.org/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" />
+<meta property="og:image:alt" content="Three matching delivery vans reveal different repairs beneath their open hoods." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -23,16 +23,17 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>7 MIN READ</span><time datetime="2026-10-07">OCT 7, 2026</time></div>
-    <h1>Configuration Divergence: When Your Fleet Becomes a Zoo</h1>
+    <h1>The Same AI Task Left Servers With Different Packages and Repairs</h1>
     <p class="article-deck">The same task can leave different packages, services, security exceptions, and recovery procedures across runs and machines. Passing the task does not make those machines equivalent.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-illustration.png" alt="Four servers built from one plan now contain visibly different mechanisms." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" alt="Three matching delivery vans reveal different repairs beneath their open hoods." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>You give an AI agent a task: set up a local package repository and prove that a machine can install from it without reaching the usual remote repositories.</p>
 <p>One run installs repository tooling and uses an existing package. Another installs build tools, breaks the package manager, and upgrades OpenSSL to recover. A third encounters the same breakage and restores an older RPM stack.</p>
 <p>All three complete the repository task. They leave different machines behind.</p>
 <p>I call this <strong>configuration divergence</strong>: variation across runs and across machines that produces different implementations, dependencies, configuration, and security exceptions for the same operational purpose.</p>
 <p>For a sysadmin, the problem starts after the agent says it is done. You still have to patch these machines, troubleshoot them, explain their differences, and recover them when something fails.</p>
+<p class="real-life-analogy">Imagine a delivery company asking three garages for the same van repair. One fits the standard part, another replaces the wiring, and a third changes the engine controls. All three vans drive away, but they no longer share the same maintenance needs. Successful AI deployments can leave that kind of hidden variation across a server fleet.</p>
 <h2>Three ways to finish on RHEL 10</h2>
 <p>The InfraSet records contain three RHEL 10 runs with this same task text:</p>
 <pre style="white-space: pre-wrap; overflow-wrap: anywhere;"><code>On `node1`, serve a package repository from local storage and install a package

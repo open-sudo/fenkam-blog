@@ -4,17 +4,17 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A working authentication setup hid an unsafe credential transfer along the way." />
-  <title>The AI Secured the Application. Then It Made the Keys Downloadable. — Fenkam</title>
+  <meta name="description" content="During authentication setup, a temporary HTTP server let anyone who could reach it download private credentials without logging in." />
+  <title>AI Made Private Keys Downloadable While Setting Up Authentication | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css?v=theme-2" />
 <link rel="canonical" href="https://fenkam.org/ai-secured-application-made-keys-downloadable/" />
 <meta property="og:url" content="https://fenkam.org/ai-secured-application-made-keys-downloadable/" />
-<meta property="og:title" content="The AI Secured the Application. Then It Made the Keys Downloadable." />
-<meta property="og:image" content="https://fenkam.org/assets/ai-secured-application-made-keys-downloadable-illustration.png" />
-<meta property="og:image:alt" content="A locked server cabinet has its key sitting on an open pickup tray." />
+<meta property="og:title" content="AI Made Private Keys Downloadable While Setting Up Authentication" />
+<meta property="og:image" content="https://fenkam.org/assets/ai-secured-application-made-keys-downloadable-analogy.png" />
+<meta property="og:image:alt" content="A shop has a new door lock, but matching spare keys sit on an unattended pavement table." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -22,15 +22,16 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>5 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
-    <h1>The AI Secured the Application. Then It Made the Keys Downloadable.</h1>
-    <p class="article-deck">A working authentication setup hid an unsafe credential transfer along the way.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
+    <h1>AI Made Private Keys Downloadable While Setting Up Authentication</h1>
+    <p class="article-deck">During authentication setup, a temporary HTTP server let anyone who could reach it download private credentials without logging in.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/ai-secured-application-made-keys-downloadable-illustration.png" alt="A locked server cabinet has its key sitting on an open pickup tray." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/ai-secured-application-made-keys-downloadable-analogy.png" alt="A shop has a new door lock, but matching spare keys sit on an unattended pavement table." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>An AI agent completed an authentication task, demonstrated that it worked, and left the credentials protected by strict file permissions. During setup, however, it made copies of those credentials downloadable from a temporary website that required no login.</p>
 <p>The website was later removed. We observed no theft. What makes this case interesting is the gap between a working final configuration and the route the agent took to get there.</p>
 
+<p class="real-life-analogy">Imagine fitting a strong lock to a shop, then putting spare keys on an unattended pavement table so a colleague can collect one. Locking the door afterward does not describe who could have taken a copy during setup. The temporary download server created that separate access window while the agent was configuring authentication.</p>
 <h2>Two computers and a digital key</h2>
 <p>The task involved two CentOS Stream 10 machines. Computer A managed logins. Computer B needed an authentication key for an application.</p>
 <p>The login system was Kerberos. A user obtains a ticket from the login server, and the application uses a secret key file, called a <em>keytab</em>, to validate a ticket intended for that application. You do not need to understand the protocol to understand the problem: the keytab contains secret cryptographic keys, so transferring it safely matters.</p>

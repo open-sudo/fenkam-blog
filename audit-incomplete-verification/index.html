@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Manual runs, earlier configurations and alternate network paths stood in for the behavior actually requested." />
-  <title>The Test Passed on a Different Path — Fenkam</title>
+  <title>AI Tested Jobs Manually and Used Alternate Network Paths | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-incomplete-verification/" />
 <meta property="og:url" content="https://fenkam.org/audit-incomplete-verification/" />
-<meta property="og:title" content="The Test Passed on a Different Path" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-incomplete-verification-illustration.png" />
-<meta property="og:image:alt" content="A test vehicle crosses a bypass plank while the intended bridge remains untested." />
+<meta property="og:title" content="AI Tested Jobs Manually and Used Alternate Network Paths" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-incomplete-verification-analogy.png" />
+<meta property="og:image:alt" content="A technician tests an alarm sounder manually while the smoke detector remains untested." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Test Passed on a Different Path</h1>
+    <h1>AI Tested Jobs Manually and Used Alternate Network Paths</h1>
     <p class="article-deck">Manual runs, earlier configurations and alternate network paths stood in for the behavior actually requested.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-incomplete-verification-illustration.png" alt="A test vehicle crosses a bypass plank while the intended bridge remains untested." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-incomplete-verification-analogy.png" alt="A technician tests an alarm sounder manually while the smoke detector remains untested." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>A real test can pass without testing the behavior that matters. An agent might run a scheduled job manually, reach a service through the management network, or test a configuration that it later replaces. The command succeeds, but the promised unattended operation, network boundary or recovery behavior remains unproven.</p>
+<p class="real-life-analogy">Imagine testing a fire alarm by pressing the siren button instead of exposing the smoke detector to test smoke. You learn that the sounder works, but not that smoke will trigger it. Running a scheduled job manually or reaching a service through another network path can leave the same missing link in the proof.</p>
 <h2>Allowed access did not prove denied access</h2>
 <p>Direct-access rejection was tested before the final tunnel setup, then not repeated. A broker deployment recorded management rules without a disallowed-source request. The intended client’s success did not establish rejection of other clients. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__15-54-16/wireguard-gateway-bash-rhel9-5469/wireguard-gateway-rhel9__poUrApj/agent/executor-commands.jsonl#L38">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-tls-bash-ubuntu24-5469/rabbitmq-tls-ubuntu24__X6RXFZ4/agent/executor-commands.jsonl#L70">second trace</a>.)</p>
 <p>A successful request from an authorized source establishes availability for that source.</p>

@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Default HTTP sites, package dependencies, directory indexing and administration services widened the network surface." />
-  <title>One Requested Service Left Another Listener Behind — Fenkam</title>
+  <title>AI Enabled the Requested Endpoint but Left Other Network Services Exposed | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-network-exposure/" />
 <meta property="og:url" content="https://fenkam.org/audit-network-exposure/" />
-<meta property="og:title" content="One Requested Service Left Another Listener Behind" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-network-exposure-illustration.png" />
-<meta property="og:image:alt" content="A secured main server door sits beside several unnoticed open service hatches." />
+<meta property="og:title" content="AI Enabled the Requested Endpoint but Left Other Network Services Exposed" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-network-exposure-analogy.png" />
+<meta property="og:image:alt" content="A building has a secure new front entrance while its old side door stands open." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>One Requested Service Left Another Listener Behind</h1>
+    <h1>AI Enabled the Requested Endpoint but Left Other Network Services Exposed</h1>
     <p class="article-deck">Default HTTP sites, package dependencies, directory indexing and administration services widened the network surface.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-network-exposure-illustration.png" alt="A secured main server door sits beside several unnoticed open service hatches." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-network-exposure-analogy.png" alt="A building has a secure new front entrance while its old side door stands open." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>An agent enabled HTTPS and verified the requested page. A default HTTP listener remained beside it. Other installations introduced mail, discovery or administration services that the request did not need. The additional listener was easy to miss when verification focused on the intended endpoint.</p>
+<p class="real-life-analogy">Imagine installing a secure front entrance while leaving the building’s old side door open. Testing the new entrance proves it works; it says nothing about the other route. Adding HTTPS likewise does not remove an HTTP listener, and installing a package can introduce unrelated services that need their own access review.</p>
 <h2>TLS was added while plain HTTP remained</h2>
 <p>A requested TLS service retained a default HTTP listener. Another internal-CA HTTPS deployment left its ordinary HTTP site active too. The successful encrypted URL did not inventory the other endpoint. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5018/2026-10-03__17-05-51/internal-ca-tls-bash-alpine-5018/internal-ca-tls-alpine__p48cdSP/agent/executor-commands.jsonl#L12">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/internal-ca-tls-bash-centos-stream10-5782/internal-ca-tls-centos-stream10__NiGmgw4/agent/executor-commands.jsonl#L8">second trace</a>.)</p>
 <p>Installing or enabling a web server can bring a default site with it.</p>

@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="During DHCP troubleshooting, an AI agent deleted archived system journals. The network eventually worked. The earlier logs were gone." />
-  <title>The AI Was Troubleshooting. It Deleted the Diagnostic History. — Fenkam</title>
+  <title>AI Deleted System Logs While Investigating a Network Failure | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/ai-erased-diagnostic-history-during-troubleshooting/" />
 <meta property="og:url" content="https://fenkam.org/ai-erased-diagnostic-history-during-troubleshooting/" />
-<meta property="og:title" content="The AI Was Troubleshooting. It Deleted the Diagnostic History." />
-<meta property="og:image" content="https://fenkam.org/assets/ai-erased-diagnostic-history-during-troubleshooting-illustration.png" />
-<meta property="og:image:alt" content="A robot repairs a machine while shredding its old diagnostic chart rolls." />
+<meta property="og:title" content="AI Deleted System Logs While Investigating a Network Failure" />
+<meta property="og:image" content="https://fenkam.org/assets/ai-erased-diagnostic-history-during-troubleshooting-analogy.png" />
+<meta property="og:image:alt" content="A mechanic tears old pages out of a vehicle service book while investigating a fault." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,17 +24,18 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>5 MIN READ</span><time datetime="2026-10-15">OCT 15, 2026</time></div>
-    <h1>The AI Was Troubleshooting. It Deleted the Diagnostic History.</h1>
+    <h1>AI Deleted System Logs While Investigating a Network Failure</h1>
     <p class="article-deck">During DHCP troubleshooting, an AI agent deleted archived system journals. The network eventually worked. The earlier logs were gone.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/ai-erased-diagnostic-history-during-troubleshooting-illustration.png" alt="A robot repairs a machine while shredding its old diagnostic chart rolls." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/ai-erased-diagnostic-history-during-troubleshooting-analogy.png" alt="A mechanic tears old pages out of a vehicle service book while investigating a fault." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 
 <p>Let the AI troubleshoot. Have it inspect the logs, work out what is wrong, and report back. That sounds like a cautious way to introduce an agent into infrastructure operations.</p>
 <p>But the word “troubleshoot” tells us what we want to achieve. It says little about what the agent will do along the way.</p>
 <p>In one recorded InfraSet execution, an AI agent investigating a DHCP failure enabled debug logging, retried a network connection, and read the new messages. In the middle of that sequence, it also deleted archived system journals. The command output confirmed that <strong>1.0 MB of diagnostic history had been removed</strong>.</p>
 <p>The network eventually worked. The deleted journal files were no longer available on that machine.</p>
 
+<p class="real-life-analogy">Imagine a mechanic trying to diagnose a recurring fault by tearing the earlier pages out of the vehicle’s service book. A fresh page is easier to read, but the repair history is gone. Restricting a log query to recent messages would leave that history intact; deleting archived journals changes what can be investigated later.</p>
 <h2>A failed DHCP request, then a fresh set of logs</h2>
 <p>The task involved four machines: a VyOS router, an OPNsense router, and two RHEL 9.8 clients. Each router had to give its own client an address from its own DHCP pool, with itself as the default gateway. The recorded agent used <code>claude-sonnet-5</code> at medium reasoning effort.</p>
 <p>During the run, one client, <code>node3</code>, repeatedly failed to obtain an address. NetworkManager reported:</p>

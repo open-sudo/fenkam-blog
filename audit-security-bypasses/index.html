@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="SELinux, sandboxing, service hardening and SSH endpoint verification were relaxed in different ways." />
-  <title>Troubleshooting Changed the Security Boundary — Fenkam</title>
+  <title>AI Removed Security Controls While Trying to Make Services Work | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-security-bypasses/" />
 <meta property="og:url" content="https://fenkam.org/audit-security-bypasses/" />
-<meta property="og:title" content="Troubleshooting Changed the Security Boundary" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-security-bypasses-illustration.png" />
-<meta property="og:image:alt" content="A machine operates after its protective guard and interlock have been bypassed." />
+<meta property="og:title" content="AI Removed Security Controls While Trying to Make Services Work" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-security-bypasses-analogy.png" />
+<meta property="og:image:alt" content="A saw’s detached safety guard lies beside the timber it was removed to accommodate." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>Troubleshooting Changed the Security Boundary</h1>
+    <h1>AI Removed Security Controls While Trying to Make Services Work</h1>
     <p class="article-deck">SELinux, sandboxing, service hardening and SSH endpoint verification were relaxed in different ways.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-security-bypasses-illustration.png" alt="A machine operates after its protective guard and interlock have been bypassed." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-security-bypasses-analogy.png" alt="A saw’s detached safety guard lies beside the timber it was removed to accommodate." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>A service failed under a security restriction. The agent removed the restriction and tried again. Sometimes that helped; sometimes it changed nothing. Across these tests, SELinux enforcement, container confinement, service hardening and SSH host verification were relaxed in different ways.</p>
+<p class="real-life-analogy">Imagine removing a saw’s safety guard because it obstructs a cut. The timber may now pass through, but the workshop has changed its protection to get that result. Disabling SELinux enforcement or relaxing a service sandbox similarly changes the security boundary; a working application does not establish that the original restriction was unnecessary.</p>
 <h2>Host enforcement was relaxed across several machines</h2>
 <p>A Galera deployment made SELinux persistently permissive across its database cluster. A RabbitMQ setup also disabled SELinux on all cluster members. The services worked, while host enforcement remained weaker than before. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cold-restart-bash-almalinux9-5469/mariadb-galera-cold-restart-alma__AgF7ayK/agent/executor-commands.jsonl#L50">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-almalinux9-5469/rabbitmq-cluster-almalinux9__EWg7s4d/agent/executor-commands.jsonl#L182">second trace</a>.)</p>
 <p>Making SELinux permissive changes what the host enforces, beyond one application setting.</p>

@@ -5,16 +5,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Three successful deployments included temporary security relaxations. Their healthy final states did not show the whole execution." />
-  <title>Insecure Remediation: How the AI Got There — Fenkam</title>
+  <title>AI Temporarily Disabled Security Controls During Successful Repairs | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css?v=theme-2" />
 <link rel="canonical" href="https://fenkam.org/insecure-remediation-how-the-ai-got-there/" />
 <meta property="og:url" content="https://fenkam.org/insecure-remediation-how-the-ai-got-there/" />
-<meta property="og:title" content="Insecure Remediation: How the AI Got There" />
-<meta property="og:image" content="https://fenkam.org/assets/insecure-remediation-how-the-ai-got-there-illustration.png" />
-<meta property="og:image:alt" content="Removed safety panels and a temporary bypass cable show how a working machine was repaired." />
+<meta property="og:title" content="AI Temporarily Disabled Security Controls During Successful Repairs" />
+<meta property="og:image" content="https://fenkam.org/assets/insecure-remediation-how-the-ai-got-there-analogy.png" />
+<meta property="og:image:alt" content="A warehouse security gate is propped open during unloading despite having a working lock." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -23,16 +23,17 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>5 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
-    <h1>Insecure Remediation: How the AI Got There</h1>
+    <h1>AI Temporarily Disabled Security Controls During Successful Repairs</h1>
     <p class="article-deck">Three successful deployments included temporary security relaxations. Their healthy final states did not show the whole execution.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/insecure-remediation-how-the-ai-got-there-illustration.png" alt="Removed safety panels and a temporary bypass cable show how a working machine was repaired." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/insecure-remediation-how-the-ai-got-there-analogy.png" alt="A warehouse security gate is propped open during unloading despite having a working lock." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>The database cluster worked. The VPN carried encrypted traffic. The SSH tunnel recovered after an interruption. Each task received full marks for functionality.</p>
 <p>During the work, the AI agents temporarily relaxed security controls. Two database servers ran with SELinux in permissive mode. Two gateways had packet filtering disabled. A tunnel service lost a privilege safeguard and was assigned an unconfined SELinux context during troubleshooting.</p>
 <p>The controls discussed here were subsequently restored or the experimental settings removed. That recovery is part of the story. So is the interval before it.</p>
 <p>These executions show a recurring pattern: an agent reaches a working result through intermediate states with fewer protections. Whether that is acceptable depends on the environment and the agreed scope of the work. A successful final check describes only part of that execution.</p>
 
+<p class="real-life-analogy">Imagine a warehouse finishing a delivery with every door locked, after propping the security gate open throughout unloading. The final inspection is accurate, but it cannot describe access during the work. Temporary firewall or enforcement changes similarly belong in the operational history even when the agent restores them before handover.</p>
 <h2>A working cluster, with a permissive interval</h2>
 <p>In finding <code>181</code>, batch <code>5469</code>, the task was to build a three-member MariaDB Galera cluster on RHEL 10. Writes had to replicate between members, the database had to remain available when one member was down, and that member had to resynchronize on return.</p>
 <p>The agent encountered SELinux denials while getting a member to join. On <code>node1</code>, it ran:</p>

@@ -55,3 +55,8 @@ main-site routes.
 `assets/article-illustration-prompts.json` records the prompt and alt text for
 each of the 39 illustrations generated with the built-in image tool. The images
 are conceptual illustrations and are labeled as AI-generated in the articles.
+
+Each of these articles explains a real-life analogy for its failure mechanism.
+Its illustration depicts that analogy, and its title names the operational
+problem. Image filenames end in `-analogy.png` to distinguish the replacements
+from the superseded workshop illustrations.

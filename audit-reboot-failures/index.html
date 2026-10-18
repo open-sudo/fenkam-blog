@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Live routes, service startup, temporary storage and router credentials failed to return automatically." />
-  <title>Recovery Worked Only After Another Manual Command — Fenkam</title>
+  <title>AI Configurations Worked Until the Server Restarted | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-reboot-failures/" />
 <meta property="og:url" content="https://fenkam.org/audit-reboot-failures/" />
-<meta property="og:title" content="Recovery Worked Only After Another Manual Command" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-reboot-failures-illustration.png" />
-<meta property="og:image:alt" content="A restarted machine needs a robot to replace a gear that did not return automatically." />
+<meta property="og:title" content="AI Configurations Worked Until the Server Restarted" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-reboot-failures-analogy.png" />
+<meta property="og:image:alt" content="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>Recovery Worked Only After Another Manual Command</h1>
+    <h1>AI Configurations Worked Until the Server Restarted</h1>
     <p class="article-deck">Live routes, service startup, temporary storage and router credentials failed to return automatically.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-reboot-failures-illustration.png" alt="A restarted machine needs a robot to replace a gear that did not return automatically." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-reboot-failures-analogy.png" alt="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>The route returned after reboot, but only after the agent ran another command. The service came back, but only after a manual start. Those are useful recoveries. They are different from showing that the delivered setup restores itself automatically.</p>
+<p class="real-life-analogy">Imagine a shop’s automatic shutters opening only after the owner arrives and cranks them by hand each morning. The shop can open, but the automatic mechanism has not been demonstrated. Routes and services restored through post-reboot commands similarly show that recovery is possible, without establishing automatic startup.</p>
 <h2>Live network state was not durable configuration</h2>
 <p>A bridge created with live ip commands disappeared after reboot. An ECMP route also required manual reapplication after restart. Both worked before the restart without having a proven durable representation. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/transparent-l2-bridge-ubuntu24__m6YfrrS/agent/executor-commands.jsonl#L22">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl#L148">second trace</a>.)</p>
 <p>A bridge or route created by imperative commands can work until restart.</p>

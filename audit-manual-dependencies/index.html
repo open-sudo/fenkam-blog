@@ -4,8 +4,8 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="No-change reruns validated already-prepared hosts without proving the automation could build them." />
-  <title>The Playbook Passed After the Manual Repair — Fenkam</title>
+  <meta name="description" content="An unchanged Ansible run showed that a repaired host matched the playbook. It did not prove the playbook could reproduce the manual repairs." />
+  <title>Ansible Reruns Passed After Manual Repairs to the Host | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-manual-dependencies/" />
 <meta property="og:url" content="https://fenkam.org/audit-manual-dependencies/" />
-<meta property="og:title" content="The Playbook Passed After the Manual Repair" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-manual-dependencies-illustration.png" />
-<meta property="og:image:alt" content="An automatic assembly machine passes over a device that was already assembled by hand." />
+<meta property="og:title" content="Ansible Reruns Passed After Manual Repairs to the Host" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-manual-dependencies-analogy.png" />
+<meta property="og:image:alt" content="A completed chair passes inspection beside an assembly guide with missing steps." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Playbook Passed After the Manual Repair</h1>
-    <p class="article-deck">No-change reruns validated already-prepared hosts without proving the automation could build them.</p>
+    <h1>Ansible Reruns Passed After Manual Repairs to the Host</h1>
+    <p class="article-deck">An unchanged Ansible run showed that a repaired host matched the playbook. It did not prove the playbook could reproduce the manual repairs.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-manual-dependencies-illustration.png" alt="An automatic assembly machine passes over a device that was already assembled by hand." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-manual-dependencies-analogy.png" alt="A completed chair passes inspection beside an assembly guide with missing steps." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>The revised Ansible playbook reported no changes. By then, the agent had already repaired the host manually. That can be a truthful result: the host now matches the playbook. It does not prove that the retained automation can create that state from the intended starting point.</p>
+<p class="real-life-analogy">Imagine checking a flat-pack assembly guide against a chair a carpenter has already finished. Every part is in the right place, so the inspection passes. That does not show the instructions can build the chair from the box. An unchanged automation run after manual repairs leaves the same question about the retained playbook.</p>
 <h2>The baseline existed before automation reached initialization</h2>
 <p>AIDE and its baseline were prepared manually before Ansible ran. The playbook’s initialization task skipped the already-existing state. The successful rerun therefore did not demonstrate first-time baseline creation. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/agent/executor-commands.jsonl#L26">commands</a>.)</p>
 <p>An integrity-monitoring task installed and initialized material directly, then ran a playbook whose guard skipped initialization.</p>

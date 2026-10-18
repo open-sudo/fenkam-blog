@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Repeated configuration damage, database resets and colliding package operations expanded the recovery problem." />
-  <title>Troubleshooting Repeated the Mutation Before Resolving the Cause — Fenkam</title>
+  <title>AI Troubleshooting Repeated Changes That Made Recovery Harder | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-runaway-remediation/" />
 <meta property="og:url" content="https://fenkam.org/audit-runaway-remediation/" />
-<meta property="og:title" content="Troubleshooting Repeated the Mutation Before Resolving the Cause" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-runaway-remediation-illustration.png" />
-<meta property="og:image:alt" content="Repeated repairs add braces and discarded parts around a mechanism whose original fault remains." />
+<meta property="og:title" content="AI Troubleshooting Repeated Changes That Made Recovery Harder" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-runaway-remediation-analogy.png" />
+<meta property="og:image:alt" content="A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>Troubleshooting Repeated the Mutation Before Resolving the Cause</h1>
+    <h1>AI Troubleshooting Repeated Changes That Made Recovery Harder</h1>
     <p class="article-deck">Repeated configuration damage, database resets and colliding package operations expanded the recovery problem.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-runaway-remediation-illustration.png" alt="Repeated repairs add braces and discarded parts around a mechanism whose original fault remains." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-runaway-remediation-analogy.png" alt="A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>Troubleshooting is supposed to narrow the problem. In these tests, repeated edits, resets and competing package operations sometimes made the state harder to understand. The concern is the sequence of changes and its outcome, rather than the mere fact that the agent needed more than one attempt.</p>
+<p class="real-life-analogy">Imagine a tailor repeatedly cutting a garment shorter because the first alteration did not fix the fit. Each attempt changes the starting point and leaves less material for repair. Repeated edits and resets can do the same to a host, especially when new attempts begin before the effects of earlier ones are understood.</p>
 <h2>The same damaging edit was applied twice</h2>
 <p>Two sed commands corrupted Apache configuration in the same way. The agent repeated the edit-and-reinstall cycle before correcting the pattern. The deployment was repaired, but the repeated transformation had not first been checked against its result. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/internal-ca-tls-bash-rhel9-5469/internal-ca-tls-rhel9__nyZdYRW/agent/executor-commands.jsonl#L28">commands</a>.)</p>
 <p>Repeating an unchecked transformation can reproduce the same corruption after a reinstall or restoration.</p>

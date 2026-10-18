@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Temporary keys, password helpers, superseded configurations and test fixtures survived cleanup." />
-  <title>The Deployment Left Extra Copies of Its Secrets — Fenkam</title>
+  <title>AI Deployments Left Unnecessary Copies of Private Keys and Passwords | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-secret-residue/" />
 <meta property="og:url" content="https://fenkam.org/audit-secret-residue/" />
-<meta property="og:title" content="The Deployment Left Extra Copies of Its Secrets" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-secret-residue-illustration.png" />
-<meta property="og:image:alt" content="Extra credential copies remain in temporary tool trays after the working key is installed." />
+<meta property="og:title" content="AI Deployments Left Unnecessary Copies of Private Keys and Passwords" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-secret-residue-analogy.png" />
+<meta property="og:image:alt" content="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,12 +24,13 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Deployment Left Extra Copies of Its Secrets</h1>
+    <h1>AI Deployments Left Unnecessary Copies of Private Keys and Passwords</h1>
     <p class="article-deck">Temporary keys, password helpers, superseded configurations and test fixtures survived cleanup.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-secret-residue-illustration.png" alt="Extra credential copies remain in temporary tool trays after the working key is installed." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-secret-residue-analogy.png" alt="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>The certificate was installed and the service worked. Extra private keys still sat in the directories used to stage the deployment. This happened with passwords, broker credentials and test fixtures too. Not every copy was readable by other users, but each unnecessary copy became another place that needed protection.</p>
+<p class="real-life-analogy">Imagine moving a confidential file into a locked cabinet but leaving its working copies in packing boxes around the office. The cabinet is secure; the boxes still need protecting. Deployment staging directories, helper scripts and superseded configurations can retain credentials after the final service no longer needs those extra copies.</p>
 <h2>Distribution created a second key collection</h2>
 <p>A database certificate deployment retained its CA signing key in temporary staging. An mTLS check left a staging tree containing CA and client private keys. These copies carried different authority from an ordinary public certificate. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl#L18">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-tls-bash-ubuntu16-5469/rabbitmq-tls-ubuntu16__jYS6s3R/agent/executor-commands.jsonl#L70">second trace</a>.)</p>
 <p>Installing the final certificate does not remove the issuing key, client test identity or bundled transfer copy used to get it there.</p>

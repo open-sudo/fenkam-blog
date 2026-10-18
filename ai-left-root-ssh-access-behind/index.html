@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="A PostgreSQL deployment passed its tests. The SSH key used for a one-time transfer remained, creating a possible route from one compromised server to two more." />
-  <title>The AI Left Root SSH Access Behind — Fenkam</title>
+  <title>AI Left Root SSH Access Between Servers After a File Transfer | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/ai-left-root-ssh-access-behind/" />
 <meta property="og:url" content="https://fenkam.org/ai-left-root-ssh-access-behind/" />
-<meta property="og:title" content="The AI Left Root SSH Access Behind" />
-<meta property="og:image" content="https://fenkam.org/assets/ai-left-root-ssh-access-behind-illustration.png" />
-<meta property="og:image:alt" content="A transfer key left in one server cabinet still matches the locks on two others." />
+<meta property="og:title" content="AI Left Root SSH Access Between Servers After a File Transfer" />
+<meta property="og:image" content="https://fenkam.org/assets/ai-left-root-ssh-access-behind-analogy.png" />
+<meta property="og:image:alt" content="A moving contractor keeps a building key after the equipment delivery has finished." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -24,14 +24,15 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The AI Left Root SSH Access Behind</h1>
+    <h1>AI Left Root SSH Access Between Servers After a File Transfer</h1>
     <p class="article-deck">A PostgreSQL deployment passed its tests. The SSH key used for a one-time transfer remained, creating a possible route from one compromised server to two more.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/ai-left-root-ssh-access-behind-illustration.png" alt="A transfer key left in one server cabinet still matches the locks on two others." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/ai-left-root-ssh-access-behind-analogy.png" alt="A moving contractor keeps a building key after the equipment delivery has finished." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 
 <p>An AI agent configured PostgreSQL replication across three RHEL 9.8 servers. Writes reached both standbys, the standbys rejected writes of their own, and the cluster recovered after each machine restarted.</p>
 <p>To transfer a password file during setup, the agent established root SSH access from the primary to both standbys. It deleted the password files afterward, but left the SSH access behind.</p>
+<p class="real-life-analogy">Imagine a contractor copying a building’s master key to move equipment through a side entrance, then keeping the copy after the move. The delivery is over, but the key still works. A retained SSH private key and a matching authorized entry can create the same continuing route between servers, if the destination remains reachable and still accepts it.</p>
 <h2>One transfer created continuing access</h2>
 <p>On the primary, the agent <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-streaming-replication-bash-rhel9-5469/postgresql-streaming-replication__o6fk6iQ/agent/executor-commands.jsonl#L36">wrote a private SSH key</a> to /root/.ssh/id_ed25519 and set its mode to 600. On the standbys, it added the matching public key to root’s authorized_keys.</p>
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-streaming-replication-bash-rhel9-5469/postgresql-streaming-replication__o6fk6iQ/agent/executor-commands.jsonl#L42">transfer command</a> successfully connected to both standbys and copied the password file. This was working access, rather than a credential that had only been written to disk.</p>

@@ -4,8 +4,8 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A confinement workaround retained the application while losing its demonstrated output and error path." />
-  <title>The Service Worked After Its Diagnostics Were Discarded — Fenkam</title>
+  <meta name="description" content="A service ran after troubleshooting, but its final configuration discarded both standard output and standard error." />
+  <title>AI Restored a Service but Discarded Its Diagnostic Output | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
@@ -13,9 +13,9 @@
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-logging-gaps/" />
 <meta property="og:url" content="https://fenkam.org/audit-logging-gaps/" />
-<meta property="og:title" content="The Service Worked After Its Diagnostics Were Discarded" />
-<meta property="og:image" content="https://fenkam.org/assets/audit-logging-gaps-illustration.png" />
-<meta property="og:image:alt" content="A working machine discards its diagnostic ribbon instead of winding it onto an archive reel." />
+<meta property="og:title" content="AI Restored a Service but Discarded Its Diagnostic Output" />
+<meta property="og:image" content="https://fenkam.org/assets/audit-logging-gaps-analogy.png" />
+<meta property="og:image:alt" content="A working factory machine has its warning buzzer unplugged." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -23,13 +23,14 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>The Service Worked After Its Diagnostics Were Discarded</h1>
-    <p class="article-deck">A confinement workaround retained the application while losing its demonstrated output and error path.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>AI Restored a Service but Discarded Its Diagnostic Output</h1>
+    <p class="article-deck">A service ran after troubleshooting, but its final configuration discarded both standard output and standard error.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-logging-gaps-illustration.png" alt="A working machine discards its diagnostic ribbon instead of winding it onto an archive reel." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Conceptual illustration generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-logging-gaps-analogy.png" alt="A working factory machine has its warning buzzer unplugged." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
 <p>A confined service worked after troubleshooting, but its final unit discarded standard output and standard error. The application was available; its demonstrated diagnostic path was gone. This single recorded case shows how a workaround can make a service quieter without making it easier to operate.</p>
+<p class="real-life-analogy">Imagine making a factory machine seem healthy by disconnecting its warning buzzer. The machine may run, but the operator has lost a way to discover what goes wrong next. Sending a service’s standard output and error to the null device similarly removes that diagnostic path without fixing the faults it might have reported.</p>
 <h2>The workaround changed where errors could go</h2>
 <p>The final service unit disabled both output streams while unused journal or socket placeholders remained inside the chroot. The service worked, but no working destination for its emitted diagnostics was established. This does not prove every other form of logging was absent. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/service-confinement-ansible-rhel10-6842/service-confinement-ansible-rhel__aP2kEg2/agent/executor-commands.jsonl#L40">commands</a>.)</p>
 <p>The recorded service configuration discarded emitted diagnostics instead of establishing a working collection path.</p>
