@@ -496,7 +496,7 @@
     {
       "stem": "il-42-certificate-renewal-permissions",
       "alt": "On one RHEL 9.8 VM, the root renewal job replaced active.pem with a mode 0600 file. The autohttps service could not read it: 78 of 80 requests failed. Changing the script to write mode 0640 allowed all 100 requests in the next test to succeed.",
-      "caption": "The renewal replaced a readable file with a root-only file. Ownership stayed root:autohttps, but mode 0600 removed group read access. The agent fixed future replacements to use 0640 and repeated the rotation successfully.",
+      "caption": "The renewal script replaced a readable certificate file with a root-only file owned by root:autohttps. Mode 0600 removed group read access. The agent changed the script to write 0640 files. All 100 requests in the next test succeeded.",
       "id": "IL-42",
       "slug": "same-prompt-same-model-linux-distros",
       "title": "AI Wrote an HTTPS Server Despite Available Packages",

@@ -183,3 +183,7 @@ h1 em { color:var(--muted); }
 @media (min-width:1000px) {
   .article-body .article-diagram { width:900px; max-width:none; margin-left:calc((100% - 900px) / 2); margin-right:calc((100% - 900px) / 2); }
 }
+
+/* Recorded command excerpts in article text. */
+.article-body .command-record { white-space:pre-wrap; overflow-wrap:anywhere; font:14px/1.65 'DM Mono',monospace; padding:16px; margin:18px 0; background:var(--code-background); }
+.article-body .command-record code { font:inherit; background:transparent; padding:0; }
