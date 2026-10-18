@@ -78,7 +78,8 @@ Each card's `data-os` lists systems covered by the article text or linked case
 examples, including family tags such as `ubuntu` and release tags such as
 `ubuntu-24`. Use `general` for articles without specific systems. Do not tag a
 story from unrelated cases found only in its full evidence inventory.
-The OS dropdown sits at the very top of the homepage, above the site header.
+The OS dropdown sits in the homepage navigation row, with an accessible name
+and no visible label.
 Selecting a system jumps to the filtered article list.
 `article-filter.js` filters these tags, updates the count and keeps visible
 images alternating. The selected filter can be shared with `?os=ubuntu-24`.
