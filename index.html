@@ -9,40 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=os-filter-1" />
-      <script src="/article-filter.js?v=1" defer></script>
+    <link rel="stylesheet" href="styles.css?v=os-filter-top-2" />
+      <script src="/article-filter.js?v=2" defer></script>
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>
-    <header class="site-header shell">
-      <a class="wordmark" href="index.html" aria-label="LLM as Sysadmin home"><span>F</span> LLM AS SYSADMIN</a>
-      <nav aria-label="Main navigation">
-        <a href="#writing">Articles</a>
-        <a href="#about">About</a>
-        <a href="mailto:hello@fenkam.org">Say hello</a>
-        <a class="nav-pill" href="#subscribe">Subscribe</a>
-      <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Switch to dark mode" hidden><svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z" /></svg><svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg></button></nav>
-    </header>
-
-    <main>
-      <section class="hero shell">
-        <div class="hero-title">
-          <div class="hero-kicker"><span class="status-dot"></span> AI in infrastructure</div>
-          <h1>LLM as<br /><em>Sysadmin.</em></h1>
-        </div>
-        <div class="hero-bottom">
-          <p class="hero-intro">Exploring how to make the best of AI in infrastructure, from <span>greenfield to brownfield</span>, datacenter to edge, security to scale.</p>
-          <a class="hero-mark" href="#writing" aria-label="Scroll to explore articles"><span>↘</span><small>SCROLL TO<br />EXPLORE</small></a>
-        </div>
-      </section>
-
-      <section class="signal-strip" aria-label="Topics">
-        <div class="shell ticker"><span>GREENFIELD</span><i>✳</i><span>BROWNFIELD</span><i>✳</i><span>DATACENTER</span><i>✳</i><span>EDGE</span><i>✳</i><span>SECURITY</span></div>
-      </section>
-
-      <section id="writing" class="writing shell">
-        <div class="section-heading"><p class="eyebrow">01 / Articles</p><p class="section-note" id="article-count" role="status" aria-live="polite" aria-atomic="true">44 articles</p></div>
-        <div class="article-filters" hidden>
+        <div class="article-filters shell" hidden>
           <label for="os-filter">Operating system</label>
           <select id="os-filter" aria-controls="writing">
             <option value="all">All operating systems</option>
@@ -75,360 +47,45 @@
             <option value="general">General articles</option>
           </select>
         </div>
+    <header class="site-header shell">
+      <a class="wordmark" href="index.html" aria-label="LLM as Sysadmin home"><span>F</span> LLM AS SYSADMIN</a>
+      <nav aria-label="Main navigation">
+        <a href="#writing">Articles</a>
+        <a href="#about">About</a>
+        <a href="mailto:hello@fenkam.org">Say hello</a>
+        <a class="nav-pill" href="#subscribe">Subscribe</a>
+      <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Switch to dark mode" hidden><svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z" /></svg><svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg></button></nav>
+    </header>
+
+    <main>
+      <section class="hero shell">
+        <div class="hero-title">
+          <div class="hero-kicker"><span class="status-dot"></span> AI in infrastructure</div>
+          <h1>LLM as<br /><em>Sysadmin.</em></h1>
+        </div>
+        <div class="hero-bottom">
+          <p class="hero-intro">Exploring how to make the best of AI in infrastructure, from <span>greenfield to brownfield</span>, datacenter to edge, security to scale.</p>
+          <a class="hero-mark" href="#writing" aria-label="Scroll to explore articles"><span>↘</span><small>SCROLL TO<br />EXPLORE</small></a>
+        </div>
+      </section>
+
+      <section class="signal-strip" aria-label="Topics">
+        <div class="shell ticker"><span>GREENFIELD</span><i>✳</i><span>BROWNFIELD</span><i>✳</i><span>DATACENTER</span><i>✳</i><span>EDGE</span><i>✳</i><span>SECURITY</span></div>
+      </section>
+
+      <section id="writing" class="writing shell">
+        <div class="section-heading"><p class="eyebrow">01 / Articles</p><p class="section-note" id="article-count" role="status" aria-live="polite" aria-atomic="true">44 articles</p></div>
 <p><a href="/remaining-audit-categories/">Browse 27 Linux administration field notes →</a></p>
-        <article class="feature-card" data-os="ubuntu-7 ubuntu-16 ubuntu-24 rhel-7 rhel-9 rhel-10 centos-5 centos-stream-10 almalinux-9 alpine ubuntu rhel centos almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="assets/iod1-ai-built-webserver.png" alt="A robotic arm assembling an improvised server connected to two website windows." width="1536" height="1024" loading="lazy" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>ILLUSION OF DONE / #1</span><span>3 MIN READ</span><time datetime="2026-10-05">OCT 5, 2026</time></div>
-            <h2><a href="/illusion1/">IL-1: LLM Wrote New Software Instead of Configuring Apache or Nginx</a></h2>
-            <p>A request to implement two websites became implementation of a custom Python HTTP Server. And it passed the functional test.</p>
-            <a class="read-link" href="/illusion1/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="rhel-9 rhel"><div class="feature-art art-illustration"><img class="feature-image" src="/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" alt="Seven separate family albums contain copies of the same photograph rather than different years of history." width="1536" height="1024" loading="lazy" decoding="async" /></div><div class="feature-copy"><div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span></div><h2><a href="/illusion-of-done-2-ai-put-the-illusion-in-backup/">IL-2: AI Created a Week of Backup History by Copying One Current Archive</a></h2><p>The backup folder looked like it held a week of history. Six of those backups were backdated copies of the same file.</p><a class="read-link" href="/illusion-of-done-2-ai-put-the-illusion-in-backup/">Read the article <span>↗</span></a></div></article>
-        <article class="feature-card" data-os="ubuntu-24 rhel-10 centos-5 almalinux-9 alpine vyos ubuntu rhel centos almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-credential-leakage-analogy.png" alt="A sealed confidential envelope sits beside exposed copies in a shared printer tray and outgoing basket." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-credential-leakage/">IL-3: AI Exposed Credentials Through Logs, Transfers and File Permissions</a></h2>
-            <p>Secrets appeared in execution output, plaintext transfers, permissive files and temporary web servers.</p>
-            <a class="read-link" href="/audit-credential-leakage/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-16 rhel-7 rhel-9 rhel-10 almalinux-9 alpine ubuntu rhel almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-leftover-access-analogy.png" alt="A contractor access card still opens a hotel room after the renovation is finished." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-leftover-access/">IL-4: AI Left Temporary Accounts and SSH Keys After the Work Ended</a></h2>
-            <p>One-time transfers, abandoned experiments and verification accounts left credentials or grants behind.</p>
-            <a class="read-link" href="/audit-leftover-access/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-16 rhel-9 rhel-10 centos-5 centos-stream-10 almalinux-9 ubuntu rhel centos almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-secret-residue-analogy.png" alt="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-secret-residue/">IL-5: AI Deployments Left Unnecessary Copies of Private Keys and Passwords</a></h2>
-            <p>Temporary keys, password helpers, superseded configurations and test fixtures survived cleanup.</p>
-            <a class="read-link" href="/audit-secret-residue/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-16 ubuntu-24 rhel-10 centos-stream-10 almalinux-9 openwrt ubuntu rhel centos almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-firewall-misconfiguration-analogy.png" alt="A delivery bicycle passes through a fence opening much wider than it needs." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-firewall-misconfiguration/">IL-6: AI Firewall Changes Allowed More Traffic Than Requested</a></h2>
-            <p>Rules were broader than requested, filtering was disabled during diagnosis, and unrelated access changed.</p>
-            <a class="read-link" href="/audit-firewall-misconfiguration/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-16 ubuntu-24 rhel-9 rhel-10 centos-stream-10 ubuntu rhel centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-incomplete-verification-analogy.png" alt="A technician tests an alarm sounder manually while the smoke detector remains untested." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-incomplete-verification/">IL-7: AI Tested Jobs Manually and Used Alternate Network Paths</a></h2>
-            <p>Manual runs, earlier configurations and alternate network paths stood in for the behavior actually requested.</p>
-            <a class="read-link" href="/audit-incomplete-verification/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-24 rhel-10 centos-stream-10 alpine ubuntu rhel centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-service-outages-analogy.png" alt="A resident waits at a lift that remains unavailable after maintenance." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-service-outages/">IL-8: Some AI Administration Runs Ended Without a Reachable Server</a></h2>
-            <p>Storage reboots, recovery attempts, failed management services and credential cleanup ended without a confirmed usable deployment.</p>
-            <a class="read-link" href="/audit-service-outages/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-7 rhel-7 rhel-10 ubuntu rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-software-provenance-analogy.png" alt="A pharmacy shipment is unpacked while its supplier-authentication check remains unused." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-software-provenance/">IL-9: AI Installed Software Without Establishing Its Authenticity</a></h2>
-            <p>Package-signature bypasses and relaxed download checks let installations proceed without the intended assurance about their origin.</p>
-            <a class="read-link" href="/audit-software-provenance/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="rhel-7 rhel-10 almalinux-9 rhel almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-security-bypasses-analogy.png" alt="A saw’s detached safety guard lies beside the timber it was removed to accommodate." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-security-bypasses/">IL-10: AI Removed Security Controls While Trying to Make Services Work</a></h2>
-            <p>SELinux, sandboxing, service hardening and SSH endpoint verification were relaxed in different ways.</p>
-            <a class="read-link" href="/audit-security-bypasses/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-24 rhel-7 rhel-10 centos-5 almalinux-9 alpine ubuntu rhel centos almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-unsafe-changes-analogy.png" alt="A plumber reaches for the building-wide water manifold to fix a small leak on one branch." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-unsafe-changes/">IL-11: AI Repairs Changed Unrelated Accounts, Libraries and Network Access</a></h2>
-            <p>Text transformations, package recovery, network edits and storage helpers changed more than the immediate task required.</p>
-            <a class="read-link" href="/audit-unsafe-changes/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-24 rhel-7 rhel-9 rhel-10 centos-stream-10 vyos ubuntu rhel centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-reboot-failures-analogy.png" alt="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-reboot-failures/">IL-12: AI Configurations Worked Until the Server Restarted</a></h2>
-            <p>Live routes, service startup, temporary storage and router credentials failed to return automatically.</p>
-            <a class="read-link" href="/audit-reboot-failures/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-16 ubuntu-24 rhel-7 rhel-9 alpine ubuntu rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-test-residue-analogy.png" alt="Rehearsal props remain mixed with genuine emergency equipment backstage." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-test-residue/">IL-13: AI Left Test Data, Listeners and Simulated Outages in the Deployment</a></h2>
-            <p>Synthetic backups, test listeners, configuration markers and simulated repository outages survived verification.</p>
-            <a class="read-link" href="/audit-test-residue/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-16 rhel-7 centos-stream-10 alpine ubuntu rhel centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-excessive-privileges-analogy.png" alt="A gardener carrying a watering can also holds keys that open the house and its safe." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-excessive-privileges/">IL-14: AI Granted Service Accounts More Access Than Their Jobs Needed</a></h2>
-            <p>Verification grants, broad SSH access, troubleshooting permissions and daemon identities exceeded their continuing roles.</p>
-            <a class="read-link" href="/audit-excessive-privileges/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="rhel-7 rhel-10 rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-diy-infrastructure-analogy.png" alt="A homemade postal chute delivers one envelope while parcels and other mail cannot pass through." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-diy-infrastructure/">IL-15: AI Built Proxies That Passed Simple Tests but Missed Protocol Behavior</a></h2>
-            <p>Custom HTTP proxies and DNS forwarders met narrow demonstrations while leaving production behavior incomplete.</p>
-            <a class="read-link" href="/audit-diy-infrastructure/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-16 rhel-7 centos-stream-10 ubuntu rhel centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-disruptive-testing-analogy.png" alt="A generator load test trips the shared supply powering its measurement instruments." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-disruptive-testing/">IL-16: AI Stress Tests Disrupted the Connection Needed for Recovery</a></h2>
-            <p>Requested memory-pressure exercises sometimes ran inside the management cgroup or ended without a recovered control path.</p>
-            <a class="read-link" href="/audit-disruptive-testing/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-24 rhel-10 centos-stream-10 alpine ubuntu rhel centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-network-exposure-analogy.png" alt="A building has a secure new front entrance while its old side door stands open." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-network-exposure/">IL-17: AI Enabled the Requested Endpoint but Left Other Network Services Exposed</a></h2>
-            <p>Default HTTP sites, package dependencies, directory indexing and administration services widened the network surface.</p>
-            <a class="read-link" href="/audit-network-exposure/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-7 ubuntu-24 centos-5 ubuntu centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-process-integrity-analogy.png" alt="A restaurant signals that it is open while only a cleaner is inside and the kitchen is unprepared." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-process-integrity/">IL-18: AI Service Scripts Mistook Process IDs for Working Services</a></h2>
-            <p>Service scripts treated a live process number or a successful launch as proof that the intended service was ready for clients.</p>
-            <a class="read-link" href="/audit-process-integrity/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-24 rhel-10 centos-stream-10 alpine ubuntu rhel centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-weak-authentication-analogy.png" alt="One reception desk checks identification while a side desk issues the same access badges without checking." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-weak-authentication/">IL-19: AI Password Policies Did Not Protect Every Credential-Setting Path</a></h2>
-            <p>Password-generation failures, bypassed policy paths, coupled secrets and certificate roles weakened identity checks.</p>
-            <a class="read-link" href="/audit-weak-authentication/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="rhel-7 rhel-10 centos-stream-10 alpine vyos rhel centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-false-success-analogy.png" alt="A railway journey is signed off while its paper running log shows a gap in service." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-false-success/">IL-20: AI Claimed Success Despite Failed Checks and Contradictory Logs</a></h2>
-            <p>Reports claimed uninterrupted failover, complete cleanup or continuous security enforcement where the recorded work showed otherwise.</p>
-            <a class="read-link" href="/audit-false-success/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-16 ubuntu-24 rhel-9 rhel-10 ubuntu rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-manual-dependencies-analogy.png" alt="A completed chair passes inspection beside an assembly guide with missing steps." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-manual-dependencies/">IL-21: Ansible Reruns Passed After Manual Repairs to the Host</a></h2>
-            <p>An unchanged Ansible run showed that a repaired host matched the playbook. It did not prove the playbook could reproduce the manual repairs.</p>
-            <a class="read-link" href="/audit-manual-dependencies/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-24 rhel-9 alpine ubuntu rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-runaway-remediation-analogy.png" alt="A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-runaway-remediation/">IL-22: AI Troubleshooting Repeated Changes That Made Recovery Harder</a></h2>
-            <p>Repeated configuration damage, database resets and colliding package operations expanded the recovery problem.</p>
-            <a class="read-link" href="/audit-runaway-remediation/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-24 rhel-10 centos-stream-10 ubuntu rhel centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-security-misconfiguration-analogy.png" alt="A caretaker checks a latched playground gate while a gap remains in the surrounding fence." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-security-misconfiguration/">IL-23: AI Confinement and Read-Only Rules Failed Their Tests</a></h2>
-            <p>Confinement, integrity monitoring and read-only replication each showed a mismatch between the claimed guarantee and observed behavior.</p>
-            <a class="read-link" href="/audit-security-misconfiguration/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-16 centos-stream-10 ubuntu centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-configuration-drift-analogy.png" alt="A returned car contains a road atlas with ordinary routes still covered by tape from a demonstration." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-configuration-drift/">IL-24: AI Left Repository and Boot Settings Changed After Small Tasks</a></h2>
-            <p>A repository demonstration left normal package sources disabled. A separate swap task selected an older kernel for future boots.</p>
-            <a class="read-link" href="/audit-configuration-drift/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-24 rhel-9 ubuntu rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-incomplete-deployment-analogy.png" alt="A new bathroom tap is installed above disconnected water-supply pipes." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-incomplete-deployment/">IL-25: AI Created Deployment Files Without Bringing the Required Services Online</a></h2>
-            <p>A replication cluster, encrypted broker and routed network each ended with a material component missing.</p>
-            <a class="read-link" href="/audit-incomplete-deployment/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-24 alpine ubuntu">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-cluster-integrity-analogy.png" alt="A reopened library branch is listed in the directory while its shelves remain partly empty." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-cluster-integrity/">IL-26: A Cluster Node Rejoined Without Fully Recovering Its Data</a></h2>
-            <p>A broker returned under a changed hostname. An object-store node rejoined before its local shard was restored. Cluster membership did not prove data recovery.</p>
-            <a class="read-link" href="/audit-cluster-integrity/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="alpine">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-competing-services-analogy.png" alt="A new ticket counter opens, but every customer remains in the queue for the original counter." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-competing-services/">IL-27: AI Started a Second DHCP Server but Clients Kept Using the First</a></h2>
-            <p>The agent forced a second DHCP server to start despite a conflict warning. Clients continued getting addresses from the original server.</p>
-            <a class="read-link" href="/audit-competing-services/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="rhel-10 rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-idempotency-risks-analogy.png" alt="A book has been shelved, but an identical replacement arrives because the returns trolley is empty." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-idempotency-risks/">IL-28: Ansible Mail Migration Could Recreate Messages After Normal Mailbox Use</a></h2>
-            <p>The migration checked whether a message existed using a filename that ordinary mailbox activity could change. A later playbook run could create a duplicate.</p>
-            <a class="read-link" href="/audit-idempotency-risks/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="rhel-10 rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-logging-gaps-analogy.png" alt="A working factory machine has its warning buzzer unplugged." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-logging-gaps/">IL-29: AI Restored a Service but Discarded Its Diagnostic Output</a></h2>
-            <p>A service ran after troubleshooting, but its final configuration discarded both standard output and standard error.</p>
-            <a class="read-link" href="/audit-logging-gaps/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-16 centos-stream-10 ubuntu centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-configured-network-applications-as-root-analogy.png" alt="A hotel parcel clerk receives a master key while a smaller cupboard key lies unused." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/ai-configured-network-applications-as-root/">IL-30: AI Ran Network Request Handlers as Root</a></h2>
-            <p>An upload receiver and a meter collector passed their functional tests. Their service definitions gave the network-facing applications the administrator identity.</p>
-            <a class="read-link" href="/ai-configured-network-applications-as-root/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-24 rhel-9 ubuntu rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-left-root-ssh-access-behind-analogy.png" alt="A moving contractor keeps a building key after the equipment delivery has finished." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/ai-left-root-ssh-access-behind/">IL-31: AI Left Root SSH Access Between Servers After a File Transfer</a></h2>
-            <p>A PostgreSQL deployment passed its tests. The SSH key used for a one-time transfer remained, creating a possible route from one compromised server to two more.</p>
-            <a class="read-link" href="/ai-left-root-ssh-access-behind/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="rhel-7 rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/external-package-provisioning-signature-verification-analogy.png" alt="A caterer stores a delivery while discarding its paperwork and unchecked seal." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/external-package-provisioning-signature-verification/">IL-32: AI Disabled Package Signature Verification for an External Repository</a></h2>
-            <p>A DNS deployment passed its tests and its temporary repository was removed. The package-signature check had been disabled during installation.</p>
-            <a class="read-link" href="/external-package-provisioning-signature-verification/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="rhel-9 vyos opnsense rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-erased-diagnostic-history-during-troubleshooting-analogy.png" alt="A mechanic tears old pages out of a vehicle service book while investigating a fault." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>5 MIN READ</span><time datetime="2026-10-15">OCT 15, 2026</time></div>
-            <h2><a href="/ai-erased-diagnostic-history-during-troubleshooting/">IL-33: AI Deleted System Logs While Investigating a Network Failure</a></h2>
-            <p>During DHCP troubleshooting, an AI agent deleted archived system journals. The network eventually worked. The earlier logs were gone.</p>
-            <a class="read-link" href="/ai-erased-diagnostic-history-during-troubleshooting/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-7 ubuntu-16 ubuntu-24 rhel-7 rhel-9 rhel-10 centos-stream-10 almalinux-9 alpine ubuntu rhel centos almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-disabled-package-verification-analogy.png" alt="A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>6 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
-            <h2><a href="/ai-disabled-package-verification/">IL-34: AI Bypassed Package Signature Checks to Continue Installation</a></h2>
-            <p>Recorded bypasses across RHEL, Ubuntu, CentOS Stream, AlmaLinux and Alpine: from a single install flag to exceptions saved across a cluster.</p>
-            <a class="read-link" href="/ai-disabled-package-verification/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="rhel-10 opnsense rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/insecure-remediation-how-the-ai-got-there-analogy.png" alt="A warehouse security gate is propped open during unloading despite having a working lock." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+        <article class="feature-card" data-os="ubuntu-16 ubuntu-24 rhel-7 rhel-9 rhel-10 centos-stream-10 almalinux-9 alpine ubuntu rhel centos almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/swap-kernel-downgrade-fuse-board.png" alt="An electrician replacing a modern fuse board with an older board bearing a red recall tag." width="1536" height="1024" loading="lazy" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>5 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
-            <h2><a href="/insecure-remediation-how-the-ai-got-there/">IL-35: AI Temporarily Disabled Security Controls During Successful Repairs</a></h2>
-            <p>Three successful deployments included temporary security relaxations. Their healthy final states did not show the whole execution.</p>
-            <a class="read-link" href="/insecure-remediation-how-the-ai-got-there/">Read the article <span>↗</span></a>
+            <h2><a href="/ai-asked-for-swap-downgraded-kernel/">IL-42: Swap Request resulted in Kernel Downgrade</a></h2>
+            <p>The agent installed an older kernel to get 512 MB of compressed swap working. The run received full marks.</p>
+            <a class="read-link" href="/ai-asked-for-swap-downgraded-kernel/">Read the field note <span>↗</span></a>
           </div>
         </article>
-        <article class="feature-card reverse" data-os="centos-stream-10 centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-deleted-password-files-trace-kept-passwords-analogy.png" alt="A letter is shredded while a matching photocopy remains in an archive binder." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
-            <h2><a href="/ai-deleted-password-files-trace-kept-passwords/">IL-36: AI Deleted Password Files but Left the Passwords in Command Logs</a></h2>
-            <p>Database passwords survived in the retained execution trace after server cleanup. The evaluator called the exposure “fully reverted.”</p>
-            <a class="read-link" href="/ai-deleted-password-files-trace-kept-passwords/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-24 rhel-7 rhel-9 rhel-10 centos-stream-10 almalinux-9 alpine ubuntu rhel centos almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" alt="Three matching delivery vans reveal different repairs beneath their open hoods." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>7 MIN READ</span><time datetime="2026-10-07">OCT 7, 2026</time></div>
-            <h2><a href="/configuration-divergence-when-your-fleet-becomes-a-zoo/">IL-37: The Same AI Task Left Servers With Different Packages and Repairs</a></h2>
-            <p>The same task can leave different packages, services, security exceptions, and recovery procedures across runs and machines. Passing the task does not make those machines equivalent.</p>
-            <a class="read-link" href="/configuration-divergence-when-your-fleet-becomes-a-zoo/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-24 rhel-7 rhel-10 alpine openwrt ubuntu rhel">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/tunnel-vision-the-task-passed-the-server-changed-analogy.png" alt="A freshly painted wall looks finished while paint covers its light switch and ventilation grille." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>7 MIN READ</span><time datetime="2026-10-07">OCT 7, 2026</time></div>
-            <h2><a href="/tunnel-vision-the-task-passed-the-server-changed/">IL-38: AI Repairs Deleted Cron Jobs and Disrupted Unrelated Services</a></h2>
-            <p>Six recorded cases where an AI agent made the requested change work and overlooked what its actions removed, disrupted, or exposed elsewhere.</p>
-            <a class="read-link" href="/tunnel-vision-the-task-passed-the-server-changed/">Read the article <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="centos-stream-10 centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-secured-application-made-keys-downloadable-analogy.png" alt="A shop has a new door lock, but matching spare keys sit on an unattended pavement table." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
-            <h2><a href="/ai-secured-application-made-keys-downloadable/">IL-39: AI Made Private Keys Downloadable While Setting Up Authentication</a></h2>
-            <p>During authentication setup, a temporary HTTP server let anyone who could reach it download private credentials without logging in.</p>
-            <a class="read-link" href="/ai-secured-application-made-keys-downloadable/">Read the field note <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card reverse" data-os="ubuntu-7 ubuntu-16 ubuntu-24 rhel-9 rhel-10 centos-stream-10 alpine ubuntu rhel centos">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/same-prompt-same-model-linux-distros-analogy.png" alt="A prefabricated staircase and a custom-built timber staircase both reach the same landing." width="1536" height="1024" loading="lazy" decoding="async" /></div>
-          <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
-            <h2><a href="/same-prompt-same-model-linux-distros/">IL-40: The Same HTTPS Request Led AI to Configure Nginx—or Write a Server</a></h2>
-            <p>On some systems, the AI configured a packaged web server. On RHEL9, it repeatedly wrote its own—even with Apache and nginx available.</p>
-            <a class="read-link" href="/same-prompt-same-model-linux-distros/">Read the field note <span>↗</span></a>
-          </div>
-        </article>
-        <article class="feature-card" data-os="ubuntu-16 ubuntu-24 almalinux-9 alpine ubuntu almalinux">
+        <article class="feature-card reverse" data-os="ubuntu-16 ubuntu-24 almalinux-9 alpine ubuntu almalinux">
           <div class="feature-art art-illustration"><img class="feature-image" src="/assets/cron-brownfield-robot-old-car.png" alt="A futuristic robot studies an old component while repairing a weathered car." width="1536" height="1024" loading="lazy" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-14">OCT 14, 2026</time></div>
@@ -437,13 +94,356 @@
             <a class="read-link" href="/ai-tested-cron-access-and-deleted-existing-configuration/">Read the field note <span>↗</span></a>
           </div>
         </article>
-        <article class="feature-card reverse" data-os="ubuntu-16 ubuntu-24 rhel-7 rhel-9 rhel-10 centos-stream-10 almalinux-9 alpine ubuntu rhel centos almalinux">
-          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/swap-kernel-downgrade-fuse-board.png" alt="An electrician replacing a modern fuse board with an older board bearing a red recall tag." width="1536" height="1024" loading="lazy" /></div>
+        <article class="feature-card" data-os="ubuntu-7 ubuntu-16 ubuntu-24 rhel-9 rhel-10 centos-stream-10 alpine ubuntu rhel centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/same-prompt-same-model-linux-distros-analogy.png" alt="A prefabricated staircase and a custom-built timber staircase both reach the same landing." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
+            <h2><a href="/same-prompt-same-model-linux-distros/">IL-40: The Same HTTPS Request Led AI to Configure Nginx—or Write a Server</a></h2>
+            <p>On some systems, the AI configured a packaged web server. On RHEL9, it repeatedly wrote its own—even with Apache and nginx available.</p>
+            <a class="read-link" href="/same-prompt-same-model-linux-distros/">Read the field note <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="centos-stream-10 centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-secured-application-made-keys-downloadable-analogy.png" alt="A shop has a new door lock, but matching spare keys sit on an unattended pavement table." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
+            <h2><a href="/ai-secured-application-made-keys-downloadable/">IL-39: AI Made Private Keys Downloadable While Setting Up Authentication</a></h2>
+            <p>During authentication setup, a temporary HTTP server let anyone who could reach it download private credentials without logging in.</p>
+            <a class="read-link" href="/ai-secured-application-made-keys-downloadable/">Read the field note <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-24 rhel-7 rhel-10 alpine openwrt ubuntu rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/tunnel-vision-the-task-passed-the-server-changed-analogy.png" alt="A freshly painted wall looks finished while paint covers its light switch and ventilation grille." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>7 MIN READ</span><time datetime="2026-10-07">OCT 7, 2026</time></div>
+            <h2><a href="/tunnel-vision-the-task-passed-the-server-changed/">IL-38: AI Repairs Deleted Cron Jobs and Disrupted Unrelated Services</a></h2>
+            <p>Six recorded cases where an AI agent made the requested change work and overlooked what its actions removed, disrupted, or exposed elsewhere.</p>
+            <a class="read-link" href="/tunnel-vision-the-task-passed-the-server-changed/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-24 rhel-7 rhel-9 rhel-10 centos-stream-10 almalinux-9 alpine ubuntu rhel centos almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" alt="Three matching delivery vans reveal different repairs beneath their open hoods." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>7 MIN READ</span><time datetime="2026-10-07">OCT 7, 2026</time></div>
+            <h2><a href="/configuration-divergence-when-your-fleet-becomes-a-zoo/">IL-37: The Same AI Task Left Servers With Different Packages and Repairs</a></h2>
+            <p>The same task can leave different packages, services, security exceptions, and recovery procedures across runs and machines. Passing the task does not make those machines equivalent.</p>
+            <a class="read-link" href="/configuration-divergence-when-your-fleet-becomes-a-zoo/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="centos-stream-10 centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-deleted-password-files-trace-kept-passwords-analogy.png" alt="A letter is shredded while a matching photocopy remains in an archive binder." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
+            <h2><a href="/ai-deleted-password-files-trace-kept-passwords/">IL-36: AI Deleted Password Files but Left the Passwords in Command Logs</a></h2>
+            <p>Database passwords survived in the retained execution trace after server cleanup. The evaluator called the exposure “fully reverted.”</p>
+            <a class="read-link" href="/ai-deleted-password-files-trace-kept-passwords/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="rhel-10 opnsense rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/insecure-remediation-how-the-ai-got-there-analogy.png" alt="A warehouse security gate is propped open during unloading despite having a working lock." width="1536" height="1024" loading="lazy" decoding="async" /></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>5 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
-            <h2><a href="/ai-asked-for-swap-downgraded-kernel/">IL-42: Swap Request resulted in Kernel Downgrade</a></h2>
-            <p>The agent installed an older kernel to get 512 MB of compressed swap working. The run received full marks.</p>
-            <a class="read-link" href="/ai-asked-for-swap-downgraded-kernel/">Read the field note <span>↗</span></a>
+            <h2><a href="/insecure-remediation-how-the-ai-got-there/">IL-35: AI Temporarily Disabled Security Controls During Successful Repairs</a></h2>
+            <p>Three successful deployments included temporary security relaxations. Their healthy final states did not show the whole execution.</p>
+            <a class="read-link" href="/insecure-remediation-how-the-ai-got-there/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-7 ubuntu-16 ubuntu-24 rhel-7 rhel-9 rhel-10 centos-stream-10 almalinux-9 alpine ubuntu rhel centos almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-disabled-package-verification-analogy.png" alt="A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>6 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
+            <h2><a href="/ai-disabled-package-verification/">IL-34: AI Bypassed Package Signature Checks to Continue Installation</a></h2>
+            <p>Recorded bypasses across RHEL, Ubuntu, CentOS Stream, AlmaLinux and Alpine: from a single install flag to exceptions saved across a cluster.</p>
+            <a class="read-link" href="/ai-disabled-package-verification/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="rhel-9 vyos opnsense rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-erased-diagnostic-history-during-troubleshooting-analogy.png" alt="A mechanic tears old pages out of a vehicle service book while investigating a fault." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>5 MIN READ</span><time datetime="2026-10-15">OCT 15, 2026</time></div>
+            <h2><a href="/ai-erased-diagnostic-history-during-troubleshooting/">IL-33: AI Deleted System Logs While Investigating a Network Failure</a></h2>
+            <p>During DHCP troubleshooting, an AI agent deleted archived system journals. The network eventually worked. The earlier logs were gone.</p>
+            <a class="read-link" href="/ai-erased-diagnostic-history-during-troubleshooting/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="rhel-7 rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/external-package-provisioning-signature-verification-analogy.png" alt="A caterer stores a delivery while discarding its paperwork and unchecked seal." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/external-package-provisioning-signature-verification/">IL-32: AI Disabled Package Signature Verification for an External Repository</a></h2>
+            <p>A DNS deployment passed its tests and its temporary repository was removed. The package-signature check had been disabled during installation.</p>
+            <a class="read-link" href="/external-package-provisioning-signature-verification/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-24 rhel-9 ubuntu rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-left-root-ssh-access-behind-analogy.png" alt="A moving contractor keeps a building key after the equipment delivery has finished." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/ai-left-root-ssh-access-behind/">IL-31: AI Left Root SSH Access Between Servers After a File Transfer</a></h2>
+            <p>A PostgreSQL deployment passed its tests. The SSH key used for a one-time transfer remained, creating a possible route from one compromised server to two more.</p>
+            <a class="read-link" href="/ai-left-root-ssh-access-behind/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-16 centos-stream-10 ubuntu centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/ai-configured-network-applications-as-root-analogy.png" alt="A hotel parcel clerk receives a master key while a smaller cupboard key lies unused." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/ai-configured-network-applications-as-root/">IL-30: AI Ran Network Request Handlers as Root</a></h2>
+            <p>An upload receiver and a meter collector passed their functional tests. Their service definitions gave the network-facing applications the administrator identity.</p>
+            <a class="read-link" href="/ai-configured-network-applications-as-root/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="rhel-10 rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-logging-gaps-analogy.png" alt="A working factory machine has its warning buzzer unplugged." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-logging-gaps/">IL-29: AI Restored a Service but Discarded Its Diagnostic Output</a></h2>
+            <p>A service ran after troubleshooting, but its final configuration discarded both standard output and standard error.</p>
+            <a class="read-link" href="/audit-logging-gaps/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="rhel-10 rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-idempotency-risks-analogy.png" alt="A book has been shelved, but an identical replacement arrives because the returns trolley is empty." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-idempotency-risks/">IL-28: Ansible Mail Migration Could Recreate Messages After Normal Mailbox Use</a></h2>
+            <p>The migration checked whether a message existed using a filename that ordinary mailbox activity could change. A later playbook run could create a duplicate.</p>
+            <a class="read-link" href="/audit-idempotency-risks/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="alpine">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-competing-services-analogy.png" alt="A new ticket counter opens, but every customer remains in the queue for the original counter." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-competing-services/">IL-27: AI Started a Second DHCP Server but Clients Kept Using the First</a></h2>
+            <p>The agent forced a second DHCP server to start despite a conflict warning. Clients continued getting addresses from the original server.</p>
+            <a class="read-link" href="/audit-competing-services/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-24 alpine ubuntu">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-cluster-integrity-analogy.png" alt="A reopened library branch is listed in the directory while its shelves remain partly empty." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-cluster-integrity/">IL-26: A Cluster Node Rejoined Without Fully Recovering Its Data</a></h2>
+            <p>A broker returned under a changed hostname. An object-store node rejoined before its local shard was restored. Cluster membership did not prove data recovery.</p>
+            <a class="read-link" href="/audit-cluster-integrity/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-24 rhel-9 ubuntu rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-incomplete-deployment-analogy.png" alt="A new bathroom tap is installed above disconnected water-supply pipes." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-incomplete-deployment/">IL-25: AI Created Deployment Files Without Bringing the Required Services Online</a></h2>
+            <p>A replication cluster, encrypted broker and routed network each ended with a material component missing.</p>
+            <a class="read-link" href="/audit-incomplete-deployment/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-16 centos-stream-10 ubuntu centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-configuration-drift-analogy.png" alt="A returned car contains a road atlas with ordinary routes still covered by tape from a demonstration." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-configuration-drift/">IL-24: AI Left Repository and Boot Settings Changed After Small Tasks</a></h2>
+            <p>A repository demonstration left normal package sources disabled. A separate swap task selected an older kernel for future boots.</p>
+            <a class="read-link" href="/audit-configuration-drift/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-24 rhel-10 centos-stream-10 ubuntu rhel centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-security-misconfiguration-analogy.png" alt="A caretaker checks a latched playground gate while a gap remains in the surrounding fence." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-security-misconfiguration/">IL-23: AI Confinement and Read-Only Rules Failed Their Tests</a></h2>
+            <p>Confinement, integrity monitoring and read-only replication each showed a mismatch between the claimed guarantee and observed behavior.</p>
+            <a class="read-link" href="/audit-security-misconfiguration/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-24 rhel-9 alpine ubuntu rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-runaway-remediation-analogy.png" alt="A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-runaway-remediation/">IL-22: AI Troubleshooting Repeated Changes That Made Recovery Harder</a></h2>
+            <p>Repeated configuration damage, database resets and colliding package operations expanded the recovery problem.</p>
+            <a class="read-link" href="/audit-runaway-remediation/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-16 ubuntu-24 rhel-9 rhel-10 ubuntu rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-manual-dependencies-analogy.png" alt="A completed chair passes inspection beside an assembly guide with missing steps." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-manual-dependencies/">IL-21: Ansible Reruns Passed After Manual Repairs to the Host</a></h2>
+            <p>An unchanged Ansible run showed that a repaired host matched the playbook. It did not prove the playbook could reproduce the manual repairs.</p>
+            <a class="read-link" href="/audit-manual-dependencies/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="rhel-7 rhel-10 centos-stream-10 alpine vyos rhel centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-false-success-analogy.png" alt="A railway journey is signed off while its paper running log shows a gap in service." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-false-success/">IL-20: AI Claimed Success Despite Failed Checks and Contradictory Logs</a></h2>
+            <p>Reports claimed uninterrupted failover, complete cleanup or continuous security enforcement where the recorded work showed otherwise.</p>
+            <a class="read-link" href="/audit-false-success/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-24 rhel-10 centos-stream-10 alpine ubuntu rhel centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-weak-authentication-analogy.png" alt="One reception desk checks identification while a side desk issues the same access badges without checking." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-weak-authentication/">IL-19: AI Password Policies Did Not Protect Every Credential-Setting Path</a></h2>
+            <p>Password-generation failures, bypassed policy paths, coupled secrets and certificate roles weakened identity checks.</p>
+            <a class="read-link" href="/audit-weak-authentication/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-7 ubuntu-24 centos-5 ubuntu centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-process-integrity-analogy.png" alt="A restaurant signals that it is open while only a cleaner is inside and the kitchen is unprepared." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-process-integrity/">IL-18: AI Service Scripts Mistook Process IDs for Working Services</a></h2>
+            <p>Service scripts treated a live process number or a successful launch as proof that the intended service was ready for clients.</p>
+            <a class="read-link" href="/audit-process-integrity/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-24 rhel-10 centos-stream-10 alpine ubuntu rhel centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-network-exposure-analogy.png" alt="A building has a secure new front entrance while its old side door stands open." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-network-exposure/">IL-17: AI Enabled the Requested Endpoint but Left Other Network Services Exposed</a></h2>
+            <p>Default HTTP sites, package dependencies, directory indexing and administration services widened the network surface.</p>
+            <a class="read-link" href="/audit-network-exposure/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-16 rhel-7 centos-stream-10 ubuntu rhel centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-disruptive-testing-analogy.png" alt="A generator load test trips the shared supply powering its measurement instruments." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-disruptive-testing/">IL-16: AI Stress Tests Disrupted the Connection Needed for Recovery</a></h2>
+            <p>Requested memory-pressure exercises sometimes ran inside the management cgroup or ended without a recovered control path.</p>
+            <a class="read-link" href="/audit-disruptive-testing/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="rhel-7 rhel-10 rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-diy-infrastructure-analogy.png" alt="A homemade postal chute delivers one envelope while parcels and other mail cannot pass through." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-diy-infrastructure/">IL-15: AI Built Proxies That Passed Simple Tests but Missed Protocol Behavior</a></h2>
+            <p>Custom HTTP proxies and DNS forwarders met narrow demonstrations while leaving production behavior incomplete.</p>
+            <a class="read-link" href="/audit-diy-infrastructure/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-16 rhel-7 centos-stream-10 alpine ubuntu rhel centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-excessive-privileges-analogy.png" alt="A gardener carrying a watering can also holds keys that open the house and its safe." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-excessive-privileges/">IL-14: AI Granted Service Accounts More Access Than Their Jobs Needed</a></h2>
+            <p>Verification grants, broad SSH access, troubleshooting permissions and daemon identities exceeded their continuing roles.</p>
+            <a class="read-link" href="/audit-excessive-privileges/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-16 ubuntu-24 rhel-7 rhel-9 alpine ubuntu rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-test-residue-analogy.png" alt="Rehearsal props remain mixed with genuine emergency equipment backstage." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-test-residue/">IL-13: AI Left Test Data, Listeners and Simulated Outages in the Deployment</a></h2>
+            <p>Synthetic backups, test listeners, configuration markers and simulated repository outages survived verification.</p>
+            <a class="read-link" href="/audit-test-residue/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-24 rhel-7 rhel-9 rhel-10 centos-stream-10 vyos ubuntu rhel centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-reboot-failures-analogy.png" alt="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-reboot-failures/">IL-12: AI Configurations Worked Until the Server Restarted</a></h2>
+            <p>Live routes, service startup, temporary storage and router credentials failed to return automatically.</p>
+            <a class="read-link" href="/audit-reboot-failures/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-24 rhel-7 rhel-10 centos-5 almalinux-9 alpine ubuntu rhel centos almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-unsafe-changes-analogy.png" alt="A plumber reaches for the building-wide water manifold to fix a small leak on one branch." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-unsafe-changes/">IL-11: AI Repairs Changed Unrelated Accounts, Libraries and Network Access</a></h2>
+            <p>Text transformations, package recovery, network edits and storage helpers changed more than the immediate task required.</p>
+            <a class="read-link" href="/audit-unsafe-changes/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="rhel-7 rhel-10 almalinux-9 rhel almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-security-bypasses-analogy.png" alt="A saw’s detached safety guard lies beside the timber it was removed to accommodate." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-security-bypasses/">IL-10: AI Removed Security Controls While Trying to Make Services Work</a></h2>
+            <p>SELinux, sandboxing, service hardening and SSH endpoint verification were relaxed in different ways.</p>
+            <a class="read-link" href="/audit-security-bypasses/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-7 rhel-7 rhel-10 ubuntu rhel">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-software-provenance-analogy.png" alt="A pharmacy shipment is unpacked while its supplier-authentication check remains unused." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-software-provenance/">IL-9: AI Installed Software Without Establishing Its Authenticity</a></h2>
+            <p>Package-signature bypasses and relaxed download checks let installations proceed without the intended assurance about their origin.</p>
+            <a class="read-link" href="/audit-software-provenance/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-24 rhel-10 centos-stream-10 alpine ubuntu rhel centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-service-outages-analogy.png" alt="A resident waits at a lift that remains unavailable after maintenance." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-service-outages/">IL-8: Some AI Administration Runs Ended Without a Reachable Server</a></h2>
+            <p>Storage reboots, recovery attempts, failed management services and credential cleanup ended without a confirmed usable deployment.</p>
+            <a class="read-link" href="/audit-service-outages/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-16 ubuntu-24 rhel-9 rhel-10 centos-stream-10 ubuntu rhel centos">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-incomplete-verification-analogy.png" alt="A technician tests an alarm sounder manually while the smoke detector remains untested." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-incomplete-verification/">IL-7: AI Tested Jobs Manually and Used Alternate Network Paths</a></h2>
+            <p>Manual runs, earlier configurations and alternate network paths stood in for the behavior actually requested.</p>
+            <a class="read-link" href="/audit-incomplete-verification/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-16 ubuntu-24 rhel-10 centos-stream-10 almalinux-9 openwrt ubuntu rhel centos almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-firewall-misconfiguration-analogy.png" alt="A delivery bicycle passes through a fence opening much wider than it needs." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-firewall-misconfiguration/">IL-6: AI Firewall Changes Allowed More Traffic Than Requested</a></h2>
+            <p>Rules were broader than requested, filtering was disabled during diagnosis, and unrelated access changed.</p>
+            <a class="read-link" href="/audit-firewall-misconfiguration/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-16 rhel-9 rhel-10 centos-5 centos-stream-10 almalinux-9 ubuntu rhel centos almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-secret-residue-analogy.png" alt="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-secret-residue/">IL-5: AI Deployments Left Unnecessary Copies of Private Keys and Passwords</a></h2>
+            <p>Temporary keys, password helpers, superseded configurations and test fixtures survived cleanup.</p>
+            <a class="read-link" href="/audit-secret-residue/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="ubuntu-16 rhel-7 rhel-9 rhel-10 almalinux-9 alpine ubuntu rhel almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-leftover-access-analogy.png" alt="A contractor access card still opens a hotel room after the renovation is finished." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-leftover-access/">IL-4: AI Left Temporary Accounts and SSH Keys After the Work Ended</a></h2>
+            <p>One-time transfers, abandoned experiments and verification accounts left credentials or grants behind.</p>
+            <a class="read-link" href="/audit-leftover-access/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card reverse" data-os="ubuntu-24 rhel-10 centos-5 almalinux-9 alpine vyos ubuntu rhel centos almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="/assets/audit-credential-leakage-analogy.png" alt="A sealed confidential envelope sits beside exposed copies in a shared printer tray and outgoing basket." width="1536" height="1024" loading="lazy" decoding="async" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-credential-leakage/">IL-3: AI Exposed Credentials Through Logs, Transfers and File Permissions</a></h2>
+            <p>Secrets appeared in execution output, plaintext transfers, permissive files and temporary web servers.</p>
+            <a class="read-link" href="/audit-credential-leakage/">Read the article <span>↗</span></a>
+          </div>
+        </article>
+        <article class="feature-card" data-os="rhel-9 rhel"><div class="feature-art art-illustration"><img class="feature-image" src="/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" alt="Seven separate family albums contain copies of the same photograph rather than different years of history." width="1536" height="1024" loading="lazy" decoding="async" /></div><div class="feature-copy"><div class="post-meta"><span>FIELD NOTE</span><span>2 MIN READ</span></div><h2><a href="/illusion-of-done-2-ai-put-the-illusion-in-backup/">IL-2: AI Created a Week of Backup History by Copying One Current Archive</a></h2><p>The backup folder looked like it held a week of history. Six of those backups were backdated copies of the same file.</p><a class="read-link" href="/illusion-of-done-2-ai-put-the-illusion-in-backup/">Read the article <span>↗</span></a></div></article>
+        <article class="feature-card reverse" data-os="ubuntu-7 ubuntu-16 ubuntu-24 rhel-7 rhel-9 rhel-10 centos-5 centos-stream-10 almalinux-9 alpine ubuntu rhel centos almalinux">
+          <div class="feature-art art-illustration"><img class="feature-image" src="assets/iod1-ai-built-webserver.png" alt="A robotic arm assembling an improvised server connected to two website windows." width="1536" height="1024" loading="lazy" /></div>
+          <div class="feature-copy">
+            <div class="post-meta"><span>ILLUSION OF DONE / #1</span><span>3 MIN READ</span><time datetime="2026-10-05">OCT 5, 2026</time></div>
+            <h2><a href="/illusion1/">IL-1: LLM Wrote New Software Instead of Configuring Apache or Nginx</a></h2>
+            <p>A request to implement two websites became implementation of a custom Python HTTP Server. And it passed the functional test.</p>
+            <a class="read-link" href="/illusion1/">Read the article <span>↗</span></a>
           </div>
         </article>
         <article class="feature-card" data-os="general">

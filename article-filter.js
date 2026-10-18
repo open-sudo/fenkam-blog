@@ -30,7 +30,9 @@
     const url = new URL(window.location.href);
     if (select.value === 'all') url.searchParams.delete('os');
     else url.searchParams.set('os', select.value);
+    url.hash = 'writing';
     window.history.replaceState(null, '', url);
+    section.scrollIntoView({ behavior: 'instant', block: 'start' });
   });
   filterArticles();
   document.querySelector('.article-filters').hidden = false;
