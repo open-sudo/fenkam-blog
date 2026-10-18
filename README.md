@@ -138,6 +138,12 @@ exports support social previews. New article diagrams open at full size.
 Homepage diagrams show the full image without cropping and keep the existing
 alternating-card layout. Original illustrations and prompts remain as history.
 
+Make section handoffs explicit: state what the current section established,
+connect the remaining work to the article's main requirement, and say what the
+next section will explain. Begin each section by naming its subject and how
+it follows from the preceding section. Use concrete terms such as "web-server
+software" so readers can identify the decision or component being discussed.
+
 Review the whole article for continuity, including section starts and endings.
 Introduce both ends of a connection before saying it failed. Explain the first
 attempt before a retry, and introduce a new task before describing its result.
