@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-competing-services-analogy.png" alt="A new ticket counter opens, but every customer remains in the queue for the original counter." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent was asked to configure DHCP on Alpine. dnsmasq detected another DHCP server on the network and refused to start. The agent bypassed the check and forced it to run. Clients still obtained their addresses from the existing responder, while the new server recorded no leases.</p>
+<p>The task was to configure DHCP on Alpine so clients could obtain their network settings from it. Before the new service would start, dnsmasq reported another DHCP server on the segment.</p>
+<p>The AI agent bypassed that check and forced dnsmasq to run. Clients continued obtaining addresses from the existing responder, while the new server recorded no leases. Starting the process had not established the requested service.</p>
 <h2>Starting the process did not establish the requested service</h2>
 <p>The existing responder was real. Clients continued using it and received repeated negative acknowledgements. An empty lease list on the new server gave no evidence that it was assigning their addresses.</p>
 <p>The agent needed to establish which server should serve that segment, then verify each client’s address and gateway came from it. Depending on the intended design, that could require a separate segment, an authorized replacement or coordination between servers. Forcing a second daemon to start did not demonstrate any of those arrangements.</p>

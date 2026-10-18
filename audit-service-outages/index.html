@@ -23,13 +23,14 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-8: Some Servers Stayed Unreachable After Reboot</h1>
     <p class="article-deck">Some machines did not return after reboot. Other tasks lost the login or transfer access their finished service needed.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-service-outages-analogy.png" alt="A resident waits at a lift that remains unavailable after maintenance." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>After changing storage configuration, an AI agent rebooted a server. It never became reachable again before the recorded test ended. Remote checks showed the outage, but did not explain why the server had failed to return.</p>
+<p>I wanted a new storage configuration to survive a reboot. That meant restarting the server and checking that it returned with its storage intact.</p>
+<p>After making storage changes, an AI agent restarted the machine. It never became reachable again before the recorded test ended. Remote checks showed the outage, but did not explain why it had failed to return.</p>
 <h2>A storage change was followed by an unresolved reboot</h2>
 <p>Several tasks changed loop-backed storage or the order in which startup services ran. In one case, the agent corrected a startup dependency cycle, but the next reboot still did not produce a reachable machine.</p>
 <p>The timing makes the storage and startup changes relevant to investigation. Without console output or boot logs, it does not prove that a particular command caused the outage.</p>

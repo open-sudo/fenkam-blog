@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-cluster-integrity-analogy.png" alt="A reopened library branch is listed in the directory while its shelves remain partly empty." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An object-storage node automatically rejoined its cluster after restart. Its local data shard was still unhealthy. An explicit healing command repaired that status. The node’s return to the membership list was therefore only part of recovery; its local data had not recovered automatically in the demonstrated sequence.</p>
+<p>A MinIO storage node needed to recover after a restart, rejoin its cluster and catch up with the data it had missed. Returning to the membership list was only part of that job.</p>
+<p>In an AI agent’s deployment test, the node rejoined automatically but its local data shard remained unhealthy. An explicit healing command repaired it. Automatic membership recovery had worked; automatic local-data recovery had not been demonstrated.</p>
 <h2>A hostname change gave RabbitMQ a different identity</h2>
 <p>In a separate Alpine task, DHCP changed a RabbitMQ server’s hostname during boot. RabbitMQ used the hostname as part of its node identity, so it started as a different, unclustered node.</p>
 <p>The agent began repair, but the record ended without a confirmed rejoin. Other members stayed healthy. A successful request to a surviving peer would not have established that the missing member had returned.</p>

@@ -23,13 +23,14 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-14: AI Gave Accounts Unnecessary Permissions</h1>
     <p class="article-deck">Test grants, unrestricted SSH keys and administrator service accounts remained after narrower jobs were complete.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-excessive-privileges-analogy.png" alt="A gardener carrying a watering can also holds keys that open the house and its safe." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent created a database account for verification and gave it ALL PRIVILEGES on every database. The account remained afterward. It could do much more than the operation being tested. Other tasks similarly left broad permissions attached to application accounts or continuing automation.</p>
+<p>The database setup needed a verification account. That account only needed enough authority to perform the check.</p>
+<p>An AI agent gave it ALL PRIVILEGES on every database and left it in place afterward. The test passed, but the account retained much more authority than the check required. Other tasks left similar permissions on application and automation accounts.</p>
 <h2>Permissions added for a test became permanent</h2>
 <p>The database verification account kept its global privileges. A RabbitMQ application account retained a management tag that had been added only for testing.</p>
 <p>An application that needs to send messages does not necessarily need broker-management access. A convenient test account is not automatically an appropriate account to leave in service.</p>

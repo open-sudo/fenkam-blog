@@ -28,7 +28,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/same-prompt-same-model-linux-distros-analogy.png" alt="A prefabricated staircase and a custom-built timber staircase both reach the same landing." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>We asked the same AI model to serve HTTPS on port 8443, renew certificates automatically and keep answering requests during renewal. It configured Apache or nginx on several systems. On RHEL 9, it repeatedly wrote a custom Python service instead.</p>
+<p>I wanted an HTTPS service that could renew its certificate without interrupting requests. It had to listen on port 8443, load the renewed certificate and recover after a reboot.</p>
+<p>I tested an AI agent using GPT-5.6-sol on several Linux systems, giving it that task in each run. It configured Apache or nginx on some. On RHEL 9, it repeatedly wrote a custom Python service instead.</p>
 <h2>Apache and nginx were available on RHEL 9</h2>
 <p>Ubuntu 7 used Apache; Ubuntu 24, Alpine and CentOS Stream used nginx. An early RHEL 10 attempt wrote custom software when repositories were unavailable. A later RHEL 10 run had repository access and installed Apache.</p>
 <p>On RHEL 9, the agent did not query repositories or try a package installation. A separate check on the same live machine confirmed Apache, mod_ssl and nginx were available.</p>

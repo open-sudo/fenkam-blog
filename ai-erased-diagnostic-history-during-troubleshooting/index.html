@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/ai-erased-diagnostic-history-during-troubleshooting-analogy.png" alt="A mechanic tears old pages out of a vehicle service book while investigating a fault." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>While configuring DHCP on a RHEL 9.8 client, an AI agent enabled debug logging and retried a failed connection. Its troubleshooting command also rotated the system journal and deleted archived files older than one second.</p>
+<p>The RHEL 9.8 client needed an address from DHCP, but its connection attempts kept failing. NetworkManager’s journal messages were useful evidence for finding the cause.</p>
+<p>The AI agent enabled debug logging and retried the connection. Its troubleshooting command also rotated the system journal and deleted archived files older than one second—removing history while the fault was still unresolved.</p>
 <h2>The command removed history, not just lines from the display</h2>
 <p>The agent ran <code>journalctl --rotate</code> followed by <code>journalctl --vacuum-time=1s</code>. The output confirmed 1.0 MB of archived journals removed. The DHCP retry still failed.</p>
 <p>The later query already limited output by service, interface, time and line count. Those display filters did not require deleting the older messages. The vacuum operation had no equivalent restriction to NetworkManager or that interface.</p>

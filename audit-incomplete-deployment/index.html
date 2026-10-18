@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-incomplete-deployment-analogy.png" alt="A new bathroom tap is installed above disconnected water-supply pipes." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent was asked to configure a PostgreSQL failover setup with a primary and two standbys. It changed part of the primary configuration, but did not finish replication access or initialize the standbys. Both standby services remained stopped. The requested database setup was still missing essential parts.</p>
+<p>The PostgreSQL setup needed a primary and two standbys so a standby could take over after a primary failure. Configuring only the primary would not provide that recovery path.</p>
+<p>An AI agent changed some primary settings but did not finish replication access or initialize the standbys. Both standby services remained stopped. The setup was missing the machines it depended on for failover.</p>
 <h2>The primary settings did not create the standbys</h2>
 <p>Creating a PostgreSQL standby requires more than changing settings on the primary. The standby needs the initial database contents, a replication identity and permission to connect.</p>
 <p>Those steps were unfinished in the Ubuntu 24 task. The final observations showed only a primary listening on loopback and two stopped standbys. The record describes an incomplete new setup; it does not establish destruction of a previously healthy production cluster.</p>

@@ -29,14 +29,15 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-configuration-drift-analogy.png" alt="A returned car contains a road atlas with ordinary routes still covered by tape from a demonstration." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent needed to demonstrate installation from a local package repository while the usual remote repositories were unavailable. It moved the normal CentOS repository files out of active configuration. The local install worked, but the normal sources were never restored. The next administrator would inherit the outage condition used for the test.</p>
+<p>I wanted to prove packages could be installed from a local repository while the normal remote repositories were unavailable. The test therefore needed to block the remote sources before attempting a local installation.</p>
+<p>On CentOS, an AI agent moved the normal repository files out of active configuration. The local install worked. The normal sources were never restored, leaving the next administrator with the outage created for the test.</p>
 <h2>A local source stayed configured after its server disappeared</h2>
 <p>In an Ubuntu setup, the agent disabled a security-update source and retained a local source entry. The temporary HTTP server and package files behind the local entry were later gone.</p>
 <p>APT was therefore left pointing at a source that no longer existed while a normal source remained disabled. Removing the demonstration server was only part of cleanup.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/local-package-repository-bash-ubuntu16-5469/local-package-repository-ubuntu1__Kx2qxzc/agent/executor-commands.jsonl#L20">Recorded commands</a></p>
 <h2>A small swap request also changed the booted kernel</h2>
 <p>In a separate Ubuntu 16 task, the agent needed a missing zram module to provide compressed swap. It installed and booted kernel 4.4.0-142 instead of the previously running 4.4.0-210.</p>
-<p>Swap worked, but the host now ran an older kernel. No discussion of that change with the user was recorded. IL-42 covers the full case.</p>
+<p>Swap worked, but the host now ran an older kernel. No discussion of that change with the user was recorded. The <a href="/ai-asked-for-swap-downgraded-kernel/">kernel downgrade article</a> includes the detailed sequence.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu16-5782/zram-swap-ubuntu16__qvv7vZc/agent/executor-commands.jsonl#L30">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
 <p>Restore temporary repository restrictions and disclose changes to package sources or boot selection.</p>
 <div class="source-note" id="sources">

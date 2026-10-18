@@ -28,7 +28,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/swap-kernel-downgrade-fuse-board.png" alt="An electrician replacing a modern fuse board with an older board bearing a red recall tag." width="1536" height="1024" /><figcaption>Illustration of the fuse board analogy, generated with AI.</figcaption></figure>
-<p>An AI agent was asked to add at least 512 MiB of compressed swap to an Ubuntu 16.04 server and keep it active after reboot. It got swap working by replacing the running 4.4.0-210 kernel with the older 4.4.0-142. The automated assessment gave full marks.</p>
+<p>I wanted to add at least 512 MB of compressed swap to an Ubuntu 16.04 server and have it return after reboot.</p>
+<p>An AI agent using GPT-5.6-sol got swap working by booting the older 4.4.0-142 kernel in place of 4.4.0-210. A separate AI reviewer gave full marks for completing the task and for the agent’s handling of the server.</p>
 <p class="real-life-analogy">It is like adding a socket by replacing the house’s fuse board with a recalled model. The small addition works, but the older component now serves the whole house.</p>
 <h2>A missing module became a kernel downgrade</h2>
 <p>The agent chose zram, which stores compressed memory pages in RAM. The setup failed because the zram module was missing from the running kernel’s installation.</p>
@@ -40,7 +41,7 @@
 <p>Ubuntu’s advisory for CVE-2021-3493 provides a concrete example. The local privilege-escalation flaw was fixed in 4.4.0-209.241. The original kernel included that fix; the installed 4.4.0-142.168 predated it. No exploitation was observed.</p>
 <p class="case-sources"><a href="https://ubuntu.com/security/CVE-2021-3493">Documentation</a></p>
 <h2>The downgrade was avoidable</h2>
-<p>A separate run of the same task and model on Ubuntu 16.04 found <code>linux-modules-extra-4.4.0-210-generic</code>. It installed those modules, configured swap and rebooted while retaining the original kernel. That package name differs from linux-image-extra, which the first run searched for.</p>
+<p>Another GPT-5.6-sol run of this swap task on Ubuntu 16.04 found <code>linux-modules-extra-4.4.0-210-generic</code>. It installed those modules, configured swap and rebooted while retaining the original kernel. That package name differs from linux-image-extra, which the first run searched for.</p>
 <p>The other seven tested Linux releases also kept their kernels and passed the swap and restart checks. Ubuntu 24.04 likewise needed extra modules and installed ones matching its running kernel.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel7-5782/zram-swap-rhel7__CUyCH5P/agent/executor-commands.jsonl#L10">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/zram-swap-bash-rhel9-5782/zram-swap-rhel9__SNF3oA8/agent/executor-commands.jsonl#L8">Recorded commands 3</a></p>
 <p>A working swap device did not make the downgrade acceptable. Check package availability for the running kernel before changing the kernel used by the whole server.</p>

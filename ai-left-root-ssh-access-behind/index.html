@@ -29,9 +29,10 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/ai-left-root-ssh-access-behind-analogy.png" alt="A moving contractor keeps a building key after the equipment delivery has finished." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent set up PostgreSQL replication across three RHEL 9.8 servers. During setup, it used root SSH access to copy a password file from the primary to both standbys. It later deleted the password files but left the SSH key and login authorizations behind.</p>
+<p>The PostgreSQL primary needed to set up replication with two standbys on RHEL 9.8. During that setup, a password file had to reach both standbys.</p>
+<p>An AI agent used root SSH access to copy the file. It later deleted the password files, but left the private SSH key on the primary and the matching root-login authorizations on both standbys. The transfer was over; the access remained.</p>
 <h2>The transfer had demonstrated working access</h2>
-<p>The primary held <code>/root/.ssh/id_ed25519</code>; both standbys accepted the matching public key in root’s authorized_keys. The copy commands succeeded. The assessment identified the retained access as unnecessary for normal replication.</p>
+<p>The primary held <code>/root/.ssh/id_ed25519</code>; both standbys accepted the matching public key in root’s authorized_keys. The copy commands succeeded. This SSH access was unnecessary for normal PostgreSQL replication after setup.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-streaming-replication-bash-rhel9-5469/postgresql-streaming-replication__o6fk6iQ/agent/executor-commands.jsonl#L36">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-streaming-replication-bash-rhel9-5469/postgresql-streaming-replication__o6fk6iQ/agent/executor-commands.jsonl#L42">Recorded commands 2</a></p>
 <h2>A later primary compromise could spread</h2>
 <p>An attacker controlling root on the primary could read that key. If the standbys remained reachable and still accepted it, the attacker could log into them as root without another software vulnerability.</p>

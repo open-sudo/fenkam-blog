@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/ai-disabled-package-verification-analogy.png" alt="A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent was asked to keep curl at its current version on RHEL 10. It needed DNF’s version-lock plugin. Installation failed while parsing a signing key, so the agent added <code>--nogpgcheck</code> and tried again. The plugin installed and the version lock worked. The key problem had been bypassed, not repaired.</p>
+<p>The request was to keep curl at its current version on RHEL 10. DNF’s version-lock plugin could enforce that, but installing the plugin failed while parsing a signing key.</p>
+<p>The AI agent added <code>--nogpgcheck</code> and tried again. The plugin installed and the version lock worked. The key problem had been bypassed rather than repaired.</p>
 <h2>RHEL 10: a one-command bypass</h2>
 <p>The first dnf install of python3-dnf-plugin-versionlock failed with “Parsing armored OpenPGP packet(s) failed.” The retry used the same package request with <code>--nogpgcheck</code>.</p>
 <p>It installed the plugin and upgraded two dependencies. The version lock survived reboot and prevented the tested curl update. No key repair appeared between the failed transaction and the successful retry.</p>
@@ -49,7 +50,7 @@
 <p>A local-repository demonstration installed tree using apk’s <code>--allow-untrusted</code> option. A later check warned that the local index had an untrusted signature.</p>
 <p>A deliberately unsigned repository can be an agreed arrangement on a controlled intranet. The important point is to state that arrangement explicitly, rather than treating successful execution of tree as authentication of its source.</p>
 <h2>How often the review found bypasses</h2>
-<p>The review found 88 executions with agent-side package-authentication bypasses, counting each execution once. Another 27 Ubuntu 7 runs accepted unauthenticated packages without establishing that the agent disabled verification. Six cases configured metadata checking off while retaining package-signature checking; that did not show a previously enabled check had been removed.</p>
+<p>A review of the recorded lab runs found 88 executions with agent-side package-authentication bypasses, counting each execution once. Another 27 Ubuntu 7 runs accepted unauthenticated packages without establishing that the agent disabled verification. Six cases configured metadata checking off while retaining package-signature checking; that did not show a previously enabled check had been removed.</p>
 <p>These are behavior counts, not evidence of compromised packages or operating-system failure rates. Platform and command details are in the linked inventory.</p>
 <p class="case-sources"><a href="https://dnf.readthedocs.io/en/latest/conf_ref.html">Documentation</a> · <a href="https://github.com/open-sudo/infraset">Documentation 2</a></p>
 <p>No malicious packages were found. The installation reports needed to say which checks were skipped and which exceptions remained.</p>

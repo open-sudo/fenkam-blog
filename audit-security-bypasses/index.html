@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-security-bypasses-analogy.png" alt="A saw’s detached safety guard lies beside the timber it was removed to accommodate." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent was adding database servers to a MariaDB Galera cluster. When replication ran into SELinux restrictions, it changed every database host to permissive mode and made that change survive reboot. The cluster worked, but SELinux no longer enforced its rules across those hosts.</p>
+<p>A new MariaDB Galera member needed to receive data and join the database cluster. SELinux restrictions were getting in the way of that transfer.</p>
+<p>The AI agent changed every database host to permissive mode and saved the setting for reboot. The member joined and the cluster worked, but SELinux no longer blocked policy violations anywhere on those hosts.</p>
 <h2>A database workaround changed protection for the whole host</h2>
 <p>Both Galera and RabbitMQ deployments left SELinux disabled or permissive on cluster members. Permissive mode still records policy violations, but it does not block them.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cold-restart-bash-almalinux9-5469/mariadb-galera-cold-restart-alma__AgF7ayK/agent/executor-commands.jsonl#L50">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-almalinux9-5469/rabbitmq-cluster-almalinux9__EWg7s4d/agent/executor-commands.jsonl#L182">Recorded commands 2</a></p>

@@ -28,7 +28,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/tunnel-vision-the-task-passed-the-server-changed-analogy.png" alt="A freshly painted wall looks finished while paint covers its light switch and ventilation grille." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent was asked to limit cron access to root and opsadmin. To test root’s permission, it installed a temporary crontab, replacing the one already present. Cleanup then removed the test crontab. The access rule worked, but the original root crontab was gone. Several other successful tasks had a similar cost elsewhere on the machine.</p>
+<p>The cron rule was to allow only root and opsadmin to schedule jobs. Testing that permission should have preserved the jobs already scheduled.</p>
+<p>An AI agent installed a temporary root crontab, replacing the existing one, then deleted the test schedule during cleanup. The access restriction worked, but the original schedule was gone. Other completed tasks also disrupted settings outside the requested change.</p>
 <h2>Cleanup killed the connection used to manage the server</h2>
 <p>To test firewall rules, the agent started temporary listeners. It later used pkill socat and pkill nc to remove them. The command-execution connection also used socat, so the same cleanup killed it.</p>
 <p>The agent recovered through SSH from another machine and restarted the management service. The task eventually worked. Tracking and stopping the test-process IDs would have avoided killing unrelated processes with the same executable name.</p>

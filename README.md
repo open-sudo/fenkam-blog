@@ -98,3 +98,14 @@ Keep long run inventories in expandable details below the main story.
 Distinguish an observed failure, a code risk and a behavior that was not tested.
 Keep internal finding IDs and batch labels in the evidence, not in the narrative.
 Link recorded commands next to the case and detailed evidence at the end.
+
+Every article must stand on its own. Assume the reader opened this page first.
+Introduce the task and its purpose before describing the agent's actions.
+Name the model before comparing its behavior across runs. Introduce reviewers,
+test accounts and other actors before referring to them. Cross-links provide
+optional detail; they must not supply context needed to understand this page.
+
+Tell each field note as a short factual story: the situation, the goal, the
+agent's decision, what happened next and the consequence. Let those parts flow
+through the prose rather than using them as a repeated set of headings.
+Do not invent customers, incidents, dialogue or requirements to make a story.

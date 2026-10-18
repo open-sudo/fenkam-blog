@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/ai-configured-network-applications-as-root-analogy.png" alt="A hotel parcel clerk receives a master key while a smaller cupboard key lies unused." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent repaired a Python upload receiver on Ubuntu 16.04 and verified that it worked after reboot. Its service definition included <code>User=root</code> and <code>Group=root</code>. The program accepting network requests therefore ran with the administrator identity.</p>
+<p>The upload receiver needed to accept files on port 8080 and save them in a designated directory. The repair also had to survive a reboot.</p>
+<p>An AI agent repaired the Python service on Ubuntu 16.04 and verified that it worked after restart. Its service definition included <code>User=root</code> and <code>Group=root</code>, so the program handling network requests ran with the administrator identity.</p>
 <h2>The upload service did not need that authority</h2>
 <p>The receiver listened on port 8080 and saved uploads in a designated directory. A dedicated account could have permission to write there without authority over unrelated system files.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/http-upload-size-boundary-bash-ubuntu16-3541/http-upload-size-boundary-bash-u__o9u4jUq/agent/executor-commands.jsonl#L8">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/http-upload-size-boundary-bash-ubuntu16-3541/http-upload-size-boundary-bash-u__o9u4jUq/agent/executor-commands.jsonl#L54">Recorded commands 2</a></p>

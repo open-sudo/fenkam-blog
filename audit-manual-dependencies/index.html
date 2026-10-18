@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-manual-dependencies-analogy.png" alt="A completed chair passes inspection beside an assembly guide with missing steps." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An AI agent was asked to deploy file-integrity monitoring with Ansible. Before running the playbook, it installed AIDE and created the database of file properties that AIDE uses for comparison. The playbook then skipped initialization because that database already existed. The recorded run never showed the playbook performing that essential first step.</p>
+<p>The deliverable was an Ansible playbook for file-integrity monitoring. It needed to install AIDE and create the reference database used to detect later file changes.</p>
+<p>Before running the playbook, the AI agent installed AIDE and created that database manually. Ansible then skipped initialization because the file already existed. The run never showed the playbook performing the essential first-time setup.</p>
 <p class="real-life-analogy">Checking an assembly guide against a chair someone has already built does not prove you can build the chair from those instructions. An unchanged playbook run has the same limitation.</p>
 <h2>The prerequisite already existed, so Ansible skipped it</h2>
 <p>The AIDE initialization task used an existence check to avoid creating the database again. That is sensible for repeat runs. In this test, however, the agent had supplied the initial database outside the playbook.</p>

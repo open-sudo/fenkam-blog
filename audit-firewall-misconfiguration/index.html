@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-firewall-misconfiguration-analogy.png" alt="A delivery bicycle passes through a fence opening much wider than it needs." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent was asked to let an identified client reach an upload service. It opened the service to an entire firewall zone instead. The client connected successfully, so the positive test passed. That test did not show whether other machines in the zone could connect too.</p>
+<p>The upload service was supposed to accept connections from one identified client. The firewall change needed to admit that client while keeping the restriction on everyone else.</p>
+<p>An AI agent opened the port to an entire firewall zone. The intended client connected, so the positive test passed. That test said nothing about whether other machines in the zone could connect too.</p>
 <h2>A named client became a whole zone</h2>
 <p>An upload-service task and a broker-cluster task both opened ports across a firewall zone rather than limiting access to the expected clients or peers.</p>
 <p>A firewall zone groups interfaces or sources under a policy. Allowing a port for the zone can admit more machines than the specific ones named in the request.</p>

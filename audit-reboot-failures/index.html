@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-reboot-failures-analogy.png" alt="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent created a network bridge with live ip commands. Traffic worked, but the bridge disappeared after the machine restarted. Another route returned only after the agent entered a command again. The request required automatic recovery; these tests showed a need for manual intervention.</p>
+<p>I wanted the new network bridge to return automatically after a restart. A bridge that existed only until the next reboot would leave the administrator with more work to do.</p>
+<p>An AI agent created the bridge with live ip commands and got traffic flowing. After reboot, the bridge was gone. Another route returned only after the agent entered a command again. These setups needed manual repairs to recover.</p>
 <h2>An active startup service still left the route missing</h2>
 <p>One machine reported its route-setup service as active, yet the route was absent and pings failed until the agent repaired it manually.</p>
 <p>Another router restored only one of its multipath routes. The agent changed its startup configuration afterward but did not reboot that router again. The change might have fixed the problem; that final recovery test was missing.</p>

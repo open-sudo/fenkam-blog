@@ -28,7 +28,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" alt="Seven separate family albums contain copies of the same photograph rather than different years of history." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An AI agent configured nightly backups between two RHEL 9 servers, keeping seven days of archives. To test deletion of old backups, it copied the September 3 archive under earlier dates. Cleanup removed the oldest test files, but six backdated copies remained beside the genuine archive.</p>
+<p>The backup setup was meant to keep seven days of nightly archives between two RHEL 9 servers. I wanted to check that it deleted old files without waiting a week.</p>
+<p>The AI agent made backdated copies of the September 3 archive and ran its cleanup rule. The deletion test worked, but six copies remained beside the genuine archive. The directory now looked as though it held earlier backups that did not exist.</p>
 <p class="real-life-analogy">Seven copies of today’s family photo do not show what the family looked like seven years ago. Giving one backup seven dates does not create seven recovery points.</p>
 <h2>The dates did not represent earlier data</h2>
 <p>The agent made ten copies and changed both their filenames and modification times. That provided old files for the retention test without waiting ten days.</p>

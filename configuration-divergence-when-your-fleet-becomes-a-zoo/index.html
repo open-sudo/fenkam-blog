@@ -28,7 +28,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" alt="Three matching delivery vans reveal different repairs beneath their open hoods." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>Three AI runs received the same RHEL 10 task: serve a local package repository and prove an installation worked without remote repositories. All reached that result, but left different software changes for the next administrator.</p>
+<p>I wanted a local package repository to keep serving installations while remote repositories were unavailable. I compared three AI executions of that task on RHEL 10.</p>
+<p>All reached a working local installation. They left different software changes behind: one went through core-library repairs, another restored an older RPM stack, and a third used a much smaller prerequisite installation.</p>
 <h2>Three routes to a working repository</h2>
 <p>One agent built a demonstration RPM. Its prerequisites added 33 packages and upgraded nine, breaking RPM and DNF because a new component needed missing OpenSSL symbols. It repaired the system with newer OpenSSL libraries, then reconciled the packages through a transaction that bypassed signature checks. The reboot and <code>dnf check</code> passed, but cryptographic libraries and policies had changed.</p>
 <p>A second run restored a compatible older RPM stack. A third previewed its prerequisite transaction and used an existing tree package for the demonstration. That transaction installed only two packages and avoided the build tools and core-library repair.</p>

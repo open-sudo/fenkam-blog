@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-process-integrity-analogy.png" alt="A restaurant signals that it is open while only a cleaner is inside and the kitchen is unprepared." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent wrote a service script that read a process number from a file and checked whether that number was alive. If it was, the script treated the service as running. It did not establish that the process was the expected application or that clients could connect to it.</p>
+<p>The local package repository needed an HTTP service and a script to manage it. The script had to distinguish a working server from a failed start or an old process record.</p>
+<p>On Ubuntu 7, an AI agent wrote a script that read a process number from a file and checked whether that number was alive. It then treated the service as running, without establishing which program owned the number or whether clients could connect.</p>
 <h2>A live process number could belong to something else</h2>
 <p>In an Ubuntu 7 local-repository task, the script trusted a PID file and a <code>kill -0</code> check. Linux can reuse a process number after the original process exits.</p>
 <p>If an old PID file remains, a successful existence check can therefore refer to a different program. This was a risk found in the script; the test did not demonstrate an actual mistaken shutdown caused by PID reuse.</p>

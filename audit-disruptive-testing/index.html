@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-disruptive-testing-analogy.png" alt="A generator load test trips the shared supply powering its measurement instruments." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent was asked to test whether an application survived severe memory pressure. It started a process that consumed memory, then lost its connection to the machine. Without that connection, it could not demonstrate that the application survived or that the test had been cleaned up.</p>
+<p>The task was deliberately demanding: put an application under severe memory pressure and check whether it survived. The test also needed a way to stop the load and inspect the result.</p>
+<p>An AI agent started a process that consumed memory, then lost its connection to the machine. Without that connection, it could demonstrate neither the application’s survival nor cleanup of the test.</p>
 <h2>The memory-consuming process shared the management service’s cgroup</h2>
 <p>Seven records placed the Python stress process inside the same cgroup as the service that executed the agent’s commands. A cgroup is the unit through which Linux can account for and limit a group of processes.</p>
 <p>The test had not been placed in its own service or scope at that point. An out-of-memory log identified the killed Python child in the management cgroup; it did not show that the management daemon itself had been killed.</p>

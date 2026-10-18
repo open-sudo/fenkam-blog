@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-logging-gaps-analogy.png" alt="A working factory machine has its warning buzzer unplugged." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent configured a background worker as the unprivileged inventorysvc account inside a chroot on RHEL 10. The finished systemd unit discarded both standard output and standard error. Messages written to those streams would not be retained for the operator.</p>
+<p>The background worker on RHEL 10 was to run as the unprivileged inventorysvc account inside a chroot. An operator would still need its messages when diagnosing a failure.</p>
+<p>The AI agent delivered a systemd unit that discarded both standard output and standard error. The worker could run, but messages sent to those streams would not be retained.</p>
 <h2>A running worker did not prove its errors were being recorded</h2>
 <p>Logging-related socket placeholders remained inside the chroot. Their presence did not show a connection to a working collector. The missing check was to emit a message from the actual confined worker and retrieve it at the intended log destination.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/service-confinement-ansible-rhel10-6842/service-confinement-ansible-rhel__aP2kEg2/agent/executor-commands.jsonl#L40">Recorded commands</a></p>

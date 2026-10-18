@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-runaway-remediation-analogy.png" alt="A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>While configuring HTTPS on RHEL 9, an AI agent used sed to edit Apache’s configuration. The command inserted certificate-chain text before every line and broke the file. After reinstalling or restoring the configuration, the agent repeated the same damaging edit. It eventually corrected the pattern, but first reproduced a mistake it could have inspected.</p>
+<p>An Apache HTTPS setup on RHEL 9 needed a certificate-chain entry in its configuration. The next step was to edit that file and check that Apache could read it.</p>
+<p>The AI agent used a sed command that inserted the text before every line, breaking the configuration. After restoring or reinstalling the file, it repeated the same damaging edit. It eventually corrected the pattern, but first reproduced the mistake.</p>
 <h2>Database resets did not produce a working cluster</h2>
 <p>Two Alpine Galera tasks went through repeated resets and recovery overrides. Neither finished with a working cluster.</p>
 <p>The record does not establish enough about every intermediate database state to declare each recovery choice unsafe. It does show a sequence of changes that never reached the requested result. Resetting again was not evidence that the cause had been found.</p>

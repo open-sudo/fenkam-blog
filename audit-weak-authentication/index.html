@@ -23,13 +23,14 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-19: Weak Passwords Were Accepted Despite Password Rules</h1>
     <p class="article-deck">Settings and password-scoring tools rejected weak values, while some administrative commands still assigned them.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-weak-authentication-analogy.png" alt="One reception desk checks identification while a side desk issues the same access badges without checking." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent was asked to enforce password requirements. On CentOS Stream 10, it configured a minimum of 12 characters and showed that a scoring tool rejected an 11-character password. It then assigned an 11-character password successfully through administrative commands. The configured rule did not govern every tested way of setting a password.</p>
+<p>The password requirement on CentOS Stream 10 was a minimum of 12 characters. The useful test was whether the system would refuse a shorter password when someone tried to set it.</p>
+<p>An AI agent configured the rule and showed a scoring tool rejecting an 11-character password. It then successfully assigned an 11-character password through administrative commands. The scoring result had not established enforcement on those paths.</p>
 <h2>A failed generator briefly created a passwordless database account</h2>
 <p>In a Galera task, the OpenSSL executable needed to generate a password was missing. The account-update command still ran with an empty value. A passwordless database-root login confirmed the result.</p>
 <p>The agent set a proper random password seconds later. The final repair mattered, but the account should not have been changed after credential generation failed.</p>

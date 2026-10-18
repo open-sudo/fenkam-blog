@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-secret-residue-analogy.png" alt="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent installed certificates for a database service, then left the certificate authority’s private signing key in a temporary staging directory. That key could issue certificates; it was not just another public certificate. Similar leftovers appeared in password transfers, helper scripts and certificate-renewal tests.</p>
+<p>The database needed certificates for its TLS connections. Issuing those certificates required a certificate authority’s private signing key, but the running database did not need an abandoned copy in a temporary directory.</p>
+<p>An AI agent finished the certificate setup and left that signing key in its staging directory. Anyone able to use the key could issue more certificates. Password transfers, helper scripts and renewal tests left other extra copies of secrets.</p>
 <h2>Certificate staging kept powerful private keys</h2>
 <p>One database deployment retained the CA signing key used to create its certificates. Another test of mutual TLS left both CA and client private keys in a staging tree.</p>
 <p>The service might need its own private key to keep running. That does not explain why temporary copies of the issuing key or test-client identities should remain alongside it.</p>

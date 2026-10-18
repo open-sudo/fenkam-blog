@@ -23,13 +23,14 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-7: AI Tested the Wrong Behavior</h1>
     <p class="article-deck">A manually run renewal, a connection over another network or an earlier test can pass while the requested behavior remains untested.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-incomplete-verification-analogy.png" alt="A technician tests an alarm sounder manually while the smoke detector remains untested." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI agent needed to arrange automatic certificate renewal. It ran the renewal command manually and saw it work. That demonstrated that a certificate could be renewed; it did not demonstrate that the scheduler would run the command before expiry. Several other tasks had the same gap between the promised behavior and the test performed.</p>
+<p>The certificate needed to renew before it expired, without an administrator remembering to run a command. The job therefore included both a working renewal command and a scheduler that would invoke it.</p>
+<p>An AI agent ran the command manually and saw it succeed. That proved renewal was possible, but not that it would happen automatically. Other tasks also passed tests that missed the behavior they were meant to demonstrate.</p>
 <h2>The allowed client worked; the forbidden client was not tested</h2>
 <p>A RabbitMQ deployment had rules intended to restrict access to the broker’s management interface. The agent recorded the rules without attempting access from a source that should have been blocked.</p>
 <p>A WireGuard task required an outside client to reach an application only through a VPN gateway. The agent tested rejection of direct access before deployment, but did not repeat it after the final tunnel, application and firewall changes. That left the required rejection test unfinished.</p>

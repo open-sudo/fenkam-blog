@@ -29,7 +29,8 @@
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-idempotency-risks-analogy.png" alt="A book has been shelved, but an identical replacement arrives because the returns trolley is empty." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
-<p>An AI-written Ansible playbook imported mail using exact destination filenames and <code>force:false</code>. That avoided overwriting files already at those paths. It did not account for Maildir renaming a message when its read-state flags changed.</p>
+<p>The job was to import existing mail into a Maildir mailbox using Ansible. The playbook also needed to avoid importing a message again when someone reran it.</p>
+<p>The AI-written playbook used exact destination filenames and <code>force:false</code> to avoid overwriting existing files. That worked while the names stayed unchanged. It did not account for Maildir renaming a message when its read-state flags changed.</p>
 <h2>The next run could import the same message again</h2>
 <p>The playbook looked for a file named <code>two.eml:2,</code>. After a user read the message, Maildir could change the flag suffix. The message would still exist, but its original filename would not.</p>
 <p>A later playbook run could then copy the original message again under the old name and flags. The existence check tracked a mutable filename rather than whether the message had already been imported.</p>
