@@ -5,14 +5,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Cron tests, network cleanup and package demonstrations changed parts of the server outside the requested feature." />
-  <title>IL-38: AI Finished Tasks While Removing or Disrupting Existing Services | Fenkam</title>
+  <title>IL-38: AI Finished Tasks but Disrupted Existing Services | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
 <link rel="canonical" href="https://fenkam.org/tunnel-vision-the-task-passed-the-server-changed/" />
 <meta property="og:url" content="https://fenkam.org/tunnel-vision-the-task-passed-the-server-changed/" />
-<meta property="og:title" content="IL-38: AI Finished Tasks While Removing or Disrupting Existing Services" />
+<meta property="og:title" content="IL-38: AI Finished Tasks but Disrupted Existing Services" />
 <meta property="og:image" content="https://fenkam.org/assets/tunnel-vision-the-task-passed-the-server-changed-analogy.png" />
 <meta property="og:image:alt" content="A freshly painted wall looks finished while paint covers its light switch and ventilation grille." />
 </head>
@@ -22,18 +22,13 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-07">OCT 7, 2026</time></div>
-    <h1>IL-38: AI Finished Tasks While Removing or Disrupting Existing Services</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-07">OCT 7, 2026</time></div>
+    <h1>IL-38: AI Finished Tasks but Disrupted Existing Services</h1>
     <p class="article-deck">Cron tests, network cleanup and package demonstrations changed parts of the server outside the requested feature.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/tunnel-vision-the-task-passed-the-server-changed-analogy.png" alt="A freshly painted wall looks finished while paint covers its light switch and ventilation grille." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/tunnel-vision-the-task-passed-the-server-changed-analogy.png" alt="A freshly painted wall looks finished while paint covers its light switch and ventilation grille." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>An AI agent was asked to limit cron access to root and opsadmin. To test root’s permission, it installed a temporary crontab, replacing the one already present. Cleanup then removed the test crontab. The access rule worked, but the original root crontab was gone. Several other successful tasks had a similar cost elsewhere on the machine.</p>
-<p class="real-life-analogy">Imagine a decorator making one wall look perfect while painting over the light switches and covering the room’s ventilation grille. The wall passes inspection; the room is harder to use. A task-focused check can similarly miss lost schedules, exposed management services or retained test settings elsewhere on the host.</p>
-<h2>The cron test replaced existing configuration</h2>
-<p>On Alpine, <code>crontab /tmp/cron-access-test</code> replaced root’s whole crontab. The agent had not saved the existing contents. The later <code>crontab -r</code> deleted the replacement.</p>
-<p>The final file audit confirmed that the original crontab path was missing. The record did not preserve its contents or establish a particular missed scheduled job, but it did establish configuration loss.</p>
-<p class="case-sources"><a href="/ai-tested-cron-access-and-deleted-existing-configuration/">Documentation</a></p>
 <h2>Cleanup killed the connection used to manage the server</h2>
 <p>To test firewall rules, the agent started temporary listeners. It later used pkill socat and pkill nc to remove them. The command-execution connection also used socat, so the same cleanup killed it.</p>
 <p>The agent recovered through SSH from another machine and restarted the management service. The task eventually worked. Tracking and stopping the test-process IDs would have avoided killing unrelated processes with the same executable name.</p>
@@ -49,10 +44,15 @@
 <h2>The offline test kept blocking online updates</h2>
 <p>An Ubuntu 24 test sent ordinary APT HTTP requests through a non-existent local proxy while exempting the local repository. That proved the local installation could succeed during a simulated remote outage.</p>
 <p>The proxy setting remained after reboot. Later updates would still encounter a restriction introduced only for the demonstration.</p>
-<p>Preserve existing state before testing, track the processes and settings introduced by the task, and compare the finished machine with what was there before. A correct new feature can coexist with an unrelated loss that its own test never exercises.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/tunnel-vision-the-task-passed-the-server-changed-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<p>The requested features worked. Checking and preserving unrelated state was a separate part of completing the work.</p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/tunnel-vision-the-task-passed-the-server-changed-evidence.json">Evidence extract</a></p>
+<details class="article-details"><summary>Supporting records and references</summary>
+<p class="case-sources"><a href="/ai-tested-cron-access-and-deleted-existing-configuration/">Related article</a></p>
+</details>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

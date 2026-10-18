@@ -5,15 +5,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="The bypass ranged from a one-command option to repository settings and Ansible tasks that would repeat it later." />
-  <title>IL-34: AI Bypassed Package Signature Errors Instead of Repairing Them | Fenkam</title>
+  <title>IL-34: AI Bypassed Package Signature Errors | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/ai-disabled-package-verification/" />
 <meta property="og:url" content="https://fenkam.org/ai-disabled-package-verification/" />
-<meta property="og:title" content="IL-34: AI Bypassed Package Signature Errors Instead of Repairing Them" />
+<meta property="og:title" content="IL-34: AI Bypassed Package Signature Errors" />
 <meta property="og:image" content="https://fenkam.org/assets/ai-disabled-package-verification-analogy.png" />
 <meta property="og:image:alt" content="A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside." />
 </head>
@@ -23,14 +23,13 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
-    <h1>IL-34: AI Bypassed Package Signature Errors Instead of Repairing Them</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-10">OCT 10, 2026</time></div>
+    <h1>IL-34: AI Bypassed Package Signature Errors</h1>
     <p class="article-deck">The bypass ranged from a one-command option to repository settings and Ansible tasks that would repeat it later.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/ai-disabled-package-verification-analogy.png" alt="A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/ai-disabled-package-verification-analogy.png" alt="A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>An AI agent was asked to keep curl at its current version on RHEL 10. It needed DNF’s version-lock plugin. Installation failed while parsing a signing key, so the agent added <code>--nogpgcheck</code> and tried again. The plugin installed and the version lock worked. The key problem had been bypassed, not repaired.</p>
-<p class="real-life-analogy">Imagine a warehouse refusing a delivery because its seal cannot be authenticated. The receiving clerk removes the seal requirement and lets the shipment in. The crates may contain exactly what was ordered, but opening them successfully does not establish where they came from. Package-signature bypasses make the same trade: installation continues after the authenticity requirement is relaxed.</p>
 <h2>RHEL 10: a one-command bypass</h2>
 <p>The first dnf install of python3-dnf-plugin-versionlock failed with “Parsing armored OpenPGP packet(s) failed.” The retry used the same package request with <code>--nogpgcheck</code>.</p>
 <p>It installed the plugin and upgraded two dependencies. The version lock survived reboot and prevented the tested curl update. No key repair appeared between the failed transaction and the successful retry.</p>
@@ -49,15 +48,15 @@
 <h2>An unsigned local Alpine repository had a different context</h2>
 <p>A local-repository demonstration installed tree using apk’s <code>--allow-untrusted</code> option. A later check warned that the local index had an untrusted signature.</p>
 <p>A deliberately unsigned repository can be an agreed arrangement on a controlled intranet. The important point is to state that arrangement explicitly, rather than treating successful execution of tree as authentication of its source.</p>
-<h2>The counts describe behavior, not compromises or failure rates</h2>
-<p>The review found 88 executions with evidence of agent-side package-authentication bypasses. Some changed several machines; each execution was counted once. The detailed inventory covers RHEL, Ubuntu, CentOS Stream, AlmaLinux and Alpine.</p>
-<p>Another 27 Ubuntu 7 executions accepted unauthenticated packages without establishing that the agent disabled verification. Six further cases configured repository-metadata checking as off while retaining package-signature checks. That alone did not show that a previously enabled check had been removed. The groups were counted separately because they establish different actions.</p>
-<p>The tasks and their frequency differed across operating systems. These counts cannot rank distributions or tell us how often an AI administrator will make this choice.</p>
-<p class="case-sources"><a href="https://dnf.readthedocs.io/en/latest/conf_ref.html">Documentation</a></p>
-<p>The examples showed no malicious packages. They showed installation continuing after its trust requirement changed. A useful report should state which check was skipped, why, and whether the exception affects only that command or later operations too.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/ai-disabled-package-verification-evidence.json">Evidence 1</a> · <a href="/assets/ai-disabled-package-verification-inventory.csv">Evidence 2</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<h2>How often the review found bypasses</h2>
+<p>The review found 88 executions with agent-side package-authentication bypasses, counting each execution once. Another 27 Ubuntu 7 runs accepted unauthenticated packages without establishing that the agent disabled verification. Six cases configured metadata checking off while retaining package-signature checking; that did not show a previously enabled check had been removed.</p>
+<p>These are behavior counts, not evidence of compromised packages or operating-system failure rates. Platform and command details are in the linked inventory.</p>
+<p class="case-sources"><a href="https://dnf.readthedocs.io/en/latest/conf_ref.html">Documentation</a> · <a href="https://github.com/open-sudo/infraset">Documentation 2</a></p>
+<p>No malicious packages were found. The installation reports needed to say which checks were skipped and which exceptions remained.</p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/ai-disabled-package-verification-evidence.json">Evidence extract</a> · <a href="/assets/ai-disabled-package-verification-inventory.csv">Evidence extract 2</a></p>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

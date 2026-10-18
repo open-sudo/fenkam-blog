@@ -4,15 +4,15 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="HTTPS encrypted the transfer, but the temporary file server did not verify who was downloading the keys." />
-  <title>IL-39: AI Served Secret Authentication Files From a Website With No Login | Fenkam</title>
+  <meta name="description" content="A temporary HTTPS server delivered a keytab without authenticating the downloader." />
+  <title>IL-39: AI Made Authentication Keys Downloadable Without Login | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
 <link rel="canonical" href="https://fenkam.org/ai-secured-application-made-keys-downloadable/" />
 <meta property="og:url" content="https://fenkam.org/ai-secured-application-made-keys-downloadable/" />
-<meta property="og:title" content="IL-39: AI Served Secret Authentication Files From a Website With No Login" />
+<meta property="og:title" content="IL-39: AI Made Authentication Keys Downloadable Without Login" />
 <meta property="og:image" content="https://fenkam.org/assets/ai-secured-application-made-keys-downloadable-analogy.png" />
 <meta property="og:image:alt" content="A shop has a new door lock, but matching spare keys sit on an unattended pavement table." />
 </head>
@@ -22,34 +22,27 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
-    <h1>IL-39: AI Served Secret Authentication Files From a Website With No Login</h1>
-    <p class="article-deck">HTTPS encrypted the transfer, but the temporary file server did not verify who was downloading the keys.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
+    <h1>IL-39: AI Made Authentication Keys Downloadable Without Login</h1>
+    <p class="article-deck">A temporary HTTPS server delivered a keytab without authenticating the downloader.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/ai-secured-application-made-keys-downloadable-analogy.png" alt="A shop has a new door lock, but matching spare keys sit on an unattended pavement table." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An AI agent configured Kerberos authentication across two CentOS Stream 10 machines. The application needed a secret key file generated on the login server. To move it, the agent started a temporary HTTPS website and downloaded the file from the other machine. The website required no login or client certificate.</p>
-<p class="real-life-analogy">Imagine fitting a strong lock to a shop, then putting spare keys on an unattended pavement table so a colleague can collect one. Locking the door afterward does not describe who could have taken a copy during setup. The temporary download server created that separate access window while the agent was configuring authentication.</p>
-<h2>The application needed a secret, not a public download</h2>
-<p>One machine hosted the Kerberos realm; the other hosted an application. An analyst needed to obtain a service ticket, and the application needed a keytab to validate tickets intended for it.</p>
-<p>A keytab contains secret cryptographic keys. The agent generated it on the first machine and needed to deliver it to the application machine while preserving the existing ownership notes.</p>
-<h2>Opening the transfer port also opened a download opportunity</h2>
-<p>The agent copied the keytab into a temporary directory and started an OpenSSL HTTPS file server on the first machine’s internal address, port 9443. When the download was blocked, it opened that port in the firewall and retried.</p>
-<p>The second machine fetched the file without supplying credentials. The firewall rule did not limit the port specifically to that machine. A client able to reach the endpoint and knowing the URL could request the same file.</p>
-<p>At the destination, the agent correctly installed it as a root-owned file with mode 0600. Those permissions protected the installed copy, not the separate copy the web server had just offered.</p>
-<h2>Encryption did not restrict the recipient</h2>
-<p>HTTPS encrypted traffic in transit. It did not decide which clients were allowed to receive the secret. That would require another control, such as authenticated client access or a suitably restricted transfer method.</p>
-<p>The download also used curl <code>--insecure</code>, skipping verification of the server’s TLS certificate. That weakened the receiving machine’s separate check of the server identity.</p>
-<p>The agent repeated the transfer pattern with the analyst’s Kerberos ticket-cache file, which also contained live authentication material, and again during verification after reboot.</p>
-<h2>The service and cleanup both worked</h2>
-<p>The analyst obtained a service ticket, the application keytab validated it, and the machines passed restart checks. The agent removed the temporary servers and transfer files and closed the port.</p>
-<p>This was not a permanently exposed download service. No stolen credential or public-Internet exposure was observed. The demonstrated exposure was the internal endpoint during the transfer window, subject to reachability and knowledge of its URL.</p>
-<h2>The final permissions could not describe the earlier transfer</h2>
-<p>An administrator checking only the finished machines would find restrictive key-file permissions and no temporary website. The command history showed that a copy had been downloadable without recipient authentication during setup.</p>
-<p>Protect the transfer as carefully as the final file. Successful authentication afterward cannot establish that only the intended recipient received the credentials used to build it.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/ai-secured-application-made-keys-downloadable-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<figure class="article-illustration"><img src="/assets/ai-secured-application-made-keys-downloadable-analogy.png" alt="A shop has a new door lock, but matching spare keys sit on an unattended pavement table." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
+<p>An AI agent configured Kerberos on two CentOS Stream 10 machines. The login server generated a secret application keytab, which the application server needed to validate service tickets. The agent moved that keytab through a temporary HTTPS file server with no login requirement.</p>
+<h2>Opening the transfer port made the file downloadable</h2>
+<p>After an initial blocked connection, the agent opened port 9443 and downloaded the keytab from the second machine. The request supplied no password or client certificate, and the firewall rule did not restrict access specifically to that machine.</p>
+<p>A client able to reach the endpoint and knowing the URL could request the same copy. The agent later protected the installed keytab with mode 0600, but that did not restrict downloads of the earlier served copy.</p>
+<h2>HTTPS protected the connection, not the recipient list</h2>
+<p>Encryption did not establish which clients could receive the file. The download also used curl <code>--insecure</code>, skipping the separate check of the server’s TLS identity.</p>
+<p>The agent repeated the transfer method with the analyst’s active ticket cache and during post-reboot verification. Those files also contained live authentication material.</p>
+<h2>The temporary server was removed</h2>
+<p>Authentication and restart tests passed. The agent stopped the file servers, removed transfer files and closed the port. No stolen credential or public-Internet exposure was observed.</p>
+<p>The demonstrated problem was the unauthenticated internal download window. Any misuse would have required reachability during that window and knowledge of the URL.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/ai-secured-application-made-keys-downloadable-evidence.json">Evidence extract</a></p>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

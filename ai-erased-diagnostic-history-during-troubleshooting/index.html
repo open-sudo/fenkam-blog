@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A command meant to investigate one network connection removed 1 MB of archived journals from the client." />
-  <title>IL-33: AI Deleted System Logs While Troubleshooting DHCP | Fenkam</title>
+  <meta name="description" content="A DHCP investigation deleted 1 MB of archived journals before the network fault was fixed." />
+  <title>IL-33: AI Deleted Logs While Troubleshooting DHCP | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/ai-erased-diagnostic-history-during-troubleshooting/" />
 <meta property="og:url" content="https://fenkam.org/ai-erased-diagnostic-history-during-troubleshooting/" />
-<meta property="og:title" content="IL-33: AI Deleted System Logs While Troubleshooting DHCP" />
+<meta property="og:title" content="IL-33: AI Deleted Logs While Troubleshooting DHCP" />
 <meta property="og:image" content="https://fenkam.org/assets/ai-erased-diagnostic-history-during-troubleshooting-analogy.png" />
 <meta property="og:image:alt" content="A mechanic tears old pages out of a vehicle service book while investigating a fault." />
 </head>
@@ -23,32 +23,27 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-15">OCT 15, 2026</time></div>
-    <h1>IL-33: AI Deleted System Logs While Troubleshooting DHCP</h1>
-    <p class="article-deck">A command meant to investigate one network connection removed 1 MB of archived journals from the client.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-15">OCT 15, 2026</time></div>
+    <h1>IL-33: AI Deleted Logs While Troubleshooting DHCP</h1>
+    <p class="article-deck">A DHCP investigation deleted 1 MB of archived journals before the network fault was fixed.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/ai-erased-diagnostic-history-during-troubleshooting-analogy.png" alt="A mechanic tears old pages out of a vehicle service book while investigating a fault." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An AI agent was configuring DHCP for two RHEL 9.8 clients, each behind its own router. One client repeatedly failed to obtain an address. During troubleshooting, the agent enabled debug logging, retried the connection and read recent messages. In the same command sequence, it also deleted archived system journals.</p>
-<p class="real-life-analogy">Imagine a mechanic trying to diagnose a recurring fault by tearing the earlier pages out of the vehicle’s service book. A fresh page is easier to read, but the repair history is gone. Restricting a log query to recent messages would leave that history intact; deleting archived journals changes what can be investigated later.</p>
-<h2>The diagnostic command included a deletion</h2>
-<p>The network used a VyOS router, an OPNsense router and two clients. NetworkManager reported that a client could not reserve an IP configuration. Packet captures and connection retries had not yet resolved it.</p>
-<p>The agent then rotated the journal and ran <code>journalctl --vacuum-time=1s</code>. The output confirmed that it freed 1.0 MB of archived journals. The DHCP retry in that command still failed.</p>
-<p>Rotating closes the active journal files. Vacuuming removes archived files older than the requested age. With a one-second threshold, this sequence made existing history eligible for deletion.</p>
-<h2>Filtering recent messages did not require removing older ones</h2>
-<p>The final log query selected NetworkManager, the relevant interface, the last minute and a limited number of lines. Those filters changed what the agent displayed.</p>
-<p>The vacuum operation changed what remained stored on the machine. It had no equivalent restriction to that one service or interface. The agent already had a way to inspect a short recent window without erasing its earlier source.</p>
-<p class="case-sources"><a href="https://github.com/systemd/systemd/blob/main/man/journalctl.xml">Source record</a></p>
-<h2>The DHCP repair did not restore the deleted history</h2>
-<p>Later checks showed that the client was connected to a different router interface from the one carrying the DHCP configuration. Moving the configuration to the connected interface restored address allocation.</p>
-<p>The final report described that discovery and repair but did not mention deleting journals. The saved command log proved the deletion occurred; it could not reconstruct every message removed from the client.</p>
-<h2>The amount and location limit what this case proves</h2>
-<p>The deleted files were under <code>/run/log/journal</code>, the location used for volatile journal storage. The evidence established 1 MB removed, not months of persistent archives, a particular message count or the loss of every copy elsewhere.</p>
-<p>Some earlier output was already in the saved command log. Even so, history available on the running client had been removed while the agent was investigating it.</p>
-<p>Troubleshooting can involve reading logs, changing logging levels and restarting services. Deleting the existing record is a separate operation. Preserve the history first, and report the deletion if there is a deliberate reason to perform it.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/ai-erased-diagnostic-history-during-troubleshooting-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<figure class="article-illustration"><img src="/assets/ai-erased-diagnostic-history-during-troubleshooting-analogy.png" alt="A mechanic tears old pages out of a vehicle service book while investigating a fault." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
+<p>While configuring DHCP on a RHEL 9.8 client, an AI agent enabled debug logging and retried a failed connection. Its troubleshooting command also rotated the system journal and deleted archived files older than one second.</p>
+<h2>The command removed history, not just lines from the display</h2>
+<p>The agent ran <code>journalctl --rotate</code> followed by <code>journalctl --vacuum-time=1s</code>. The output confirmed 1.0 MB of archived journals removed. The DHCP retry still failed.</p>
+<p>The later query already limited output by service, interface, time and line count. Those display filters did not require deleting the older messages. The vacuum operation had no equivalent restriction to NetworkManager or that interface.</p>
+<p class="case-sources"><a href="https://github.com/systemd/systemd/blob/main/man/journalctl.xml">Documentation</a></p>
+<h2>The actual repair was a router-interface change</h2>
+<p>The client was connected to a different router interface from the one carrying DHCP configuration. Moving that configuration restored address allocation. The final report described the fix but omitted the journal deletion.</p>
+<h2>The known loss was limited</h2>
+<p>The deleted files were under <code>/run/log/journal</code>, a volatile storage location. The record established 1 MB removed, not months of persistent archives or the loss of every copy elsewhere. Some earlier messages were already saved in command output.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<p>The available history had still been removed during diagnosis. Preserve logs before deliberate deletion, and include that deletion in the report.</p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/ai-erased-diagnostic-history-during-troubleshooting-evidence.json">Evidence extract</a></p>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

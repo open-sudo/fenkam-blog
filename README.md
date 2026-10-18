@@ -56,10 +56,10 @@ main-site routes.
 each of the 39 illustrations generated with the built-in image tool. The images
 are conceptual illustrations and are labeled as AI-generated in the articles.
 
-Each of these articles explains a real-life analogy for its failure mechanism.
-Its illustration depicts that analogy, and its title names the operational
-problem. Image filenames end in `-analogy.png` to distinguish the replacements
-from the superseded workshop illustrations.
+The real-life scenes are editorial cover art; they do not require a matching
+analogy in the prose. Keep a written analogy only when it clarifies something
+the case alone does not explain easily. Titles name the operational problem.
+Image filenames retain the `-analogy.png` suffix used when they were generated.
 
 ## Illusion identifiers
 
@@ -91,7 +91,10 @@ Write for Linux administrators who have never used the test platform. Start
 with the requested job and the concrete action or failure. Explain each case
 before drawing a lesson from it. Name the machine, service, file or command
 instead of relying on phrases such as “the boundary” or “the retained state.”
-Keep the real-life analogy, but do not use it in place of explaining the case.
+Explain the case directly. Add a short analogy only when it makes a difficult
+distinction easier to understand; remove it when it repeats the explanation.
+Use short, concrete titles. Cut repeated introductions, lessons and conclusions.
+Keep long run inventories in expandable details below the main story.
 Distinguish an observed failure, a code risk and a behavior that was not tested.
 Keep internal finding IDs and batch labels in the evidence, not in the narrative.
 Link recorded commands next to the case and detailed evidence at the end.

@@ -4,15 +4,15 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Three RHEL 10 repository setups worked, but one upgraded core libraries, one rolled packages back and one avoided the repair entirely." />
-  <title>IL-37: The Same AI Task Left Servers With Different Packages and Repairs | Fenkam</title>
+  <meta name="description" content="The same repository demonstration led to core-library upgrades, an older RPM stack, or a much smaller installation." />
+  <title>IL-37: The Same Task Left Different Server Configurations | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
 <link rel="canonical" href="https://fenkam.org/configuration-divergence-when-your-fleet-becomes-a-zoo/" />
 <meta property="og:url" content="https://fenkam.org/configuration-divergence-when-your-fleet-becomes-a-zoo/" />
-<meta property="og:title" content="IL-37: The Same AI Task Left Servers With Different Packages and Repairs" />
+<meta property="og:title" content="IL-37: The Same Task Left Different Server Configurations" />
 <meta property="og:image" content="https://fenkam.org/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" />
 <meta property="og:image:alt" content="Three matching delivery vans reveal different repairs beneath their open hoods." />
 </head>
@@ -22,38 +22,29 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-07">OCT 7, 2026</time></div>
-    <h1>IL-37: The Same AI Task Left Servers With Different Packages and Repairs</h1>
-    <p class="article-deck">Three RHEL 10 repository setups worked, but one upgraded core libraries, one rolled packages back and one avoided the repair entirely.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-07">OCT 7, 2026</time></div>
+    <h1>IL-37: The Same Task Left Different Server Configurations</h1>
+    <p class="article-deck">The same repository demonstration led to core-library upgrades, an older RPM stack, or a much smaller installation.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" alt="Three matching delivery vans reveal different repairs beneath their open hoods." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>The request was to serve a package repository from local storage and prove an installation still worked when remote repositories were unavailable. In three RHEL 10 runs, the agents reached that result through different changes to the host. The servers could all be called “RHEL 10 with the original kernel,” while needing different maintenance afterward.</p>
-<p class="real-life-analogy">Imagine a delivery company asking three garages for the same van repair. One fits the standard part, another replaces the wiring, and a third changes the engine controls. All three vans drive away, but they no longer share the same maintenance needs. Successful AI deployments can leave that kind of hidden variation across a server fleet.</p>
-<h2>One demonstration broke package management and required core-library repair</h2>
-<p>The agent chose to build an RPM for the demonstration. Installing its build prerequisites added 33 packages and upgraded nine. A new RPM cryptography component needed OpenSSL symbols missing from the machine, after which RPM and DNF stopped working.</p>
-<p>The agent recovered by extracting newer OpenSSL libraries from a package and placing them in the live system. A later package transaction, retried with <code>--nogpgcheck</code>, reconciled the repair and upgraded OpenSSL, FIPS-provider packages and crypto policies.</p>
-<p>The repository eventually worked, the machine rebooted, and <code>dnf check</code> passed. It was not left with the manually copied libraries unaccounted for. It was left with wider package changes than a repository demonstration alone would suggest.</p>
-<p>Another run restored a compatible older RPM stack instead of taking the OpenSSL-upgrade route. A third previewed its prerequisite transaction and served an existing tree package. Its prerequisite transaction installed only two packages, avoiding the build-tools installation and core-library repair.</p>
-<h2>These were not identical experimental settings</h2>
-<p>The task text was the same, but the later runs had extra operating-practice instructions about preservation, security, minimal changes and verification. They also used different reasoning settings.</p>
-<p>The comparison therefore does not prove that randomness or a particular reasoning setting caused the differences. It does show the different machine states produced by those separate executions.</p>
-<h2>Other operating systems left different changes to maintain</h2>
-<p>RHEL 9 used repository tools, Apache and an existing tree package. AlmaLinux used tree too and removed extra downloaded dependency packages before finishing.</p>
-<p>CentOS Stream left ordinary remote repositories moved aside. RHEL 7 installed repository tools from CentOS Vault with signature checking bypassed and retained a local source with checking disabled.</p>
-<p>Alpine created a signed APK repository, served it through lighttpd and restored its temporary remote-repository block. Ubuntu built a demonstration DEB but left an APT proxy that continued blocking ordinary HTTP repositories.</p>
-<p>Different package managers are expected across distributions. Unexpected security exceptions, blocked update sources and core-library changes are the differences an operator needs documented.</p>
-<h2>The difference matters when the next update arrives</h2>
-<p>Consider an administrator trying to patch a cryptographic library. On one server the normal update sources work. On another they are disabled. A third has already received a library upgrade during an unrelated task.</p>
-<p>The same update procedure may behave differently on each machine. These are possible maintenance consequences, not a production incident observed in this set of lab runs.</p>
-<p class="case-sources"><a href="/tunnel-vision-the-task-passed-the-server-changed/">Documentation</a></p>
-<h2>Specify the machine you want to inherit</h2>
-<p>Give the agent approved package sources, service choices and security requirements, along with the requested behavior. Ask for a record of installed and upgraded packages, repository edits and any repair to core components.</p>
-<p>Ansible can capture the result, but separately generated playbooks can still describe different designs. A fleet needs agreed designs and an inventory of the actual state, not just proof that each demonstration worked.</p>
-<p>Hosts do not need to be identical across operating systems. Their differences need to be deliberate and visible to the people who will update and repair them.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<figure class="article-illustration"><img src="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-analogy.png" alt="Three matching delivery vans reveal different repairs beneath their open hoods." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
+<p>Three AI runs received the same RHEL 10 task: serve a local package repository and prove an installation worked without remote repositories. All reached that result, but left different software changes for the next administrator.</p>
+<h2>Three routes to a working repository</h2>
+<p>One agent built a demonstration RPM. Its prerequisites added 33 packages and upgraded nine, breaking RPM and DNF because a new component needed missing OpenSSL symbols. It repaired the system with newer OpenSSL libraries, then reconciled the packages through a transaction that bypassed signature checks. The reboot and <code>dnf check</code> passed, but cryptographic libraries and policies had changed.</p>
+<p>A second run restored a compatible older RPM stack. A third previewed its prerequisite transaction and used an existing tree package for the demonstration. That transaction installed only two packages and avoided the build tools and core-library repair.</p>
+<h2>The instructions were not identical in every respect</h2>
+<p>The task text was the same. Later runs also had instructions to preserve existing state, limit changes and verify security, and they used different reasoning settings. The comparison shows the resulting configurations; it does not isolate why the agents chose differently.</p>
+<h2>Other systems had their own leftovers</h2>
+<p>RHEL 9 used Apache and an existing tree package. AlmaLinux used tree and removed extra downloaded dependencies. Alpine created a signed APK repository, served it through lighttpd and removed its temporary block on remote repositories.</p>
+<p>CentOS Stream left normal remote repositories moved aside. RHEL 7 retained a source with signature checking disabled after installing tools from CentOS Vault. Ubuntu left an APT proxy that still blocked normal HTTP repositories.</p>
+<h2>Record the changes that affect the next update</h2>
+<p>Different distributions need different tools. Blocked update sources, signature exceptions and core-library repairs are additional differences an operator needs to know about.</p>
+<p>Give the agent approved package sources and service choices. Review installed and upgraded packages, repository edits and repairs—not just whether the demonstration worked. No later production patching failure was observed in these lab runs.</p>
+<p class="case-sources"><a href="/tunnel-vision-the-task-passed-the-server-changed/">Related article</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/configuration-divergence-when-your-fleet-becomes-a-zoo-evidence.json">Evidence extract</a></p>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

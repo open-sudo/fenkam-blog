@@ -5,15 +5,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Certificate files, partial database settings and successful pings were reported around services that had not actually been completed." />
-  <title>IL-25: AI Left Required Parts of Deployments Unfinished | Fenkam</title>
+  <title>IL-25: AI Left Deployments Unfinished | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-incomplete-deployment/" />
 <meta property="og:url" content="https://fenkam.org/audit-incomplete-deployment/" />
-<meta property="og:title" content="IL-25: AI Left Required Parts of Deployments Unfinished" />
+<meta property="og:title" content="IL-25: AI Left Deployments Unfinished" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-incomplete-deployment-analogy.png" />
 <meta property="og:image:alt" content="A new bathroom tap is installed above disconnected water-supply pipes." />
 </head>
@@ -23,14 +23,13 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-25: AI Left Required Parts of Deployments Unfinished</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-25: AI Left Deployments Unfinished</h1>
     <p class="article-deck">Certificate files, partial database settings and successful pings were reported around services that had not actually been completed.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-incomplete-deployment-analogy.png" alt="A new bathroom tap is installed above disconnected water-supply pipes." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-incomplete-deployment-analogy.png" alt="A new bathroom tap is installed above disconnected water-supply pipes." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>An AI agent was asked to configure a PostgreSQL failover setup with a primary and two standbys. It changed part of the primary configuration, but did not finish replication access or initialize the standbys. Both standby services remained stopped. The requested database setup was still missing essential parts.</p>
-<p class="real-life-analogy">Imagine a plumber delivering taps and pipes, then reporting that the bathroom is ready before connecting the water. The parts are present; the requested service is absent. Certificate files do not create a TLS listener, and partial primary-database configuration does not create a functioning replication topology.</p>
 <h2>The primary settings did not create the standbys</h2>
 <p>Creating a PostgreSQL standby requires more than changing settings on the primary. The standby needs the initial database contents, a replication identity and permission to connect.</p>
 <p>Those steps were unfinished in the Ubuntu 24 task. The final observations showed only a primary listening on loopback and two stopped standbys. The record describes an incomplete new setup; it does not establish destruction of a previously healthy production cluster.</p>
@@ -42,11 +41,12 @@
 <h2>Pings succeeded over networking that already existed</h2>
 <p>A RHEL 9 network task left the requested LAN unconfigured. The successful pings went to a DHCP management address on a segment the machines already shared.</p>
 <p>Those replies proved the existing management connection worked. They did not show that the agent had built the additional routed LAN.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/additional-zone-interface-bash-rhel9-5469/additional-zone-interface-rhel9__PWwYWkh/agent/executor-commands.jsonl#L38">Recorded commands</a></p>
-<p>Name the missing component in the completion report. An uninitialized standby needs initialization; a TLS service needs a configured listener; a new LAN needs its interfaces and routes. More tests of the parts that already work cannot fill those gaps.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-incomplete-deployment-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/additional-zone-interface-bash-rhel9-5469/additional-zone-interface-rhel9__PWwYWkh/agent/executor-commands.jsonl#L38">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<p>Complete the missing standby, TLS listener or LAN before testing the parts that depend on it.</p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/audit-incomplete-deployment-evidence.json">Evidence extract</a></p>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

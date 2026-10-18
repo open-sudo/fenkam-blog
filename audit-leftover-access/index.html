@@ -5,15 +5,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Access created for a transfer, a failed experiment or a login test sometimes remained after its purpose had ended." />
-  <title>IL-4: AI Left Temporary Accounts and SSH Access Behind | Fenkam</title>
+  <title>IL-4: AI Left Temporary Login Access Behind | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-leftover-access/" />
 <meta property="og:url" content="https://fenkam.org/audit-leftover-access/" />
-<meta property="og:title" content="IL-4: AI Left Temporary Accounts and SSH Access Behind" />
+<meta property="og:title" content="IL-4: AI Left Temporary Login Access Behind" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-leftover-access-analogy.png" />
 <meta property="og:image:alt" content="A contractor access card still opens a hotel room after the renovation is finished." />
 </head>
@@ -23,33 +23,33 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-4: AI Left Temporary Accounts and SSH Access Behind</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-4: AI Left Temporary Login Access Behind</h1>
     <p class="article-deck">Access created for a transfer, a failed experiment or a login test sometimes remained after its purpose had ended.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-leftover-access-analogy.png" alt="A contractor access card still opens a hotel room after the renovation is finished." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-leftover-access-analogy.png" alt="A contractor access card still opens a hotel room after the renovation is finished." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>An AI agent needed to move a file between servers, so it set up SSH access. The file arrived, but the matching login authorization remained. Other tasks left accounts or keys from unsuccessful approaches and verification tests. Finishing the task did not automatically end the access created along the way.</p>
-<p class="real-life-analogy">Imagine a hotel failing to cancel a tradesperson’s access card after a renovation. The room is finished, but the old card may still open the door. Temporary accounts, copied SSH keys and authorization entries have the same separate lifecycle: completing the job does not automatically revoke the access used to do it.</p>
-<h2>The file transfer ended; the login permission remained</h2>
-<p>Two database-related tasks left SSH authorization after temporary transfer work. That authorization was a separate change from creating or deleting the transferred file. A server could continue accepting the key after the original job was over.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/mysql-relational-import-bash-ubuntu16-3541/mysql-relational-import-bash-ubu__Fv4z93P/agent/executor-commands.jsonl#L10">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/database-reader-writer-roles-bash-rhel7-8350/database-reader-writer-roles-bas__HaPxpFp/agent/executor-commands.jsonl#L14">Recorded commands 2</a></p>
 <h2>Abandoned approaches left credentials on disk</h2>
 <p>An attempted certificate transfer failed, but its SSH credentials remained. In another deployment, the agent replaced an Ansible login credential without removing the original.</p>
 <p>A failed connection is not proof that an attacker could use that credential. The destination might reject it or have no SSH service. It does mean cleanup must account for an approach that was abandoned before it worked.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-30-01/internal-ca-tls-bash-alpine-5469/internal-ca-tls-alpine__DoJsyWu/agent/executor-commands.jsonl#L20">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/application-log-rotation-ansible-rhel10-6842/application-log-rotation-ansible__N8s6kmc/agent/executor-commands.jsonl#L8">Recorded commands 2</a></p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-30-01/internal-ca-tls-bash-alpine-5469/internal-ca-tls-alpine__DoJsyWu/agent/executor-commands.jsonl#L20">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/application-log-rotation-ansible-rhel10-6842/application-log-rotation-ansible__N8s6kmc/agent/executor-commands.jsonl#L8">Recorded commands 2</a></p>
 <h2>Login tests created access of their own</h2>
 <p>Testing SSH certificates required temporary identities and keys. Some tests left a root-login credential, a private-key copy or a matching authorization entry behind.</p>
 <p>An administrator needs to know which of these were test-only and which are part of normal operation. Their filenames alone may not explain the difference.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/ssh-host-certificate-bash-almalinux9-5469/ssh-host-certificate-almalinux9__EnD8Aup/agent/executor-commands.jsonl#L12">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/ssh-host-certificate-bash-rhel9-5782/ssh-host-certificate-rhel9__Xpx3tjE/agent/executor-commands.jsonl#L10">Recorded commands 2</a></p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/ssh-host-certificate-bash-almalinux9-5469/ssh-host-certificate-almalinux9__EnD8Aup/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/ssh-host-certificate-bash-rhel9-5782/ssh-host-certificate-rhel9__Xpx3tjE/agent/executor-commands.jsonl#L10">Recorded commands 2</a></p>
 <h2>Some changes spread access further</h2>
 <p>One task copied a shared root private key to several machines. Compromising any machine that holds a usable copy could then expose that credential. A separate database experiment left a remote-root grant that accepted connections from a broad range of source hosts.</p>
 <p>Whether either route can actually be used depends on the remaining credentials, server policy and network access.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/rsyslog-rhel7-rhel10-tls-bash-mixed-5782/rsyslog-rhel7-rhel10-tls__StEkkE4/agent/executor-commands.jsonl#L34">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/mariadb-galera-scale-out-bash-alpine-5469/mariadb-galera-scale-out-alpine__2Ltt3Ky/agent/executor-commands.jsonl#L336">Recorded commands 2</a></p>
-<p>For every account, key or grant added during the work, ask what still needs it. Remove access that served only the completed task. Keep continuing automation access narrow and documented, so cleanup does not break a legitimate job.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-leftover-access-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/rsyslog-rhel7-rhel10-tls-bash-mixed-5782/rsyslog-rhel7-rhel10-tls__StEkkE4/agent/executor-commands.jsonl#L34">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/mariadb-galera-scale-out-bash-alpine-5469/mariadb-galera-scale-out-alpine__2Ltt3Ky/agent/executor-commands.jsonl#L336">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<p>Remove access used only for the completed job. Keep legitimate ongoing automation access restricted and documented.</p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/audit-leftover-access-evidence.json">Evidence extract</a></p>
+<details class="article-details"><summary>Supporting records and references</summary>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/mysql-relational-import-bash-ubuntu16-3541/mysql-relational-import-bash-ubu__Fv4z93P/agent/executor-commands.jsonl#L10">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/database-reader-writer-roles-bash-rhel7-8350/database-reader-writer-roles-bas__HaPxpFp/agent/executor-commands.jsonl#L14">Recorded commands 2</a></p>
+</details>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

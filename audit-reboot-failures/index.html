@@ -5,15 +5,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Routes, services and router credentials sometimes disappeared after restart, even though they had worked beforehand." />
-  <title>IL-12: AI Setups Needed Manual Repairs After Reboot | Fenkam</title>
+  <title>IL-12: AI Setups Needed Repairs After Reboot | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-reboot-failures/" />
 <meta property="og:url" content="https://fenkam.org/audit-reboot-failures/" />
-<meta property="og:title" content="IL-12: AI Setups Needed Manual Repairs After Reboot" />
+<meta property="og:title" content="IL-12: AI Setups Needed Repairs After Reboot" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-reboot-failures-analogy.png" />
 <meta property="og:image:alt" content="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." />
 </head>
@@ -23,33 +23,33 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-12: AI Setups Needed Manual Repairs After Reboot</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-12: AI Setups Needed Repairs After Reboot</h1>
     <p class="article-deck">Routes, services and router credentials sometimes disappeared after restart, even though they had worked beforehand.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-reboot-failures-analogy.png" alt="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-reboot-failures-analogy.png" alt="A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>An AI agent created a network bridge with live ip commands. Traffic worked, but the bridge disappeared after the machine restarted. Another route returned only after the agent entered a command again. The request required automatic recovery; these tests showed a need for manual intervention.</p>
-<p class="real-life-analogy">Imagine a shop’s automatic shutters opening only after the owner arrives and cranks them by hand each morning. The shop can open, but the automatic mechanism has not been demonstrated. Routes and services restored through post-reboot commands similarly show that recovery is possible, without establishing automatic startup.</p>
-<h2>Live networking commands did not survive startup</h2>
-<p>A bridge and an equal-cost multipath route worked before reboot but were not restored automatically. Commands that change the running network do not necessarily update the configuration read at startup.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/transparent-l2-bridge-ubuntu24__m6YfrrS/agent/executor-commands.jsonl#L22">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl#L148">Recorded commands 2</a></p>
 <h2>An active startup service still left the route missing</h2>
 <p>One machine reported its route-setup service as active, yet the route was absent and pings failed until the agent repaired it manually.</p>
 <p>Another router restored only one of its multipath routes. The agent changed its startup configuration afterward but did not reboot that router again. The change might have fixed the problem; that final recovery test was missing.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl#L104">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl#L220">Recorded commands 2</a></p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel10-5469/redundant-uplinks-rhel10__Q66BZpr/agent/executor-commands.jsonl#L104">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-06__12-50-17/redundant-path-failover-bash-ubuntu24-5469/redundant-path-failover-ubuntu24__4uM7tUx/agent/executor-commands.jsonl#L220">Recorded commands 2</a></p>
 <h2>A web server had to be started again</h2>
 <p>One HTTP server had been launched with nohup. That kept it alive after the launching shell ended, but did not arrange a start after reboot. The agent had to launch it again.</p>
 <p>In another task, nginx was enabled for startup but was inactive after restart. An enabled setting described what was intended to start; it did not explain why the service was not running.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-06__00-21-44/double-nat-path-bash-rhel7-5469/double-nat-path-rhel7__kus85og/agent/executor-commands.jsonl#L260">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl#L130">Recorded commands 2</a></p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-06__00-21-44/double-nat-path-bash-rhel7-5469/double-nat-path-rhel7__kus85og/agent/executor-commands.jsonl#L260">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/wireguard-gateway-ansible-centos-stream10-7778/wireguard-gateway-centos-stream1__iy4yNi5/agent/executor-commands.jsonl#L130">Recorded commands 2</a></p>
 <h2>Router access and firewall settings also had to persist</h2>
 <p>A firewall interface returned in the wrong zone after reboot. The agent repaired the assignment but did not restart the affected node again to verify the repair.</p>
 <p>A VyOS router lost the credentials used by its automation controller because they had been written into a runtime home directory instead of saved through the router’s persistent configuration.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/port-forward-ansible-rhel10-7778/port-forward-rhel10__wJBesdS/agent/executor-commands.jsonl#L138">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/vrrp-failover-ansible-rhel7-7778/vrrp-failover-rhel7__V7wPNUS/agent/executor-commands.jsonl#L222">Recorded commands 2</a></p>
-<p>After the final fix, restart the affected machine and observe it before entering any rescue commands. Record which parts returned on their own. A successful manual recovery is useful, but it is not automatic recovery.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-reboot-failures-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/port-forward-ansible-rhel10-7778/port-forward-rhel10__wJBesdS/agent/executor-commands.jsonl#L138">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/vrrp-failover-ansible-rhel7-7778/vrrp-failover-rhel7__V7wPNUS/agent/executor-commands.jsonl#L222">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<p>Restart after the final repair and inspect the machine before running rescue commands. Record what returned automatically.</p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/audit-reboot-failures-evidence.json">Evidence extract</a></p>
+<details class="article-details"><summary>Supporting records and references</summary>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/transparent-l2-bridge-ubuntu24__m6YfrrS/agent/executor-commands.jsonl#L22">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/redundant-uplinks-bash-rhel9-5469/redundant-uplinks-rhel9__JZGceE9/agent/executor-commands.jsonl#L148">Recorded commands 2</a></p>
+</details>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

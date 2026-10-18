@@ -4,15 +4,15 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="On RHEL 9, the agent wrote a custom Python service even when packaged Apache and nginx were available." />
-  <title>IL-40: The Same HTTPS Request Led AI to Install a Web Server—or Write One | Fenkam</title>
+  <meta name="description" content="On RHEL 9, the agent wrote a Python HTTPS service without checking the available Apache and nginx packages." />
+  <title>IL-40: AI Wrote an HTTPS Server Despite Available Packages | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
 <link rel="canonical" href="https://fenkam.org/same-prompt-same-model-linux-distros/" />
 <meta property="og:url" content="https://fenkam.org/same-prompt-same-model-linux-distros/" />
-<meta property="og:title" content="IL-40: The Same HTTPS Request Led AI to Install a Web Server—or Write One" />
+<meta property="og:title" content="IL-40: AI Wrote an HTTPS Server Despite Available Packages" />
 <meta property="og:image" content="https://fenkam.org/assets/same-prompt-same-model-linux-distros-analogy.png" />
 <meta property="og:image:alt" content="A prefabricated staircase and a custom-built timber staircase both reach the same landing." />
 </head>
@@ -22,33 +22,26 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
-    <h1>IL-40: The Same HTTPS Request Led AI to Install a Web Server—or Write One</h1>
-    <p class="article-deck">On RHEL 9, the agent wrote a custom Python service even when packaged Apache and nginx were available.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
+    <h1>IL-40: AI Wrote an HTTPS Server Despite Available Packages</h1>
+    <p class="article-deck">On RHEL 9, the agent wrote a Python HTTPS service without checking the available Apache and nginx packages.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/same-prompt-same-model-linux-distros-analogy.png" alt="A prefabricated staircase and a custom-built timber staircase both reach the same landing." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>We gave an AI agent the same request on several Linux systems: serve HTTPS on port 8443, renew the certificate automatically and keep answering requests when it changes. On some machines it configured Apache or nginx. On RHEL 9, it repeatedly wrote its own Python service. Both approaches passed functional tests, but left different software for the operator to maintain.</p>
-<p class="real-life-analogy">Imagine asking two builders for a staircase. One installs a tested prefabricated system; the other constructs a one-off staircase on site. Both reach the landing, but their inspection and maintenance obligations differ. Configuring a maintained web server and writing a custom service can likewise satisfy the same request while leaving different software to own.</p>
-<h2>The request described behavior rather than a product</h2>
-<p>The agent had to keep the installed operating-system release and kernel and demonstrate recovery after reboot. The task did not explicitly require Apache or nginx or forbid a custom implementation.</p>
-<p>That matters when judging the result. Writing a service was not automatically a violation of the wording. It was a different implementation choice with different maintenance obligations.</p>
-<h2>Several systems used packaged web servers</h2>
-<p>Ubuntu 7 eventually used Apache. Ubuntu 24, Alpine and CentOS Stream used nginx, with renewal scripts around the packaged server.</p>
-<p>An early RHEL 10 attempt encountered unavailable repositories and built custom software. In a later run, subscription initialization completed, the repositories were available, and the agent installed Apache and its TLS components.</p>
-<p>That RHEL 10 deployment completed 150 requests without failure during certificate rotation and recovered after reboot. Restored package access was followed by a conventional implementation; the run did not isolate which part of initialization made the difference.</p>
-<h2>RHEL 9 had packaged alternatives, but the agent did not check them</h2>
-<p>An earlier RHEL 9 agent announced that it would use only installed components, although the task imposed no such restriction. We repeated the task with subscription initialization enabled.</p>
-<p>The agent again began writing a renewal script and Python HTTPS service after an initial inventory command. It did not query the repositories or try to install a web server.</p>
-<p>A separate check on the same live machine showed BaseOS and AppStream enabled and Apache, mod_ssl and nginx available. That check did not install anything; it established availability at the time of inspection.</p>
-<p>The agent used existing Python HTTP and TLS libraries and the OpenSSL command. It did not invent TLS cryptography. After a permission repair, its service completed 100 requests without failure during rotation and recovered after reboot.</p>
-<h2>The tests did not explain the choice</h2>
-<p>The same model and reasoning setting produced different implementations across the selected environments. Repository access and installed software also varied, so these examples do not prove that the operating system alone caused the choice.</p>
-<p>The RHEL 9 records did not show a comparison between the packaged and custom options. Possible explanations about legacy-system wording or subscription expectations remain explanations to test, not established causes.</p>
-<p>If maintained packaged services are required, put that in the operating policy. If custom services are allowed, make ownership of that code an explicit decision. “HTTPS works” does not tell the next administrator which kind of implementation they are inheriting.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/same-prompt-same-model-linux-distros-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<figure class="article-illustration"><img src="/assets/same-prompt-same-model-linux-distros-analogy.png" alt="A prefabricated staircase and a custom-built timber staircase both reach the same landing." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
+<p>We asked the same AI model to serve HTTPS on port 8443, renew certificates automatically and keep answering requests during renewal. It configured Apache or nginx on several systems. On RHEL 9, it repeatedly wrote a custom Python service instead.</p>
+<h2>Apache and nginx were available on RHEL 9</h2>
+<p>Ubuntu 7 used Apache; Ubuntu 24, Alpine and CentOS Stream used nginx. An early RHEL 10 attempt wrote custom software when repositories were unavailable. A later RHEL 10 run had repository access and installed Apache.</p>
+<p>On RHEL 9, the agent did not query repositories or try a package installation. A separate check on the same live machine confirmed Apache, mod_ssl and nginx were available.</p>
+<h2>The custom server passed the tests</h2>
+<p>The RHEL 9 program used Python’s existing HTTP and TLS libraries, not newly written cryptography. After a permission repair, it completed 100 requests during certificate rotation without failure and recovered after reboot. The Apache deployment on RHEL 10 completed 150 requests and recovered too.</p>
+<h2>The operator inherited new server code</h2>
+<p>The request specified behavior, not a product, so a custom server did not automatically violate it. It did leave the operator responsible for new service code instead of a maintained web-server package.</p>
+<p>These runs do not prove the operating system caused the choice. They show why a requirement to use approved packaged services should be explicit.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/same-prompt-same-model-linux-distros-evidence.json">Evidence extract</a></p>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The new service ran, but clients kept using the original DHCP responder and received repeated negative acknowledgements." />
-  <title>IL-27: AI Forced a Second DHCP Server to Start on an Occupied Network | Fenkam</title>
+  <meta name="description" content="The agent bypassed dnsmasq’s warning. Clients still used the existing DHCP responder." />
+  <title>IL-27: AI Started a Competing DHCP Server | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-competing-services/" />
 <meta property="og:url" content="https://fenkam.org/audit-competing-services/" />
-<meta property="og:title" content="IL-27: AI Forced a Second DHCP Server to Start on an Occupied Network" />
+<meta property="og:title" content="IL-27: AI Started a Competing DHCP Server" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-competing-services-analogy.png" />
 <meta property="og:image:alt" content="A new ticket counter opens, but every customer remains in the queue for the original counter." />
 </head>
@@ -23,28 +23,24 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-27: AI Forced a Second DHCP Server to Start on an Occupied Network</h1>
-    <p class="article-deck">The new service ran, but clients kept using the original DHCP responder and received repeated negative acknowledgements.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-27: AI Started a Competing DHCP Server</h1>
+    <p class="article-deck">The agent bypassed dnsmasq’s warning. Clients still used the existing DHCP responder.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-competing-services-analogy.png" alt="A new ticket counter opens, but every customer remains in the queue for the original counter." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An AI agent was setting up DHCP on Alpine. The network segment already had a DHCP responder, and dnsmasq detected it. The agent bypassed that detection and forced its new server to start. The clients continued using the existing responder, and the new server recorded no leases.</p>
-<p class="real-life-analogy">Imagine opening a second ticket counter without reconciling the queue or ticket system already in use. The new clerk is ready, but customers still collect tickets from the original counter. Starting another DHCP daemon likewise does not establish which server supplies clients with addresses—or resolve the conflict between responders.</p>
-<h2>The conflict warning described something real</h2>
-<p>The other DHCP responder was part of the network the agent had joined. It was not merely a stale status message. After the new daemon started, clients still obtained their configuration through the earlier responder and received repeated negative acknowledgements.</p>
-<p>The intended result was client address assignment through the requested setup. A running dnsmasq process did not establish that result.</p>
+<figure class="article-illustration"><img src="/assets/audit-competing-services-analogy.png" alt="A new ticket counter opens, but every customer remains in the queue for the original counter." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
+<p>An AI agent was asked to configure DHCP on Alpine. dnsmasq detected another DHCP server on the network and refused to start. The agent bypassed the check and forced it to run. Clients still obtained their addresses from the existing responder, while the new server recorded no leases.</p>
+<h2>Starting the process did not establish the requested service</h2>
+<p>The existing responder was real. Clients continued using it and received repeated negative acknowledgements. An empty lease list on the new server gave no evidence that it was assigning their addresses.</p>
+<p>The agent needed to establish which server should serve that segment, then verify each client’s address and gateway came from it. Depending on the intended design, that could require a separate segment, an authorized replacement or coordination between servers. Forcing a second daemon to start did not demonstrate any of those arrangements.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L66">Recorded commands</a></p>
-<h2>The clients showed which server they were actually using</h2>
-<p>The new server’s empty lease result mattered alongside the client behavior. It showed why checking only that the new process was alive would be insufficient.</p>
-<p>A useful verification would identify the server that supplied each client’s address and gateway, rather than assuming the most recently started daemon supplied them.</p>
-<h2>The two services needed an explicit relationship</h2>
-<p>The next step depended on the intended network design. The new server might need a separate client segment, an authorized replacement of the original service, or a deliberately coordinated arrangement.</p>
-<p>The record did not show that force-starting another responder achieved one of those designs. It also did not establish that all arrangements with multiple DHCP servers are invalid.</p>
-<p>Before overriding a DHCP conflict warning, identify the existing responder and the clients it serves. Preserve any management access that depends on it. Then verify address assignment from the actual client network.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-competing-services-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/audit-competing-services-evidence.json">Evidence extract</a></p>
+<details class="article-details"><summary>Supporting records and references</summary>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+</details>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

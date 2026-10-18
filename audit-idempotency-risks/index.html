@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The playbook checked a Maildir filename that normal mailbox use could rename, making an existing message look absent." />
-  <title>IL-28: Ansible Could Copy Mail Again After a Message Was Marked Read | Fenkam</title>
+  <meta name="description" content="A Maildir filename changed during normal use could make an imported message look missing on the next run." />
+  <title>IL-28: Rerunning Ansible Could Duplicate Mail | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-idempotency-risks/" />
 <meta property="og:url" content="https://fenkam.org/audit-idempotency-risks/" />
-<meta property="og:title" content="IL-28: Ansible Could Copy Mail Again After a Message Was Marked Read" />
+<meta property="og:title" content="IL-28: Rerunning Ansible Could Duplicate Mail" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-idempotency-risks-analogy.png" />
 <meta property="og:image:alt" content="A book has been shelved, but an identical replacement arrives because the returns trolley is empty." />
 </head>
@@ -23,28 +23,25 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-28: Ansible Could Copy Mail Again After a Message Was Marked Read</h1>
-    <p class="article-deck">The playbook checked a Maildir filename that normal mailbox use could rename, making an existing message look absent.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-28: Rerunning Ansible Could Duplicate Mail</h1>
+    <p class="article-deck">A Maildir filename changed during normal use could make an imported message look missing on the next run.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-idempotency-risks-analogy.png" alt="A book has been shelved, but an identical replacement arrives because the returns trolley is empty." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An AI agent wrote an Ansible playbook to migrate email into Maildir. It used <code>force:false</code> to avoid overwriting a destination file that already existed. The destination name included Maildir flags. Reading a message can change those flags and rename the file, so the next playbook run could mistake an existing message for a missing one.</p>
-<p class="real-life-analogy">Imagine a librarian deciding whether to buy a book by checking whether it is still on the returns trolley. Once someone shelves it, that check says the book is missing and another copy gets ordered. A migration guard tied to a filename that normal mailbox use changes can make the same mistake on a later automation run.</p>
-<h2>The first copy worked</h2>
-<p>The playbook placed the supplied messages into exact destination filenames. On that initial run, the required mail appeared. An immediate rerun against the same filenames could also appear safe.</p>
-<p>The question was what would happen after the mailbox had been used normally, not whether the first file copy succeeded.</p>
+<figure class="article-illustration"><img src="/assets/audit-idempotency-risks-analogy.png" alt="A book has been shelved, but an identical replacement arrives because the returns trolley is empty." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
+<p>An AI-written Ansible playbook imported mail using exact destination filenames and <code>force:false</code>. That avoided overwriting files already at those paths. It did not account for Maildir renaming a message when its read-state flags changed.</p>
+<h2>The next run could import the same message again</h2>
+<p>The playbook looked for a file named <code>two.eml:2,</code>. After a user read the message, Maildir could change the flag suffix. The message would still exist, but its original filename would not.</p>
+<p>A later playbook run could then copy the original message again under the old name and flags. The existence check tracked a mutable filename rather than whether the message had already been imported.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/imap-maildir-cutover-ansible-rhel10-9186/imap-maildir-cutover-ansible-rhe__owcohQ8/agent/executor-commands.jsonl#L26">Recorded commands</a></p>
-<h2>The filename changed while the message remained</h2>
-<p>Maildir stores message flags in a suffix on the filename. If a user marks a message read, the mail system can change that suffix.</p>
-<p>The playbook looked specifically for the filename <code>two.eml:2,</code>. If normal mail use changed that suffix, the exact name would be absent even though the message remained. The playbook could then copy it again under the old name and flags.</p>
-<h2>The risky rerun was not performed</h2>
-<p>The recorded test did not change message flags and then reapply the playbook. No duplicate-message incident was observed.</p>
-<p>The concern came from the delivered logic: its “already copied” check depended on a name that the destination was allowed to change. That is enough to justify another test, without claiming the duplicate actually occurred.</p>
-<p>Use a migration marker or a message-identity check that survives ordinary mailbox activity. Test the migration again after reading or moving imported mail. Preserve the original source so a repair does not turn duplicate prevention into accidental message loss.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-idempotency-risks-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<h2>This was a code risk, not an observed duplicate</h2>
+<p>The first migration worked. The recorded test did not change message flags and rerun the playbook, so no duplicate was demonstrated. An immediate rerun before using the mailbox would not exercise the problem either.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<p>Test a rerun after ordinary mailbox use. A migration-completion marker or durable message identity should survive changes to the destination filename.</p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/audit-idempotency-risks-evidence.json">Evidence extract</a></p>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

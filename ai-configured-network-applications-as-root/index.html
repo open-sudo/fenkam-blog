@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The repaired applications passed their tests, but the processes accepting network input had administrator privileges." />
-  <title>IL-30: AI Ran Two Network Services as Root | Fenkam</title>
+  <meta name="description" content="One service explicitly used root. Another inherited root because its systemd unit did not specify a user." />
+  <title>IL-30: AI Ran Network Services as Root | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/ai-configured-network-applications-as-root/" />
 <meta property="og:url" content="https://fenkam.org/ai-configured-network-applications-as-root/" />
-<meta property="og:title" content="IL-30: AI Ran Two Network Services as Root" />
+<meta property="og:title" content="IL-30: AI Ran Network Services as Root" />
 <meta property="og:image" content="https://fenkam.org/assets/ai-configured-network-applications-as-root-analogy.png" />
 <meta property="og:image:alt" content="A hotel parcel clerk receives a master key while a smaller cupboard key lies unused." />
 </head>
@@ -23,33 +23,29 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-30: AI Ran Two Network Services as Root</h1>
-    <p class="article-deck">The repaired applications passed their tests, but the processes accepting network input had administrator privileges.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-30: AI Ran Network Services as Root</h1>
+    <p class="article-deck">One service explicitly used root. Another inherited root because its systemd unit did not specify a user.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/ai-configured-network-applications-as-root-analogy.png" alt="A hotel parcel clerk receives a master key while a smaller cupboard key lies unused." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An AI agent repaired a Python upload receiver on Ubuntu 16.04. It accepted valid uploads, rejected oversized requests and recovered after reboot. The systemd service also contained <code>User=root</code> and <code>Group=root</code>. Every request was therefore handled by a program with the administrator identity.</p>
-<p class="real-life-analogy">Imagine a hotel giving its parcel clerk a master key to every room, simply so the clerk can put deliveries in one cupboard. If someone takes over the parcel desk, they inherit that wider access. Root gives a network request handler similar authority over the host; a dedicated service account can limit it to the files its job needs.</p>
-<h2>The upload receiver needed a directory, not the whole host</h2>
-<p>The requested service listened on port 8080 and saved each accepted request body in its own file. It had to enforce a 65,536-byte limit, preserve an existing receipt and avoid leaving a completed receipt for an interrupted upload.</p>
-<p>Neither that port nor a dedicated receipt directory inherently required root. A service account could receive permission to write there without receiving the same authority over unrelated system files. The agent verified upload behavior, but chose root in the installed service definition.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/http-upload-size-boundary-bash-ubuntu16-3541/http-upload-size-boundary-bash-u__o9u4jUq/agent/executor-commands.jsonl#L8">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/http-upload-size-boundary-bash-ubuntu16-3541/http-upload-size-boundary-bash-u__o9u4jUq/agent/executor-commands.jsonl#L54">Recorded commands 2</a></p>
-<h2>A meter collector became root by default</h2>
-<p>A second repair concerned an existing UDP meter collector on CentOS Stream 10. It needed to keep valid readings, ignore duplicates, record malformed messages and preserve earlier data through restarts.</p>
-<p>The agent created a system service with <code>NoNewPrivileges=true</code> and <code>PrivateTmp=true</code>, but no User setting. A system service defaults to root, and the inspected Python program did not switch accounts itself.</p>
-<p>Those safeguards did not change its identity. <code>NoNewPrivileges</code> prevents gaining additional privileges through another executable; it does not take away root privileges the process already holds.</p>
+<figure class="article-illustration"><img src="/assets/ai-configured-network-applications-as-root-analogy.png" alt="A hotel parcel clerk receives a master key while a smaller cupboard key lies unused." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
+<p>An AI agent repaired a Python upload receiver on Ubuntu 16.04 and verified that it worked after reboot. Its service definition included <code>User=root</code> and <code>Group=root</code>. The program accepting network requests therefore ran with the administrator identity.</p>
+<h2>The upload service did not need that authority</h2>
+<p>The receiver listened on port 8080 and saved uploads in a designated directory. A dedicated account could have permission to write there without authority over unrelated system files.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/http-upload-size-boundary-bash-ubuntu16-3541/http-upload-size-boundary-bash-u__o9u4jUq/agent/executor-commands.jsonl#L8">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/http-upload-size-boundary-bash-ubuntu16-3541/http-upload-size-boundary-bash-u__o9u4jUq/agent/executor-commands.jsonl#L54">Recorded commands 2</a></p>
+<h2>The second service became root by default</h2>
+<p>On CentOS Stream 10, an agent repaired an existing UDP meter collector. Its systemd unit set <code>NoNewPrivileges=true</code> and <code>PrivateTmp=true</code> but omitted User. The program did not switch accounts itself.</p>
+<p>A system service defaults to root. <code>NoNewPrivileges</code> prevents gaining additional privileges through another executable; it does not remove root privileges the process already has.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/udp-meter-ingestion-bash-centos-stream10-4543/udp-meter-ingestion-centos-strea__P5tuonF/agent/executor-commands.jsonl#L12">Recorded commands</a></p>
-<h2>A compromise would start with more authority</h2>
-<p>Running as root did not, by itself, demonstrate a remotely exploitable bug. An attacker would still need a way to make the application perform an unauthorized action.</p>
-<p>If that became command execution in the root process, ordinary ownership permissions would offer much less protection to other credentials, configuration and services. A restricted account would limit the starting authority, subject to the rest of the machine’s security controls.</p>
-<h2>The request handler’s identity is what matters</h2>
-<p>These were repairs to existing applications. The problem was not dependent on whether the agent should have written a new server.</p>
-<p>It also differs from a conventional web server that uses a privileged master process and restricted workers. Here, the network handlers themselves ran without that separation.</p>
-<p>Give the service account access to its required files, then repeat the functional and restart tests under that account. Check which user actually handles requests. A working upload is not a reason to give the receiver authority over the rest of the server.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/ai-configured-network-applications-as-root-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<h2>The risk is the authority an attacker would inherit</h2>
+<p>Neither test demonstrated a remote exploit. If an attacker gained command execution in the request handler, however, it would begin as root rather than a restricted service account.</p>
+<p>These were repairs to existing programs whose handlers ran as root. They did not use the conventional arrangement of a privileged master and restricted request workers.</p>
 <p class="case-sources"><a href="https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html">Documentation</a></p>
-
+<p>Set up the required directory permissions for a dedicated account, then repeat the functional and reboot tests under that account.</p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/ai-configured-network-applications-as-root-evidence.json">Evidence extract</a></p>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

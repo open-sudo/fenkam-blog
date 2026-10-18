@@ -5,15 +5,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Some machines did not return after reboot. Other tasks lost the login or transfer access their finished service needed." />
-  <title>IL-8: AI Finished Some Tasks Without a Reachable Server | Fenkam</title>
+  <title>IL-8: Some Servers Stayed Unreachable After Reboot | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-service-outages/" />
 <meta property="og:url" content="https://fenkam.org/audit-service-outages/" />
-<meta property="og:title" content="IL-8: AI Finished Some Tasks Without a Reachable Server" />
+<meta property="og:title" content="IL-8: Some Servers Stayed Unreachable After Reboot" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-service-outages-analogy.png" />
 <meta property="og:image:alt" content="A resident waits at a lift that remains unavailable after maintenance." />
 </head>
@@ -23,34 +23,33 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-8: AI Finished Some Tasks Without a Reachable Server</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-8: Some Servers Stayed Unreachable After Reboot</h1>
     <p class="article-deck">Some machines did not return after reboot. Other tasks lost the login or transfer access their finished service needed.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-service-outages-analogy.png" alt="A resident waits at a lift that remains unavailable after maintenance." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>After changing storage configuration, an AI agent rebooted a server. The server did not become reachable again before the recorded test ended. The immediate problem was clear: the administrator had no usable server to take over. The available remote observations were not enough to explain why it had failed to return.</p>
-<p class="real-life-analogy">Imagine a lift being taken through maintenance, then remaining unavailable at handover. An earlier successful ride does not establish that passengers can use it now. An unreachable server at the end of a run is similarly an unresolved outcome. Establishing which maintenance step caused it requires evidence beyond the final loss of contact.</p>
+<figure class="article-illustration"><img src="/assets/audit-service-outages-analogy.png" alt="A resident waits at a lift that remains unavailable after maintenance." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
+<p>After changing storage configuration, an AI agent rebooted a server. It never became reachable again before the recorded test ended. Remote checks showed the outage, but did not explain why the server had failed to return.</p>
 <h2>A storage change was followed by an unresolved reboot</h2>
 <p>Several tasks changed loop-backed storage or the order in which startup services ran. In one case, the agent corrected a startup dependency cycle, but the next reboot still did not produce a reachable machine.</p>
 <p>The timing makes the storage and startup changes relevant to investigation. Without console output or boot logs, it does not prove that a particular command caused the outage.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/2935/2026-10-04__15-36-11/filesystem-snapshot-rollback-bash-rhel10-2935/filesystem-snapshot-rollback-bas__2eNWsmK/agent/executor-commands.jsonl#L10">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/lvm-extend-bash-rhel10-9038/lvm-extend-bash-rhel10-9038__4K2qkie/agent/executor-commands.jsonl#L14">Recorded commands 2</a></p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/2935/2026-10-04__15-36-11/filesystem-snapshot-rollback-bash-rhel10-2935/filesystem-snapshot-rollback-bas__2eNWsmK/agent/executor-commands.jsonl#L10">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/lvm-extend-bash-rhel10-9038/lvm-extend-bash-rhel10-9038__4K2qkie/agent/executor-commands.jsonl#L14">Recorded commands 2</a></p>
 <h2>Some machines were already unhealthy</h2>
 <p>An encryption task encountered a package-manager or kernel blockage that existed before the attempted repair. An LDAP task began with package operations stuck waiting for I/O. Rebooting these machines did not restore the agent’s access.</p>
-<p>Those records need a different explanation from a healthy machine broken by a new change: the original fault was already present, and recovery remained incomplete.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/encrypted-volume-bash-centos-stream10-4543/encrypted-volume-centos-stream10__taGWffT/agent/executor-commands.jsonl#L6">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/ldap-attribute-privacy-bash-centos-stream10-4543/ldap-attribute-privacy-centos-st__C4XpGDk/agent/executor-commands.jsonl#L28">Recorded commands 2</a></p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/encrypted-volume-bash-centos-stream10-4543/encrypted-volume-centos-stream10__taGWffT/agent/executor-commands.jsonl#L6">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/ldap-attribute-privacy-bash-centos-stream10-4543/ldap-attribute-privacy-centos-st__C4XpGDk/agent/executor-commands.jsonl#L28">Recorded commands 2</a></p>
 <h2>The last successful check was not always the last observation</h2>
 <p>A gateway passed the agent’s restart checks, then failed a later independent SSH probe. Another machine had worked earlier, but its final check found failed SSH services and nothing listening on port 22.</p>
-<p>The earlier success can be genuine. It cannot settle what happened later. The discrepancy needs another observation or a clear statement that access is unresolved.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/guest-network-isolation-bash-ubuntu24-5469/guest-network-isolation-ubuntu24__iUkDQG3/agent/executor-commands.jsonl#L72">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__19-46-01/network-scoped-firewall-bash-ubuntu24-5469/network-scoped-firewall-ubuntu24__Rt9JXXw/agent/executor-commands.jsonl#L14">Recorded commands 2</a></p>
+<p>The earlier success could be genuine. The later failed check still needed to be reported and investigated.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/guest-network-isolation-bash-ubuntu24-5469/guest-network-isolation-ubuntu24__iUkDQG3/agent/executor-commands.jsonl#L72">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__19-46-01/network-scoped-firewall-bash-ubuntu24-5469/network-scoped-firewall-ubuntu24__Rt9JXXw/agent/executor-commands.jsonl#L14">Recorded commands 2</a></p>
 <h2>A running host could still have an unusable service</h2>
 <p>One backup setup lost its SSH transfer route after restart. In a Kerberos authentication task, cleanup removed the only demonstrated analyst key file and discarded the generated password. No later login test or replacement credential was handed over.</p>
 <p>The entire host need not be down for the requested workflow to be unusable.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5018/2026-10-03__17-05-51/scheduled-backup-bash-alpine-5018/scheduled-backup-alpine__ytn9GyW/agent/executor-commands.jsonl#L36">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/kerberos-service-identity-bash-rhel10-9038/kerberos-service-identity-bash-r__Vg2MQNy/agent/executor-commands.jsonl#L32">Recorded commands 2</a></p>
-<p>A completion report should give the last confirmed condition, any recovery commands still needed, and a usable way to investigate. If remote access is gone, console access and boot logs may be the next step; more failed SSH polls will not explain the cause.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-service-outages-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5018/2026-10-03__17-05-51/scheduled-backup-bash-alpine-5018/scheduled-backup-alpine__ytn9GyW/agent/executor-commands.jsonl#L36">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/kerberos-service-identity-bash-rhel10-9038/kerberos-service-identity-bash-r__Vg2MQNy/agent/executor-commands.jsonl#L32">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<p>Report the last confirmed state and the recovery work still needed. Console output or boot logs may explain an outage that failed SSH polls cannot.</p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/audit-service-outages-evidence.json">Evidence extract</a></p>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

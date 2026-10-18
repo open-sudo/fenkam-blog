@@ -5,15 +5,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Fake backup history, temporary listeners and blocked repositories remained after their demonstrations ended." />
-  <title>IL-13: AI Left Test Files and Test Services on the Finished Server | Fenkam</title>
+  <title>IL-13: AI Left Test Files and Services Behind | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-test-residue/" />
 <meta property="og:url" content="https://fenkam.org/audit-test-residue/" />
-<meta property="og:title" content="IL-13: AI Left Test Files and Test Services on the Finished Server" />
+<meta property="og:title" content="IL-13: AI Left Test Files and Services Behind" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-test-residue-analogy.png" />
 <meta property="og:image:alt" content="Rehearsal props remain mixed with genuine emergency equipment backstage." />
 </head>
@@ -23,34 +23,33 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-13: AI Left Test Files and Test Services on the Finished Server</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-13: AI Left Test Files and Services Behind</h1>
     <p class="article-deck">Fake backup history, temporary listeners and blocked repositories remained after their demonstrations ended.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-test-residue-analogy.png" alt="Rehearsal props remain mixed with genuine emergency equipment backstage." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
+<figure class="article-illustration"><img src="/assets/audit-test-residue-analogy.png" alt="Rehearsal props remain mixed with genuine emergency equipment backstage." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
 <p>An AI agent needed to prove that a backup script deleted old archives. It copied an archive under older dates, ran the retention test, and left the copies beside genuine backups. The deletion rule could work while the directory gave a misleading picture of the recovery history available to the operator.</p>
-<p class="real-life-analogy">Imagine a theatre crew leaving rehearsal props mixed with the real emergency equipment after opening night. The rehearsal may have worked, but the next person cannot safely treat everything as operational. Synthetic backups, test listeners and outage simulations similarly need removal or clear separation from the system being handed over.</p>
 <h2>Backdated files looked like historical backups</h2>
 <p>Two retention tests left synthetic dated archives in the final backup listing. One retained four such copies.</p>
 <p>Artificial dates can help test when a cleanup rule deletes a file. They do not give a copied archive the contents the system had on that earlier date. Leaving those files with real archives makes that distinction harder to see.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl#L14">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-29__18-27-50/scheduled-backup-ansible-rhel7-7778/scheduled-backup-rhel7__KtGvn2g/agent/executor-commands.jsonl#L50">Recorded commands 2</a></p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl#L14">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-29__18-27-50/scheduled-backup-ansible-rhel7-7778/scheduled-backup-rhel7__KtGvn2g/agent/executor-commands.jsonl#L50">Recorded commands 2</a></p>
 <h2>Application configuration was used as test material</h2>
 <p>A synchronization test replaced the authoritative application configuration with test data. Another added debug settings and markers that the synchronization system copied to other machines.</p>
-<p>The copying mechanism worked. The remaining problem was what it copied: verification data had become the configuration other machines would continue receiving.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__09-35-35/config-sync-bash-ubuntu24-5469/config-sync-ubuntu24__g9Js8ry/agent/executor-commands.jsonl#L52">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__20-14-54/config-sync-bash-ubuntu24-5469/config-sync-ubuntu24__kk4y4dT/agent/executor-commands.jsonl#L34">Recorded commands 2</a></p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__09-35-35/config-sync-bash-ubuntu24-5469/config-sync-ubuntu24__g9Js8ry/agent/executor-commands.jsonl#L52">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__20-14-54/config-sync-bash-ubuntu24-5469/config-sync-ubuntu24__kk4y4dT/agent/executor-commands.jsonl#L34">Recorded commands 2</a></p>
 <h2>Temporary listeners remained on familiar service ports</h2>
 <p>A firewall test started a simple TCP listener on PostgreSQL’s port and left it running. A separate network-alias policy test retained a Python listener.</p>
 <p>A port number alone does not identify the application behind it. A later administrator could find an open port that belonged to the demonstration rather than the intended service.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__15-54-16/cross-lan-firewall-bash-rhel9-5469/cross-lan-firewall-rhel9__KvRG5dc/agent/executor-commands.jsonl#L16">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/alias-based-policy-bash-rhel7-5469/alias-based-policy-rhel7__4kCMH6m/agent/executor-commands.jsonl#L50">Recorded commands 2</a></p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__15-54-16/cross-lan-firewall-bash-rhel9-5469/cross-lan-firewall-rhel9__KvRG5dc/agent/executor-commands.jsonl#L16">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/alias-based-policy-bash-rhel7-5469/alias-based-policy-rhel7__4kCMH6m/agent/executor-commands.jsonl#L50">Recorded commands 2</a></p>
 <h2>The simulated repository outage became a real restriction</h2>
 <p>On Alpine, the agent blocked the normal package CDN through the hosts file to test a local repository. That block remained afterward.</p>
 <p>On Ubuntu, an APT proxy pointed at a local port with no proxy server. An exception allowed the local repository to work, but ordinary HTTP repositories stayed blocked after the demonstration.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/local-package-repository-bash-alpine-5782/local-package-repository-alpine__gTBeGcZ/agent/executor-commands.jsonl#L12">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/local-package-repository-bash-ubuntu16-5782/local-package-repository-ubuntu1__gG7fZQB/agent/executor-commands.jsonl#L4">Recorded commands 2</a></p>
-<p>List what the test introduced, then restore or remove it. Keep any useful test fixtures separate from live configuration and genuine backups. Testing should leave the administrator with the requested service, not a permanent copy of the test conditions.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-test-residue-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/local-package-repository-bash-alpine-5782/local-package-repository-alpine__gTBeGcZ/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/local-package-repository-bash-ubuntu16-5782/local-package-repository-ubuntu1__gG7fZQB/agent/executor-commands.jsonl#L4">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<p>Remove test listeners and outage settings, restore the original inputs, and keep synthetic archives separate from genuine backups.</p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/audit-test-residue-evidence.json">Evidence extract</a></p>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

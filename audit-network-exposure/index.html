@@ -5,15 +5,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="HTTPS worked, but plain HTTP, discovery or administration services sometimes remained available too." />
-  <title>IL-17: AI Left Extra Network Services Running Beside the Requested One | Fenkam</title>
+  <title>IL-17: AI Left Unrequested Network Services Running | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=readability-1" />
+  <link rel="stylesheet" href="/styles.css?v=editorial-2" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-network-exposure/" />
 <meta property="og:url" content="https://fenkam.org/audit-network-exposure/" />
-<meta property="og:title" content="IL-17: AI Left Extra Network Services Running Beside the Requested One" />
+<meta property="og:title" content="IL-17: AI Left Unrequested Network Services Running" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-network-exposure-analogy.png" />
 <meta property="og:image:alt" content="A building has a secure new front entrance while its old side door stands open." />
 </head>
@@ -23,30 +23,29 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-17: AI Left Extra Network Services Running Beside the Requested One</h1>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-17: AI Left Unrequested Network Services Running</h1>
     <p class="article-deck">HTTPS worked, but plain HTTP, discovery or administration services sometimes remained available too.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-illustration"><img src="/assets/audit-network-exposure-analogy.png" alt="A building has a secure new front entrance while its old side door stands open." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An AI agent configured an HTTPS site and successfully fetched its page. The web server’s ordinary HTTP site was still listening as well. Testing the encrypted URL confirmed the new service, but did not reveal every other service the installation had made available.</p>
-<p class="real-life-analogy">Imagine installing a secure front entrance while leaving the building’s old side door open. Testing the new entrance proves it works; it says nothing about the other route. Adding HTTPS likewise does not remove an HTTP listener, and installing a package can introduce unrelated services that need their own access review.</p>
-<h2>Adding HTTPS did not remove the default HTTP site</h2>
-<p>Two certificate and web-server tasks left plain HTTP listeners active after configuring TLS. That might be an intentional redirect or compatibility service in another design, but these deployments had not established a need for the extra site.</p>
-<p>An administrator needs to inspect all listeners, not infer them from the one URL that passed its test.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5018/2026-10-03__17-05-51/internal-ca-tls-bash-alpine-5018/internal-ca-tls-alpine__p48cdSP/agent/executor-commands.jsonl#L12">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/internal-ca-tls-bash-centos-stream10-5782/internal-ca-tls-centos-stream10__NiGmgw4/agent/executor-commands.jsonl#L8">Recorded commands 2</a></p>
+<figure class="article-illustration"><img src="/assets/audit-network-exposure-analogy.png" alt="A building has a secure new front entrance while its old side door stands open." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Editorial illustration, generated with AI.</figcaption></figure>
+<p>An AI agent configured an HTTPS site and fetched its page successfully. The ordinary HTTP site was still listening too. Other tasks also left extra listeners that were not needed for the requested service.</p>
 <h2>Installing one tool started another network service</h2>
 <p>Installing a file-integrity tool introduced an SMTP listener. A print-archive task intended for local use enabled network discovery on all interfaces.</p>
 <p>Package dependencies and defaults can start services that are not obvious from the main package’s name. They still become part of the machine the administrator receives.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/file-integrity-baseline-bash-ubuntu24-5469/file-integrity-baseline-ubuntu24__VK7dDkm/agent/executor-commands.jsonl#L6">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/print-spool-recovery-bash-rhel10-9038/print-spool-recovery-bash-rhel10__sErS5Ys/agent/executor-commands.jsonl#L6">Recorded commands 2</a></p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/file-integrity-baseline-bash-ubuntu24-5469/file-integrity-baseline-ubuntu24__VK7dDkm/agent/executor-commands.jsonl#L6">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/print-spool-recovery-bash-rhel10-9038/print-spool-recovery-bash-rhel10__sErS5Ys/agent/executor-commands.jsonl#L6">Recorded commands 2</a></p>
 <h2>Administrative interfaces added separate access to review</h2>
 <p>A broker deployment enabled its management interface with default administrator credentials. A Kerberos setup retained remote-administration services the requested application did not need.</p>
 <p>These ports provide different powers from the application’s ordinary client connection. Their bind addresses, firewall rules and authentication need separate inspection.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-ubuntu24-5469/rabbitmq-cluster-ubuntu24__VndcLF5/agent/executor-commands.jsonl#L186">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7403/2026-10-03__14-57-05/kerberos-service-identity-bash-ubuntu24-7403/kerberos-service-identity-ubuntu__L6tbD9P/agent/executor-commands.jsonl#L10">Recorded commands 2</a></p>
-<p>A service listening on all interfaces is not automatically reachable from the public Internet. It is still an additional listener to account for. At handover, list each open port, who should reach it and why it needs to remain.</p>
-<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-network-exposure-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
-
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-ubuntu24-5469/rabbitmq-cluster-ubuntu24__VndcLF5/agent/executor-commands.jsonl#L186">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7403/2026-10-03__14-57-05/kerberos-service-identity-bash-ubuntu24-7403/kerberos-service-identity-ubuntu__L6tbD9P/agent/executor-commands.jsonl#L10">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
+<p>List each open port, its intended clients and why it needs to remain. A successful HTTPS request is not a listener inventory.</p>
+<div class="source-note" id="sources">
+<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
+<p class="case-sources"><a href="/assets/audit-network-exposure-evidence.json">Evidence extract</a></p>
+<details class="article-details"><summary>Supporting records and references</summary>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5018/2026-10-03__17-05-51/internal-ca-tls-bash-alpine-5018/internal-ca-tls-alpine__p48cdSP/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/internal-ca-tls-bash-centos-stream10-5782/internal-ca-tls-centos-stream10__NiGmgw4/agent/executor-commands.jsonl#L8">Recorded commands 2</a></p>
+</details>
+</div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

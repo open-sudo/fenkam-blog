@@ -160,3 +160,9 @@ h1 em { color:var(--muted); }
 }
 
 .article-body .case-sources { font:12px/1.6 'DM Mono',monospace; color:var(--muted); margin-top:14px; }
+
+/* Keep detailed run inventories available without interrupting the story. */
+.article-body .article-details { margin:24px 0; padding:16px 0; border-block:1px solid var(--line); }
+.article-details summary { cursor:pointer; font:15px/1.5 'Space Grotesk',sans-serif; color:var(--ink); }
+.article-details summary:focus-visible { outline:2px solid var(--ink); outline-offset:4px; }
+.source-note .article-details { border:0; margin:12px 0; padding:0; }
