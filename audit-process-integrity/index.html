@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Service scripts treated a live process number or a successful launch as proof that the intended service was ready for clients." />
-  <title>IL-18: AI Service Scripts Mistook Process IDs for Working Services | Fenkam</title>
+  <meta name="description" content="A saved process number could identify the wrong process, and a successful start command could precede a failed network listener." />
+  <title>IL-18: AI Service Scripts Reported Success Before Checking the Service | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-process-integrity/" />
 <meta property="og:url" content="https://fenkam.org/audit-process-integrity/" />
-<meta property="og:title" content="IL-18: AI Service Scripts Mistook Process IDs for Working Services" />
+<meta property="og:title" content="IL-18: AI Service Scripts Reported Success Before Checking the Service" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-process-integrity-analogy.png" />
 <meta property="og:image:alt" content="A restaurant signals that it is open while only a cleaner is inside and the kitchen is unprepared." />
 </head>
@@ -24,33 +24,34 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-18: AI Service Scripts Mistook Process IDs for Working Services</h1>
-    <p class="article-deck">Service scripts treated a live process number or a successful launch as proof that the intended service was ready for clients.</p>
+    <h1>IL-18: AI Service Scripts Reported Success Before Checking the Service</h1>
+    <p class="article-deck">A saved process number could identify the wrong process, and a successful start command could precede a failed network listener.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-process-integrity-analogy.png" alt="A restaurant signals that it is open while only a cleaner is inside and the kitchen is unprepared." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An init script found a live PID and called the service running. Another start script reported success before the application bound its port. Process existence, process identity and readiness are different things. The control logic needs to know which one it has actually established.</p>
+<p>An AI agent wrote a service script that read a process number from a file and checked whether that number was alive. If it was, the script treated the service as running. It did not establish that the process was the expected application or that clients could connect to it.</p>
 <p class="real-life-analogy">Imagine a restaurant marking itself open because someone is inside, even though the person is the cleaner and the kitchen is cold. Presence does not establish identity or readiness. A live PID can belong to another process, and a launched process may still fail before it binds the port clients need.</p>
-<h2>A live PID stood in for service identity</h2>
-<p>An init script trusted a stored PID and kill -0 without matching the expected application, start identity or listener. The code supported a mistaken-identity risk; the test did not demonstrate every possible PID-reuse failure. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/local-package-repository-bash-ubuntu7-8220/local-package-repository-ubuntu7__MMKawVy/agent/executor-commands.jsonl#L8">commands</a>.)</p>
-<p>A PID file and a successful existence check do not establish the expected executable, process start identity or ownership of the listening socket.</p>
-<h2>The start path reported success before binding</h2>
-<p>Two daemon start paths recorded a PID before binding the HTTP socket. A successful parent exit or existing PID file could therefore precede a serving child. One runtime directory was writable by the serving account as well. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl#L12">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl#L6">second trace</a>.)</p>
-<p>A daemonizing parent can exit successfully before its child has acquired the application port.</p>
-<h2>The stop path forgot a process that could still be alive</h2>
-<p>Two stop paths waited only a bounded interval, then deleted the PID file and reported stopped without failing if the process still lived. The supervisor could forget a process it had not actually stopped. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799/ssh-local-service-tunnel-centos5__mD9FU7r/agent/executor-commands.jsonl#L22">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/udp-meter-ingestion-bash-centos5-8799/udp-meter-ingestion-centos5__fnYrvTc/agent/executor-commands.jsonl#L24">second trace</a>.)</p>
-<p>A bounded wait is useful only if its timeout has an explicit result.</p>
-<h2>Start and stop disagreed about the allocated device</h2>
-<p>A zram start command selected an available device dynamically, while stop hardcoded /dev/zram0. The helper did not retain the chosen device identity, so allocation and cleanup could target different resources. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/executor-commands.jsonl#L22">commands</a>.)</p>
-<p>The zram case is a related ownership problem outside ordinary daemon PIDs.</p>
-<h2>What should an administrator check?</h2>
-<p>A dependable lifecycle ties status, readiness and cleanup to the same owned process or resource. That can involve a service manager, process start identity and listener checks, or a stored allocation identifier. The relevant failure mode is mistaken identity, not a claim that all PID files or all dynamically allocated devices are unsafe.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-process-integrity-evidence.json">source extract</a> includes all 6 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>A live process number could belong to something else</h2>
+<p>In an Ubuntu 7 local-repository task, the script trusted a PID file and a <code>kill -0</code> check. Linux can reuse a process number after the original process exits.</p>
+<p>If an old PID file remains, a successful existence check can therefore refer to a different program. This was a risk found in the script; the test did not demonstrate an actual mistaken shutdown caused by PID reuse.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/local-package-repository-bash-ubuntu7-8220/local-package-repository-ubuntu7__MMKawVy/agent/executor-commands.jsonl#L8">Recorded commands</a></p>
+<h2>The start command finished before the port was ready</h2>
+<p>Two CentOS 5 service scripts saved a PID before the HTTP process had bound its listening socket. The launching process could exit successfully even if the child later failed to acquire the port.</p>
+<p>One runtime directory could also be modified by the serving account. A PID file in that directory was not independent confirmation that the expected service had started.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-02__23-55-49/service-resource-limits-bash-centos5-8799/service-resource-limits-centos5__WoszBo4/agent/executor-commands.jsonl#L12">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl#L6">Recorded commands 2</a></p>
+<h2>The stop command could forget a process still running</h2>
+<p>Two other stop scripts waited for a limited time, removed the PID file, and reported completion without treating a surviving process as failure.</p>
+<p>If the process did not exit in time, the script could leave it alive while deleting the information used to manage it. The timeout needed an explicit failure result or another verified cleanup step.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/ssh-local-service-tunnel-bash-centos5-8799/ssh-local-service-tunnel-centos5__mD9FU7r/agent/executor-commands.jsonl#L22">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/udp-meter-ingestion-bash-centos5-8799/udp-meter-ingestion-centos5__fnYrvTc/agent/executor-commands.jsonl#L24">Recorded commands 2</a></p>
+<h2>A storage helper stopped the wrong device by assumption</h2>
+<p>A compressed-swap script chose an available zram device at startup but always used <code>/dev/zram0</code> when stopping. It did not save which device it had actually allocated.</p>
+<p>If startup chose another device, cleanup could target a different one. This is the same tracking mistake applied to a resource rather than a process number.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/zram-swap-bash-ubuntu24-5782/zram-swap-ubuntu24__ubCDjz7/agent/executor-commands.jsonl#L22">Recorded commands</a></p>
+<p>Check the identity of the process or device you created, whether the application is ready, and whether it actually stopped. Those are separate observations. A service manager can help, but the status it reports still needs to match the application’s behavior.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-process-integrity-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

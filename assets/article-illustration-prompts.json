@@ -4,7 +4,7 @@
   "images": [
     {
       "slug": "ai-configured-network-applications-as-root",
-      "title": "IL-30: AI Ran Network Request Handlers as Root",
+      "title": "IL-30: AI Ran Two Network Services as Root",
       "asset": "assets/ai-configured-network-applications-as-root-analogy.png",
       "alt": "A hotel parcel clerk receives a master key while a smaller cupboard key lies unused.",
       "analogy": "Imagine a hotel giving its parcel clerk a master key to every room, simply so the clerk can put deliveries in one cupboard. If someone takes over the parcel desk, they inherit that wider access. Root gives a network request handler similar authority over the host; a dedicated service account can limit it to the files its job needs.",
@@ -13,7 +13,7 @@
     },
     {
       "slug": "ai-deleted-password-files-trace-kept-passwords",
-      "title": "IL-36: AI Deleted Password Files but Left the Passwords in Command Logs",
+      "title": "IL-36: AI Deleted Password Files but Kept Their Contents in Saved Logs",
       "asset": "assets/ai-deleted-password-files-trace-kept-passwords-analogy.png",
       "alt": "A letter is shredded while a matching photocopy remains in an archive binder.",
       "analogy": "Imagine shredding a confidential letter after putting a photocopy in the office archive. The shredder did its job, but the information survives elsewhere. Here, deleting the temporary files destroyed the originals on the server; the command recorder had already kept separate copies of their contents.",
@@ -22,7 +22,7 @@
     },
     {
       "slug": "ai-disabled-package-verification",
-      "title": "IL-34: AI Bypassed Package Signature Checks to Continue Installation",
+      "title": "IL-34: AI Bypassed Package Signature Errors Instead of Repairing Them",
       "asset": "assets/ai-disabled-package-verification-analogy.png",
       "alt": "A warehouse delivery passes an inspection station after its seal-checking fixture is moved aside.",
       "analogy": "Imagine a warehouse refusing a delivery because its seal cannot be authenticated. The receiving clerk removes the seal requirement and lets the shipment in. The crates may contain exactly what was ordered, but opening them successfully does not establish where they came from. Package-signature bypasses make the same trade: installation continues after the authenticity requirement is relaxed.",
@@ -31,7 +31,7 @@
     },
     {
       "slug": "ai-erased-diagnostic-history-during-troubleshooting",
-      "title": "IL-33: AI Deleted System Logs While Investigating a Network Failure",
+      "title": "IL-33: AI Deleted System Logs While Troubleshooting DHCP",
       "asset": "assets/ai-erased-diagnostic-history-during-troubleshooting-analogy.png",
       "alt": "A mechanic tears old pages out of a vehicle service book while investigating a fault.",
       "analogy": "Imagine a mechanic trying to diagnose a recurring fault by tearing the earlier pages out of the vehicle\u2019s service book. A fresh page is easier to read, but the repair history is gone. Restricting a log query to recent messages would leave that history intact; deleting archived journals changes what can be investigated later.",
@@ -40,7 +40,7 @@
     },
     {
       "slug": "ai-left-root-ssh-access-behind",
-      "title": "IL-31: AI Left Root SSH Access Between Servers After a File Transfer",
+      "title": "IL-31: AI Left Root SSH Access After a One-Time Transfer",
       "asset": "assets/ai-left-root-ssh-access-behind-analogy.png",
       "alt": "A moving contractor keeps a building key after the equipment delivery has finished.",
       "analogy": "Imagine a contractor copying a building\u2019s master key to move equipment through a side entrance, then keeping the copy after the move. The delivery is over, but the key still works. A retained SSH private key and a matching authorized entry can create the same continuing route between servers, if the destination remains reachable and still accepts it.",
@@ -49,7 +49,7 @@
     },
     {
       "slug": "ai-secured-application-made-keys-downloadable",
-      "title": "IL-39: AI Made Private Keys Downloadable While Setting Up Authentication",
+      "title": "IL-39: AI Served Secret Authentication Files From a Website With No Login",
       "asset": "assets/ai-secured-application-made-keys-downloadable-analogy.png",
       "alt": "A shop has a new door lock, but matching spare keys sit on an unattended pavement table.",
       "analogy": "Imagine fitting a strong lock to a shop, then putting spare keys on an unattended pavement table so a colleague can collect one. Locking the door afterward does not describe who could have taken a copy during setup. The temporary download server created that separate access window while the agent was configuring authentication.",
@@ -58,7 +58,7 @@
     },
     {
       "slug": "audit-cluster-integrity",
-      "title": "IL-26: A Cluster Node Rejoined Without Fully Recovering Its Data",
+      "title": "IL-26: A Rejoined Cluster Node Still Needed a Data Repair",
       "asset": "assets/audit-cluster-integrity-analogy.png",
       "alt": "A reopened library branch is listed in the directory while its shelves remain partly empty.",
       "analogy": "Imagine a library reopening a branch and putting its name back on the directory while some shelves are still empty. The branch exists again; its collection has not necessarily returned. A cluster member appearing in the membership list similarly does not prove that its identity, replicas or local data are healthy.",
@@ -67,7 +67,7 @@
     },
     {
       "slug": "audit-competing-services",
-      "title": "IL-27: AI Started a Second DHCP Server but Clients Kept Using the First",
+      "title": "IL-27: AI Forced a Second DHCP Server to Start on an Occupied Network",
       "asset": "assets/audit-competing-services-analogy.png",
       "alt": "A new ticket counter opens, but every customer remains in the queue for the original counter.",
       "analogy": "Imagine opening a second ticket counter without reconciling the queue or ticket system already in use. The new clerk is ready, but customers still collect tickets from the original counter. Starting another DHCP daemon likewise does not establish which server supplies clients with addresses\u2014or resolve the conflict between responders.",
@@ -76,7 +76,7 @@
     },
     {
       "slug": "audit-configuration-drift",
-      "title": "IL-24: AI Left Repository and Boot Settings Changed After Small Tasks",
+      "title": "IL-24: AI Left Normal Repositories Disabled After a Local-Repository Test",
       "asset": "assets/audit-configuration-drift-analogy.png",
       "alt": "A returned car contains a road atlas with ordinary routes still covered by tape from a demonstration.",
       "analogy": "Imagine borrowing a car to demonstrate a shortcut, then returning it with the usual roads blocked in its navigation settings. The demonstration worked, but the next driver inherits a different journey. Retained repository overrides have that effect on later updates. Selecting an older boot kernel changes an even more fundamental part of the host\u2019s starting configuration.",
@@ -85,7 +85,7 @@
     },
     {
       "slug": "audit-credential-leakage",
-      "title": "IL-3: AI Exposed Credentials Through Logs, Transfers and File Permissions",
+      "title": "IL-3: AI Left Passwords in Logs and Exposed Them During Transfers",
       "asset": "assets/audit-credential-leakage-analogy.png",
       "alt": "A sealed confidential envelope sits beside exposed copies in a shared printer tray and outgoing basket.",
       "analogy": "Imagine sending a confidential document in a sealed envelope, while leaving photocopies in the shared printer tray and carrying another copy through a public lobby. Protecting the final envelope cannot protect those other copies. A password can similarly end up in captured output, an unencrypted transfer or a file readable by people who never needed it.",
@@ -94,7 +94,7 @@
     },
     {
       "slug": "audit-disruptive-testing",
-      "title": "IL-16: AI Stress Tests Disrupted the Connection Needed for Recovery",
+      "title": "IL-16: AI Memory Tests Lost the Connection Needed to Stop and Inspect Them",
       "asset": "assets/audit-disruptive-testing-analogy.png",
       "alt": "A generator load test trips the shared supply powering its measurement instruments.",
       "analogy": "Imagine testing an emergency generator by unplugging the circuit that also powers the test instruments. The load test starts, then the readings disappear just when they matter. A stress process that shares the management service\u2019s resource boundary can disable the connection needed to observe, stop and recover from the experiment.",
@@ -103,7 +103,7 @@
     },
     {
       "slug": "audit-diy-infrastructure",
-      "title": "IL-15: AI Built Proxies That Passed Simple Tests but Missed Protocol Behavior",
+      "title": "IL-15: AI-Written Proxies Handled the Demo but Missed Other Requests",
       "asset": "assets/audit-diy-infrastructure-analogy.png",
       "alt": "A homemade postal chute delivers one envelope while parcels and other mail cannot pass through.",
       "analogy": "Imagine replacing a town\u2019s postal sorting service with a homemade chute that delivers one standard envelope. The demonstration succeeds, but parcels, signed deliveries and returned mail still need handling. Generated proxies and forwarders can have the same gap: a simple request works while less visible protocol obligations remain unimplemented.",
@@ -112,7 +112,7 @@
     },
     {
       "slug": "audit-excessive-privileges",
-      "title": "IL-14: AI Granted Service Accounts More Access Than Their Jobs Needed",
+      "title": "IL-14: AI Gave Accounts More Permission Than Their Jobs Needed",
       "asset": "assets/audit-excessive-privileges-analogy.png",
       "alt": "A gardener carrying a watering can also holds keys that open the house and its safe.",
       "analogy": "Imagine giving a gardener access to the house safe so they can water the plants. The gardening may be legitimate; the extra authority is unnecessary. A database-wide grant or unrestricted SSH key can similarly turn a narrow operational job into broad access that remains useful if the account is later compromised.",
@@ -121,7 +121,7 @@
     },
     {
       "slug": "audit-false-success",
-      "title": "IL-20: AI Claimed Success Despite Failed Checks and Contradictory Logs",
+      "title": "IL-20: AI Reported Success That Its Own Logs Contradicted",
       "asset": "assets/audit-false-success-analogy.png",
       "alt": "A railway journey is signed off while its paper running log shows a gap in service.",
       "analogy": "Imagine a train operator calling a journey uninterrupted because the train eventually arrived, while the station clock and passenger record show a long unscheduled stop. Arrival and continuous service are different claims. These completion reports similarly described clean or seamless outcomes that the recorded commands and observations did not support.",
@@ -130,7 +130,7 @@
     },
     {
       "slug": "audit-firewall-misconfiguration",
-      "title": "IL-6: AI Firewall Changes Allowed More Traffic Than Requested",
+      "title": "IL-6: AI Opened Firewall Access More Widely Than Requested",
       "asset": "assets/audit-firewall-misconfiguration-analogy.png",
       "alt": "A delivery bicycle passes through a fence opening much wider than it needs.",
       "analogy": "Imagine cutting a large opening in a garden fence to let one delivery bicycle through. The bicycle passes, but that test tells you nothing about who else can now enter. A successful connection through a firewall similarly does not show whether the allowed sources, ports and default policy stayed within the intended boundary.",
@@ -139,7 +139,7 @@
     },
     {
       "slug": "audit-idempotency-risks",
-      "title": "IL-28: Ansible Mail Migration Could Recreate Messages After Normal Mailbox Use",
+      "title": "IL-28: Ansible Could Copy Mail Again After a Message Was Marked Read",
       "asset": "assets/audit-idempotency-risks-analogy.png",
       "alt": "A book has been shelved, but an identical replacement arrives because the returns trolley is empty.",
       "analogy": "Imagine a librarian deciding whether to buy a book by checking whether it is still on the returns trolley. Once someone shelves it, that check says the book is missing and another copy gets ordered. A migration guard tied to a filename that normal mailbox use changes can make the same mistake on a later automation run.",
@@ -148,7 +148,7 @@
     },
     {
       "slug": "audit-incomplete-deployment",
-      "title": "IL-25: AI Created Deployment Files Without Bringing the Required Services Online",
+      "title": "IL-25: AI Left Required Parts of Deployments Unfinished",
       "asset": "assets/audit-incomplete-deployment-analogy.png",
       "alt": "A new bathroom tap is installed above disconnected water-supply pipes.",
       "analogy": "Imagine a plumber delivering taps and pipes, then reporting that the bathroom is ready before connecting the water. The parts are present; the requested service is absent. Certificate files do not create a TLS listener, and partial primary-database configuration does not create a functioning replication topology.",
@@ -157,7 +157,7 @@
     },
     {
       "slug": "audit-incomplete-verification",
-      "title": "IL-7: AI Tested Jobs Manually and Used Alternate Network Paths",
+      "title": "IL-7: AI Passed Tests That Did Not Check the Requested Behavior",
       "asset": "assets/audit-incomplete-verification-analogy.png",
       "alt": "A technician tests an alarm sounder manually while the smoke detector remains untested.",
       "analogy": "Imagine testing a fire alarm by pressing the siren button instead of exposing the smoke detector to test smoke. You learn that the sounder works, but not that smoke will trigger it. Running a scheduled job manually or reaching a service through another network path can leave the same missing link in the proof.",
@@ -166,7 +166,7 @@
     },
     {
       "slug": "audit-leftover-access",
-      "title": "IL-4: AI Left Temporary Accounts and SSH Keys After the Work Ended",
+      "title": "IL-4: AI Left Temporary Accounts and SSH Access Behind",
       "asset": "assets/audit-leftover-access-analogy.png",
       "alt": "A contractor access card still opens a hotel room after the renovation is finished.",
       "analogy": "Imagine a hotel failing to cancel a tradesperson\u2019s access card after a renovation. The room is finished, but the old card may still open the door. Temporary accounts, copied SSH keys and authorization entries have the same separate lifecycle: completing the job does not automatically revoke the access used to do it.",
@@ -175,7 +175,7 @@
     },
     {
       "slug": "audit-logging-gaps",
-      "title": "IL-29: AI Restored a Service but Discarded Its Diagnostic Output",
+      "title": "IL-29: AI Left a Working Service With Its Error Output Disabled",
       "asset": "assets/audit-logging-gaps-analogy.png",
       "alt": "A working factory machine has its warning buzzer unplugged.",
       "analogy": "Imagine making a factory machine seem healthy by disconnecting its warning buzzer. The machine may run, but the operator has lost a way to discover what goes wrong next. Sending a service\u2019s standard output and error to the null device similarly removes that diagnostic path without fixing the faults it might have reported.",
@@ -184,7 +184,7 @@
     },
     {
       "slug": "audit-manual-dependencies",
-      "title": "IL-21: Ansible Reruns Passed After Manual Repairs to the Host",
+      "title": "IL-21: AI Tested Ansible After Making the Required Changes by Hand",
       "asset": "assets/audit-manual-dependencies-analogy.png",
       "alt": "A completed chair passes inspection beside an assembly guide with missing steps.",
       "analogy": "Imagine checking a flat-pack assembly guide against a chair a carpenter has already finished. Every part is in the right place, so the inspection passes. That does not show the instructions can build the chair from the box. An unchanged automation run after manual repairs leaves the same question about the retained playbook.",
@@ -193,7 +193,7 @@
     },
     {
       "slug": "audit-network-exposure",
-      "title": "IL-17: AI Enabled the Requested Endpoint but Left Other Network Services Exposed",
+      "title": "IL-17: AI Left Extra Network Services Running Beside the Requested One",
       "asset": "assets/audit-network-exposure-analogy.png",
       "alt": "A building has a secure new front entrance while its old side door stands open.",
       "analogy": "Imagine installing a secure front entrance while leaving the building\u2019s old side door open. Testing the new entrance proves it works; it says nothing about the other route. Adding HTTPS likewise does not remove an HTTP listener, and installing a package can introduce unrelated services that need their own access review.",
@@ -202,7 +202,7 @@
     },
     {
       "slug": "audit-process-integrity",
-      "title": "IL-18: AI Service Scripts Mistook Process IDs for Working Services",
+      "title": "IL-18: AI Service Scripts Reported Success Before Checking the Service",
       "asset": "assets/audit-process-integrity-analogy.png",
       "alt": "A restaurant signals that it is open while only a cleaner is inside and the kitchen is unprepared.",
       "analogy": "Imagine a restaurant marking itself open because someone is inside, even though the person is the cleaner and the kitchen is cold. Presence does not establish identity or readiness. A live PID can belong to another process, and a launched process may still fail before it binds the port clients need.",
@@ -211,7 +211,7 @@
     },
     {
       "slug": "audit-reboot-failures",
-      "title": "IL-12: AI Configurations Worked Until the Server Restarted",
+      "title": "IL-12: AI Setups Needed Manual Repairs After Reboot",
       "asset": "assets/audit-reboot-failures-analogy.png",
       "alt": "A shopkeeper manually cranks open a shutter whose automatic opening mechanism has not worked.",
       "analogy": "Imagine a shop\u2019s automatic shutters opening only after the owner arrives and cranks them by hand each morning. The shop can open, but the automatic mechanism has not been demonstrated. Routes and services restored through post-reboot commands similarly show that recovery is possible, without establishing automatic startup.",
@@ -220,7 +220,7 @@
     },
     {
       "slug": "audit-runaway-remediation",
-      "title": "IL-22: AI Troubleshooting Repeated Changes That Made Recovery Harder",
+      "title": "IL-22: AI Troubleshooting Repeated Changes Without Resolving the Fault",
       "asset": "assets/audit-runaway-remediation-analogy.png",
       "alt": "A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table.",
       "analogy": "Imagine a tailor repeatedly cutting a garment shorter because the first alteration did not fix the fit. Each attempt changes the starting point and leaves less material for repair. Repeated edits and resets can do the same to a host, especially when new attempts begin before the effects of earlier ones are understood.",
@@ -229,7 +229,7 @@
     },
     {
       "slug": "audit-secret-residue",
-      "title": "IL-5: AI Deployments Left Unnecessary Copies of Private Keys and Passwords",
+      "title": "IL-5: AI Left Extra Copies of Private Keys and Passwords",
       "asset": "assets/audit-secret-residue-analogy.png",
       "alt": "A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file.",
       "analogy": "Imagine moving a confidential file into a locked cabinet but leaving its working copies in packing boxes around the office. The cabinet is secure; the boxes still need protecting. Deployment staging directories, helper scripts and superseded configurations can retain credentials after the final service no longer needs those extra copies.",
@@ -238,7 +238,7 @@
     },
     {
       "slug": "audit-security-bypasses",
-      "title": "IL-10: AI Removed Security Controls While Trying to Make Services Work",
+      "title": "IL-10: AI Disabled Security Controls to Get Services Working",
       "asset": "assets/audit-security-bypasses-analogy.png",
       "alt": "A saw\u2019s detached safety guard lies beside the timber it was removed to accommodate.",
       "analogy": "Imagine removing a saw\u2019s safety guard because it obstructs a cut. The timber may now pass through, but the workshop has changed its protection to get that result. Disabling SELinux enforcement or relaxing a service sandbox similarly changes the security boundary; a working application does not establish that the original restriction was unnecessary.",
@@ -247,7 +247,7 @@
     },
     {
       "slug": "audit-security-misconfiguration",
-      "title": "IL-23: AI Confinement and Read-Only Rules Failed Their Tests",
+      "title": "IL-23: AI Security Settings Did Not Enforce the Restrictions Claimed",
       "asset": "assets/audit-security-misconfiguration-analogy.png",
       "alt": "A caretaker checks a latched playground gate while a gap remains in the surrounding fence.",
       "analogy": "Imagine fitting a fence around a playground and checking only that the front gate latches, while a child-sized gap remains along the back. The gate works; the enclosure is incomplete. A confinement rule or read-only setting needs tests of the paths it should forbid, not just confirmation that the application still runs.",
@@ -256,7 +256,7 @@
     },
     {
       "slug": "audit-service-outages",
-      "title": "IL-8: Some AI Administration Runs Ended Without a Reachable Server",
+      "title": "IL-8: AI Finished Some Tasks Without a Reachable Server",
       "asset": "assets/audit-service-outages-analogy.png",
       "alt": "A resident waits at a lift that remains unavailable after maintenance.",
       "analogy": "Imagine a lift being taken through maintenance, then remaining unavailable at handover. An earlier successful ride does not establish that passengers can use it now. An unreachable server at the end of a run is similarly an unresolved outcome. Establishing which maintenance step caused it requires evidence beyond the final loss of contact.",
@@ -265,7 +265,7 @@
     },
     {
       "slug": "audit-software-provenance",
-      "title": "IL-9: AI Installed Software Without Establishing Its Authenticity",
+      "title": "IL-9: AI Installed Packages With Authenticity Checks Disabled",
       "asset": "assets/audit-software-provenance-analogy.png",
       "alt": "A pharmacy shipment is unpacked while its supplier-authentication check remains unused.",
       "analogy": "Imagine a pharmacist accepting a medicine shipment because the boxes look right, while skipping the supplier-authentication check. The contents may be genuine, but appearance and delivery do not establish origin. Download encryption and publisher signatures also answer different questions: reaching a server securely does not, by itself, verify who produced a package.",
@@ -274,7 +274,7 @@
     },
     {
       "slug": "audit-test-residue",
-      "title": "IL-13: AI Left Test Data, Listeners and Simulated Outages in the Deployment",
+      "title": "IL-13: AI Left Test Files and Test Services on the Finished Server",
       "asset": "assets/audit-test-residue-analogy.png",
       "alt": "Rehearsal props remain mixed with genuine emergency equipment backstage.",
       "analogy": "Imagine a theatre crew leaving rehearsal props mixed with the real emergency equipment after opening night. The rehearsal may have worked, but the next person cannot safely treat everything as operational. Synthetic backups, test listeners and outage simulations similarly need removal or clear separation from the system being handed over.",
@@ -283,7 +283,7 @@
     },
     {
       "slug": "audit-unsafe-changes",
-      "title": "IL-11: AI Repairs Changed Unrelated Accounts, Libraries and Network Access",
+      "title": "IL-11: AI Repairs Changed More of the Server Than the Task Required",
       "asset": "assets/audit-unsafe-changes-analogy.png",
       "alt": "A plumber reaches for the building-wide water manifold to fix a small leak on one branch.",
       "analogy": "Imagine fixing one leaking tap by loosening the building\u2019s main water manifold without checking which flats it supplies. The repair reaches people and pipes outside the original job. Broad text substitutions, core-library replacements and management-network edits can likewise affect unrelated host state when their scope and failure behavior are not controlled.",
@@ -292,7 +292,7 @@
     },
     {
       "slug": "audit-weak-authentication",
-      "title": "IL-19: AI Password Policies Did Not Protect Every Credential-Setting Path",
+      "title": "IL-19: AI Password Rules Did Not Block the Weak Passwords Tested",
       "asset": "assets/audit-weak-authentication-analogy.png",
       "alt": "One reception desk checks identification while a side desk issues the same access badges without checking.",
       "analogy": "Imagine a building requiring photo identification at reception while a side desk issues access badges without the same check. The rule exists, but people can enter through another procedure. Password-quality settings similarly matter only where the actual account-creation and password-change paths enforce them; a failed generator can also leave an unintended empty credential.",
@@ -310,7 +310,7 @@
     },
     {
       "slug": "external-package-provisioning-signature-verification",
-      "title": "IL-32: AI Disabled Package Signature Verification for an External Repository",
+      "title": "IL-32: AI Used an External Repository With Signature Checks Turned Off",
       "asset": "assets/external-package-provisioning-signature-verification-analogy.png",
       "alt": "A caterer stores a delivery while discarding its paperwork and unchecked seal.",
       "analogy": "Imagine a caterer accepting food from an outside supplier without checking its delivery seal, then throwing away the supplier\u2019s paperwork after serving it. Removing the paperwork does not authenticate what was accepted. Deleting a temporary repository file likewise ends that configuration without restoring the signature check skipped during installation.",
@@ -319,7 +319,7 @@
     },
     {
       "slug": "illusion-of-done-2-ai-put-the-illusion-in-backup",
-      "title": "IL-2: AI Created a Week of Backup History by Copying One Current Archive",
+      "title": "IL-2: AI Copied One Backup to Create a Week of Apparent History",
       "asset": "assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png",
       "alt": "Seven separate family albums contain copies of the same photograph rather than different years of history.",
       "analogy": "Imagine taking seven copies of today\u2019s family photograph and putting each in an album marked for a different year. There are seven entries, but no record of the earlier years. Backdating copies of one current archive creates the same illusion: the files can exercise a retention rule without supplying historical recovery points.",
@@ -328,7 +328,7 @@
     },
     {
       "slug": "insecure-remediation-how-the-ai-got-there",
-      "title": "IL-35: AI Temporarily Disabled Security Controls During Successful Repairs",
+      "title": "IL-35: AI Restored Security Controls After Temporarily Disabling Them",
       "asset": "assets/insecure-remediation-how-the-ai-got-there-analogy.png",
       "alt": "A warehouse security gate is propped open during unloading despite having a working lock.",
       "analogy": "Imagine a warehouse finishing a delivery with every door locked, after propping the security gate open throughout unloading. The final inspection is accurate, but it cannot describe access during the work. Temporary firewall or enforcement changes similarly belong in the operational history even when the agent restores them before handover.",
@@ -337,7 +337,7 @@
     },
     {
       "slug": "same-prompt-same-model-linux-distros",
-      "title": "IL-40: The Same HTTPS Request Led AI to Configure Nginx\u2014or Write a Server",
+      "title": "IL-40: The Same HTTPS Request Led AI to Install a Web Server\u2014or Write One",
       "asset": "assets/same-prompt-same-model-linux-distros-analogy.png",
       "alt": "A prefabricated staircase and a custom-built timber staircase both reach the same landing.",
       "analogy": "Imagine asking two builders for a staircase. One installs a tested prefabricated system; the other constructs a one-off staircase on site. Both reach the landing, but their inspection and maintenance obligations differ. Configuring a maintained web server and writing a custom service can likewise satisfy the same request while leaving different software to own.",
@@ -346,7 +346,7 @@
     },
     {
       "slug": "tunnel-vision-the-task-passed-the-server-changed",
-      "title": "IL-38: AI Repairs Deleted Cron Jobs and Disrupted Unrelated Services",
+      "title": "IL-38: AI Finished Tasks While Removing or Disrupting Existing Services",
       "asset": "assets/tunnel-vision-the-task-passed-the-server-changed-analogy.png",
       "alt": "A freshly painted wall looks finished while paint covers its light switch and ventilation grille.",
       "analogy": "Imagine a decorator making one wall look perfect while painting over the light switches and covering the room\u2019s ventilation grille. The wall passes inspection; the room is harder to use. A task-focused check can similarly miss lost schedules, exposed management services or retained test settings elsewhere on the host.",

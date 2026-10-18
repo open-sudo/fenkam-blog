@@ -27,33 +27,33 @@
 <p>What happens when an AI agent administers a Linux server? These field notes follow concrete examples from recorded tests: leaked credentials, firewall changes, failed recovery, incomplete automation and other operational problems.</p>
 <p>Each article explains how the issue appeared in different tasks and what the evidence actually establishes. The examples include observed failures, corrected mistakes, implementation risks and missing checks. They are not reports of production intrusions.</p>
 <div class="run-table-scroll" role="region" aria-label="Infrastructure field notes" tabindex="0"><table class="run-comparison"><thead><tr><th scope="col">Topic</th><th scope="col">Article</th></tr></thead><tbody>
-<tr><th scope="row">Logging gaps</th><td><a href="/audit-logging-gaps/">IL-29: AI Restored a Service but Discarded Its Diagnostic Output</a></td></tr>
-<tr><th scope="row">Idempotency risks</th><td><a href="/audit-idempotency-risks/">IL-28: Ansible Mail Migration Could Recreate Messages After Normal Mailbox Use</a></td></tr>
-<tr><th scope="row">Competing services</th><td><a href="/audit-competing-services/">IL-27: AI Started a Second DHCP Server but Clients Kept Using the First</a></td></tr>
-<tr><th scope="row">Cluster integrity</th><td><a href="/audit-cluster-integrity/">IL-26: A Cluster Node Rejoined Without Fully Recovering Its Data</a></td></tr>
-<tr><th scope="row">Incomplete deployment</th><td><a href="/audit-incomplete-deployment/">IL-25: AI Created Deployment Files Without Bringing the Required Services Online</a></td></tr>
-<tr><th scope="row">Configuration drift</th><td><a href="/audit-configuration-drift/">IL-24: AI Left Repository and Boot Settings Changed After Small Tasks</a></td></tr>
-<tr><th scope="row">Security misconfiguration</th><td><a href="/audit-security-misconfiguration/">IL-23: AI Confinement and Read-Only Rules Failed Their Tests</a></td></tr>
-<tr><th scope="row">Runaway remediation</th><td><a href="/audit-runaway-remediation/">IL-22: AI Troubleshooting Repeated Changes That Made Recovery Harder</a></td></tr>
-<tr><th scope="row">Manual dependencies</th><td><a href="/audit-manual-dependencies/">IL-21: Ansible Reruns Passed After Manual Repairs to the Host</a></td></tr>
-<tr><th scope="row">False success</th><td><a href="/audit-false-success/">IL-20: AI Claimed Success Despite Failed Checks and Contradictory Logs</a></td></tr>
-<tr><th scope="row">Weak authentication</th><td><a href="/audit-weak-authentication/">IL-19: AI Password Policies Did Not Protect Every Credential-Setting Path</a></td></tr>
-<tr><th scope="row">Process integrity</th><td><a href="/audit-process-integrity/">IL-18: AI Service Scripts Mistook Process IDs for Working Services</a></td></tr>
-<tr><th scope="row">Network exposure</th><td><a href="/audit-network-exposure/">IL-17: AI Enabled the Requested Endpoint but Left Other Network Services Exposed</a></td></tr>
-<tr><th scope="row">Disruptive testing</th><td><a href="/audit-disruptive-testing/">IL-16: AI Stress Tests Disrupted the Connection Needed for Recovery</a></td></tr>
-<tr><th scope="row">DIY infrastructure</th><td><a href="/audit-diy-infrastructure/">IL-15: AI Built Proxies That Passed Simple Tests but Missed Protocol Behavior</a></td></tr>
-<tr><th scope="row">Excessive privileges</th><td><a href="/audit-excessive-privileges/">IL-14: AI Granted Service Accounts More Access Than Their Jobs Needed</a></td></tr>
-<tr><th scope="row">Test residue</th><td><a href="/audit-test-residue/">IL-13: AI Left Test Data, Listeners and Simulated Outages in the Deployment</a></td></tr>
-<tr><th scope="row">Reboot failures</th><td><a href="/audit-reboot-failures/">IL-12: AI Configurations Worked Until the Server Restarted</a></td></tr>
-<tr><th scope="row">Unsafe changes</th><td><a href="/audit-unsafe-changes/">IL-11: AI Repairs Changed Unrelated Accounts, Libraries and Network Access</a></td></tr>
-<tr><th scope="row">Security bypasses</th><td><a href="/audit-security-bypasses/">IL-10: AI Removed Security Controls While Trying to Make Services Work</a></td></tr>
-<tr><th scope="row">Software provenance</th><td><a href="/audit-software-provenance/">IL-9: AI Installed Software Without Establishing Its Authenticity</a></td></tr>
-<tr><th scope="row">Service outages</th><td><a href="/audit-service-outages/">IL-8: Some AI Administration Runs Ended Without a Reachable Server</a></td></tr>
-<tr><th scope="row">Incomplete verification</th><td><a href="/audit-incomplete-verification/">IL-7: AI Tested Jobs Manually and Used Alternate Network Paths</a></td></tr>
-<tr><th scope="row">Firewall misconfiguration</th><td><a href="/audit-firewall-misconfiguration/">IL-6: AI Firewall Changes Allowed More Traffic Than Requested</a></td></tr>
-<tr><th scope="row">Secret residue</th><td><a href="/audit-secret-residue/">IL-5: AI Deployments Left Unnecessary Copies of Private Keys and Passwords</a></td></tr>
-<tr><th scope="row">Leftover access</th><td><a href="/audit-leftover-access/">IL-4: AI Left Temporary Accounts and SSH Keys After the Work Ended</a></td></tr>
-<tr><th scope="row">Credential leakage</th><td><a href="/audit-credential-leakage/">IL-3: AI Exposed Credentials Through Logs, Transfers and File Permissions</a></td></tr>
+<tr><th scope="row">Logging gaps</th><td><a href="/audit-logging-gaps/">IL-29: AI Left a Working Service With Its Error Output Disabled</a></td></tr>
+<tr><th scope="row">Idempotency risks</th><td><a href="/audit-idempotency-risks/">IL-28: Ansible Could Copy Mail Again After a Message Was Marked Read</a></td></tr>
+<tr><th scope="row">Competing services</th><td><a href="/audit-competing-services/">IL-27: AI Forced a Second DHCP Server to Start on an Occupied Network</a></td></tr>
+<tr><th scope="row">Cluster integrity</th><td><a href="/audit-cluster-integrity/">IL-26: A Rejoined Cluster Node Still Needed a Data Repair</a></td></tr>
+<tr><th scope="row">Incomplete deployment</th><td><a href="/audit-incomplete-deployment/">IL-25: AI Left Required Parts of Deployments Unfinished</a></td></tr>
+<tr><th scope="row">Configuration drift</th><td><a href="/audit-configuration-drift/">IL-24: AI Left Normal Repositories Disabled After a Local-Repository Test</a></td></tr>
+<tr><th scope="row">Security misconfiguration</th><td><a href="/audit-security-misconfiguration/">IL-23: AI Security Settings Did Not Enforce the Restrictions Claimed</a></td></tr>
+<tr><th scope="row">Runaway remediation</th><td><a href="/audit-runaway-remediation/">IL-22: AI Troubleshooting Repeated Changes Without Resolving the Fault</a></td></tr>
+<tr><th scope="row">Manual dependencies</th><td><a href="/audit-manual-dependencies/">IL-21: AI Tested Ansible After Making the Required Changes by Hand</a></td></tr>
+<tr><th scope="row">False success</th><td><a href="/audit-false-success/">IL-20: AI Reported Success That Its Own Logs Contradicted</a></td></tr>
+<tr><th scope="row">Weak authentication</th><td><a href="/audit-weak-authentication/">IL-19: AI Password Rules Did Not Block the Weak Passwords Tested</a></td></tr>
+<tr><th scope="row">Process integrity</th><td><a href="/audit-process-integrity/">IL-18: AI Service Scripts Reported Success Before Checking the Service</a></td></tr>
+<tr><th scope="row">Network exposure</th><td><a href="/audit-network-exposure/">IL-17: AI Left Extra Network Services Running Beside the Requested One</a></td></tr>
+<tr><th scope="row">Disruptive testing</th><td><a href="/audit-disruptive-testing/">IL-16: AI Memory Tests Lost the Connection Needed to Stop and Inspect Them</a></td></tr>
+<tr><th scope="row">DIY infrastructure</th><td><a href="/audit-diy-infrastructure/">IL-15: AI-Written Proxies Handled the Demo but Missed Other Requests</a></td></tr>
+<tr><th scope="row">Excessive privileges</th><td><a href="/audit-excessive-privileges/">IL-14: AI Gave Accounts More Permission Than Their Jobs Needed</a></td></tr>
+<tr><th scope="row">Test residue</th><td><a href="/audit-test-residue/">IL-13: AI Left Test Files and Test Services on the Finished Server</a></td></tr>
+<tr><th scope="row">Reboot failures</th><td><a href="/audit-reboot-failures/">IL-12: AI Setups Needed Manual Repairs After Reboot</a></td></tr>
+<tr><th scope="row">Unsafe changes</th><td><a href="/audit-unsafe-changes/">IL-11: AI Repairs Changed More of the Server Than the Task Required</a></td></tr>
+<tr><th scope="row">Security bypasses</th><td><a href="/audit-security-bypasses/">IL-10: AI Disabled Security Controls to Get Services Working</a></td></tr>
+<tr><th scope="row">Software provenance</th><td><a href="/audit-software-provenance/">IL-9: AI Installed Packages With Authenticity Checks Disabled</a></td></tr>
+<tr><th scope="row">Service outages</th><td><a href="/audit-service-outages/">IL-8: AI Finished Some Tasks Without a Reachable Server</a></td></tr>
+<tr><th scope="row">Incomplete verification</th><td><a href="/audit-incomplete-verification/">IL-7: AI Passed Tests That Did Not Check the Requested Behavior</a></td></tr>
+<tr><th scope="row">Firewall misconfiguration</th><td><a href="/audit-firewall-misconfiguration/">IL-6: AI Opened Firewall Access More Widely Than Requested</a></td></tr>
+<tr><th scope="row">Secret residue</th><td><a href="/audit-secret-residue/">IL-5: AI Left Extra Copies of Private Keys and Passwords</a></td></tr>
+<tr><th scope="row">Leftover access</th><td><a href="/audit-leftover-access/">IL-4: AI Left Temporary Accounts and SSH Access Behind</a></td></tr>
+<tr><th scope="row">Credential leakage</th><td><a href="/audit-credential-leakage/">IL-3: AI Left Passwords in Logs and Exposed Them During Transfers</a></td></tr>
 </tbody></table></div>
 
 

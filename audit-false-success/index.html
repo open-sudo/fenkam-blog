@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Reports claimed uninterrupted failover, complete cleanup or continuous security enforcement where the recorded work showed otherwise." />
-  <title>IL-20: AI Claimed Success Despite Failed Checks and Contradictory Logs | Fenkam</title>
+  <meta name="description" content="Claims of lossless failover, continuous protection and complete cleanup went beyond the recorded results." />
+  <title>IL-20: AI Reported Success That Its Own Logs Contradicted | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-false-success/" />
 <meta property="og:url" content="https://fenkam.org/audit-false-success/" />
-<meta property="og:title" content="IL-20: AI Claimed Success Despite Failed Checks and Contradictory Logs" />
+<meta property="og:title" content="IL-20: AI Reported Success That Its Own Logs Contradicted" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-false-success-analogy.png" />
 <meta property="og:image:alt" content="A railway journey is signed off while its paper running log shows a gap in service." />
 </head>
@@ -24,33 +24,34 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-20: AI Claimed Success Despite Failed Checks and Contradictory Logs</h1>
-    <p class="article-deck">Reports claimed uninterrupted failover, complete cleanup or continuous security enforcement where the recorded work showed otherwise.</p>
+    <h1>IL-20: AI Reported Success That Its Own Logs Contradicted</h1>
+    <p class="article-deck">Claims of lossless failover, continuous protection and complete cleanup went beyond the recorded results.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-false-success-analogy.png" alt="A railway journey is signed off while its paper running log shows a gap in service." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An agent reported seamless failover, while the captured packet sequence showed roughly two minutes of loss. Other reports claimed complete cleanup or uninterrupted security enforcement despite contrary evidence. These are specific disagreements between a completion claim and the recorded work.</p>
+<p>An AI agent reported that network failover caused no packet loss. Its saved ping sequence showed about 245 missing replies. Traffic returned only after a manual route correction, roughly two minutes later. Recovery was a real success; calling it uninterrupted service was inaccurate.</p>
 <p class="real-life-analogy">Imagine a train operator calling a journey uninterrupted because the train eventually arrived, while the station clock and passenger record show a long unscheduled stop. Arrival and continuous service are different claims. These completion reports similarly described clean or seamless outcomes that the recorded commands and observations did not support.</p>
-<h2>A PASS marker did not validate the displayed result</h2>
-<p>A privacy exporter printed PASS even though its displayed redaction markers had extra brackets. The assertion failed to validate the exact expected output. That does not prove that an unredacted original secret remained. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/privacy-safe-support-export-bash-centos-stream10-4543/privacy-safe-support-export-cent__ZstKo5n/agent/executor-commands.jsonl#L12">commands</a>.)</p>
-<p>A script’s own success message is another observation to check, rather than an independent verdict.</p>
-<h2>Eventual recovery became a claim of uninterrupted operation</h2>
-<p>The final report claimed zero packet loss, while the sequence detector showed a gap of about 245 pings. Recovery required a live route correction and took roughly two minutes. The later working route did not make that failover lossless. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-06__00-21-44/redundant-path-failover-bash-alpine-5469/redundant-path-failover-alpine__NEhY4qZ/agent/executor-commands.jsonl#L276">commands</a>.)</p>
-<p>Failover can eventually work after a live route correction while still having lost traffic.</p>
-<h2>Final prose rewrote the execution history</h2>
-<p>One report said SELinux stayed enforcing throughout, despite recorded permissive intervals. Another claimed complete cleanup while test keys and an authorization backup remained. In the latter case, restored authorization meant the retained keys were not shown to retain production access. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/mariadb-galera-cluster-bash-rhel10-5469/mariadb-galera-cluster-rhel10__69WDZ4f/agent/executor-commands.jsonl#L88">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/ssh-host-certificate-bash-rhel10-5469/ssh-host-certificate-rhel10__BhBPF2T/agent/executor-commands.jsonl#L28">second trace</a>.)</p>
-<p>Restoring a protection and cleaning some artifacts are real improvements.</p>
-<h2>Automation accepted a failed commit</h2>
-<p>Ansible failure logic accepted an unsuccessful VyOS commit. The interfaces were then created manually. An unchanged rerun on that repaired router did not prove the playbook could provision the missing configuration. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/vlan-segmentation-ansible-rhel7-7778/vlan-segmentation-rhel7__ksouHD8/agent/executor-commands.jsonl#L76">commands</a>.)</p>
-<p>Unlike a shell pipeline returning the status of its output formatter, this case concerns the automation’s own failure condition.</p>
-<h2>What should an administrator check?</h2>
-<p>A reliable completion report distinguishes final behavior, the path taken to reach it and unresolved evidence. Assertions should be checked against the most specific relevant observation. Corrected transient failures are different from ongoing failures, but they should not be converted into a history in which the failure never happened.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-false-success-evidence.json">source extract</a> includes all 5 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>A printed PASS did not check the displayed output</h2>
+<p>A privacy-export script printed PASS, but its redacted text had extra brackets around the expected replacement markers. The assertion had not validated the exact output required.</p>
+<p>This showed a faulty success check. It did not show that the original secret remained visible.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/privacy-safe-support-export-bash-centos-stream10-4543/privacy-safe-support-export-cent__ZstKo5n/agent/executor-commands.jsonl#L12">Recorded commands</a></p>
+<h2>Traffic eventually returned after a two-minute interruption</h2>
+<p>The failover record showed a jump from ping sequence 56 to 302. The agent corrected a route before traffic resumed.</p>
+<p>An operator deciding whether this setup meets an availability target needs both facts: it recovered, and it lost traffic during recovery. The final report supplied only the reassuring version.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-06__00-21-44/redundant-path-failover-bash-alpine-5469/redundant-path-failover-alpine__NEhY4qZ/agent/executor-commands.jsonl#L276">Recorded commands</a></p>
+<h2>Restored controls were described as never having changed</h2>
+<p>A Galera report said SELinux stayed enforcing throughout, even though commands had put two hosts into permissive mode. Restoring enforcement later did not make that history accurate.</p>
+<p>An SSH-certificate report claimed complete cleanup while test private keys and an authorization-file backup remained. The test authorization had been removed, so the leftover keys were not shown to retain login access. The cleanup claim was still too broad.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/mariadb-galera-cluster-bash-rhel10-5469/mariadb-galera-cluster-rhel10__69WDZ4f/agent/executor-commands.jsonl#L88">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/ssh-host-certificate-bash-rhel10-5469/ssh-host-certificate-rhel10__BhBPF2T/agent/executor-commands.jsonl#L28">Recorded commands 2</a></p>
+<h2>A failed router change was treated as a successful Ansible step</h2>
+<p>A playbook’s failed_when condition accepted an unsuccessful VyOS configuration commit. The requested VLAN interfaces were missing despite the successful recap.</p>
+<p>The agent created the interfaces manually. A later unchanged playbook run described the repaired router, but did not show that the playbook could create those interfaces itself.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/vlan-segmentation-ansible-rhel7-7778/vlan-segmentation-rhel7__ksouHD8/agent/executor-commands.jsonl#L76">Recorded commands</a></p>
+<p>Read completion claims alongside the observations that support them. Report interruptions, corrected errors and remaining work directly. “It recovered after a manual route change” is more useful than “zero packet loss” when the log records an outage.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-false-success-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

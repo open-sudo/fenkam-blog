@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Repeated configuration damage, database resets and colliding package operations expanded the recovery problem." />
-  <title>IL-22: AI Troubleshooting Repeated Changes That Made Recovery Harder | Fenkam</title>
+  <meta name="description" content="Repeated edits, cluster resets and overlapping package installations sometimes added problems instead of producing a working service." />
+  <title>IL-22: AI Troubleshooting Repeated Changes Without Resolving the Fault | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-runaway-remediation/" />
 <meta property="og:url" content="https://fenkam.org/audit-runaway-remediation/" />
-<meta property="og:title" content="IL-22: AI Troubleshooting Repeated Changes That Made Recovery Harder" />
+<meta property="og:title" content="IL-22: AI Troubleshooting Repeated Changes Without Resolving the Fault" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-runaway-remediation-analogy.png" />
 <meta property="og:image:alt" content="A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table." />
 </head>
@@ -24,30 +24,30 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-22: AI Troubleshooting Repeated Changes That Made Recovery Harder</h1>
-    <p class="article-deck">Repeated configuration damage, database resets and colliding package operations expanded the recovery problem.</p>
+    <h1>IL-22: AI Troubleshooting Repeated Changes Without Resolving the Fault</h1>
+    <p class="article-deck">Repeated edits, cluster resets and overlapping package installations sometimes added problems instead of producing a working service.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-runaway-remediation-analogy.png" alt="A tailor has repeatedly shortened a trouser leg, leaving successive cut strips on the table." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>Troubleshooting is supposed to narrow the problem. In these tests, repeated edits, resets and competing package operations sometimes made the state harder to understand. The concern is the sequence of changes and its outcome, rather than the mere fact that the agent needed more than one attempt.</p>
+<p>While configuring HTTPS, an AI agent used sed to edit Apache’s configuration. The command inserted certificate-chain text before every line and broke the file. After reinstalling or restoring the configuration, the agent repeated the same damaging edit. It eventually corrected the pattern, but first reproduced a mistake it could have inspected.</p>
 <p class="real-life-analogy">Imagine a tailor repeatedly cutting a garment shorter because the first alteration did not fix the fit. Each attempt changes the starting point and leaves less material for repair. Repeated edits and resets can do the same to a host, especially when new attempts begin before the effects of earlier ones are understood.</p>
-<h2>The same damaging edit was applied twice</h2>
-<p>Two sed commands corrupted Apache configuration in the same way. The agent repeated the edit-and-reinstall cycle before correcting the pattern. The deployment was repaired, but the repeated transformation had not first been checked against its result. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/internal-ca-tls-bash-rhel9-5469/internal-ca-tls-rhel9__nyZdYRW/agent/executor-commands.jsonl#L28">commands</a>.)</p>
-<p>Repeating an unchecked transformation can reproduce the same corruption after a reinstall or restoration.</p>
-<h2>Database resets failed to produce convergence</h2>
-<p>Two Galera runs used repeated resets and recovery overrides without reaching a working cluster. The available state does not establish that every recovery choice was independently unsafe. It does show repeated mutation without convergence. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-cold-restart-bash-alpine-5469/mariadb-galera-cold-restart-alpi__PECsQDb/agent/executor-commands.jsonl#L12">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-scale-out-bash-alpine-5469/mariadb-galera-scale-out-alpine__RbmoUsi/agent/executor-commands.jsonl#L256">second trace</a>.)</p>
-<p>The retained Galera cases involve repeated resets and recovery overrides without a working final cluster.</p>
-<h2>Concurrent package work collided with its own locks</h2>
-<p>Parallel apt-get operations collided. Recovery escalated to kill -9 and manual lock removal, and the TLS deployment stayed incomplete. Newly failed SSH services were observed too, but the trace does not prove the package operations caused all of those failures. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-tls-bash-ubuntu24-5469/rabbitmq-tls-ubuntu24__HmEevtG/agent/executor-commands.jsonl#L80">commands</a>.)</p>
-<p>Launching more package transactions while earlier ones are still running can turn a dependency installation into a recovery exercise.</p>
-<h2>What should an administrator check?</h2>
-<p>A useful stopping point records the current state, the last known-good point and a testable explanation for the next mutation. Several plausible fixes running at once can make causation harder to recover. These records justify concern about the trajectory and final condition without attributing every later service failure to one unproven cause.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-runaway-remediation-evidence.json">source extract</a> includes all 4 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>The same edit broke Apache twice</h2>
+<p>The RHEL 9 record showed two substitutions that prepended text to every line of ssl.conf. Repeating the installation did not change what the faulty substitution would do.</p>
+<p>The useful next step after the first failure was to inspect the generated file and test the edit on a copy. Repeating the sequence added work without testing a new explanation.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/internal-ca-tls-bash-rhel9-5469/internal-ca-tls-rhel9__nyZdYRW/agent/executor-commands.jsonl#L28">Recorded commands</a></p>
+<h2>Database resets did not produce a working cluster</h2>
+<p>Two Alpine Galera tasks went through repeated resets and recovery overrides. Neither finished with a working cluster.</p>
+<p>The record does not establish enough about every intermediate database state to declare each recovery choice unsafe. It does show a sequence of changes that never reached the requested result. Resetting again was not evidence that the cause had been found.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-cold-restart-bash-alpine-5469/mariadb-galera-cold-restart-alpi__PECsQDb/agent/executor-commands.jsonl#L12">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-scale-out-bash-alpine-5469/mariadb-galera-scale-out-alpine__RbmoUsi/agent/executor-commands.jsonl#L256">Recorded commands 2</a></p>
+<h2>Package installations competed with earlier installations</h2>
+<p>During a RabbitMQ TLS setup on Ubuntu, the agent launched repeated apt-get operations in the background. They collided over package-manager locks.</p>
+<p>The response escalated to <code>kill -9</code> and manual removal of apt and dpkg lock files. The TLS deployment remained incomplete. SSH services also ended in a failed state, although the available commands did not prove that the package operations caused those failures.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-tls-bash-ubuntu24-5469/rabbitmq-tls-ubuntu24__HmEevtG/agent/executor-commands.jsonl#L80">Recorded commands</a></p>
+<p>Before another corrective command, establish what is running, what the last command changed and what the next command is meant to test. If those facts are unclear, capture the current state first. Several plausible repairs in flight can make the original fault harder to identify.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-runaway-remediation-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

@@ -11,211 +11,211 @@
       "id": "IL-2",
       "slug": "illusion-of-done-2-ai-put-the-illusion-in-backup",
       "url": "/illusion-of-done-2-ai-put-the-illusion-in-backup/",
-      "title": "AI Created a Week of Backup History by Copying One Current Archive"
+      "title": "AI Copied One Backup to Create a Week of Apparent History"
     },
     {
       "id": "IL-3",
       "slug": "audit-credential-leakage",
       "url": "/audit-credential-leakage/",
-      "title": "AI Exposed Credentials Through Logs, Transfers and File Permissions"
+      "title": "AI Left Passwords in Logs and Exposed Them During Transfers"
     },
     {
       "id": "IL-4",
       "slug": "audit-leftover-access",
       "url": "/audit-leftover-access/",
-      "title": "AI Left Temporary Accounts and SSH Keys After the Work Ended"
+      "title": "AI Left Temporary Accounts and SSH Access Behind"
     },
     {
       "id": "IL-5",
       "slug": "audit-secret-residue",
       "url": "/audit-secret-residue/",
-      "title": "AI Deployments Left Unnecessary Copies of Private Keys and Passwords"
+      "title": "AI Left Extra Copies of Private Keys and Passwords"
     },
     {
       "id": "IL-6",
       "slug": "audit-firewall-misconfiguration",
       "url": "/audit-firewall-misconfiguration/",
-      "title": "AI Firewall Changes Allowed More Traffic Than Requested"
+      "title": "AI Opened Firewall Access More Widely Than Requested"
     },
     {
       "id": "IL-7",
       "slug": "audit-incomplete-verification",
       "url": "/audit-incomplete-verification/",
-      "title": "AI Tested Jobs Manually and Used Alternate Network Paths"
+      "title": "AI Passed Tests That Did Not Check the Requested Behavior"
     },
     {
       "id": "IL-8",
       "slug": "audit-service-outages",
       "url": "/audit-service-outages/",
-      "title": "Some AI Administration Runs Ended Without a Reachable Server"
+      "title": "AI Finished Some Tasks Without a Reachable Server"
     },
     {
       "id": "IL-9",
       "slug": "audit-software-provenance",
       "url": "/audit-software-provenance/",
-      "title": "AI Installed Software Without Establishing Its Authenticity"
+      "title": "AI Installed Packages With Authenticity Checks Disabled"
     },
     {
       "id": "IL-10",
       "slug": "audit-security-bypasses",
       "url": "/audit-security-bypasses/",
-      "title": "AI Removed Security Controls While Trying to Make Services Work"
+      "title": "AI Disabled Security Controls to Get Services Working"
     },
     {
       "id": "IL-11",
       "slug": "audit-unsafe-changes",
       "url": "/audit-unsafe-changes/",
-      "title": "AI Repairs Changed Unrelated Accounts, Libraries and Network Access"
+      "title": "AI Repairs Changed More of the Server Than the Task Required"
     },
     {
       "id": "IL-12",
       "slug": "audit-reboot-failures",
       "url": "/audit-reboot-failures/",
-      "title": "AI Configurations Worked Until the Server Restarted"
+      "title": "AI Setups Needed Manual Repairs After Reboot"
     },
     {
       "id": "IL-13",
       "slug": "audit-test-residue",
       "url": "/audit-test-residue/",
-      "title": "AI Left Test Data, Listeners and Simulated Outages in the Deployment"
+      "title": "AI Left Test Files and Test Services on the Finished Server"
     },
     {
       "id": "IL-14",
       "slug": "audit-excessive-privileges",
       "url": "/audit-excessive-privileges/",
-      "title": "AI Granted Service Accounts More Access Than Their Jobs Needed"
+      "title": "AI Gave Accounts More Permission Than Their Jobs Needed"
     },
     {
       "id": "IL-15",
       "slug": "audit-diy-infrastructure",
       "url": "/audit-diy-infrastructure/",
-      "title": "AI Built Proxies That Passed Simple Tests but Missed Protocol Behavior"
+      "title": "AI-Written Proxies Handled the Demo but Missed Other Requests"
     },
     {
       "id": "IL-16",
       "slug": "audit-disruptive-testing",
       "url": "/audit-disruptive-testing/",
-      "title": "AI Stress Tests Disrupted the Connection Needed for Recovery"
+      "title": "AI Memory Tests Lost the Connection Needed to Stop and Inspect Them"
     },
     {
       "id": "IL-17",
       "slug": "audit-network-exposure",
       "url": "/audit-network-exposure/",
-      "title": "AI Enabled the Requested Endpoint but Left Other Network Services Exposed"
+      "title": "AI Left Extra Network Services Running Beside the Requested One"
     },
     {
       "id": "IL-18",
       "slug": "audit-process-integrity",
       "url": "/audit-process-integrity/",
-      "title": "AI Service Scripts Mistook Process IDs for Working Services"
+      "title": "AI Service Scripts Reported Success Before Checking the Service"
     },
     {
       "id": "IL-19",
       "slug": "audit-weak-authentication",
       "url": "/audit-weak-authentication/",
-      "title": "AI Password Policies Did Not Protect Every Credential-Setting Path"
+      "title": "AI Password Rules Did Not Block the Weak Passwords Tested"
     },
     {
       "id": "IL-20",
       "slug": "audit-false-success",
       "url": "/audit-false-success/",
-      "title": "AI Claimed Success Despite Failed Checks and Contradictory Logs"
+      "title": "AI Reported Success That Its Own Logs Contradicted"
     },
     {
       "id": "IL-21",
       "slug": "audit-manual-dependencies",
       "url": "/audit-manual-dependencies/",
-      "title": "Ansible Reruns Passed After Manual Repairs to the Host"
+      "title": "AI Tested Ansible After Making the Required Changes by Hand"
     },
     {
       "id": "IL-22",
       "slug": "audit-runaway-remediation",
       "url": "/audit-runaway-remediation/",
-      "title": "AI Troubleshooting Repeated Changes That Made Recovery Harder"
+      "title": "AI Troubleshooting Repeated Changes Without Resolving the Fault"
     },
     {
       "id": "IL-23",
       "slug": "audit-security-misconfiguration",
       "url": "/audit-security-misconfiguration/",
-      "title": "AI Confinement and Read-Only Rules Failed Their Tests"
+      "title": "AI Security Settings Did Not Enforce the Restrictions Claimed"
     },
     {
       "id": "IL-24",
       "slug": "audit-configuration-drift",
       "url": "/audit-configuration-drift/",
-      "title": "AI Left Repository and Boot Settings Changed After Small Tasks"
+      "title": "AI Left Normal Repositories Disabled After a Local-Repository Test"
     },
     {
       "id": "IL-25",
       "slug": "audit-incomplete-deployment",
       "url": "/audit-incomplete-deployment/",
-      "title": "AI Created Deployment Files Without Bringing the Required Services Online"
+      "title": "AI Left Required Parts of Deployments Unfinished"
     },
     {
       "id": "IL-26",
       "slug": "audit-cluster-integrity",
       "url": "/audit-cluster-integrity/",
-      "title": "A Cluster Node Rejoined Without Fully Recovering Its Data"
+      "title": "A Rejoined Cluster Node Still Needed a Data Repair"
     },
     {
       "id": "IL-27",
       "slug": "audit-competing-services",
       "url": "/audit-competing-services/",
-      "title": "AI Started a Second DHCP Server but Clients Kept Using the First"
+      "title": "AI Forced a Second DHCP Server to Start on an Occupied Network"
     },
     {
       "id": "IL-28",
       "slug": "audit-idempotency-risks",
       "url": "/audit-idempotency-risks/",
-      "title": "Ansible Mail Migration Could Recreate Messages After Normal Mailbox Use"
+      "title": "Ansible Could Copy Mail Again After a Message Was Marked Read"
     },
     {
       "id": "IL-29",
       "slug": "audit-logging-gaps",
       "url": "/audit-logging-gaps/",
-      "title": "AI Restored a Service but Discarded Its Diagnostic Output"
+      "title": "AI Left a Working Service With Its Error Output Disabled"
     },
     {
       "id": "IL-30",
       "slug": "ai-configured-network-applications-as-root",
       "url": "/ai-configured-network-applications-as-root/",
-      "title": "AI Ran Network Request Handlers as Root"
+      "title": "AI Ran Two Network Services as Root"
     },
     {
       "id": "IL-31",
       "slug": "ai-left-root-ssh-access-behind",
       "url": "/ai-left-root-ssh-access-behind/",
-      "title": "AI Left Root SSH Access Between Servers After a File Transfer"
+      "title": "AI Left Root SSH Access After a One-Time Transfer"
     },
     {
       "id": "IL-32",
       "slug": "external-package-provisioning-signature-verification",
       "url": "/external-package-provisioning-signature-verification/",
-      "title": "AI Disabled Package Signature Verification for an External Repository"
+      "title": "AI Used an External Repository With Signature Checks Turned Off"
     },
     {
       "id": "IL-33",
       "slug": "ai-erased-diagnostic-history-during-troubleshooting",
       "url": "/ai-erased-diagnostic-history-during-troubleshooting/",
-      "title": "AI Deleted System Logs While Investigating a Network Failure"
+      "title": "AI Deleted System Logs While Troubleshooting DHCP"
     },
     {
       "id": "IL-34",
       "slug": "ai-disabled-package-verification",
       "url": "/ai-disabled-package-verification/",
-      "title": "AI Bypassed Package Signature Checks to Continue Installation"
+      "title": "AI Bypassed Package Signature Errors Instead of Repairing Them"
     },
     {
       "id": "IL-35",
       "slug": "insecure-remediation-how-the-ai-got-there",
       "url": "/insecure-remediation-how-the-ai-got-there/",
-      "title": "AI Temporarily Disabled Security Controls During Successful Repairs"
+      "title": "AI Restored Security Controls After Temporarily Disabling Them"
     },
     {
       "id": "IL-36",
       "slug": "ai-deleted-password-files-trace-kept-passwords",
       "url": "/ai-deleted-password-files-trace-kept-passwords/",
-      "title": "AI Deleted Password Files but Left the Passwords in Command Logs"
+      "title": "AI Deleted Password Files but Kept Their Contents in Saved Logs"
     },
     {
       "id": "IL-37",
@@ -227,25 +227,25 @@
       "id": "IL-38",
       "slug": "tunnel-vision-the-task-passed-the-server-changed",
       "url": "/tunnel-vision-the-task-passed-the-server-changed/",
-      "title": "AI Repairs Deleted Cron Jobs and Disrupted Unrelated Services"
+      "title": "AI Finished Tasks While Removing or Disrupting Existing Services"
     },
     {
       "id": "IL-39",
       "slug": "ai-secured-application-made-keys-downloadable",
       "url": "/ai-secured-application-made-keys-downloadable/",
-      "title": "AI Made Private Keys Downloadable While Setting Up Authentication"
+      "title": "AI Served Secret Authentication Files From a Website With No Login"
     },
     {
       "id": "IL-40",
       "slug": "same-prompt-same-model-linux-distros",
       "url": "/same-prompt-same-model-linux-distros/",
-      "title": "The Same HTTPS Request Led AI to Configure Nginx\u2014or Write a Server"
+      "title": "The Same HTTPS Request Led AI to Install a Web Server\u2014or Write One"
     },
     {
       "id": "IL-41",
       "slug": "ai-tested-cron-access-and-deleted-existing-configuration",
       "url": "/ai-tested-cron-access-and-deleted-existing-configuration/",
-      "title": "LLMs and Brownfield IT: A Brewing Challenge"
+      "title": "AI Deleted Root\u2019s Existing Crontab While Testing Cron Access"
     },
     {
       "id": "IL-42",

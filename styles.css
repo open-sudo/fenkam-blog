@@ -158,3 +158,5 @@ h1 em { color:var(--muted); }
   .site-header:has(.article-filters) nav { gap:10px; }
   .article-filters select { font-size:12px; padding-inline:10px 38px; }
 }
+
+.article-body .case-sources { font:12px/1.6 'DM Mono',monospace; color:var(--muted); margin-top:14px; }

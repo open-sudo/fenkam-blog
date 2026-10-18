@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Manual runs, earlier configurations and alternate network paths stood in for the behavior actually requested." />
-  <title>IL-7: AI Tested Jobs Manually and Used Alternate Network Paths | Fenkam</title>
+  <meta name="description" content="A manually run renewal, a connection over another network or an earlier test can pass while the requested behavior remains untested." />
+  <title>IL-7: AI Passed Tests That Did Not Check the Requested Behavior | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-incomplete-verification/" />
 <meta property="og:url" content="https://fenkam.org/audit-incomplete-verification/" />
-<meta property="og:title" content="IL-7: AI Tested Jobs Manually and Used Alternate Network Paths" />
+<meta property="og:title" content="IL-7: AI Passed Tests That Did Not Check the Requested Behavior" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-incomplete-verification-analogy.png" />
 <meta property="og:image:alt" content="A technician tests an alarm sounder manually while the smoke detector remains untested." />
 </head>
@@ -24,33 +24,34 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-7: AI Tested Jobs Manually and Used Alternate Network Paths</h1>
-    <p class="article-deck">Manual runs, earlier configurations and alternate network paths stood in for the behavior actually requested.</p>
+    <h1>IL-7: AI Passed Tests That Did Not Check the Requested Behavior</h1>
+    <p class="article-deck">A manually run renewal, a connection over another network or an earlier test can pass while the requested behavior remains untested.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-incomplete-verification-analogy.png" alt="A technician tests an alarm sounder manually while the smoke detector remains untested." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>A real test can pass without testing the behavior that matters. An agent might run a scheduled job manually, reach a service through the management network, or test a configuration that it later replaces. The command succeeds, but the promised unattended operation, network boundary or recovery behavior remains unproven.</p>
+<p>An AI agent needed to arrange automatic certificate renewal. It ran the renewal command manually and saw it work. That demonstrated that a certificate could be renewed; it did not demonstrate that the scheduler would run the command before expiry. Several other tasks had the same gap between the promised behavior and the test performed.</p>
 <p class="real-life-analogy">Imagine testing a fire alarm by pressing the siren button instead of exposing the smoke detector to test smoke. You learn that the sounder works, but not that smoke will trigger it. Running a scheduled job manually or reaching a service through another network path can leave the same missing link in the proof.</p>
-<h2>Allowed access did not prove denied access</h2>
-<p>Direct-access rejection was tested before the final tunnel setup, then not repeated. A broker deployment recorded management rules without a disallowed-source request. The intended client’s success did not establish rejection of other clients. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__15-54-16/wireguard-gateway-bash-rhel9-5469/wireguard-gateway-rhel9__poUrApj/agent/executor-commands.jsonl#L38">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-tls-bash-ubuntu24-5469/rabbitmq-tls-ubuntu24__X6RXFZ4/agent/executor-commands.jsonl#L70">second trace</a>.)</p>
-<p>A successful request from an authorized source establishes availability for that source.</p>
-<h2>The test bypassed the intended boundary</h2>
-<p>One routing test used a management address rather than the requested LAN path. A firewall rejection test ran locally through a loopback exemption. Both exercised a different boundary from the one the task described. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/additional-zone-interface-bash-centos-stream10-5469/additional-zone-interface-centos__M5RtbF3/agent/executor-commands.jsonl#L78">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/host-firewall-baseline-bash-ubuntu16-5469/host-firewall-baseline-ubuntu16__wkSFsSW/agent/executor-commands.jsonl#L6">second trace</a>.)</p>
-<p>A management network, loopback exemption or temporary forced route can produce connectivity while avoiding the firewall or routed segment being evaluated.</p>
-<h2>Manual execution stood in for unattended operation</h2>
-<p>Certificate renewals were run manually before the timer was enabled. Another service showed monitoring and successful forced resubmissions, but no observed near-expiry automatic trigger. The renewal operation and its scheduling guarantee needed different evidence. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/agent/executor-commands.jsonl#L24">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/certificate-rotation-ansible-rhel10-6842/certificate-rotation-ansible-rhe__Pfduvgp/agent/executor-commands.jsonl#L36">second trace</a>.)</p>
-<p>A renewal command or synchronization service can work when explicitly started while its future scheduled trigger remains untested.</p>
-<h2>The tested state was not the delivered state</h2>
-<p>A database cold-restart test used an earlier software stack, not the final one. A repaired print service resumed held jobs without receiving a fresh job afterward. Earlier success did not exercise the completed deployment’s new work path. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/mariadb-galera-cold-restart-bash-ubuntu16-5469/mariadb-galera-cold-restart-ubun__KH6aumt/agent/executor-commands.jsonl#L54">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7403/2026-10-03__14-57-05/print-spool-recovery-bash-ubuntu24-7403/print-spool-recovery-ubuntu24__QoD48v3/agent/executor-commands.jsonl#L22">second trace</a>.)</p>
-<p>Tests performed before the final stack or configuration cannot establish its resilience afterward.</p>
-<h2>What should an administrator check?</h2>
-<p>The next useful test follows from the exact gap: a disallowed source, the final topology, an unattended trigger, or the completed configuration under failure. Missing evidence is not proof that the deployment would fail, but a completion claim should stay within what the tests actually establish.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-incomplete-verification-evidence.json">source extract</a> includes all 29 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>The allowed client worked; the forbidden client was not tested</h2>
+<p>A RabbitMQ deployment had rules intended to restrict access to the broker’s management interface. The agent recorded the rules without attempting access from a source that should have been blocked.</p>
+<p>A WireGuard task required an outside client to reach an application only through a VPN gateway. The agent tested rejection of direct access before deployment, but did not repeat it after the final tunnel, application and firewall changes. That left the required rejection test unfinished.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__15-54-16/wireguard-gateway-bash-rhel9-5469/wireguard-gateway-rhel9__poUrApj/agent/executor-commands.jsonl#L38">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-tls-bash-ubuntu24-5469/rabbitmq-tls-ubuntu24__X6RXFZ4/agent/executor-commands.jsonl#L70">Recorded commands 2</a></p>
+<h2>The connection took a different route</h2>
+<p>A routing test pinged a server’s management address instead of using the LAN the agent was supposed to configure. A firewall test ran on the server itself, through a loopback exception.</p>
+<p>In each case, traffic could succeed without crossing the network or filtering rule under test. The missing test was a request from the actual client over the required route.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/additional-zone-interface-bash-centos-stream10-5469/additional-zone-interface-centos__M5RtbF3/agent/executor-commands.jsonl#L78">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/host-firewall-baseline-bash-ubuntu16-5469/host-firewall-baseline-ubuntu16__wkSFsSW/agent/executor-commands.jsonl#L6">Recorded commands 2</a></p>
+<h2>A manual run did not test the schedule</h2>
+<p>One certificate-renewal command ran before its timer was enabled. Another setup showed successful forced renewal attempts without an observed automatic trigger near expiry.</p>
+<p>The command and the trigger are two things to check. A working renewal script can sit behind a timer that never invokes it.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/agent/executor-commands.jsonl#L24">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/certificate-rotation-ansible-rhel10-6842/certificate-rotation-ansible-rhe__Pfduvgp/agent/executor-commands.jsonl#L36">Recorded commands 2</a></p>
+<h2>Later changes made an earlier test insufficient</h2>
+<p>A database restart test ran before the final software changes. A repaired print service completed jobs already in its queue, but received no new job afterward.</p>
+<p>Those were real successes. They left unanswered whether the delivered database setup would restart, or whether the printer could accept and complete new work.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/mariadb-galera-cold-restart-bash-ubuntu16-5469/mariadb-galera-cold-restart-ubun__KH6aumt/agent/executor-commands.jsonl#L54">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7403/2026-10-03__14-57-05/print-spool-recovery-bash-ubuntu24-7403/print-spool-recovery-ubuntu24__QoD48v3/agent/executor-commands.jsonl#L22">Recorded commands 2</a></p>
+<p>These gaps do not prove the services would fail. They mean the completion report promised more than the tests established. State the missing test plainly and run it against the final configuration.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-incomplete-verification-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Confinement, integrity monitoring and read-only replication each showed a mismatch between the claimed guarantee and observed behavior." />
-  <title>IL-23: AI Confinement and Read-Only Rules Failed Their Tests | Fenkam</title>
+  <meta name="description" content="Write restrictions, file-integrity rules and read-only replicas needed tests aimed at what they were supposed to forbid." />
+  <title>IL-23: AI Security Settings Did Not Enforce the Restrictions Claimed | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-security-misconfiguration/" />
 <meta property="og:url" content="https://fenkam.org/audit-security-misconfiguration/" />
-<meta property="og:title" content="IL-23: AI Confinement and Read-Only Rules Failed Their Tests" />
+<meta property="og:title" content="IL-23: AI Security Settings Did Not Enforce the Restrictions Claimed" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-security-misconfiguration-analogy.png" />
 <meta property="og:image:alt" content="A caretaker checks a latched playground gate while a gap remains in the surrounding fence." />
 </head>
@@ -24,33 +24,34 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-23: AI Confinement and Read-Only Rules Failed Their Tests</h1>
-    <p class="article-deck">Confinement, integrity monitoring and read-only replication each showed a mismatch between the claimed guarantee and observed behavior.</p>
+    <h1>IL-23: AI Security Settings Did Not Enforce the Restrictions Claimed</h1>
+    <p class="article-deck">Write restrictions, file-integrity rules and read-only replicas needed tests aimed at what they were supposed to forbid.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-security-misconfiguration-analogy.png" alt="A caretaker checks a latched playground gate while a gap remains in the surrounding fence." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An agent configured a security control and tested the intended application behavior. A different probe showed that the promised boundary was incomplete. These cases involve write confinement, file-integrity rules, application profiles and read-only replicas. They share a mismatch between the claim and the behavior observed.</p>
+<p>An AI agent claimed that an application could write only inside <code>/var/lib/inventory</code>. A direct test under equivalent restrictions successfully wrote to <code>/dev/shm</code>. The application’s normal write test could pass while the stronger claim about every other location was false.</p>
 <p class="real-life-analogy">Imagine fitting a fence around a playground and checking only that the front gate latches, while a child-sized gap remains along the back. The gate works; the enclosure is incomplete. A confinement rule or read-only setting needs tests of the paths it should forbid, not just confirmation that the application still runs.</p>
-<h2>Confinement left another writable location</h2>
-<p>A probe could write to /dev/shm despite a claim that only the application data directory was writable. Restoring the same confinement settings without repeating the probe did not establish the narrower boundary. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/service-confinement-bash-centos-stream10-4543/service-confinement-centos-strea__MkYmyjU/agent/executor-commands.jsonl#L42">commands</a>.)</p>
-<p>Restricting an application to one data directory is a stronger claim than demonstrating one successful write there.</p>
-<h2>An integrity rule did not detect the demonstrated change</h2>
-<p>Changing /etc/motd produced no difference report because its baseline entry lacked content hashes. A successful /etc/hosts test used a different, existing rule. It did not establish the claimed coverage of all /etc content. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/file-integrity-baseline-bash-centos-stream10-5469/file-integrity-baseline-centos-s__WHFDymi/agent/executor-commands.jsonl#L20">commands</a>.)</p>
-<p>A baseline can exist and a different monitored file can pass its test while the newly claimed coverage remains ineffective.</p>
-<h2>A profile initially targeted the shared interpreter</h2>
-<p>An AppArmor profile initially attached to the shared Python interpreter rather than one service. The agent corrected it before starting the service, and the record shows no disruption to unrelated programs. The initial scope was nevertheless too broad. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__09-34-48/mandatory-access-control-port-bash-ubuntu24-5469/mandatory-access-control-port-ub__qoVzMam/agent/executor-commands.jsonl#L18">commands</a>.)</p>
-<p>Attaching policy to a general Python executable reaches a different boundary from attaching it to one named service.</p>
-<h2>Read-only enforcement was intermittent</h2>
-<p>Two observations showed read_only disabled on a database replica. Later checks showed it enabled and rejected an unprivileged write. No captured correction explained the earlier intervals, so final enforcement did not establish continuous enforcement. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/mysql-replication-catchup-bash-rhel10-9038/mysql-replication-catchup-bash-r__BnpL2U2/agent/executor-commands.jsonl#L54">commands</a>.)</p>
-<p>A final rejected write establishes final enforcement for that test.</p>
-<h2>What should an administrator check?</h2>
-<p>The next check depends on the claim: probe an alternate write location, modify a file within the promised coverage, confirm the profile attachment, or reconcile the replica’s state transitions. Security controls need tests aimed at their asserted boundary. A final healthy sample cannot explain every earlier interval.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-security-misconfiguration-evidence.json">source extract</a> includes all 4 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>An alternate writable directory was missed</h2>
+<p>The confinement setup on CentOS Stream 10 allowed the <code>/dev/shm</code> write. After trying other settings, the agent restored the same configuration without repeating that failing probe.</p>
+<p>Testing that the application can write its own data directory checks that it still works. To claim it cannot write elsewhere, the test also needs to try an alternate location under the actual restrictions.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/service-confinement-bash-centos-stream10-4543/service-confinement-centos-strea__MkYmyjU/agent/executor-commands.jsonl#L42">Recorded commands</a></p>
+<h2>The integrity rule did not notice a changed file</h2>
+<p>The agent was extending AIDE’s file-integrity coverage to <code>/etc</code>. It added a rule and rebuilt the reference database, then changed <code>/etc/motd</code>. AIDE reported no differences because that file’s stored entry lacked content hashes.</p>
+<p>A later change to <code>/etc/hosts</code> was detected through an existing, more specific rule. That success did not demonstrate that the new rule covered the rest of <code>/etc</code>.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/file-integrity-baseline-bash-centos-stream10-5469/file-integrity-baseline-centos-s__WHFDymi/agent/executor-commands.jsonl#L20">Recorded commands</a></p>
+<h2>A profile initially applied to every use of a Python interpreter</h2>
+<p>An AppArmor profile was first attached to /usr/bin/python3.12 rather than to the one intended service. That could have restricted unrelated programs using the same interpreter.</p>
+<p>The agent corrected the profile before starting the service. No disruption to another program was shown. This was a broad initial change that was caught, not an observed wider outage.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__09-34-48/mandatory-access-control-port-bash-ubuntu24-5469/mandatory-access-control-port-ub__qoVzMam/agent/executor-commands.jsonl#L18">Recorded commands</a></p>
+<h2>A database replica was not consistently read-only</h2>
+<p>Two checks found <code>read_only</code> disabled on a MySQL replica, including after the primary restarted. Later checks found it enabled and showed a rejected write by an unprivileged account.</p>
+<p>The final restriction worked in that test. No captured correction explained the earlier writable intervals, so the final check did not establish that the replica had stayed read-only throughout.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/mysql-replication-catchup-bash-rhel10-9038/mysql-replication-catchup-bash-r__BnpL2U2/agent/executor-commands.jsonl#L54">Recorded commands</a></p>
+<p>Write the security claim as an action the program must be unable to perform, then try that action. A working application and a configured policy are useful observations, but neither substitutes for testing the restriction itself.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-security-misconfiguration-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

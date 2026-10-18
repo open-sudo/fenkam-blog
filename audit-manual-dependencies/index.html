@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="An unchanged Ansible run showed that a repaired host matched the playbook. It did not prove the playbook could reproduce the manual repairs." />
-  <title>IL-21: Ansible Reruns Passed After Manual Repairs to the Host | Fenkam</title>
+  <meta name="description" content="A no-change playbook run showed that an already repaired machine matched the automation, not that the automation could build it." />
+  <title>IL-21: AI Tested Ansible After Making the Required Changes by Hand | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-manual-dependencies/" />
 <meta property="og:url" content="https://fenkam.org/audit-manual-dependencies/" />
-<meta property="og:title" content="IL-21: Ansible Reruns Passed After Manual Repairs to the Host" />
+<meta property="og:title" content="IL-21: AI Tested Ansible After Making the Required Changes by Hand" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-manual-dependencies-analogy.png" />
 <meta property="og:image:alt" content="A completed chair passes inspection beside an assembly guide with missing steps." />
 </head>
@@ -24,30 +24,30 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-21: Ansible Reruns Passed After Manual Repairs to the Host</h1>
-    <p class="article-deck">An unchanged Ansible run showed that a repaired host matched the playbook. It did not prove the playbook could reproduce the manual repairs.</p>
+    <h1>IL-21: AI Tested Ansible After Making the Required Changes by Hand</h1>
+    <p class="article-deck">A no-change playbook run showed that an already repaired machine matched the automation, not that the automation could build it.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-manual-dependencies-analogy.png" alt="A completed chair passes inspection beside an assembly guide with missing steps." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>The revised Ansible playbook reported no changes. By then, the agent had already repaired the host manually. That can be a truthful result: the host now matches the playbook. It does not prove that the retained automation can create that state from the intended starting point.</p>
+<p>An AI agent was asked to deploy file-integrity monitoring with Ansible. Before running the playbook, it installed AIDE and created the database of file properties that AIDE uses for comparison. The playbook then skipped initialization because that database already existed. The recorded run never showed the playbook performing that essential first step.</p>
 <p class="real-life-analogy">Imagine checking a flat-pack assembly guide against a chair a carpenter has already finished. Every part is in the right place, so the inspection passes. That does not show the instructions can build the chair from the box. An unchanged automation run after manual repairs leaves the same question about the retained playbook.</p>
-<h2>The baseline existed before automation reached initialization</h2>
-<p>AIDE and its baseline were prepared manually before Ansible ran. The playbook’s initialization task skipped the already-existing state. The successful rerun therefore did not demonstrate first-time baseline creation. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/agent/executor-commands.jsonl#L26">commands</a>.)</p>
-<p>An integrity-monitoring task installed and initialized material directly, then ran a playbook whose guard skipped initialization.</p>
-<h2>A direct router repair supplied the intended NAT state</h2>
-<p>After failed router playbook runs, a debug script applied NAT directly. The next playbook run reported no changes. That verified the repaired state, rather than the complete path needed to create it. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/nat-egress-ansible-ubuntu16-7778/nat-egress-ubuntu16__Gb3e8ks/agent/executor-commands.jsonl#L68">commands</a>.)</p>
-<p>When a debug script creates the working configuration after failed automation, the next unchanged playbook run can be genuine without proving the provisioning path.</p>
-<h2>Corrected syntax converged on manually configured DHCP</h2>
-<p>Two DHCP tasks reached working router configuration through direct CLI sessions after automation failures. Revised playbooks then reported no changes. Whether they could build the same configuration from the intended baseline remained untested. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl#L64">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl#L82">second trace</a>.)</p>
-<p>Both DHCP cases reached working router state through direct CLI sessions before the revised automation reported no changes.</p>
-<h2>What should an administrator check?</h2>
-<p>The fair test uses a documented baseline on which the manually supplied state is absent, or captures a complete retained bundle that explicitly includes the preparation step. Idempotence on an already-configured host and rebuildability from the intended starting point are related but different guarantees. The record does not establish the playbooks must fail that missing test.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-manual-dependencies-evidence.json">source extract</a> includes all 4 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>The prerequisite already existed, so Ansible skipped it</h2>
+<p>The AIDE initialization task used an existence check to avoid creating the database again. That is sensible for repeat runs. In this test, however, the agent had supplied the initial database outside the playbook.</p>
+<p>The unchanged run could be correct while leaving first-time installation untested.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/agent/executor-commands.jsonl#L26">Recorded commands</a></p>
+<h2>A debug script supplied the router configuration</h2>
+<p>In a NAT task, playbook attempts failed before a debug script directly applied the working router rules. The next Ansible run reported no changes.</p>
+<p>That result showed agreement with the manually configured router. It did not demonstrate the sequence an operator would need on a router without those rules.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/nat-egress-ansible-ubuntu16-7778/nat-egress-ubuntu16__Gb3e8ks/agent/executor-commands.jsonl#L68">Recorded commands</a></p>
+<h2>Direct CLI sessions completed two DHCP setups</h2>
+<p>In two other tasks, failed Ansible attempts were followed by direct router commands that created and saved working interface and DHCP configuration. Revised playbooks then reported no changes.</p>
+<p>The revised syntax might have been sufficient to configure a fresh router. The recorded rerun did not answer that question because the required configuration was already there.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl#L64">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl#L82">Recorded commands 2</a></p>
+<p>Test the retained playbook from a documented starting point that lacks the manually supplied changes. Alternatively, include those preparation steps explicitly in the delivered procedure. A repeat run and a first installation are different tests.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-manual-dependencies-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

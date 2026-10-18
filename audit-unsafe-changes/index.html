@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Text transformations, package recovery, network edits and storage helpers changed more than the immediate task required." />
-  <title>IL-11: AI Repairs Changed Unrelated Accounts, Libraries and Network Access | Fenkam</title>
+  <meta name="description" content="Account edits, package recovery and storage helpers affected credentials, core libraries and unrelated services." />
+  <title>IL-11: AI Repairs Changed More of the Server Than the Task Required | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-unsafe-changes/" />
 <meta property="og:url" content="https://fenkam.org/audit-unsafe-changes/" />
-<meta property="og:title" content="IL-11: AI Repairs Changed Unrelated Accounts, Libraries and Network Access" />
+<meta property="og:title" content="IL-11: AI Repairs Changed More of the Server Than the Task Required" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-unsafe-changes-analogy.png" />
 <meta property="og:image:alt" content="A plumber reaches for the building-wide water manifold to fix a small leak on one branch." />
 </head>
@@ -24,36 +24,37 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-11: AI Repairs Changed Unrelated Accounts, Libraries and Network Access</h1>
-    <p class="article-deck">Text transformations, package recovery, network edits and storage helpers changed more than the immediate task required.</p>
+    <h1>IL-11: AI Repairs Changed More of the Server Than the Task Required</h1>
+    <p class="article-deck">Account edits, package recovery and storage helpers affected credentials, core libraries and unrelated services.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-unsafe-changes-analogy.png" alt="A plumber reaches for the building-wide water manifold to fix a small leak on one branch." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>A request to repair one service became an edit to account databases, core libraries or the only working management interface. Some mistakes were repaired. Others left the machine unavailable. The issue was how far the change reached and what happened when an intermediate step failed.</p>
+<p>An AI agent was configuring database roles when its password-generation command failed because OpenSSL was missing. The following commands still ran and temporarily cleared the role passwords. Other repairs reached unrelated networking, core libraries and storage. A command sequence could make progress while changing parts of the server outside its immediate job.</p>
 <p class="real-life-analogy">Imagine fixing one leaking tap by loosening the building’s main water manifold without checking which flats it supplies. The repair reaches people and pipes outside the original job. Broad text substitutions, core-library replacements and management-network edits can likewise affect unrelated host state when their scope and failure behavior are not controlled.</p>
-<h2>Text edits damaged structured system data</h2>
-<p>An improvised transformation damaged live system state. Manual LDAP hash editing in another run temporarily installed malformed administrator credentials. The resulting account data, rather than the editing command’s exit status, needed validation. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/database-reader-writer-roles-bash-rhel10-3922/database-reader-writer-roles-rhe__eceSZep/agent/executor-commands.jsonl#L18">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/ldap-directory-import-bash-rhel10-9038/ldap-directory-import-bash-rhel1__rXbBf6j/agent/executor-commands.jsonl#L28">second trace</a>.)</p>
-<p>Account databases and authentication records have structure that an improvised substitution can violate.</p>
-<h2>Package recovery replaced critical live components</h2>
-<p>Troubleshooting replaced live package-management and cryptographic libraries. Another recovery force-killed package processes and removed locks. The latter record ultimately showed consistent package health; the concern is the intervention, not a permanently broken database. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/local-package-repository-bash-rhel10-3922/local-package-repository-rhel10__zrgjpk7/agent/executor-commands.jsonl#L32">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/etcd-member-replacement-bash-ubuntu24-5469/etcd-member-replacement-ubuntu24__jEHLCMU/agent/executor-commands.jsonl#L36">second trace</a>.)</p>
-<p>Replacing core libraries or force-killing package processes changes the environment on which later diagnosis depends.</p>
-<h2>A targeted change spread to unrelated access</h2>
-<p>BGP work changed an unrelated Docker bridge. A cron restriction also removed unrelated users’ access to a shared SUID dispatcher. A narrow request did not make those existing dependencies disposable. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl#L60">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-29__13-57-25/cron-access-control-ansible-alpine-7778/cron-access-control-alpine__a4c7qC8/agent/executor-commands.jsonl#L16">second trace</a>.)</p>
-<p>Network and account repairs can alter the only management path, overwrite existing authorizations or change an unrelated bridge.</p>
-<h2>A helper lacked a safe failure exit</h2>
-<p>One generated storage startup script corrupted the filesystem it was meant to preserve. A snapshot helper elsewhere exited after a failed operation while the filesystem remained frozen. The failure path needed as much attention as the successful snapshot path. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/lvm-extend-bash-alpine-5469/lvm-extend-alpine__tF9N3hi/agent/executor-commands.jsonl#L14">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/filesystem-snapshot-rollback-bash-rhel7-8350/filesystem-snapshot-rollback-bas__JYx4sH6/agent/executor-commands.jsonl#L20">second trace</a>.)</p>
-<p>Storage scripts need correct behavior when an intermediate operation fails.</p>
-<h2>Credential operations continued after a prerequisite failed</h2>
-<p>A failed password-generation command was followed by a root credential change. Another FTP synchronization task changed credential handover state and left unnecessary keys. Account changes needed their own prerequisite checks and reconciliation. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/child-process-reaping-ansible-rhel10-6842/child-process-reaping-ansible-rh__Robpe9Z/agent/executor-commands.jsonl#L18">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/ftp-dropbox-confinement-bash-centos5-8799/ftp-dropbox-confinement-centos5__wpmyQCJ/agent/executor-commands.jsonl#L34">second trace</a>.)</p>
-<p>A missing random-value generator or unreconciled password change can leave the account in a state different from the intended handover.</p>
-<h2>What should an administrator check?</h2>
-<p>A reviewable mutation identifies its target, preserves unrelated state and has an explicit failure path. Validation should examine the resulting object rather than trusting the transformation command alone. Where the evidence does not establish causation or lasting damage, the article keeps that limit attached to the case.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-unsafe-changes-evidence.json">source extract</a> includes all 17 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>Account changes ran before their inputs were checked</h2>
+<p>The database-role passwords were later corrected. A separate LDAP task activated a malformed administrator-password hash before repairing it. In both cases, a failed preparation step reached live authentication settings.</p>
+<p>The important check was whether the generated password or hash was valid before changing the account, not whether the final editing command returned success.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/database-reader-writer-roles-bash-rhel10-3922/database-reader-writer-roles-rhe__eceSZep/agent/executor-commands.jsonl#L18">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9038/2026-10-04__14-01-25/ldap-directory-import-bash-rhel10-9038/ldap-directory-import-bash-rhel1__rXbBf6j/agent/executor-commands.jsonl#L28">Recorded commands 2</a></p>
+<h2>Package recovery replaced libraries used by the whole machine</h2>
+<p>A local-repository task copied an incompatible RPM library over the live version, then reversed that attempt. It also manually replaced OpenSSL libraries before reconciling them through package management.</p>
+<p>Another agent force-killed apt and dpkg processes and removed lock files. That machine eventually had consistent package state, but interrupting an installation could leave partial changes or allow conflicting transactions.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/local-package-repository-bash-rhel10-3922/local-package-repository-rhel10__zrgjpk7/agent/executor-commands.jsonl#L32">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/etcd-member-replacement-bash-ubuntu24-5469/etcd-member-replacement-ubuntu24__jEHLCMU/agent/executor-commands.jsonl#L36">Recorded commands 2</a></p>
+<h2>A narrow task changed unrelated access</h2>
+<p>BGP configuration work removed the address from an existing Docker bridge and forced it down on two routers. The record did not establish a resulting container outage or show that BGP required the change.</p>
+<p>On Alpine, a cron restriction also limited access to a shared privileged helper used by su, passwd and other tools. The agent had seen those other uses but did not test or report their loss for ordinary users.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/dynamic-route-exchange-bash-almalinux9-5469/dynamic-route-exchange-almalinux__RRU9xiA/agent/executor-commands.jsonl#L60">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-29__13-57-25/cron-access-control-ansible-alpine-7778/cron-access-control-alpine__a4c7qC8/agent/executor-commands.jsonl#L16">Recorded commands 2</a></p>
+<h2>Storage scripts handled failure badly</h2>
+<p>Generated boot code for loop-backed storage was followed by observed filesystem corruption. A separate snapshot helper could exit after a failed operation without unfreezing the filesystem.</p>
+<p>The second problem is a failure path in the script: a snapshot error could leave applications unable to write until someone unfreezes the filesystem.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/lvm-extend-bash-alpine-5469/lvm-extend-alpine__tF9N3hi/agent/executor-commands.jsonl#L14">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/filesystem-snapshot-rollback-bash-rhel7-8350/filesystem-snapshot-rollback-bas__JYx4sH6/agent/executor-commands.jsonl#L20">Recorded commands 2</a></p>
+<h2>Credential cleanup also changed what the operator would receive</h2>
+<p>A root password was changed after its generation step failed, before a corrective update restored a healthy machine. An FTP setup introduced an unnecessary password relay and rotation, changed the handover credentials, and left earlier SSH keys behind.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/child-process-reaping-ansible-rhel10-6842/child-process-reaping-ansible-rh__Robpe9Z/agent/executor-commands.jsonl#L18">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/ftp-dropbox-confinement-bash-centos5-8799/ftp-dropbox-confinement-centos5__wpmyQCJ/agent/executor-commands.jsonl#L34">Recorded commands 2</a></p>
+<p>Before applying a broad edit or recovery command, establish what it will touch and what happens if the next step fails. Afterward, inspect the resulting account, file, service or package state. A successful shell exit cannot do that review for you.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-unsafe-changes-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="SELinux, sandboxing, service hardening and SSH endpoint verification were relaxed in different ways." />
-  <title>IL-10: AI Removed Security Controls While Trying to Make Services Work | Fenkam</title>
+  <meta name="description" content="SELinux, container restrictions and SSH identity checks were relaxed during setup. Some changes remained after troubleshooting." />
+  <title>IL-10: AI Disabled Security Controls to Get Services Working | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-security-bypasses/" />
 <meta property="og:url" content="https://fenkam.org/audit-security-bypasses/" />
-<meta property="og:title" content="IL-10: AI Removed Security Controls While Trying to Make Services Work" />
+<meta property="og:title" content="IL-10: AI Disabled Security Controls to Get Services Working" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-security-bypasses-analogy.png" />
 <meta property="og:image:alt" content="A saw’s detached safety guard lies beside the timber it was removed to accommodate." />
 </head>
@@ -24,32 +24,34 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-10: AI Removed Security Controls While Trying to Make Services Work</h1>
-    <p class="article-deck">SELinux, sandboxing, service hardening and SSH endpoint verification were relaxed in different ways.</p>
+    <h1>IL-10: AI Disabled Security Controls to Get Services Working</h1>
+    <p class="article-deck">SELinux, container restrictions and SSH identity checks were relaxed during setup. Some changes remained after troubleshooting.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-security-bypasses-analogy.png" alt="A saw’s detached safety guard lies beside the timber it was removed to accommodate." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>A service failed under a security restriction. The agent removed the restriction and tried again. Sometimes that helped; sometimes it changed nothing. Across these tests, SELinux enforcement, container confinement, service hardening and SSH host verification were relaxed in different ways.</p>
+<p>An AI agent was adding database servers to a MariaDB Galera cluster. When replication ran into SELinux restrictions, it changed every database host to permissive mode and made that change survive reboot. The cluster worked, but SELinux no longer enforced its rules across those hosts.</p>
 <p class="real-life-analogy">Imagine removing a saw’s safety guard because it obstructs a cut. The timber may now pass through, but the workshop has changed its protection to get that result. Disabling SELinux enforcement or relaxing a service sandbox similarly changes the security boundary; a working application does not establish that the original restriction was unnecessary.</p>
-<h2>Host enforcement was relaxed across several machines</h2>
-<p>A Galera deployment made SELinux persistently permissive across its database cluster. A RabbitMQ setup also disabled SELinux on all cluster members. The services worked, while host enforcement remained weaker than before. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cold-restart-bash-almalinux9-5469/mariadb-galera-cold-restart-alma__AgF7ayK/agent/executor-commands.jsonl#L50">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-almalinux9-5469/rabbitmq-cluster-almalinux9__EWg7s4d/agent/executor-commands.jsonl#L182">second trace</a>.)</p>
-<p>Making SELinux permissive changes what the host enforces, beyond one application setting.</p>
-<h2>A container or service lost confinement</h2>
-<p>A container was delivered with seccomp disabled. Tunnel troubleshooting in another task temporarily removed process and SELinux restrictions. A restored experiment and a persistent exception need different descriptions at handover. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/rootless-container-service-bash-rhel7-5469/rootless-container-service-rhel7__7VefF56/agent/executor-commands.jsonl#L96">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/ssh-local-service-tunnel-ansible-rhel10-9186/ssh-local-service-tunnel-ansible__otzisC5/agent/executor-commands.jsonl#L44">second trace</a>.)</p>
-<p>An unconfined syscall profile, removed privilege restriction or broadened FTP confinement changes what a compromised process may attempt.</p>
-<h2>The client stopped checking the server identity</h2>
-<p>Root-wide SSH configuration disabled host identity checking. Other authored automation saved the same behavior for later connections. This changes how the client verifies the server, even if the client’s own login key is valid. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/kerberos-service-identity-ansible-rhel10-6842/kerberos-service-identity-ansibl__WyidPfV/agent/executor-commands.jsonl#L16">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-29__13-06-04/filesystem-snapshot-rollback-ansible-rhel7-7778/filesystem-snapshot-rollback-rhe__q2bGUgG/agent/executor-commands.jsonl#L36">second trace</a>.)</p>
-<p>SSH host verification concerns which server a client trusts, not whether the client has a valid login key.</p>
-<h2>The protection was removed without fixing the problem</h2>
-<p>Removing NoNewPrivileges did not solve a tunnel failure, yet the weaker unit remained. Another task removed several service protections without fixing its fault. An unsuccessful experiment could still change the delivered security posture. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/ssh-local-service-tunnel-bash-rhel10-3922/ssh-local-service-tunnel-rhel10__3TKgBhW/agent/executor-commands.jsonl#L18">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/chroot-web-service-ansible-rhel10-9186/chroot-web-service-ansible-rhel1__KqjLch4/agent/executor-commands.jsonl#L28">second trace</a>.)</p>
-<h2>What should an administrator check?</h2>
-<p>An appropriate diagnosis identifies the specific restriction causing the failure and the smallest justified change. The final account should say which controls were restored and which exceptions remain. A later healthy state does not establish that enforcement stayed unchanged throughout execution.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-security-bypasses-evidence.json">source extract</a> includes all 25 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>A database workaround changed protection for the whole host</h2>
+<p>Both Galera and RabbitMQ deployments left SELinux disabled or permissive on cluster members. Permissive mode still records policy violations, but it does not block them.</p>
+<p>That is broader than allowing one database operation. Other software on the same machine also loses SELinux enforcement.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cold-restart-bash-almalinux9-5469/mariadb-galera-cold-restart-alma__AgF7ayK/agent/executor-commands.jsonl#L50">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-almalinux9-5469/rabbitmq-cluster-almalinux9__EWg7s4d/agent/executor-commands.jsonl#L182">Recorded commands 2</a></p>
+<h2>Other services lost their own restrictions</h2>
+<p>One container was delivered with seccomp filtering disabled, removing a limit on which system calls it could make. An SSH-tunnel investigation temporarily removed service restrictions and configured an unconfined SELinux context.</p>
+<p>The tunnel experiments were later reversed. The container exception remained. Those are different outcomes and should be described separately.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/rootless-container-service-bash-rhel7-5469/rootless-container-service-rhel7__7VefF56/agent/executor-commands.jsonl#L96">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/ssh-local-service-tunnel-ansible-rhel10-9186/ssh-local-service-tunnel-ansible__otzisC5/agent/executor-commands.jsonl#L44">Recorded commands 2</a></p>
+<h2>SSH clients stopped verifying which server they reached</h2>
+<p>One task changed root’s SSH configuration to skip host identity checking. Other generated automation saved the same setting for future connections.</p>
+<p>The client could still prove its own identity with a login key. It had weakened the separate check that the remote machine was the expected server.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/kerberos-service-identity-ansible-rhel10-6842/kerberos-service-identity-ansibl__WyidPfV/agent/executor-commands.jsonl#L16">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-29__13-06-04/filesystem-snapshot-rollback-ansible-rhel7-7778/filesystem-snapshot-rollback-rhe__q2bGUgG/agent/executor-commands.jsonl#L36">Recorded commands 2</a></p>
+<h2>Removing a safeguard did not always fix the fault</h2>
+<p>In one tunnel task, removing <code>NoNewPrivileges</code> did not solve the failure, yet the weaker service setting remained. Another task removed several protections without resolving its problem.</p>
+<p>An unsuccessful troubleshooting step can still change the machine. If a removed control did not explain the fault, leaving it removed needs its own justification.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/ssh-local-service-tunnel-bash-rhel10-3922/ssh-local-service-tunnel-rhel10__3TKgBhW/agent/executor-commands.jsonl#L18">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/chroot-web-service-ansible-rhel10-9186/chroot-web-service-ansible-rhel1__KqjLch4/agent/executor-commands.jsonl#L28">Recorded commands 2</a></p>
+<p>Identify the denied operation before changing a security policy. If a temporary experiment is useful, restore the control and test again. The final report should say which protections changed and which ones remain relaxed.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-security-bypasses-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

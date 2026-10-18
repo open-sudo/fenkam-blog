@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Custom HTTP proxies and DNS forwarders met narrow demonstrations while leaving production behavior incomplete." />
-  <title>IL-15: AI Built Proxies That Passed Simple Tests but Missed Protocol Behavior | Fenkam</title>
+  <meta name="description" content="Generated HTTP proxies and DNS forwarders omitted behavior that a simple successful request did not exercise." />
+  <title>IL-15: AI-Written Proxies Handled the Demo but Missed Other Requests | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-diy-infrastructure/" />
 <meta property="og:url" content="https://fenkam.org/audit-diy-infrastructure/" />
-<meta property="og:title" content="IL-15: AI Built Proxies That Passed Simple Tests but Missed Protocol Behavior" />
+<meta property="og:title" content="IL-15: AI-Written Proxies Handled the Demo but Missed Other Requests" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-diy-infrastructure-analogy.png" />
 <meta property="og:image:alt" content="A homemade postal chute delivers one envelope while parcels and other mail cannot pass through." />
 </head>
@@ -24,30 +24,30 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-15: AI Built Proxies That Passed Simple Tests but Missed Protocol Behavior</h1>
-    <p class="article-deck">Custom HTTP proxies and DNS forwarders met narrow demonstrations while leaving production behavior incomplete.</p>
+    <h1>IL-15: AI-Written Proxies Handled the Demo but Missed Other Requests</h1>
+    <p class="article-deck">Generated HTTP proxies and DNS forwarders omitted behavior that a simple successful request did not exercise.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-diy-infrastructure-analogy.png" alt="A homemade postal chute delivers one envelope while parcels and other mail cannot pass through." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>A generated proxy forwarded the demonstration request, but did not implement every behavior a client might expect from a load balancer. A generated DNS forwarder resolved an internal name while omitting important validation. The narrow demonstration and the completeness of the implementation were different questions.</p>
+<p>An AI agent wrote a small HTTP proxy, then verified it with a page request. The page loaded. The code, however, handled only GET and HEAD and read whole responses into memory. That demonstration did not show how it would handle a form submission, a large streamed response or a client whose login headers needed forwarding.</p>
 <p class="real-life-analogy">Imagine replacing a town’s postal sorting service with a homemade chute that delivers one standard envelope. The demonstration succeeds, but parcels, signed deliveries and returned mail still need handling. Generated proxies and forwarders can have the same gap: a simple request works while less visible protocol obligations remain unimplemented.</p>
-<h2>HTTP proxying narrowed the supported behavior</h2>
-<p>Two generated HTTP proxies supported only GET and HEAD and buffered entire response bodies. One also turned HEAD into an upstream GET and dropped end-user authorization or cookie headers. A simple successful GET did not exercise those behaviors. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__J5TJCVt/agent/executor-commands.jsonl#L28">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel7-5782/load-balanced-web-tier-rhel7__xUo49Rd/agent/executor-commands.jsonl#L30">second trace</a>.)</p>
-<p>A proxy that handles the demonstration GET can still omit other methods, change HEAD semantics or lose authorization and cookie headers.</p>
-<h2>Retries changed the meaning of a write</h2>
-<p>A generated proxy retried POST on another backend after a broad exception, without an idempotency check. A backend that committed before the response failed could therefore receive a repeated mutation. No duplicate transaction was observed. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/agent/executor-commands.jsonl#L40">commands</a>.)</p>
-<p>A backend may commit an operation before the proxy loses the response.</p>
-<h2>A DNS response arrived without the expected validation</h2>
-<p>Two generated DNS forwarders returned upstream UDP responses without checking the expected source and request identity. They also lacked truncation-triggered upstream TCP fallback. Resolving the demonstration record did not test either weakness. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/internal-dns-resolution-bash-rhel7-5782/internal-dns-resolution-rhel7__FKXeYRt/agent/executor-commands.jsonl#L12">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__RBG7F6V/agent/executor-commands.jsonl#L24">second trace</a>.)</p>
-<p>Returning an upstream UDP packet without matching its source and request identity creates a different assurance from resolving one internal name correctly.</p>
-<h2>What should an administrator check?</h2>
-<p>Where the request specifies an established product, an unauthorized replacement is already a material problem. Where a new or demonstration service is permitted, its limited implementation still needs to be described honestly. The inspected code supports these protocol concerns; it does not establish that every conditional production failure occurred during the tests.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-diy-infrastructure-evidence.json">source extract</a> includes all 9 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>The HTTP implementation handled only part of the traffic</h2>
+<p>Two generated proxies supported only GET and HEAD and buffered complete response bodies. One sent an upstream GET when its client requested HEAD, and dropped authorization or cookie headers.</p>
+<p>Those details change application behavior. A site’s public page can load while an authenticated request or another HTTP method fails. The examples establish omissions in the code, rather than an observed failure of every kind of request.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__J5TJCVt/agent/executor-commands.jsonl#L28">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel7-5782/load-balanced-web-tier-rhel7__xUo49Rd/agent/executor-commands.jsonl#L30">Recorded commands 2</a></p>
+<h2>Retrying a write could repeat the operation</h2>
+<p>Another proxy retried a POST on a different backend after a broad exception. It did not check whether repeating the request was safe.</p>
+<p>A backend could finish a write and then lose the connection before its reply reached the proxy. Retrying could submit the same operation again. No duplicate write was observed in this test; the problem was the unguarded retry in the delivered code.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/agent/executor-commands.jsonl#L40">Recorded commands</a></p>
+<h2>A DNS answer was accepted without all the expected checks</h2>
+<p>Two generated DNS forwarders passed back UDP replies without matching both the expected sender and request identity. They also lacked an upstream TCP retry when a UDP answer was truncated.</p>
+<p>Resolving one internal name did not exercise those cases. A successful lookup could coexist with an answer-validation weakness or failure on a larger response.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/internal-dns-resolution-bash-rhel7-5782/internal-dns-resolution-rhel7__FKXeYRt/agent/executor-commands.jsonl#L12">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__RBG7F6V/agent/executor-commands.jsonl#L24">Recorded commands 2</a></p>
+<p>If the task requires an existing product, substituting new software is already a change to discuss. If custom software is permitted, its supported behavior still needs to be explicit. A working demonstration is the start of that review, not a substitute for it.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-diy-infrastructure-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

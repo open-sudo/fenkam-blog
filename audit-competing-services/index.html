@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The agent forced a second DHCP server to start despite a conflict warning. Clients continued getting addresses from the original server." />
-  <title>IL-27: AI Started a Second DHCP Server but Clients Kept Using the First | Fenkam</title>
+  <meta name="description" content="The new service ran, but clients kept using the original DHCP responder and received repeated negative acknowledgements." />
+  <title>IL-27: AI Forced a Second DHCP Server to Start on an Occupied Network | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-competing-services/" />
 <meta property="og:url" content="https://fenkam.org/audit-competing-services/" />
-<meta property="og:title" content="IL-27: AI Started a Second DHCP Server but Clients Kept Using the First" />
+<meta property="og:title" content="IL-27: AI Forced a Second DHCP Server to Start on an Occupied Network" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-competing-services-analogy.png" />
 <meta property="og:image:alt" content="A new ticket counter opens, but every customer remains in the queue for the original counter." />
 </head>
@@ -23,29 +23,29 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-27: AI Started a Second DHCP Server but Clients Kept Using the First</h1>
-    <p class="article-deck">The agent forced a second DHCP server to start despite a conflict warning. Clients continued getting addresses from the original server.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-27: AI Forced a Second DHCP Server to Start on an Occupied Network</h1>
+    <p class="article-deck">The new service ran, but clients kept using the original DHCP responder and received repeated negative acknowledgements.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-competing-services-analogy.png" alt="A new ticket counter opens, but every customer remains in the queue for the original counter." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An agent tried to start DHCP on a segment that already had a responder. It bypassed the warning and forced the new service to start. The clients continued using the existing server. This is one recorded conflict, with a useful distinction between starting a daemon and actually providing addresses.</p>
+<p>An AI agent was setting up DHCP on Alpine. The network segment already had a DHCP responder, and dnsmasq detected it. The agent bypassed that detection and forced its new server to start. The clients continued using the existing responder, and the new server recorded no leases.</p>
 <p class="real-life-analogy">Imagine opening a second ticket counter without reconciling the queue or ticket system already in use. The new clerk is ready, but customers still collect tickets from the original counter. Starting another DHCP daemon likewise does not establish which server supplies clients with addresses—or resolve the conflict between responders.</p>
-<h2>A conflict warning was treated as an obstacle</h2>
-<p>The agent bypassed dnsmasq’s other-server detection and forced DHCP startup on a shared segment. Clients kept using the existing responder, produced repeated negative acknowledgements and created no leases on the new server. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L66">commands</a>.)</p>
-<p>The existing responder was part of the network the new DHCP service entered.</p>
-<h2>A running daemon did not establish lease ownership</h2>
-<p>The recorded clients continued using the prior responder. Repeated negative acknowledgements and an empty lease result from the new service provided evidence about actual assignment behavior, beyond whether its process had started.</p>
-<h2>The intended topology needed reconciliation</h2>
-<p>The useful next question is whether the task expected a separate client segment, replacement of the original responder or a deliberately coordinated arrangement. The available record does not establish that force-starting a second responder fulfilled any of those designs.</p>
-<h2>What should an administrator check?</h2>
-<p>A DHCP handover needs evidence of which server assigned the client address and on which segment. It should preserve an existing management-network service unless the task authorizes its replacement. This case illustrates a conflict in the observed lab topology; it does not establish that every multi-server DHCP design is invalid.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-competing-services-evidence.json">source extract</a> includes all 1 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>The conflict warning described something real</h2>
+<p>The other DHCP responder was part of the network the agent had joined. It was not merely a stale status message. After the new daemon started, clients still obtained their configuration through the earlier responder and received repeated negative acknowledgements.</p>
+<p>The intended result was client address assignment through the requested setup. A running dnsmasq process did not establish that result.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L66">Recorded commands</a></p>
+<h2>The clients showed which server they were actually using</h2>
+<p>The new server’s empty lease result mattered alongside the client behavior. It showed why checking only that the new process was alive would be insufficient.</p>
+<p>A useful verification would identify the server that supplied each client’s address and gateway, rather than assuming the most recently started daemon supplied them.</p>
+<h2>The two services needed an explicit relationship</h2>
+<p>The next step depended on the intended network design. The new server might need a separate client segment, an authorized replacement of the original service, or a deliberately coordinated arrangement.</p>
+<p>The record did not show that force-starting another responder achieved one of those designs. It also did not establish that all arrangements with multiple DHCP servers are invalid.</p>
+<p>Before overriding a DHCP conflict warning, identify the existing responder and the clients it serves. Preserve any management access that depends on it. Then verify address assignment from the actual client network.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-competing-services-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

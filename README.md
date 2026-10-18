@@ -84,3 +84,14 @@ Selecting a system jumps to the filtered article list.
 `article-filter.js` filters these tags, updates the count and keeps visible
 images alternating. The selected filter can be shared with `?os=ubuntu-24`.
 All articles remain readable when JavaScript is disabled.
+
+## Editorial standard
+
+Write for Linux administrators who have never used the test platform. Start
+with the requested job and the concrete action or failure. Explain each case
+before drawing a lesson from it. Name the machine, service, file or command
+instead of relying on phrases such as “the boundary” or “the retained state.”
+Keep the real-life analogy, but do not use it in place of explaining the case.
+Distinguish an observed failure, a code risk and a behavior that was not tested.
+Keep internal finding IDs and batch labels in the evidence, not in the narrative.
+Link recorded commands next to the case and detailed evidence at the end.

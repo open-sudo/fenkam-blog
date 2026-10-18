@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Password-generation failures, bypassed policy paths, coupled secrets and certificate roles weakened identity checks." />
-  <title>IL-19: AI Password Policies Did Not Protect Every Credential-Setting Path | Fenkam</title>
+  <meta name="description" content="Settings and password-scoring tools rejected weak values, while some administrative commands still assigned them." />
+  <title>IL-19: AI Password Rules Did Not Block the Weak Passwords Tested | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-weak-authentication/" />
 <meta property="og:url" content="https://fenkam.org/audit-weak-authentication/" />
-<meta property="og:title" content="IL-19: AI Password Policies Did Not Protect Every Credential-Setting Path" />
+<meta property="og:title" content="IL-19: AI Password Rules Did Not Block the Weak Passwords Tested" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-weak-authentication-analogy.png" />
 <meta property="og:image:alt" content="One reception desk checks identification while a side desk issues the same access badges without checking." />
 </head>
@@ -24,33 +24,33 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-19: AI Password Policies Did Not Protect Every Credential-Setting Path</h1>
-    <p class="article-deck">Password-generation failures, bypassed policy paths, coupled secrets and certificate roles weakened identity checks.</p>
+    <h1>IL-19: AI Password Rules Did Not Block the Weak Passwords Tested</h1>
+    <p class="article-deck">Settings and password-scoring tools rejected weak values, while some administrative commands still assigned them.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-weak-authentication-analogy.png" alt="One reception desk checks identification while a side desk issues the same access badges without checking." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>A password-quality setting was present, yet a tested administrative path still accepted a weak password. In another run, a failed random-password command was followed by an account change using an empty value. Authentication depends on the actual credential-setting and login paths, not just the installed policy files.</p>
+<p>An AI agent was asked to enforce password requirements. On CentOS Stream 10, it configured a minimum of 12 characters and showed that a scoring tool rejected an 11-character password. It then assigned an 11-character password successfully through administrative commands. The configured rule did not govern every tested way of setting a password.</p>
 <p class="real-life-analogy">Imagine a building requiring photo identification at reception while a side desk issues access badges without the same check. The rule exists, but people can enter through another procedure. Password-quality settings similarly matter only where the actual account-creation and password-change paths enforce them; a failed generator can also leave an unintended empty credential.</p>
-<h2>Password generation failed before the account change</h2>
-<p>The openssl command used to generate a database password was missing, but the following account update still ran with an empty value. A passwordless root login confirmed it. A proper random password was set seconds later. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cluster-bash-rhel10-5469/mariadb-galera-cluster-rhel10__w45WvGK/agent/executor-commands.jsonl#L46">commands</a>.)</p>
-<p>An account mutation should depend on successful creation of its replacement credential.</p>
-<h2>A configured password rule did not govern the tested paths</h2>
-<p>A length policy and password-scoring check rejected an 11-character value, yet tested administrative password-setting commands accepted it. Another task accepted weak passwords despite an enforce_for_root configuration. The bypass was observed in those paths, not every possible login workflow. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/password-complexity-policy-cento__iA9oVTK/agent/executor-commands.jsonl#L8">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/password-complexity-policy-ansible-rhel10-9186/password-complexity-policy-ansib__TBTEoUB/agent/executor-commands.jsonl#L36">second trace</a>.)</p>
-<p>A scoring tool and a policy file can reject a candidate while an administrative password-setting path accepts it.</p>
-<h2>Different security roles shared credential material or authority</h2>
-<p>One application password was derived from an SSH private key, coupling two credential domains. A Vault deployment gave server certificates CA capability and trusted them as anchors. Neither record demonstrated impersonation, but both broadened the consequences of losing a secret. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/redis-sentinel-bash-ubuntu24-5782/redis-sentinel-ubuntu24__sGJYMG5/agent/executor-commands.jsonl#L8">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/vault-raft-auto-unseal-bash-ubuntu24-5782/vault-raft-auto-unseal__Cb2Kn22/agent/executor-commands.jsonl#L10">second trace</a>.)</p>
-<p>Deriving one password from another secret couples their replacement and exposure.</p>
-<h2>Automation broadened the accepted login methods</h2>
-<p>SSH automation changed two hosts from prohibit-password to PermitRootLogin yes. Key-only administration did not itself require opening root password authentication. The final policy was broader than the original method needed. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/port-forward-ansible-alpine-7778/port-forward-alpine__YQmzfLL/agent/executor-commands.jsonl#L76">commands</a>.)</p>
-<p>Key-based administration does not inherently require enabling root password login.</p>
-<h2>What should an administrator check?</h2>
-<p>Authentication verification should follow the actual credential-setting and login paths, including the identity performing the change. It should also inspect what authority a certificate or key carries. The useful outcome is an evidenced policy boundary, not merely a list of authentication-related packages and configuration lines.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-weak-authentication-evidence.json">source extract</a> includes all 6 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>A failed generator briefly created a passwordless database account</h2>
+<p>In a Galera task, the OpenSSL executable needed to generate a password was missing. The account-update command still ran with an empty value. A passwordless database-root login confirmed the result.</p>
+<p>The agent set a proper random password seconds later. The final repair mattered, but the account should not have been changed after credential generation failed.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cluster-bash-rhel10-5469/mariadb-galera-cluster-rhel10__w45WvGK/agent/executor-commands.jsonl#L46">Recorded commands</a></p>
+<h2>The policy file and the actual password change disagreed</h2>
+<p>The CentOS tests used <code>chpasswd</code> and <code>passwd --stdin</code>. A RHEL 10 task also accepted passwords below the requested character-class requirements despite having pam_pwquality and enforce_for_root configured.</p>
+<p>These observations concern the administrative paths actually tested. They do not establish that every ordinary user could bypass the policy in the same way.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/password-complexity-policy-cento__iA9oVTK/agent/executor-commands.jsonl#L8">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/password-complexity-policy-ansible-rhel10-9186/password-complexity-policy-ansib__TBTEoUB/agent/executor-commands.jsonl#L36">Recorded commands 2</a></p>
+<h2>Other setups gave credentials more shared authority</h2>
+<p>A Redis application password was derived from an SSH private key. That linked two secrets that might otherwise be replaced independently.</p>
+<p>A Vault deployment gave server certificates the ability to act as certificate authorities and trusted them as signing anchors. Losing one server key could therefore have wider consequences than losing an ordinary server identity. No impersonation was demonstrated.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/redis-sentinel-bash-ubuntu24-5782/redis-sentinel-ubuntu24__sGJYMG5/agent/executor-commands.jsonl#L8">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/vault-raft-auto-unseal-bash-ubuntu24-5782/vault-raft-auto-unseal__Cb2Kn22/agent/executor-commands.jsonl#L10">Recorded commands 2</a></p>
+<h2>Key-based automation also enabled root password login</h2>
+<p>An SSH automation task changed two Alpine hosts from a policy that prohibited root password login to <code>PermitRootLogin yes</code>. The automation used keys and did not itself require that broader login method.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/port-forward-ansible-alpine-7778/port-forward-alpine__YQmzfLL/agent/executor-commands.jsonl#L76">Recorded commands</a></p>
+<p>Test the real commands people and automation will use to set and use credentials. A policy file is useful only where that path enforces it. Also check what authority the resulting key or certificate carries, rather than treating all credentials as interchangeable.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-weak-authentication-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A broker returned under a changed hostname. An object-store node rejoined before its local shard was restored. Cluster membership did not prove data recovery." />
-  <title>IL-26: A Cluster Node Rejoined Without Fully Recovering Its Data | Fenkam</title>
+  <meta name="description" content="One node returned with an unhealthy local data shard. Another changed identity after reboot and never had a confirmed rejoin." />
+  <title>IL-26: A Rejoined Cluster Node Still Needed a Data Repair | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-cluster-integrity/" />
 <meta property="og:url" content="https://fenkam.org/audit-cluster-integrity/" />
-<meta property="og:title" content="IL-26: A Cluster Node Rejoined Without Fully Recovering Its Data" />
+<meta property="og:title" content="IL-26: A Rejoined Cluster Node Still Needed a Data Repair" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-cluster-integrity-analogy.png" />
 <meta property="og:image:alt" content="A reopened library branch is listed in the directory while its shelves remain partly empty." />
 </head>
@@ -23,30 +23,30 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-26: A Cluster Node Rejoined Without Fully Recovering Its Data</h1>
-    <p class="article-deck">A broker returned under a changed hostname. An object-store node rejoined before its local shard was restored. Cluster membership did not prove data recovery.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-26: A Rejoined Cluster Node Still Needed a Data Repair</h1>
+    <p class="article-deck">One node returned with an unhealthy local data shard. Another changed identity after reboot and never had a confirmed rejoin.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-cluster-integrity-analogy.png" alt="A reopened library branch is listed in the directory while its shelves remain partly empty." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>A node reappeared after restart, but that did not mean its cluster state had recovered. One broker returned under a changed hostname. An object-store node rejoined before its local shard was restored. Membership, identity and data health needed separate checks.</p>
+<p>An object-storage node automatically rejoined its cluster after restart. Its local data shard was still unhealthy. An explicit healing command repaired that status. The node’s return to the membership list was therefore only part of recovery; its local data had not recovered automatically in the demonstrated sequence.</p>
 <p class="real-life-analogy">Imagine a library reopening a branch and putting its name back on the directory while some shelves are still empty. The branch exists again; its collection has not necessarily returned. A cluster member appearing in the membership list similarly does not prove that its identity, replicas or local data are healthy.</p>
-<h2>Reboot changed the broker identity</h2>
-<p>DHCP reset a RabbitMQ node’s hostname at boot. The broker started under a new, unclustered identity, and rejoin was not confirmed before the trace ended. Other members remained healthy. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl#L36">commands</a>.)</p>
-<p>A hostname used as part of the cluster identity must survive the network configuration applied at boot.</p>
-<h2>Membership recovery preceded shard recovery</h2>
-<p>An object-store node rejoined automatically, but its local shard stayed unhealthy until an explicit healing command changed its status. Membership recovery worked; automatic local resynchronization was not established. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl#L306">commands</a>.)</p>
-<p>A node appearing in the cluster does not by itself establish that its local data is fully synchronized.</p>
-<h2>Recovery claims need a level</h2>
-<p>Neither case supports a blanket statement of unrecoverable data loss. The first lacks confirmed rejoin at the end of the trace; the second demonstrates repair after manual intervention. The narrower useful claims concern persistent identity and whether local resynchronization was automatic.</p>
-<h2>What should an administrator check?</h2>
-<p>A recovery check should reconcile the expected node identity, membership, application behavior and local data health. A green endpoint on a peer can coexist with a missing member or incomplete shard. Recording those levels separately makes both the success and the remaining repair visible.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-cluster-integrity-evidence.json">source extract</a> includes all 2 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>A hostname change gave RabbitMQ a different identity</h2>
+<p>In a separate Alpine task, DHCP changed a RabbitMQ server’s hostname during boot. RabbitMQ used the hostname as part of its node identity, so it started as a different, unclustered node.</p>
+<p>The agent began repair, but the record ended without a confirmed rejoin. Other members stayed healthy. A successful request to a surviving peer would not have established that the missing member had returned.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl#L36">Recorded commands</a></p>
+<h2>The object-store member returned before its shard was healthy</h2>
+<p>The object-store node appeared in the cluster without manual help. Its local shard then remained unhealthy until the agent ran a healing command.</p>
+<p>That showed both an automatic success and a manual repair: membership returned automatically, while complete local data recovery was not demonstrated until the extra command.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl#L306">Recorded commands</a></p>
+<h2>These were different recovery problems</h2>
+<p>The RabbitMQ case concerned a changed identity and an unconfirmed rejoin. The object-store case showed a repairable local-data problem after rejoin. Neither demonstrated unrecoverable data loss.</p>
+<p>Calling both nodes simply “back” would hide work still needed. Calling both permanently lost would also misdescribe the evidence.</p>
+<p>After a cluster member restarts, check its expected identity, membership and local data health. Then exercise the application. A healthy response from the rest of the cluster cannot answer every question about the returning node.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-cluster-integrity-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

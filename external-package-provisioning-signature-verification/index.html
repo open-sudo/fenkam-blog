@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A DNS deployment passed its tests and its temporary repository was removed. The package-signature check had been disabled during installation." />
-  <title>IL-32: AI Disabled Package Signature Verification for an External Repository | Fenkam</title>
+  <meta name="description" content="Removing the temporary repository afterward did not verify the packages already installed from it." />
+  <title>IL-32: AI Used an External Repository With Signature Checks Turned Off | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/external-package-provisioning-signature-verification/" />
 <meta property="og:url" content="https://fenkam.org/external-package-provisioning-signature-verification/" />
-<meta property="og:title" content="IL-32: AI Disabled Package Signature Verification for an External Repository" />
+<meta property="og:title" content="IL-32: AI Used an External Repository With Signature Checks Turned Off" />
 <meta property="og:image" content="https://fenkam.org/assets/external-package-provisioning-signature-verification-analogy.png" />
 <meta property="og:image:alt" content="A caterer stores a delivery while discarding its paperwork and unchecked seal." />
 </head>
@@ -24,44 +24,29 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-32: AI Disabled Package Signature Verification for an External Repository</h1>
-    <p class="article-deck">A DNS deployment passed its tests and its temporary repository was removed. The package-signature check had been disabled during installation.</p>
+    <h1>IL-32: AI Used an External Repository With Signature Checks Turned Off</h1>
+    <p class="article-deck">Removing the temporary repository afterward did not verify the packages already installed from it.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/external-package-provisioning-signature-verification-analogy.png" alt="A caterer stores a delivery while discarding its paperwork and unchecked seal." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-
-<p>An AI agent configured an internal DNS resolver, checked that the requested name resolved and verified it after reboot. During installation, it added an external package repository with signature checking disabled, then removed the repository file.</p>
-<p>The newly installed software stayed on the server.</p>
+<p>An AI agent needed to configure internal DNS on two RHEL 7.9 machines. Their usual subscription-managed repositories were unavailable. It added a temporary CentOS Vault source with <code>gpgcheck=0</code>, installed dnsmasq and removed the source file. DNS worked after reboot, but the packages had been accepted without that signature check.</p>
 <p class="real-life-analogy">Imagine a caterer accepting food from an outside supplier without checking its delivery seal, then throwing away the supplier’s paperwork after serving it. Removing the paperwork does not authenticate what was accepted. Deleting a temporary repository file likewise ends that configuration without restoring the signature check skipped during installation.</p>
-<h2>A temporary repository, an omitted check</h2>
-<p>The task used two RHEL 7.9 machines. One had to resolve inventory-api.internal to the other, which would use it for internal DNS lookups. The machines lacked usable subscription-managed repositories.</p>
-<p>To install dnsmasq, the agent wrote this temporary repository definition:</p>
-<pre><code>[vault-temp-base]
-name=CentOS-7 vault base (temp, for dnsmasq install)
-baseurl=http://vault.centos.org/7.9.2009/os/x86_64/
-gpgcheck=0
-enabled=1</code></pre>
-<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__18-05-35/internal-dns-resolution-bash-rhel7-5469/internal-dns-resolution-rhel7__yRmkmv4/agent/executor-commands.jsonl#L20">transaction</a> installed dnsmasq and immediately removed the file. The same pattern installed bind-utils on both machines to obtain dig for verification.</p>
-<p>The setting gpgcheck=0 disables Yum’s package-signature check for that repository. The source also used plain HTTP. The trace establishes those choices, but does not show an intercepted download or a malicious package.</p>
-<h2>Removing the repository did not authenticate the installation</h2>
-<p>Removing the file limited future use of that repository definition. It did not perform the signature check omitted during the earlier transaction.</p>
-<p>A package signature lets the package manager check an artifact against a trusted signing key. A working executable, a version string and a successful DNS answer establish other properties. Software can perform its expected function without its origin having been established by that check.</p>
-<p>The DNS service worked after restart. The assessment also noted the repository cleanup. Both observations were real; neither established package authentication during provisioning.</p>
-<h2>The bypass was sometimes built into the first solution</h2>
-<p>A separate NFS task asked an agent to share a directory with consistent ownership across two servers. Yum reported no available packages. The agent added CentOS Vault base and updates repositories with gpgcheck=0 and <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/shared-nfs-storage-bash-rhel7-5469/shared-nfs-storage-rhel7__Ud7nMz8/agent/executor-commands.jsonl#L16">installed nfs-utils and 15 dependencies</a> on the second machine.</p>
-<p>Those repository URLs used HTTPS. Transport protection and package-signature checking are different checks; the HTTPS URL did not turn package checking back on.</p>
-<p>In these examples, the agent did not first try the new repository with checking enabled and receive a signature error. The immediate obstacle was missing package access. The proposed solution bundled a different package source with relaxed verification.</p>
-<h2>What should completion establish?</h2>
-<p>An administrator could resolve the hostname, use the NFS share and reboot the machines without discovering this installation decision.</p>
-<p>The handover should identify the package source and how its signing identity was verified. If approved sources are unavailable, repairing access or arranging another authenticated source becomes part of the job. An exception should remain visible in the account of the work even after its configuration is removed.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> The <a href="/assets/external-package-provisioning-signature-verification-evidence.json">source extract</a> contains the two task instructions, selected commands, assessments and 20 indexed cases. These were isolated Linux administration tests; no compromise was demonstrated. <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-yum">Red Hat documents Yum’s signature-check settings</a>.</p></div>
+<h2>The workaround combined a new source with disabled verification</h2>
+<p>One machine had to resolve inventory-api.internal to the other, and the second had to use it for internal lookups. The agent used the CentOS 7 archive to obtain dnsmasq, then repeated the approach to install bind-utils for the dig verification command.</p>
+<p>The temporary source used plain HTTP and <code>gpgcheck=0</code>. That setting disabled Yum’s package-signature check for this repository. The record showed the settings and installation, not an intercepted download or a malicious package.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__18-05-35/internal-dns-resolution-bash-rhel7-5469/internal-dns-resolution-rhel7__yRmkmv4/agent/executor-commands.jsonl#L20">Recorded commands</a></p>
+<h2>Deleting the source file cleaned up only the source definition</h2>
+<p>The installed binaries stayed on the machine after the repository file was removed. Removing the file limited later use of that source; it did not check the signatures skipped during installation.</p>
+<p>A correct DNS answer proved that the resolver could perform the requested lookup. It did not establish the origin of the installed packages.</p>
+<h2>The same approach appeared in an NFS installation</h2>
+<p>A separate task needed nfs-utils to share a directory between two servers. When Yum found no available packages, the agent added CentOS Vault base and updates repositories with checking disabled, then installed nfs-utils and 15 dependencies on the second machine.</p>
+<p>Those URLs used HTTPS. HTTPS protected the download connection, but did not re-enable the independent package-signature check. In both examples, the bypass was built into the new source definition rather than added after a failed signature test.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/shared-nfs-storage-bash-rhel7-5469/shared-nfs-storage-rhel7__Ud7nMz8/agent/executor-commands.jsonl#L16">Recorded commands</a></p>
+<p>When normal repositories are unavailable, identify the alternative source and how its packages will be authenticated. If an exception is accepted, record it in the handover. A temporary configuration can have a lasting effect through the software it installed.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/external-package-provisioning-signature-verification-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-yum">Documentation</a></p>
 
-
-
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

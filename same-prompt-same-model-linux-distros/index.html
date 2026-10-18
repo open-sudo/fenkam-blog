@@ -4,15 +4,15 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="On some systems, the AI configured a packaged web server. On RHEL9, it repeatedly wrote its own—even with Apache and nginx available." />
-  <title>IL-40: The Same HTTPS Request Led AI to Configure Nginx—or Write a Server | Fenkam</title>
+  <meta name="description" content="On RHEL 9, the agent wrote a custom Python service even when packaged Apache and nginx were available." />
+  <title>IL-40: The Same HTTPS Request Led AI to Install a Web Server—or Write One | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
 <link rel="canonical" href="https://fenkam.org/same-prompt-same-model-linux-distros/" />
 <meta property="og:url" content="https://fenkam.org/same-prompt-same-model-linux-distros/" />
-<meta property="og:title" content="IL-40: The Same HTTPS Request Led AI to Configure Nginx—or Write a Server" />
+<meta property="og:title" content="IL-40: The Same HTTPS Request Led AI to Install a Web Server—or Write One" />
 <meta property="og:image" content="https://fenkam.org/assets/same-prompt-same-model-linux-distros-analogy.png" />
 <meta property="og:image:alt" content="A prefabricated staircase and a custom-built timber staircase both reach the same landing." />
 </head>
@@ -22,56 +22,34 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
-    <h1>IL-40: The Same HTTPS Request Led AI to Configure Nginx—or Write a Server</h1>
-    <p class="article-deck">On some systems, the AI configured a packaged web server. On RHEL9, it repeatedly wrote its own—even with Apache and nginx available.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
+    <h1>IL-40: The Same HTTPS Request Led AI to Install a Web Server—or Write One</h1>
+    <p class="article-deck">On RHEL 9, the agent wrote a custom Python service even when packaged Apache and nginx were available.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/same-prompt-same-model-linux-distros-analogy.png" alt="A prefabricated staircase and a custom-built timber staircase both reach the same landing." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>The same request can turn an AI into two different kinds of operator. On one machine, it installs and configures a web server. On another, it writes one.</p>
-<p>We observed that difference while running the same HTTPS task through <code>gpt-5.6-sol</code>, at high reasoning effort, across Linux environments in InfraSet. Ubuntu, Alpine, and CentOS Stream produced conventional package-based deployments. A RHEL10 rerun did too. On RHEL9, the agent repeatedly chose a custom Python service.</p>
-<p>The strongest example came after we addressed subscription initialization. Apache and nginx were available on the RHEL9 machine. The agent never checked.</p>
-
+<p>We gave an AI agent the same request on several Linux systems: serve HTTPS on port 8443, renew the certificate automatically and keep answering requests when it changes. On some machines it configured Apache or nginx. On RHEL 9, it repeatedly wrote its own Python service. Both approaches passed functional tests, but left different software for the operator to maintain.</p>
 <p class="real-life-analogy">Imagine asking two builders for a staircase. One installs a tested prefabricated system; the other constructs a one-off staircase on site. Both reach the landing, but their inspection and maintenance obligations differ. Configuring a maintained web server and writing a custom service can likewise satisfy the same request while leaving different software to own.</p>
-<h2>The exact request</h2>
-<p>This is the complete task prompt, verbatim:</p>
-<pre style="white-space: pre-wrap; overflow-wrap: anywhere;"><code>On `node1`, serve HTTPS on port 8443 with a certificate that is renewed
-automatically before it expires, and have the service pick up each new
-certificate while it keeps answering requests.
+<h2>The request described behavior rather than a product</h2>
+<p>The agent had to keep the installed operating-system release and kernel and demonstrate recovery after reboot. The task did not explicitly require Apache or nginx or forbid a custom implementation.</p>
+<p>That matters when judging the result. Writing a service was not automatically a violation of the wording. It was a different implementation choice with different maintenance obligations.</p>
+<h2>Several systems used packaged web servers</h2>
+<p>Ubuntu 7 eventually used Apache. Ubuntu 24, Alpine and CentOS Stream used nginx, with renewal scripts around the packaged server.</p>
+<p>An early RHEL 10 attempt encountered unavailable repositories and built custom software. In a later run, subscription initialization completed, the repositories were available, and the agent installed Apache and its TLS components.</p>
+<p>That RHEL 10 deployment completed 150 requests without failure during certificate rotation and recovered after reboot. Restored package access was followed by a conventional implementation; the run did not isolate which part of initialization made the difference.</p>
+<h2>RHEL 9 had packaged alternatives, but the agent did not check them</h2>
+<p>An earlier RHEL 9 agent announced that it would use only installed components, although the task imposed no such restriction. We repeated the task with subscription initialization enabled.</p>
+<p>The agent again began writing a renewal script and Python HTTPS service after an initial inventory command. It did not query the repositories or try to install a web server.</p>
+<p>A separate check on the same live machine showed BaseOS and AppStream enabled and Apache, mod_ssl and nginx available. That check did not install anything; it established availability at the time of inspection.</p>
+<p>The agent used existing Python HTTP and TLS libraries and the OpenSSL command. It did not invent TLS cryptography. After a permission repair, its service completed 100 requests without failure during rotation and recovered after reboot.</p>
+<h2>The tests did not explain the choice</h2>
+<p>The same model and reasoning setting produced different implementations across the selected environments. Repository access and installed software also varied, so these examples do not prove that the operating system alone caused the choice.</p>
+<p>The RHEL 9 records did not show a comparison between the packaged and custom options. Possible explanations about legacy-system wording or subscription expectations remain explanations to test, not established causes.</p>
+<p>If maintained packaged services are required, put that in the operating policy. If custom services are allowed, make ownership of that code an explicit decision. “HTTPS works” does not tell the next administrator which kind of implementation they are inheriting.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/same-prompt-same-model-linux-distros-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-Keep the installed operating-system release and kernel; use software compatible with this legacy platform.</code></pre>
-<p>The agent also received shared infrastructure instructions, including a requirement to reboot the node and demonstrate recovery. The public task text was identical across the six environments compared below. The model and reasoning-effort settings were the same; installed tools, operating systems, and repository conditions differed.</p>
-
-<h2>Where it configured an existing server</h2>
-<p>The recorded Ubuntu 7.10 run eventually used Apache, after trying other packaged components. Ubuntu 24.04, Alpine 3.23, and CentOS Stream 10 used nginx. Each produced a conventional web-server deployment, with custom renewal scripts around packaged TLS and HTTP software.</p>
-<p><strong>RHEL10 also behaved as expected once repository access was available.</strong> In the rerun, subscription initialization completed with a 30-second pause. The agent checked the repositories, found BaseOS and AppStream, and ran:</p>
-<pre><code>dnf -y install --setopt=install_weak_deps=False httpd mod_ssl openssl</code></pre>
-<p>It configured Apache on port 8443, generated a 30-day self-signed certificate, and scheduled renewal checks twice daily with a seven-day threshold. Apache picked up replacements through a graceful reload. The recorded rotation test completed 150 requests without failure, and the deployment recovered after reboot. The evaluator awarded full functionality marks.</p>
-<p>That matters because the earlier RHEL10 attempt had encountered unavailable repositories and built custom software instead. Restoring access was followed by a conventional implementation. This supports package availability as a contributor in that case; the rerun does not isolate whether the pause itself was necessary.</p>
-
-<h2>RHEL9 chose another route</h2>
-<p>In the earlier RHEL9 run, the agent announced: “I’ll use only these installed components: a small TLS server that reloads certificate material in-process, plus a systemd renewal timer.” The task never imposed that restriction.</p>
-<p>We repeated the task with subscription initialization enabled and the same 30-second pause. After one inventory command, the agent began creating its own certificate-renewal script and Python HTTPS service. It did not query repositories or attempt a package installation.</p>
-<p>We independently checked the same live VM while the run was underway. Both BaseOS and AppStream were enabled. A successful <code>dnf list --available httpd mod_ssl nginx</code> returned Apache 2.4.62, mod_ssl 2.4.62, and nginx 1.20.1. This check establishes availability at inspection time; it was separate from the agent’s execution and did not install a server.</p>
-<p>The agent used Python’s existing HTTP and TLS libraries and the OpenSSL command for certificates. It wrote the service and its integration, rather than implementing TLS cryptography from scratch. Its server loaded certificate material for new connections, with seven-day certificates and renewal checks every six hours.</p>
-<p>The result worked in the recorded tests. After correcting certificate-directory permissions, it served HTTPS, completed 100 requests without failure during rotation, and recovered after reboot. It received full functionality marks too.</p>
-
-<h2>“But the prompt is vague”</h2>
-<p>That is a fair objection. The request specifies behavior, not a product. It does not require Apache or nginx, forbid custom software, or state a maintenance policy. The custom implementation is not, by itself, a violation.</p>
-<p>Yet the same wording led to packaged web-server deployments across the observed Ubuntu, Alpine, CentOS Stream, and corrected RHEL10 runs. It was sufficiently specific to produce the conventional implementation in those environments. RHEL9 repeatedly took a different path, including a run where an independent check confirmed packaged alternatives were available.</p>
-<p><strong>The finding is inconsistent implementation choice under the same stated requirements.</strong> “Serve HTTPS and rotate certificates” can mean configuring maintained software, or delivering a new service whose source code someone must own. Both can pass the same functional checks. They are different operational handovers.</p>
-<p>The phrase “legacy platform” may have encouraged a preference for installed tools, even on modern RHEL9. Expectations about subscriptions may also have influenced the choice. Neither explanation is established by these traces. The RHEL9 agent did not record a comparison of the packaged and custom alternatives.</p>
-
-<h2>What the comparison establishes</h2>
-<p>This is an observed pattern across selected runs, not a claim that a distribution determines the answer. Models are nondeterministic. Repository access and installed packages also vary. Repeated controlled runs would be needed to measure how often each approach occurs and which environmental differences cause it.</p>
-<p>For operators, the practical lesson is that functional success does not tell you which implementation you will inherit. If using approved packaged services matters, say so in the operating policy. If custom services are allowed, their introduction deserves an explicit decision and a clear maintenance handover.</p>
-<p>The agent demonstrated that it could make HTTPS work. The unresolved question is why, with a packaged server available, it decided that making HTTPS work required becoming the server’s author.</p>
-
-<div class="source-note" id="sources">
-<p><strong>Evidence and scope.</strong> The <a href="/assets/same-prompt-same-model-linux-distros-evidence.json">evidence extract</a> identifies the six locally verified runs, their shared prompt and model settings, functionality scores, and a command-ID index. The RHEL9 repository check is separately identified as an operator observation. The earlier RHEL9 and RHEL10 attempts are described from the investigation record; the extract contains the retained reruns. Ubuntu12 and Ubuntu16 are not included because their run artifacts were not available for this review. Successful bounded tests are not a production-readiness assessment. The experiment lives in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p>
-</div>
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

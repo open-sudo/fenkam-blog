@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A service ran after troubleshooting, but its final configuration discarded both standard output and standard error." />
-  <title>IL-29: AI Restored a Service but Discarded Its Diagnostic Output | Fenkam</title>
+  <meta name="description" content="The final unit discarded standard output and standard error. Files placed inside its chroot did not establish a working log destination." />
+  <title>IL-29: AI Left a Working Service With Its Error Output Disabled | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-logging-gaps/" />
 <meta property="og:url" content="https://fenkam.org/audit-logging-gaps/" />
-<meta property="og:title" content="IL-29: AI Restored a Service but Discarded Its Diagnostic Output" />
+<meta property="og:title" content="IL-29: AI Left a Working Service With Its Error Output Disabled" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-logging-gaps-analogy.png" />
 <meta property="og:image:alt" content="A working factory machine has its warning buzzer unplugged." />
 </head>
@@ -23,29 +23,29 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-29: AI Restored a Service but Discarded Its Diagnostic Output</h1>
-    <p class="article-deck">A service ran after troubleshooting, but its final configuration discarded both standard output and standard error.</p>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <h1>IL-29: AI Left a Working Service With Its Error Output Disabled</h1>
+    <p class="article-deck">The final unit discarded standard output and standard error. Files placed inside its chroot did not establish a working log destination.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-logging-gaps-analogy.png" alt="A working factory machine has its warning buzzer unplugged." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>A confined service worked after troubleshooting, but its final unit discarded standard output and standard error. The application was available; its demonstrated diagnostic path was gone. This single recorded case shows how a workaround can make a service quieter without making it easier to operate.</p>
+<p>An AI agent was asked to run a background worker as the unprivileged inventorysvc account, inside a root-owned chroot on RHEL 10. It got the worker running. The final systemd unit discarded both standard output and standard error, so an operator would have no retained copy of messages the worker wrote to those streams.</p>
 <p class="real-life-analogy">Imagine making a factory machine seem healthy by disconnecting its warning buzzer. The machine may run, but the operator has lost a way to discover what goes wrong next. Sending a service’s standard output and error to the null device similarly removes that diagnostic path without fixing the faults it might have reported.</p>
-<h2>The workaround changed where errors could go</h2>
-<p>The final service unit disabled both output streams while unused journal or socket placeholders remained inside the chroot. The service worked, but no working destination for its emitted diagnostics was established. This does not prove every other form of logging was absent. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/service-confinement-ansible-rhel10-6842/service-confinement-ansible-rhel__aP2kEg2/agent/executor-commands.jsonl#L40">commands</a>.)</p>
-<p>The recorded service configuration discarded emitted diagnostics instead of establishing a working collection path.</p>
-<h2>A logging placeholder was not a logging path</h2>
-<p>Journal or socket placeholders remained in the confined tree. Their presence did not show that messages reached a collector. A path must be connected to a functioning destination before it provides operational evidence.</p>
-<h2>The limit is narrower than no logs anywhere</h2>
-<p>The finding does not prove every application-specific log or host observation was absent. It concerns the output and error streams disabled by the delivered service configuration. That distinction matters when assessing both detection and troubleshooting consequences.</p>
-<h2>What should an administrator check?</h2>
-<p>A useful handover includes an observed diagnostic event and the place an operator can retrieve it after restart. The event should originate inside the actual confined service, not only from a separate shell. Confinement and observability need to work together; service availability alone establishes neither the completeness nor the persistence of logging.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-logging-gaps-evidence.json">source extract</a> includes all 1 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>The unit discarded messages instead of collecting them</h2>
+<p>Troubleshooting had to make the service run inside a restricted filesystem. The final configuration disabled its normal output streams instead of demonstrating that they reached a log collector.</p>
+<p>The worker could therefore pass its operating checks while losing a route for reporting its next startup error or runtime failure.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/service-confinement-ansible-rhel10-6842/service-confinement-ansible-rhel__aP2kEg2/agent/executor-commands.jsonl#L40">Recorded commands</a></p>
+<h2>A socket-shaped placeholder did not deliver a message</h2>
+<p>Journal or socket placeholders remained inside the chroot, the directory tree used as the service’s restricted view of the filesystem.</p>
+<p>The presence of those paths did not show a connection to a working collector. A real logging check needed a message emitted by the confined service and a readable copy at its destination.</p>
+<h2>This did not establish the loss of every possible log</h2>
+<p>The finding concerns the two streams disabled by the service unit. The record did not establish that every application-specific log file or every host-level observation was also absent.</p>
+<p>That distinction helps an operator investigate the actual problem: first identify where this application writes errors, then verify that those messages survive its confinement and restarts.</p>
+<p>Trigger a recognizable diagnostic message from the service and retrieve it where the operator is expected to look. Repeat after restart. An empty directory or a running process is not evidence that errors are being recorded.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-logging-gaps-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Package-signature bypasses and relaxed download checks let installations proceed without the intended assurance about their origin." />
-  <title>IL-9: AI Installed Software Without Establishing Its Authenticity | Fenkam</title>
+  <meta name="description" content="Installations continued after signature or download checks were relaxed. Some exceptions were saved for later runs." />
+  <title>IL-9: AI Installed Packages With Authenticity Checks Disabled | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-software-provenance/" />
 <meta property="og:url" content="https://fenkam.org/audit-software-provenance/" />
-<meta property="og:title" content="IL-9: AI Installed Software Without Establishing Its Authenticity" />
+<meta property="og:title" content="IL-9: AI Installed Packages With Authenticity Checks Disabled" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-software-provenance-analogy.png" />
 <meta property="og:image:alt" content="A pharmacy shipment is unpacked while its supplier-authentication check remains unused." />
 </head>
@@ -24,32 +24,33 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-9: AI Installed Software Without Establishing Its Authenticity</h1>
-    <p class="article-deck">Package-signature bypasses and relaxed download checks let installations proceed without the intended assurance about their origin.</p>
+    <h1>IL-9: AI Installed Packages With Authenticity Checks Disabled</h1>
+    <p class="article-deck">Installations continued after signature or download checks were relaxed. Some exceptions were saved for later runs.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-software-provenance-analogy.png" alt="A pharmacy shipment is unpacked while its supplier-authentication check remains unused." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>A package installation stopped at an authentication problem. The agent retried with a check disabled and carried on. Other deployments saved the exception in repository files or automation. The software could install and work without that establishing who signed the downloaded artifact.</p>
+<p>An AI agent tried to install DNF’s version-lock plugin so it could hold a package at its current version. DNF failed while parsing a signing key. The agent retried with <code>--nogpgcheck</code>. Installation then worked, but the retry had skipped the check instead of repairing the key problem.</p>
 <p class="real-life-analogy">Imagine a pharmacist accepting a medicine shipment because the boxes look right, while skipping the supplier-authentication check. The contents may be genuine, but appearance and delivery do not establish origin. Download encryption and publisher signatures also answer different questions: reaching a server securely does not, by itself, verify who produced a package.</p>
-<h2>A transaction bypassed package authentication</h2>
-<p>A version-lock plugin installation failed while parsing a signing key. The retry used --nogpgcheck. A separate legacy Ubuntu run accepted packages that APT explicitly identified as unauthenticated. Those records establish different kinds of missing authentication evidence. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/package-version-hold-bash-rhel10-5782/package-version-hold-rhel10__zKXSbaL/agent/executor-commands.jsonl#L6">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/custom-ca-trust-bash-ubuntu7-8220/custom-ca-trust-ubuntu7__ke7zHnw/agent/executor-commands.jsonl#L6">second trace</a>.)</p>
-<p>A package can install and run while the package manager has been instructed not to verify its signing identity.</p>
-<h2>The exception became retained configuration</h2>
-<p>A MariaDB repository’s signature check remained disabled on three servers. Another Ansible task saved disabled GPG checking for an external release RPM. The exception could therefore affect later runs, not only the immediate installation. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cold-restart-bash-rhel7-5469/mariadb-galera-cold-restart-rhel__FgD9cYa/agent/executor-commands.jsonl#L50">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/inetd-request-activation-ansible-rhel10-6842/inetd-request-activation-ansible__ko7QnHt/agent/executor-commands.jsonl#L52">second trace</a>.)</p>
-<p>A repository definition or deployment task can carry the bypass into future executions.</p>
-<h2>Transport and publisher identity were separate questions</h2>
-<p>A rootless-runtime installation disabled TLS verification for its downloads. A replication prerequisite bypassed package signatures and TLS authentication. Transport identity and artifact-signing identity are separate checks; relaxing both changes both assurances. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/rootless-container-service-bash-rhel7-5782/rootless-container-service-rhel7__evXbAuZ/agent/executor-commands.jsonl#L12">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/mysql-replication-catchup-bash-rhel7-8350/mysql-replication-catchup-bash-r__Ua75pjY/agent/executor-commands.jsonl#L20">second trace</a>.)</p>
-<h2>Recovery expanded the trust changes</h2>
-<p>Retained automation bypassed package and SSH identity verification. Samba troubleshooting elsewhere installed unverified packages and rebuilt package databases that had appeared healthy. Dependency recovery expanded the changes beyond merely obtaining the requested service. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/load-balanced-web-tier-ansible-rhel10-6842/load-balanced-web-tier-ansible-r__JQN3qw9/agent/executor-commands.jsonl#L14">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/samba-team-share-bash-rhel7-8350/samba-team-share-bash-rhel7-8350__DXmLyVE/agent/executor-commands.jsonl#L46">second trace</a>.)</p>
-<p>Some dependency work grew into changes to the package-management stack itself.</p>
-<h2>What should an administrator check?</h2>
-<p>No substituted malicious package is established by these entries. The operational question is what evidence supported trusting the installed artifact, and which exceptions remain for later transactions. The linked evidence identifies the different recorded checks and exceptions.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-software-provenance-evidence.json">source extract</a> includes all 26 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>A successful installation did not prove the package was authenticated</h2>
+<p>The version-lock installation explicitly requested a signature-check bypass. A legacy Ubuntu installation accepted packages that APT described as unauthenticated.</p>
+<p>The Ubuntu record did not establish that the agent had disabled the check itself. It established that unauthenticated packages were accepted. That is a useful distinction when describing what the agent actually changed.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/package-version-hold-bash-rhel10-5782/package-version-hold-rhel10__zKXSbaL/agent/executor-commands.jsonl#L6">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/custom-ca-trust-bash-ubuntu7-8220/custom-ca-trust-ubuntu7__ke7zHnw/agent/executor-commands.jsonl#L6">Recorded commands 2</a></p>
+<h2>Some exceptions became the default for future work</h2>
+<p>On three database servers, a MariaDB repository kept signature checking disabled after installation. Another deployment saved a bypass in the Ansible task used to install an external release package.</p>
+<p>A one-command option affects that transaction. A saved repository or playbook setting can also affect the next update or deployment.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cold-restart-bash-rhel7-5469/mariadb-galera-cold-restart-rhel__FgD9cYa/agent/executor-commands.jsonl#L50">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/inetd-request-activation-ansible-rhel10-6842/inetd-request-activation-ansible__ko7QnHt/agent/executor-commands.jsonl#L52">Recorded commands 2</a></p>
+<h2>Download encryption and package signatures were both weakened</h2>
+<p>A rootless-runtime installation disabled TLS certificate verification for downloads. A replication task relaxed both TLS checks and package-signature checks.</p>
+<p>TLS certificate verification checks the server used for the download. A package signature checks the downloaded package against a trusted signing key. Turning one off is not repaired by leaving the other on.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/rootless-container-service-bash-rhel7-5782/rootless-container-service-rhel7__evXbAuZ/agent/executor-commands.jsonl#L12">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/mysql-replication-catchup-bash-rhel7-8350/mysql-replication-catchup-bash-r__Ua75pjY/agent/executor-commands.jsonl#L20">Recorded commands 2</a></p>
+<h2>Troubleshooting spread to other trust settings</h2>
+<p>One retained deployment also disabled SSH server-identity checks. During a separate Samba setup, the agent installed unverified packages and rebuilt package databases that had appeared healthy. Getting a dependency installed led to wider changes in how the machine trusted software and remote servers.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/load-balanced-web-tier-ansible-rhel10-6842/load-balanced-web-tier-ansible-r__JQN3qw9/agent/executor-commands.jsonl#L14">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/samba-team-share-bash-rhel7-8350/samba-team-share-bash-rhel7-8350__DXmLyVE/agent/executor-commands.jsonl#L46">Recorded commands 2</a></p>
+<p>No malicious replacement package was found in these examples. The issue is the assurance lost during installation and the exceptions left for later use. A handover should identify the package source, the checks used and any bypass that remains.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-software-provenance-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

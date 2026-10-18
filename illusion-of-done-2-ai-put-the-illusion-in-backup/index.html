@@ -4,15 +4,15 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The backup folder looked like it held a week of history. Six of those backups were backdated copies of the same file." />
-  <title>IL-2: AI Created a Week of Backup History by Copying One Current Archive | Fenkam</title>
+  <meta name="description" content="Backdated copies tested the deletion rule, but did not contain the server’s data from those earlier days." />
+  <title>IL-2: AI Copied One Backup to Create a Week of Apparent History | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
 <link rel="canonical" href="https://fenkam.org/illusion-of-done-2-ai-put-the-illusion-in-backup/" />
 <meta property="og:url" content="https://fenkam.org/illusion-of-done-2-ai-put-the-illusion-in-backup/" />
-<meta property="og:title" content="IL-2: AI Created a Week of Backup History by Copying One Current Archive" />
+<meta property="og:title" content="IL-2: AI Copied One Backup to Create a Week of Apparent History" />
 <meta property="og:image" content="https://fenkam.org/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" />
 <meta property="og:image:alt" content="Seven separate family albums contain copies of the same photograph rather than different years of history." />
 </head>
@@ -23,36 +23,26 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>ILLUSION OF DONE / #2</span><span>2 MIN READ</span><time datetime="2026-10-05">OCT 5, 2026</time></div>
-    <h1>IL-2: AI Created a Week of Backup History by Copying One Current Archive</h1>
-    <p class="article-deck">The backup folder looked like it held a week of history. Six of those backups were backdated copies of the same file.</p>
+    <h1>IL-2: AI Copied One Backup to Create a Week of Apparent History</h1>
+    <p class="article-deck">Backdated copies tested the deletion rule, but did not contain the server’s data from those earlier days.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/illusion-of-done-2-ai-put-the-illusion-in-backup-analogy.png" alt="Seven separate family albums contain copies of the same photograph rather than different years of history." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>When I asked an AI sysadmin to set up nightly backups, I expected a schedule, a working backup script, and automatic cleanup of old archives. In one RHEL 9 task in InfraSet, the agent delivered those things. It also left me with what looked like a week of backup history, created in seconds.</p>
-<p>This was the second case in my <a href="/illusion1/"><em>Illusion of Done</em> series</a>. The intent of this series is to give sysadmins recognizable failure modes to guard against.</p>
-
+<p>An AI agent was asked to back up <code>/srv/inventory/data</code> from one server to another every night and keep seven days of archives. It built the schedule and backup script on RHEL 9, then copied the current archive under older dates to test cleanup. Some copies remained beside the genuine backup when the task ended.</p>
 <p class="real-life-analogy">Imagine taking seven copies of today’s family photograph and putting each in an album marked for a different year. There are seven entries, but no record of the earlier years. Backdating copies of one current archive creates the same illusion: the files can exercise a retention rule without supplying historical recovery points.</p>
-<h2>What happened</h2>
-<p>Here was the <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/instruction.md">original task prompt</a>:</p>
-<blockquote><p>Every night, back up <code>/srv/inventory/data</code> from <code>node2</code> to <code>node1</code>. Store dated archives under <code>/var/backups/inventory</code> on <code>node1</code>, and retain the last 7 days.</p></blockquote>
-<p>The agent configured the nightly job and created a backup dated September 3. Then it tested whether the cleanup rule removed archives older than seven days.</p>
-<p>To do that, it <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/scheduled-backup-rhel9__df25r2K/agent/executor-commands.jsonl#L38">copied the new backup ten times</a>. It gave each copy an earlier date in its filename and changed its modification time to match. The directory now contained files dated August 24 through September 3, although every archive came from the September 3 backup.</p>
-<p>The cleanup removed the oldest copies. That demonstrated the retention rule. But the agent <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/scheduled-backup-rhel9__df25r2K/agent/executor-commands.jsonl#L70">left six backdated test copies in the backup directory</a>, alongside the genuine September 3 archive. They were still there at the final check, after both machines had rebooted.</p>
-<p>If I had needed the September 1 version of a file, I could have picked the archive labelled September 1. I would have received September 3’s data. The date on the archive suggested a recovery point that had never existed.</p>
-<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/scheduled-backup-rhel9__df25r2K/verifier/evaluation-report.json">evaluator awarded full functionality marks</a>. It also noticed the leftover test archives and reduced handling of the system to 0.60. The backup mechanism worked, but its output directory contained misleading history.</p>
+<h2>The retention test used invented dates</h2>
+<p>The agent needed old files to exercise the cleanup rule without waiting a week. Copying an archive and changing its date can be a reasonable way to create that test input.</p>
+<p>The problem was leaving the synthetic files in the operational backup directory. Six apparent historical backups were copies of the same current file. They did not contain six earlier states of the system.</p>
+<p>The genuine backup was dated September 3. An operator choosing the archive labelled September 1 would receive September 3’s data. The filename suggested an earlier recovery point that had never existed.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/instruction.md">Source record 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/scheduled-backup-rhel9__df25r2K/agent/executor-commands.jsonl#L38">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/scheduled-backup-rhel9__df25r2K/agent/executor-commands.jsonl#L70">Recorded commands 3</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/scheduled-backup-rhel9__df25r2K/verifier/evaluation-report.json">Source record 4</a> · <a href="/illusion-of-done/">Documentation 5</a></p>
+<h2>A deletion test and a recovery history answer different questions</h2>
+<p>The retention test asked whether the cleanup command removed files at the appropriate ages. It did not establish that backups had run on those days or captured the data that existed then.</p>
+<p>Use a separate test directory for artificial dates, or label and remove the test copies before handover. Then create and verify the first genuine archive in the real destination.</p>
+<p>A restore test should check what data comes back, not just that archive filenames exist. The operator also needs a clear statement of how much genuine backup history is available today.</p>
+<p>Creating test history can prove a retention rule. Keeping it with real archives can mislead the person relying on those backups. The schedule may be ready for future nights even when only today’s recovery point actually exists.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. The source records contain the commands and the observations used here.</p></div>
 
-<p>In my <a href="/illusion-of-done/">first article</a>, I highlighted the residue agents left behind. Here, that residue looked like recovery history. It could have led me to trust a backup that never existed for that date.</p>
-
-<h2>What could have been done differently</h2>
-<p>Testing retention with backdated files was reasonable. Leaving those files among the real backups was the mistake. I found no evidence that the agent had intended to deceive me; it had failed to clean up its test.</p>
-<p>I could have required retention tests to run in a separate directory, using the same cleanup logic. If testing in the real backup directory was necessary, the agent should have tracked and removed every synthetic archive afterward.</p>
-<p>My final check should also have included a restore and a check of where each archive came from. Seven dated filenames had looked like seven days of protection. In this run, they represented one backup and six copies.</p>
-
-<div class="source-note" id="sources">
-<p><strong>Run details.</strong> RHEL 9, InfraSet scenario <code>5469</code>, task <code>scheduled-backup</code>, batch <code>2026-09-03__11-57-11</code>, trial <code>df25r2K</code>. Evidence was linked to a fixed commit. This case showed misleading test artifacts left in the backup directory; it did not show an actual recovery incident or loss of historical data.</p>
-</div>
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

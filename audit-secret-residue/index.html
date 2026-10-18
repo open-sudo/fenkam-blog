@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Temporary keys, password helpers, superseded configurations and test fixtures survived cleanup." />
-  <title>IL-5: AI Deployments Left Unnecessary Copies of Private Keys and Passwords | Fenkam</title>
+  <meta name="description" content="The active service had its credentials, but staging directories, scripts and test files kept additional copies." />
+  <title>IL-5: AI Left Extra Copies of Private Keys and Passwords | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-secret-residue/" />
 <meta property="og:url" content="https://fenkam.org/audit-secret-residue/" />
-<meta property="og:title" content="IL-5: AI Deployments Left Unnecessary Copies of Private Keys and Passwords" />
+<meta property="og:title" content="IL-5: AI Left Extra Copies of Private Keys and Passwords" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-secret-residue-analogy.png" />
 <meta property="og:image:alt" content="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." />
 </head>
@@ -24,32 +24,33 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-5: AI Deployments Left Unnecessary Copies of Private Keys and Passwords</h1>
-    <p class="article-deck">Temporary keys, password helpers, superseded configurations and test fixtures survived cleanup.</p>
+    <h1>IL-5: AI Left Extra Copies of Private Keys and Passwords</h1>
+    <p class="article-deck">The active service had its credentials, but staging directories, scripts and test files kept additional copies.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-secret-residue-analogy.png" alt="A locked filing cabinet is surrounded by moving boxes containing extra copies of the same file." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>The certificate was installed and the service worked. Extra private keys still sat in the directories used to stage the deployment. This happened with passwords, broker credentials and test fixtures too. Not every copy was readable by other users, but each unnecessary copy became another place that needed protection.</p>
+<p>An AI agent installed certificates for a database service, then left the certificate authority’s private signing key in a temporary staging directory. That key could issue certificates; it was not just another public certificate. Similar leftovers appeared in password transfers, helper scripts and certificate-renewal tests.</p>
 <p class="real-life-analogy">Imagine moving a confidential file into a locked cabinet but leaving its working copies in packing boxes around the office. The cabinet is secure; the boxes still need protecting. Deployment staging directories, helper scripts and superseded configurations can retain credentials after the final service no longer needs those extra copies.</p>
-<h2>Distribution created a second key collection</h2>
-<p>A database certificate deployment retained its CA signing key in temporary staging. An mTLS check left a staging tree containing CA and client private keys. These copies carried different authority from an ordinary public certificate. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl#L18">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-tls-bash-ubuntu16-5469/rabbitmq-tls-ubuntu16__jYS6s3R/agent/executor-commands.jsonl#L70">second trace</a>.)</p>
-<p>Installing the final certificate does not remove the issuing key, client test identity or bundled transfer copy used to get it there.</p>
-<h2>Cleanup missed one host or an earlier copy</h2>
-<p>Replication-password cleanup missed the machine where the transfer originated. A broker task missed both the original host and an abandoned copy. Multi-host cleanup needed to follow every copy, not just the receiving side. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/postgresql-streaming-replication-bash-centos-stream10-5469/postgresql-streaming-replication__MHmKM9K/agent/executor-commands.jsonl#L34">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-cluster-bash-rhel10-5469/rabbitmq-cluster-rhel10__pQn4PhC/agent/executor-commands.jsonl#L134">second trace</a>.)</p>
-<p>A multi-node cleanup can look complete from the receiving machines while the originating host still has the password.</p>
-<h2>Helpers and diagnostic changes kept credentials embedded</h2>
-<p>Galera staging configurations retained authentication material. Broker helper scripts kept live passwords embedded in their commands. A secret can survive in a useful-looking helper even after an obvious password file is removed. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-scale-out-bash-almalinux9-5469/mariadb-galera-scale-out-almalin__LDdAc89/agent/executor-commands.jsonl#L56">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-rhel9-5469/rabbitmq-cluster-rhel9__jwS8Ajt/agent/executor-commands.jsonl#L48">second trace</a>.)</p>
-<p>Secrets can survive in configuration fragments and scripts rather than files named password.</p>
-<h2>Old generations and test fixtures accumulated</h2>
-<p>Certificate rotation left superseded key directories behind. A privacy exporter kept copies of its private input in test fixtures. Successful replacement or redaction did not remove the material used to verify it. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/certificate-rotation-bash-rhel10-5782/certificate-rotation-rhel10__9cx4362/agent/executor-commands.jsonl#L12">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/privacy-safe-support-export-bash-centos5-8799/privacy-safe-support-export-cent__QAd7h5W/agent/executor-commands.jsonl#L10">second trace</a>.)</p>
-<h2>What should an administrator check?</h2>
-<p>The appropriate cleanup starts with an inventory of copies and their owners. It distinguishes the active service credential, an intentional recovery copy and abandoned staging. Protected residue increases the number of places that need protection; evidence of broader readability or transmission is a separate, stronger claim.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-secret-residue-evidence.json">source extract</a> includes all 35 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>Certificate staging kept powerful private keys</h2>
+<p>One database deployment retained the CA signing key used to create its certificates. Another test of mutual TLS left both CA and client private keys in a staging tree.</p>
+<p>The service might need its own private key to keep running. That does not explain why temporary copies of the issuing key or test-client identities should remain alongside it.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl#L18">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-tls-bash-ubuntu16-5469/rabbitmq-tls-ubuntu16__jYS6s3R/agent/executor-commands.jsonl#L70">Recorded commands 2</a></p>
+<h2>Cleanup missed the machine that sent the password</h2>
+<p>In a replication task, the agent removed password copies from receiving machines but missed the original on the sending machine. A broker deployment also retained an earlier abandoned copy.</p>
+<p>Looking only at the destination made cleanup appear more complete than it was. The password had been created, staged and copied in more than one place.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/postgresql-streaming-replication-bash-centos-stream10-5469/postgresql-streaming-replication__MHmKM9K/agent/executor-commands.jsonl#L34">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-cluster-bash-rhel10-5469/rabbitmq-cluster-rhel10__pQn4PhC/agent/executor-commands.jsonl#L134">Recorded commands 2</a></p>
+<h2>Secrets remained inside scripts and configuration fragments</h2>
+<p>Galera setup files retained authentication values. Broker helper scripts contained live passwords in their commands. Removing a file named “password” would not remove those embedded values.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-scale-out-bash-almalinux9-5469/mariadb-galera-scale-out-almalin__LDdAc89/agent/executor-commands.jsonl#L56">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-rhel9-5469/rabbitmq-cluster-rhel9__jwS8Ajt/agent/executor-commands.jsonl#L48">Recorded commands 2</a></p>
+<h2>Replacement created more generations to protect</h2>
+<p>Certificate rotation left older private-key directories behind. A tool meant to produce a privacy-safe export also kept private input in its test fixtures.</p>
+<p>The new certificate or cleaned export could be correct while the older sensitive material remained available elsewhere.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/certificate-rotation-bash-rhel10-5782/certificate-rotation-rhel10__9cx4362/agent/executor-commands.jsonl#L12">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/privacy-safe-support-export-bash-centos5-8799/privacy-safe-support-export-cent__QAd7h5W/agent/executor-commands.jsonl#L10">Recorded commands 2</a></p>
+<p>An extra copy is not automatically a public disclosure: some retained files still had restrictive permissions. It is another place that must be protected, rotated and eventually removed. Keep deliberate recovery copies separate from abandoned working files.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-secret-residue-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->

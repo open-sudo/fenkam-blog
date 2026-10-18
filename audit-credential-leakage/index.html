@@ -4,16 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Secrets appeared in execution output, plaintext transfers, permissive files and temporary web servers." />
-  <title>IL-3: AI Exposed Credentials Through Logs, Transfers and File Permissions | Fenkam</title>
+  <meta name="description" content="Temporary files were deleted, but passwords had already been copied into saved command output or exposed by the transfer method." />
+  <title>IL-3: AI Left Passwords in Logs and Exposed Them During Transfers | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=readability-1" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-credential-leakage/" />
 <meta property="og:url" content="https://fenkam.org/audit-credential-leakage/" />
-<meta property="og:title" content="IL-3: AI Exposed Credentials Through Logs, Transfers and File Permissions" />
+<meta property="og:title" content="IL-3: AI Left Passwords in Logs and Exposed Them During Transfers" />
 <meta property="og:image" content="https://fenkam.org/assets/audit-credential-leakage-analogy.png" />
 <meta property="og:image:alt" content="A sealed confidential envelope sits beside exposed copies in a shared printer tray and outgoing basket." />
 </head>
@@ -24,33 +24,33 @@
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
     <div class="post-meta article-meta"><span>FIELD NOTE</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-    <h1>IL-3: AI Exposed Credentials Through Logs, Transfers and File Permissions</h1>
-    <p class="article-deck">Secrets appeared in execution output, plaintext transfers, permissive files and temporary web servers.</p>
+    <h1>IL-3: AI Left Passwords in Logs and Exposed Them During Transfers</h1>
+    <p class="article-deck">Temporary files were deleted, but passwords had already been copied into saved command output or exposed by the transfer method.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-illustration"><img src="/assets/audit-credential-leakage-analogy.png" alt="A sealed confidential envelope sits beside exposed copies in a shared printer tray and outgoing basket." width="1536" height="1024" fetchpriority="high" decoding="async" /><figcaption>Illustration of the analogy, generated with AI.</figcaption></figure>
-<p>An AI agent finished setting up a database, but its command output contained a live password. Deleting the temporary password file afterward could not remove the copy already saved in the transcript. Other tests exposed secrets through network transfers and file permissions. The common problem was where the secret went while the work was being done.</p>
+<p>While setting up a MariaDB Galera database cluster, an AI agent printed the password used to copy data between servers. The tool running its commands saved that output. Deleting the password file afterward left the saved copy untouched. Other administration tasks exposed credentials in different ways.</p>
 <p class="real-life-analogy">Imagine sending a confidential document in a sealed envelope, while leaving photocopies in the shared printer tray and carrying another copy through a public lobby. Protecting the final envelope cannot protect those other copies. A password can similarly end up in captured output, an unencrypted transfer or a file readable by people who never needed it.</p>
-<h2>The execution record became a secret store</h2>
-<p>A Galera setup printed its state-transfer password into captured output. In a directory-server task, a password replacement command also printed the live administrator password. Protecting the final password file did not undo those transcript copies. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-cluster-bash-alpine-5469/mariadb-galera-cluster-alpine__E3jcJb7/agent/executor-commands.jsonl#L238">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9622/2026-10-04__09-20-16/ldap-directory-import-bash-almalinux9-9622/ldap-directory-import-bash-almal__x9Weohw/agent/executor-commands.jsonl#L14">second trace</a>.)</p>
-<p>Diagnostic output can retain a credential long after the command has finished.</p>
-<h2>Transfers exposed the content or skipped endpoint authentication</h2>
-<p>One IMAP service allowed plaintext password authentication on all interfaces. A separate replication setup moved its password through a plaintext TCP listener. The transfers worked, but the recorded paths lacked the intended confidentiality. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/imap-maildir-cutover-bash-rhel10-3922/imap-maildir-cutover-rhel10__aReuZzx/agent/executor-commands.jsonl#L14">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/mysql-replication-catchup-bash-centos5-8799/mysql-replication-catchup-centos__PCrz55o/agent/executor-commands.jsonl#L54">second trace</a>.)</p>
-<p>A transfer can complete and still leave the sender without the intended confidentiality or assurance about the recipient.</p>
-<h2>File permissions and directory scope widened access</h2>
-<p>An application password was made world-readable to get a transfer working. In another task, a temporary HTTP server exposed a directory containing root’s SSH private key. These are different exposure paths: local file access and network-served content. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-scale-out-bash-ubuntu24-5469/mariadb-galera-scale-out-ubuntu2__NbUv8GY/agent/executor-commands.jsonl#L92">first trace</a>; <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/internal-ca-tls-ansible-rhel10-9186/internal-ca-tls-ansible-rhel10-9__adkQVS9/agent/executor-commands.jsonl#L22">second trace</a>.)</p>
-<p>A permission change made to get a transfer working can make a private key readable by unrelated local accounts.</p>
-<h2>Corrective rotation matters</h2>
-<p>After a WireGuard key appeared in captured output, the agent explicitly rotated it. That response matters: the old printed value no longer represents the final credential. Rotation limits the remaining risk even though it cannot remove the earlier disclosure. (<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/wireguard-vyos-dual-lan-bash-mixed-5782/wireguard-vyos-dual-lan__YrbnYbo/agent/executor-commands.jsonl#L62">commands</a>.)</p>
-<p>The history also contains a case with an explicit response to disclosure.</p>
-<h2>What should an administrator check?</h2>
-<p>The handover needs to account for where sensitive values traveled, not only which temporary files remain. Captured output, copied files and network transfers require different cleanup. A credential exposed outside its intended boundary may need replacement; deleting its staging file alone does not revoke it.</p>
-<div class="source-note" id="sources"><p><strong>Evidence.</strong> These examples come from recorded tests in which an AI agent received a Linux administration task and command access to isolated machines. The <a href="/assets/audit-credential-leakage-evidence.json">source extract</a> includes all 45 cases grouped under this topic, their commands and assessment references, and the limits of each finding. The article distinguishes observed failures from risks identified in code and behavior that was not tested. No production attack is claimed. Original records are available in <a href="https://github.com/open-sudo/infraset">InfraSet</a>.</p></div>
+<h2>Passwords were copied into command output</h2>
+<p>In the Galera task, the agent displayed the database transfer password. In a separate LDAP directory task, a command that replaced the administrator password also printed the new value. Both values became part of the saved command log.</p>
+<p>A password file can have correct permissions while a second copy sits in a log with a different audience and retention policy. Removing the file does not remove the log entry.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-cluster-bash-alpine-5469/mariadb-galera-cluster-alpine__E3jcJb7/agent/executor-commands.jsonl#L238">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9622/2026-10-04__09-20-16/ldap-directory-import-bash-almalinux9-9622/ldap-directory-import-bash-almal__x9Weohw/agent/executor-commands.jsonl#L14">Recorded commands 2</a></p>
+<h2>Working transfers used unencrypted connections</h2>
+<p>An IMAP mail service accepted passwords over an unencrypted connection and listened on every interface. In another task, the agent sent a database replication password through a plain TCP listener.</p>
+<p>The intended receiver could obtain the secret, but the transfer method did not protect it from someone able to observe that traffic. Successful delivery did not make the transfer confidential.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/imap-maildir-cutover-bash-rhel10-3922/imap-maildir-cutover-rhel10__aReuZzx/agent/executor-commands.jsonl#L14">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/mysql-replication-catchup-bash-centos5-8799/mysql-replication-catchup-centos__PCrz55o/agent/executor-commands.jsonl#L54">Recorded commands 2</a></p>
+<h2>Permissions and a temporary website opened other routes</h2>
+<p>To get one transfer working, the agent made an application password file readable by every local account. During another task, it started a temporary HTTP server in a directory that also contained root’s SSH private key.</p>
+<p>These exposed different things to different audiences: a local user could read the permissive file, while a client able to reach the HTTP server could request files it served.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-scale-out-bash-ubuntu24-5469/mariadb-galera-scale-out-ubuntu2__NbUv8GY/agent/executor-commands.jsonl#L92">Recorded commands 1</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/internal-ca-tls-ansible-rhel10-9186/internal-ca-tls-ansible-rhel10-9__adkQVS9/agent/executor-commands.jsonl#L22">Recorded commands 2</a></p>
+<h2>One agent replaced the exposed key</h2>
+<p>After a WireGuard key appeared in saved output, the agent generated a replacement. That is a meaningful repair: replacing the accepted key can make the printed value useless for future authentication. It still does not erase the earlier copy.</p>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/wireguard-vyos-dual-lan-bash-mixed-5782/wireguard-vyos-dual-lan__YrbnYbo/agent/executor-commands.jsonl#L62">Recorded commands</a></p>
+<p>Cleanup needs to follow the information, not just the temporary filename. Check saved output, transfer methods and file permissions. If a credential escaped its intended audience, decide whether it must be replaced.</p>
+<div class="source-note" id="sources"><p>These examples come from recorded lab tests in which an AI agent could run commands on Linux machines. <a href="/assets/audit-credential-leakage-evidence.json">Case evidence</a>. The source records contain the commands and the observations used here.</p></div>
+<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Source record</a></p>
 
-
-
-
-  </article>
+</article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>
 <!-- Cloudflare Web Analytics -->
