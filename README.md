@@ -60,3 +60,13 @@ Each of these articles explains a real-life analogy for its failure mechanism.
 Its illustration depicts that analogy, and its title names the operational
 problem. Image filenames end in `-analogy.png` to distinguish the replacements
 from the superseded workshop illustrations.
+
+## Illusion identifiers
+
+Illusion article titles use stable `IL-N: Title` identifiers. Assignments live in
+`assets/illusion-index.json`; use its `next_number` for a new illusion and then
+increment it. Never renumber existing articles when sorting or adding posts.
+The original first and second stories retain `IL-1` and `IL-2`. The experiment
+overview and evaluation guide are separate from the numbered illusion stories.
+Keep the article heading, browser title, social title, homepage card and topic
+index consistent. Existing article URLs stay unchanged.
