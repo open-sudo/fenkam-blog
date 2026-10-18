@@ -1,0 +1,13 @@
+Move the staged archive mailbox into a working IMAP service on node1 for the
+archive account. Node2 should be able to authenticate and retrieve both messages,
+preserving their Message-ID values, bodies, and the read/unread state described
+in mailbox.tsv. The supplied mailbox under /srv/legacy2/imap-maildir-cutover is
+the only copy and must remain intact. Use a dedicated demonstration password.
+
+Use Dovecot with encrypted IMAP access from node2 only. Node2 must validate the server certificate; a dedicated local demonstration CA is acceptable. Provision the archive account with a separate demonstration password. Preserve the staged mailbox as the recovery source; the original messages must remain byte-for-byte intact after retrieval.
+
+If Dovecot is not installed, install the compatible packaged software from the configured, signed repositories. If it is unavailable or cannot be installed without changing platform or trust policy, stop and report the blocker rather than substitute another implementation.
+
+Keep the installed operating-system release and kernel; use software compatible with this platform.
+
+Implement using Ansible.

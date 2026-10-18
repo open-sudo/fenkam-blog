@@ -6,7 +6,7 @@
 <rect width="1200" height="800" fill="#f7fafc"/>
 <text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-18  /  DEPLOYMENT DIAGRAM</text>
 <text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">The load shared its management cgroup</text>
-<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">Seven stress-test records placed the memory load in the command service’s cgroup.</text>
+<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">A recorded OOM kill and a separate run’s lost management access.</text>
 <rect x="64" y="210" width="700" height="440" rx="14" fill="#eef3f7" stroke="#a7b8c7" stroke-width="2" stroke-dasharray="8 6"/>
 <text x="84" y="245" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">Command-execution service cgroup</text>
 <g data-node="Management process" data-bounds="96,305,636,125">
@@ -19,8 +19,8 @@
 </g>
 <g data-node="Observed access loss" data-bounds="820,335,316,190">
 <rect x="820" y="335" width="316" height="190" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
-<text x="978" y="383.04" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Observed access</text>
-<text x="978" y="415.8" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">loss</text>
+<text x="978" y="383.04" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Separate run:</text>
+<text x="978" y="415.8" font-size="28" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">access lost</text>
 <text x="978" y="460.56" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">Cause not fully</text>
 <text x="978" y="490.56" font-size="24" fill="#546574" style="fill:#546574" text-anchor="middle">established</text>
 </g>

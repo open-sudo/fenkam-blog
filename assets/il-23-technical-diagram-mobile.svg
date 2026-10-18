@@ -9,9 +9,9 @@
 <text x="40" y="141" font-size="36" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">setup</text>
 <text x="40" y="178" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">AIDE’s reference database already existed</text>
 <text x="40" y="210" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">before the Ansible test.</text>
-<g data-node="Agent initializes database manually" data-bounds="48,248,544,90">
+<g data-node="Package installed directly; database already present" data-bounds="48,248,544,90">
 <rect x="48" y="248" width="544" height="90" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
-<text x="320" y="300.685" font-size="29" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Agent initializes database manually</text>
+<text x="320" y="300.685" font-size="29" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Database already present</text>
 </g>
 <g data-node="Reference database exists?" data-bounds="100,403,440,150">
 <path d="M320.0 403 L540 478.0 L320.0 553 L100 478.0 Z" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>

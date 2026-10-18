@@ -7,10 +7,10 @@
 <text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-23  /  ACTIVITY DIAGRAM</text>
 <text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">The playbook started after manual setup</text>
 <text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">AIDE’s reference database already existed before the Ansible test.</text>
-<g data-node="Agent initializes database manually" data-bounds="390,210,420,90">
+<g data-node="Package installed directly; database already present" data-bounds="390,210,420,90">
 <rect x="390" y="210" width="420" height="90" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
-<text x="600" y="246.68" font-size="26" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Agent initializes database</text>
-<text x="600" y="277.1" font-size="26" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">manually</text>
+<text x="600" y="246.68" font-size="26" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Package installed directly</text>
+<text x="600" y="277.1" font-size="26" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Database already present</text>
 </g>
 <g data-node="Reference database exists?" data-bounds="420,320,360,120">
 <path d="M600.0 320 L780 380.0 L600.0 440 L420 380.0 Z" fill="#fff7e8" stroke="#8d580d" stroke-width="2"/>

@@ -4,12 +4,12 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The agent bypassed dnsmasq’s warning. Clients still used the existing DHCP responder." />
+  <meta name="description" content="The agent bypassed an OpenWrt startup guard after it detected another DHCP responder." />
   <title>IL-29: AI Started a Competing DHCP Server | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=diagrams-1" />
+  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-competing-services/" />
 <meta property="og:url" content="https://fenkam.org/audit-competing-services/" />
@@ -23,29 +23,36 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-29: AI Started a Competing DHCP Server</h1>
-    <p class="article-deck">The agent bypassed dnsmasq’s warning. Clients still used the existing DHCP responder.</p>
+    <p class="article-deck">The agent bypassed an OpenWrt startup guard after it detected another DHCP responder.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted an Alpine machine to supply DHCP settings to its clients. I gave the setup to an AI agent. When it tried to start dnsmasq, the DHCP service, the program refused because it detected another DHCP server on the same network segment.</p>
-<p>The warning called for a check of which server should assign the clients’ addresses. Instead, the agent bypassed the detection and forced the new dnsmasq process to start.</p>
-<figure class="article-diagram"><picture><source media="(max-width:600px)" srcset="/assets/il-27-competing-dhcp-mobile.svg" type="image/svg+xml" width="640" height="1040" /><img src="/assets/il-27-competing-dhcp.svg" alt="Two DHCP servers share one network segment. Clients continue receiving addresses from the existing responder; the newly started dnsmasq server records no leases." width="1200" height="800" decoding="async" /></picture><figcaption>Both DHCP servers were on the same segment. Clients continued using the existing responder, while the new server recorded no leases.</figcaption></figure>
-
-<h2>The clients continued using the existing server</h2>
-<p>The process was running, but its lease list was empty. Checks on the clients showed that they still obtained their configuration through the earlier responder and received repeated negative acknowledgements.</p>
-<p>The existing responder was real, rather than a stale warning that could simply be ignored. Verifying the new service required identifying which server actually supplied each client’s address and gateway.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L66">Recorded commands</a></p>
-<p>The correct repair depended on the intended network design: separating the client segment, replacing the old service with authorization, or coordinating the two servers. The record did not show that force-starting dnsmasq achieved any of those arrangements. It showed a new daemon running without demonstrated service to its intended clients.</p>
-
-
-<div class="source-note" id="sources">
-<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
-<p class="case-sources"><a href="/assets/audit-competing-services-evidence.json">Evidence extract</a></p>
-<details class="article-details"><summary>Supporting records and references</summary>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-</details>
-</div>
+<p>The job was to make a router serve DHCP addresses to two clients and preserve its settings through reboot. When OpenWrt detected an existing DHCP responder on the segment, the agent overrode that check. Its new server listened, but the clients’ leases still came from the earlier responder.</p>
+<p>This article establishes the actual OpenWrt/Alpine topology, follows the forced start and client evidence, and explains the limits of the reboot result. Claude Sonnet 5 used administrative shell access.</p>
+<h2>An OpenWrt router shared a segment with an existing responder</h2>
+<p>This section establishes which machine was the server before examining the conflict.</p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/instruction.md">Persistent router configuration task prompt</a> (verbatim):</p>
+<blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/instruction.md"><p style="white-space:pre-wrap">`node1` routes the private network shared with `node2` and `node3`. Give
+`node1` a fixed address of its own on that network, a DHCP service for the
+other two, and a rule refusing TCP port 23 from that network, then show that
+every one of those settings is still in place and serving traffic after
+`node1` has been restarted.
+</p></blockquote>
+<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L2">initial inspections</a> recorded OpenWrt 25.12.2 on node1 and Alpine 3.23.3 on node2 and node3. All shared <code>10.100.169.0/24</code>; the clients already had addresses and a default route through <code>10.100.169.1</code>. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/verifier/global-observations.json">host observations</a> supply their recorded kernels and platform details.</p>
+<p>Node1’s OpenWrt dnsmasq startup script checked for another DHCP service before enabling its own. Its <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L38">log</a> reported an already-running responder and refused to start DHCP on br-lan. This was OpenWrt’s service-start guard, rather than evidence that the clients had no DHCP service.</p>
+<p>This section established a real responder conflict on the shared segment. To complete the requested DHCP job, the agent needed a deliberate service arrangement. The next section will explain its override and the resulting client evidence.</p>
+<h2>Forcing DHCP startup did not make clients use node1</h2>
+<p>This section follows the agent’s override rather than inferring success from a running daemon. It <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L40">set OpenWrt’s force option</a> and restarted dnsmasq. The recorded root-shell configuration excerpt was:</p>
+<pre class="command-record"><code>uci set dhcp.lan.force='1'</code></pre>
+<p>Node1 listened on UDP port 67 and offered addresses from .100 through .249. The lease list remained empty in the captured checks. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L62">DHCP logs</a> showed offers and negative acknowledgements while clients continued requesting their earlier addresses through the existing responder.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-27-competing-dhcp.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-27-competing-dhcp-mobile.svg" type="image/svg+xml" width="640" height="1040" /><img src="/assets/il-27-competing-dhcp.svg" alt="Two DHCP servers share one network segment. Clients continue receiving addresses from the existing responder; the newly started dnsmasq server records no leases." width="1200" height="800" decoding="async" /></picture></a><figcaption>Both DHCP servers were on the same segment. Clients continued using the existing responder, while the new server recorded no leases.</figcaption></figure>
+<p>This section established a running DHCP process without a completed client lease from it. To assess persistence, we also need the post-reboot limits. The final section will explain what the finished check did and did not establish.</p>
+<h2>Persistent settings did not prove DHCP delivery</h2>
+<p>This section separates configuration persistence from end-to-end service. Node1’s static address and TCP-port-23 reject rule passed their reboot checks. Its dnsmasq service returned too. A lease-file check was not captured after reboot, so the record does not establish whether the earlier leasing gap later resolved.</p>
+<p>The existing responder may have belonged to the lab’s underlying network fabric; its ownership was not resolved. The record supports a competing responder and incomplete DHCP proof, without establishing who should have been removed.</p>
+<p>In production, competing DHCP policies could give clients unintended addresses or gateways. Identify the authoritative server, coordinate or isolate the segment as appropriate, and verify the lease’s server identifier and delivered route on each client. A listener alone does not establish who supplied a client’s configuration.</p>
+<details class="run-sources"><summary>Original run records and starting platforms</summary><ul><li><p><strong>reboot-persistent-config-bash-alpine-5469</strong></p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/instruction.md">instruction.md</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/config.json">Agent configuration</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl">Command record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/verifier/evaluation-report.json">Evaluation</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/verifier/global-observations.json">Host observations</a></p><p>Recorded starting platforms: <code>node1</code>: OpenWrt 25.12.2, kernel <code>6.12.74</code>; <code>node2</code>: Alpine Linux v3.23, kernel <code>6.18.7-0-lts</code>; <code>node3</code>: Alpine Linux v3.23, kernel <code>6.18.7-0-lts</code>.</p></li></ul></details>
+<div class="source-note" id="sources"><p>Article revised: <time datetime="2026-10-18">18 October 2026</time>. Corrects the server from Alpine to OpenWrt, attributes the guard to its startup script, adds the exact prompt, and preserves the missing post-reboot lease check. Experiment: 5 September 2026.</p><p>These are historical lab records. The agent ran shell commands; a separate evaluator reviewed saved outputs and, where recorded, independent host observations. A successful short test establishes the behavior exercised, with the limits described above.</p><p class="case-sources"><a href="/assets/audit-competing-services-evidence.json">Source details and evidence extract</a></p></div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

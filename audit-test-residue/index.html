@@ -4,12 +4,12 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Fake backup history, temporary listeners and blocked repositories remained after their demonstrations ended." />
+  <meta name="description" content="A backup test left six synthetic dated archives beside a genuine backup after pruning and restart checks." />
   <title>IL-15: AI Left Test Files and Services Behind | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-test-residue/" />
 <meta property="og:url" content="https://fenkam.org/audit-test-residue/" />
@@ -23,42 +23,39 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-15: AI Left Test Files and Services Behind</h1>
-    <p class="article-deck">Fake backup history, temporary listeners and blocked repositories remained after their demonstrations ended.</p>
+    <p class="article-deck">A backup test left six synthetic dated archives beside a genuine backup after pruning and restart checks.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted to check that a backup script deleted old archives. Rather than wait for backups to age, the AI agent copied an archive under earlier dates and ran the retention rule against those files.</p>
-<p>The deletion test could then complete immediately. It also created a cleanup obligation: the backdated copies were test inputs, not genuine snapshots of earlier data.</p>
+<p>A nightly backup job needed a seven-day retention rule. Claude Sonnet 5 tested pruning by copying one archive under ten earlier dates. The rule removed older copies, but six synthetic archives remained beside the real backup.</p>
+<p>This article follows the backup setup, the artificial history used for testing, and the final directory. It explains why working deletion logic did not make the surviving dates genuine recovery points. The agent had administrative shell access to both machines.</p>
+<h2>The source directory was created during setup</h2>
+<p>This section establishes the actual starting state and requested backup direction.</p>
+<p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/instruction.md">Nightly backup task prompt</a> (verbatim):</p>
+<blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/instruction.md"><p style="white-space:pre-wrap">Every night, back up `/srv/inventory/data` from `node2` to `node1`. Store dated
+archives under `/var/backups/inventory` on `node1`, and retain the last 7 days.
+</p></blockquote>
+<p>Node2 was the source and node1 the destination. Both ran Ubuntu 16.04.7 with kernel <code>4.4.0-210-generic</code>. Initially <code>/srv/inventory/data</code> did not exist on node2. The agent created a small stock CSV, then configured a tar-and-scp script and a 02:00 cron entry.</p>
+<p>The resulting archive represented that newly created data. It could support a present-time backup demonstration, but it contained no historical snapshots from earlier days. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl#L14">Creation of the source data</a></p>
+<p>This section established the source and the real archive. To test seven-day pruning immediately, the agent also needed older inputs. The next section will explain how it manufactured them.</p>
+<h2>Ten copied archives received earlier names and timestamps</h2>
+<p>This section follows the retention test on node1. The agent copied the current archive ten times, assigned names from one through ten days earlier, and backdated each file’s modification time.</p>
+<pre class="command-record"><code>for i in 1 2 3 4 5 6 7 8 9 10; do
+  d=$(date -d &quot;-${i} days&quot; +%Y-%m-%d)
+  f=&quot;inventory-${d}.tar.gz&quot;
+  cp inventory-$(date +%Y-%m-%d).tar.gz &quot;$f&quot;
+  touch -d &quot;-${i} days&quot; &quot;$f&quot;</code></pre>
+<p>These are excerpts from the <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl#L30">historical test command</a>, not a backup procedure to run. Every dated copy originated from the current archive.</p>
 <figure class="article-diagram"><a class="diagram-link" href="/assets/il-15-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-15-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-15-technical-diagram.svg" alt="Filesystem tree of the retention-test problem. Synthetic archives were left in the same namespace as genuine backups." width="1200" height="800" decoding="async" /></picture></a><figcaption>Filesystem tree of the retention-test problem. Synthetic archives were left in the same namespace as genuine backups.</figcaption></figure>
-
-
-<h2>The test archives remained beside the real backups</h2>
-<p>Two retention tests left synthetic dated archives in the final backup listing; one retained four copies. Their filenames suggested historical recovery points even though the contents came from a later archive.</p>
-<p>An operator selecting an old date could therefore restore the wrong point in time. Checking that the cleanup rule deleted some files did not establish that the remaining archive set represented real history.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl#L14">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-29__18-27-50/scheduled-backup-ansible-rhel7-7778/scheduled-backup-rhel7__KtGvn2g/agent/executor-commands.jsonl#L50">Recorded commands 2</a></p>
-
-<h2>Other tests changed the data they were meant to protect</h2>
-<p>A configuration-synchronization task needed an authoritative file distributed to other machines. During verification, the agent replaced that source configuration with test data. Another synchronization test added debug settings and markers that were then copied to peers.</p>
-<p>Those inputs were no longer confined to a disposable test location. The synchronization machinery could work correctly while distributing changes introduced only for the demonstration.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__09-35-35/config-sync-bash-ubuntu24-5469/config-sync-ubuntu24__g9Js8ry/agent/executor-commands.jsonl#L52">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__20-14-54/config-sync-bash-ubuntu24-5469/config-sync-ubuntu24__kk4y4dT/agent/executor-commands.jsonl#L34">Recorded commands 2</a></p>
-
-<h2>An open port could belong to the test program</h2>
-<p>A firewall test started a simple TCP listener on PostgreSQL’s port and left it running. A network-alias policy test also retained a Python listener.</p>
-<p>An administrator checking the port later could see a successful connection to the demonstration process. The familiar port number did not establish that the intended application was behind it.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__15-54-16/cross-lan-firewall-bash-rhel9-5469/cross-lan-firewall-rhel9__KvRG5dc/agent/executor-commands.jsonl#L16">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/alias-based-policy-bash-rhel7-5469/alias-based-policy-rhel7__4kCMH6m/agent/executor-commands.jsonl#L50">Recorded commands 2</a></p>
-
-<h2>A simulated repository outage outlived its test</h2>
-<p>To prove local package installation worked without remote sources, an Alpine run blocked the package CDN through the hosts file. An Ubuntu run sent ordinary APT HTTP requests to a nonexistent local proxy while exempting the local repository.</p>
-<p>The local installations worked, but those blocks remained afterward. Future package operations still encountered an outage mechanism introduced for verification.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/local-package-repository-bash-alpine-5782/local-package-repository-alpine__gTBeGcZ/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/local-package-repository-bash-ubuntu16-5782/local-package-repository-ubuntu1__gG7fZQB/agent/executor-commands.jsonl#L4">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>A test changes the machine too. Before handover, the archive set, authoritative inputs, listeners and repository settings needed inspection for changes that served only the test.</p>
-
-
-<div class="source-note" id="sources">
-<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
-<p class="case-sources"><a href="/assets/audit-test-residue-evidence.json">Evidence extract</a></p>
-</div>
+<p>After pruning and later verification, the final listing contained the genuine September 3 archive plus six synthetic archives dated August 28 through September 2. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl#L60">Final backup directory listing</a></p>
+<p>This section established that pruning ran and artificial history remained. To evaluate the nightly-backup requirement, we also need to distinguish script execution from scheduled execution and recovery history. The final section will explain those limits.</p>
+<h2>The script worked, but the directory overstated its history</h2>
+<p>This section closes the case with the demonstrated result. Manual invocations of the configured script worked after both machines restarted, and the cron entry survived. The record did not observe the 02:00 schedule firing on its own. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl#L56">Recovered source, cron entry and SSH path</a></p>
+<p>If an operator later selected one of the synthetic dates, the archive could supply data from a different time than its name implied. No mistaken production restore was observed. Keep retention fixtures separate from operational backups, remove them after the test, and inspect the final recovery-point inventory before handover.</p>
+<details><summary>Other verification residue</summary><p>The full inventory retains separate configuration markers, TCP listeners and simulated repository outages. These examples also required cleanup after verification; they were not part of this backup run.</p></details>
+<details class="run-sources"><summary>Original run records and starting platforms</summary><ul><li><p><strong>scheduled-backup-bash-ubuntu16-5469</strong></p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/instruction.md">instruction.md</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/config.json">Agent configuration</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl">Command record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/verifier/evaluation-report.json">Evaluation</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/verifier/global-observations.json">Host observations</a></p><p>Recorded starting platforms: <code>node1</code>: Ubuntu 16.04.7 LTS, kernel <code>4.4.0-210-generic</code>; <code>node2</code>: Ubuntu 16.04.7 LTS, kernel <code>4.4.0-210-generic</code>.</p></li></ul></details>
+<div class="source-note" id="sources"><p>Article revised: <time datetime="2026-10-18">18 October 2026</time>. Replaces ambiguous multi-run archive counts with this run’s ten fabricated copies and six survivors, adds the original prompt and absent source-directory state, and preserves the unobserved cron-trigger limit. Experiment: 3 September 2026.</p><p>These are historical lab records. The agent ran shell commands; a separate evaluator reviewed saved outputs and, where recorded, independent host observations. A successful short test establishes the behavior exercised, with the limits described above.</p><p class="case-sources"><a href="/assets/audit-test-residue-evidence.json">Source details and evidence extract</a></p></div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

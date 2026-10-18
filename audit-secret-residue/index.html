@@ -4,12 +4,12 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The active service had its credentials, but staging directories, scripts and test files kept additional copies." />
+  <meta name="description" content="TLS replication worked while its root-only CA signing key remained in the temporary issuance directory." />
   <title>IL-7: AI Left Extra Copies of Secrets | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-secret-residue/" />
 <meta property="og:url" content="https://fenkam.org/audit-secret-residue/" />
@@ -23,41 +23,38 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-7: AI Left Extra Copies of Secrets</h1>
-    <p class="article-deck">The active service had its credentials, but staging directories, scripts and test files kept additional copies.</p>
+    <p class="article-deck">TLS replication worked while its root-only CA signing key remained in the temporary issuance directory.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted a database service configured with TLS certificates. Creating them required a certificate authority’s private signing key. Once the certificates were installed, the temporary staging area still needed inspection.</p>
-<p>The AI agent left that signing key in the staging directory. The service could use its own certificate and private key while an extra, more powerful key remained outside the intended runtime setup.</p>
+<p>PostgreSQL replication needed TLS and certificates issued by a dedicated cluster authority. Claude Sonnet 5 built that setup, then left the authority’s private signing key in the temporary issuance directory.</p>
+<p>This article establishes the certificate roles, follows the staging key into the delivered system, and separates working replication from the decision about who should retain issuing authority. The agent used administrative shell access on three database hosts.</p>
+<h2>The cluster required certificates for replication peers</h2>
+<p>This section establishes why the agent created a certificate authority.</p>
+<p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/instruction.md">TLS PostgreSQL replication task prompt</a> (verbatim):</p>
+<blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/instruction.md"><p style="white-space:pre-wrap">Configure PostgreSQL streaming replication across `node1`, `node2`, and
+`node3` with `node1` as the writable primary.
+
+Carry replication traffic over TLS using a certificate authority you create for
+this cluster, and accept replication connections only from peers presenting a
+certificate issued by that authority.
+</p></blockquote>
+<p>All three VMs ran RHEL 9.8 with kernel <code>5.14.0-687.20.1.el9_8.x86_64</code>. Node1 was the writable primary and node2 and node3 the standbys. PostgreSQL packages were initially absent on node1; the agent installed PostgreSQL 16.</p>
+<p>The agent created a CA under <code>/tmp/pgca</code> on node1. Its public certificate identifies the trusted issuer; its private key can sign new certificates. The node and replication-client keys serve different roles: they prove those individual identities.</p>
+<p>This section established the intended trust hierarchy. To assess retained secrets, we also need the key files created during issuance. The next section will examine their placement and permissions.</p>
+<h2>The root-owned signing key remained in staging</h2>
+<p>This section follows the issuance directory. The creation output listed <code>ca.key</code> as root-owned with mode 0600. A later listing showed the CA key beside node1 and replicator issuance files. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl#L18">CA creation and file mode</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl#L20">Service and client certificate issuance</a></p>
 <figure class="article-diagram"><a class="diagram-link" href="/assets/il-7-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-7-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-7-technical-diagram.svg" alt="PKI dependency diagram: a certificate authority signs the service certificate. Retaining the CA private key adds authority beyond the installed service key." width="1200" height="800" decoding="async" /></picture></a><figcaption>PKI dependency diagram: a certificate authority signs the service certificate. Retaining the CA private key adds authority beyond the installed service key.</figcaption></figure>
-
-
-<h2>A staging key could issue more certificates</h2>
-<p>The retained CA key could sign certificates for systems trusting that authority. A separate mutual-TLS test also left CA and client private keys in its staging tree.</p>
-<p>These were not merely public certificates. Keeping the service’s own runtime key did not explain why issuing keys and test-client identities had to remain there.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl#L18">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-tls-bash-ubuntu16-5469/rabbitmq-tls-ubuntu16__jYS6s3R/agent/executor-commands.jsonl#L70">Recorded commands 2</a></p>
-
-<h2>Cleanup did not always follow the secret back to its source</h2>
-<p>In a replication task, the agent removed password files from the receiving machines but missed the original on the sending machine. A broker deployment retained an earlier abandoned copy.</p>
-<p>Checking only the finished destination could therefore miss sensitive material created before the successful transfer.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/postgresql-streaming-replication-bash-centos-stream10-5469/postgresql-streaming-replication__MHmKM9K/agent/executor-commands.jsonl#L34">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-cluster-bash-rhel10-5469/rabbitmq-cluster-rhel10__pQn4PhC/agent/executor-commands.jsonl#L134">Recorded commands 2</a></p>
-
-<h2>A password could remain inside another file</h2>
-<p>Galera setup files retained authentication values, and broker helper scripts embedded live passwords in their commands. Removing a file explicitly named as a password file would not remove those values from the scripts.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-scale-out-bash-almalinux9-5469/mariadb-galera-scale-out-almalin__LDdAc89/agent/executor-commands.jsonl#L56">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/rabbitmq-cluster-bash-rhel9-5469/rabbitmq-cluster-rhel9__jwS8Ajt/agent/executor-commands.jsonl#L48">Recorded commands 2</a></p>
-
-<h2>Older keys and private test inputs remained</h2>
-<p>Certificate rotation left older private-key directories behind. A privacy-export tool also retained private input in its test fixtures.</p>
-<p>Some old keys or inputs can be deliberately retained for recovery or testing. The distinction needs to be explicit: what is required, who can read it and when it should be removed.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/certificate-rotation-bash-rhel10-5782/certificate-rotation-rhel10__9cx4362/agent/executor-commands.jsonl#L12">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/privacy-safe-support-export-bash-centos5-8799/privacy-safe-support-export-cent__QAd7h5W/agent/executor-commands.jsonl#L10">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>The question at handover was not whether the running service still needed a secret. It was why each additional copy existed and whether its continued access and lifetime were intended.</p>
-
-
-<div class="source-note" id="sources">
-<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
-<p class="case-sources"><a href="/assets/audit-secret-residue-evidence.json">Evidence extract</a></p>
-</div>
+<p>The trace recorded no cleanup or transfer of the CA key into a documented long-term custody arrangement. Its presence under /tmp does not by itself make it readable by every local user; the captured permissions were restrictive. The issue was the retained signing authority and its unmanaged location.</p>
+<p>Keeping a CA key can be intentional for future issuance. That purpose needs an explicit owner, access policy and lifetime. The running database’s use of its own key does not explain those decisions for the CA key.</p>
+<p>This section established the retained issuing key without overstating local readability. To assess the delivered service, we also need the replication result. The final section will connect that success to the remaining custody question.</p>
+<h2>Replication recovered without resolving signing-key custody</h2>
+<p>This section closes the operational result. Recorded database views showed two streaming peers using TLS, and post-restart writes appeared on both standbys. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl#L76">Streaming peers and TLS state</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl#L136">Replicated post-restart row</a></p>
+<p>No misuse of the CA key was observed. If someone later obtained a retained signing key, they could issue certificates accepted by systems trusting that CA, subject to the remaining application rules. Inventory issuance keys separately from runtime keys and deliberately secure or remove each staging copy before handover.</p>
+<details><summary>Other retained secret copies</summary><p>The source extract preserves password files, abandoned transfer trees, embedded credentials and superseded keys from separate runs. It distinguishes required runtime secrets from additional copies.</p></details>
+<details class="run-sources"><summary>Original run records and starting platforms</summary><ul><li><p><strong>postgresql-replication-tls-bash-rhel9-5469</strong></p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/instruction.md">instruction.md</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/config.json">Agent configuration</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl">Command record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/verifier/evaluation-report.json">Evaluation</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/verifier/global-observations.json">Host observations</a></p><p>Recorded starting platforms: <code>node1</code>: Red Hat Enterprise Linux 9.8 (Plow), kernel <code>5.14.0-687.20.1.el9_8.x86_64</code>; <code>node2</code>: Red Hat Enterprise Linux 9.8 (Plow), kernel <code>5.14.0-687.20.1.el9_8.x86_64</code>; <code>node3</code>: Red Hat Enterprise Linux 9.8 (Plow), kernel <code>5.14.0-687.20.1.el9_8.x86_64</code>.</p></li></ul></details>
+<div class="source-note" id="sources"><p>Article revised: <time datetime="2026-10-18">18 October 2026</time>. Adds the original replication prompt and baseline, identifies the CA key’s actual root-only permissions, and frames retention as a custody decision rather than assuming /tmp implies public readability. Experiment: 4 September 2026.</p><p>These are historical lab records. The agent ran shell commands; a separate evaluator reviewed saved outputs and, where recorded, independent host observations. A successful short test establishes the behavior exercised, with the limits described above.</p><p class="case-sources"><a href="/assets/audit-secret-residue-evidence.json">Source details and evidence extract</a></p></div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

@@ -4,12 +4,12 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The worker ran, but its systemd unit discarded standard output and standard error." />
+  <meta name="description" content="The confined worker ran, but its systemd unit discarded standard output and standard error." />
   <title>IL-31: AI Discarded a Worker’s Error Output | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-logging-gaps/" />
 <meta property="og:url" content="https://fenkam.org/audit-logging-gaps/" />
@@ -23,31 +23,37 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-31: AI Discarded a Worker’s Error Output</h1>
-    <p class="article-deck">The worker ran, but its systemd unit discarded standard output and standard error.</p>
+    <p class="article-deck">The confined worker ran, but its systemd unit discarded standard output and standard error.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted a background worker on RHEL 10 to run under the unprivileged inventorysvc account inside a chroot. Restricting the worker’s access still left an operational need: its errors had to reach somewhere an administrator could read them.</p>
-<p>The AI agent delivered a systemd unit that discarded both standard output and standard error. Messages written to those streams would therefore be lost even if the process itself stayed healthy.</p>
+<p>The task was to run an unprivileged background worker inside a restricted filesystem. The delivered worker ran, but its systemd unit discarded standard output and standard error. That made ordinary diagnostics unavailable through those streams.</p>
+<p>This article establishes the worker and controller, follows the logging workaround, and explains the gap between confinement checks and demonstrated error retention. GPT-5.6-sol used administrative shell access and Ansible.</p>
+<h2>A confined worker still needed an observable error path</h2>
+<p>This section establishes the worker’s required filesystem view before examining its output.</p><p><a href="/assets/run-sources/il-31/instruction.txt">Worker confinement task prompt</a> (verbatim):</p>
+<blockquote cite="/assets/run-sources/il-31/instruction.txt"><p style="white-space:pre-wrap">On `node1`, run a background worker as the dedicated unprivileged account `inventorysvc`, managed as `inventory-worker`. Confine its filesystem view to a root-owned chroot, with `/var/lib/inventory` as its only writable application directory.
+
+Keep the installed operating-system release and kernel; use software compatible with this legacy platform.
+
+Implement using Ansible.
+</p></blockquote>
+<p>Node1 was the managed RHEL 10.0 host; node2 was the Ansible controller. The <a href="/assets/run-sources/il-31/index.html#platforms">initial platform observations</a> recorded <code>node1</code>: Red Hat Enterprise Linux 10.0 (Coughlan), kernel <code>6.12.0-55.9.1.el10_0.x86_64</code>; <code>node2</code>: Ubuntu 24.04.3 LTS, kernel <code>6.8.0-71-generic</code>. Node1 had systemd 257 and no inventorysvc account or inventory-worker unit. Node2 provided Ansible Core 2.20.5.</p>
+<p>A chroot makes a directory appear as a process’s filesystem root. The agent created that root-owned tree and a writable application-data directory for inventorysvc. The prompt did not explicitly request a logging system; retaining diagnostics is the operational concern examined here.</p>
+<p>This section established the requested confinement and the separate need for diagnostics. To understand the delivered behavior, we also need the unit’s stream settings. The next section will follow their configuration.</p>
+<h2>The Ansible change discarded both standard streams</h2>
+<p>This section examines the actual change to the worker’s output handling. The agent created journal-related directories and placeholder paths inside the chroot. It then <a href="/assets/run-sources/il-31/index.html#L40">added these systemd directives through Ansible</a> on node2:</p>
+<pre class="command-record"><code>StandardOutput=null
+StandardError=null</code></pre>
+<p>Those settings discard data written to standard output and standard error. A placeholder at a logging-socket path does not by itself connect the worker to a collector or establish that a message will be retained.</p>
 <figure class="article-diagram"><a class="diagram-link" href="/assets/il-31-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-31-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-31-technical-diagram.svg" alt="Logging data-flow diagram for the delivered unit. The conclusion concerns discarded standard streams, not the absence of every possible host or application log." width="1200" height="800" decoding="async" /></picture></a><figcaption>Logging data-flow diagram for the delivered unit. The conclusion concerns discarded standard streams, not the absence of every possible host or application log.</figcaption></figure>
-
-
-<h2>The files inside the chroot did not establish a logging path</h2>
-<p>The chroot contained logging-related socket placeholders. That suggested where messages might be sent, but did not demonstrate a connection to a working collector.</p>
-<p>The missing check was to make the actual confined worker emit a recognizable message, then retrieve that message from the intended log destination. Seeing a socket path or a running process did not perform that check.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/service-confinement-ansible-rhel10-6842/service-confinement-ansible-rhel__aP2kEg2/agent/executor-commands.jsonl#L40">Recorded commands</a></p>
-
-<h2>The conclusion concerns the discarded streams</h2>
-<p>The record did not establish that every application-specific log file or host-level observation was absent. It showed that the delivered service unit discarded the worker’s usual output and error streams.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>The service needed a demonstrated route from an error in the worker to a retained message, including after restart. Without that route, the next administrator could inherit a running service with its ordinary diagnostic output missing.</p>
-
-
-<div class="source-note" id="sources">
-<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
-<p class="case-sources"><a href="/assets/audit-logging-gaps-evidence.json">Evidence extract</a></p>
-</div>
+<p>This section established that the service discarded its ordinary output streams. To assess the finished deployment, we also need to separate that setting from the confinement checks. The final section will explain what was verified and what was missing.</p>
+<h2>The healthy worker had no demonstrated replacement for those streams</h2>
+<p>This section closes the case with the observed final state. The <a href="/assets/run-sources/il-31/index.html#L100">post-restart checks</a> showed an active inventorysvc worker, persistent application files and a root-owned chroot. Those results support the requested confinement behavior.</p>
+<p>The record did not establish that every application-specific log or host observation was absent. It established discarded standard streams without an evidenced replacement diagnostic route.</p>
+<p>In production, discarded errors could delay detection or repair while the process appears healthy. Make the actual confined worker emit a recognizable diagnostic and retrieve it from the intended destination, including after restart. That is a proposed verification step; a retained error-message test was not shown in this run.</p>
+<details class="run-sources"><summary>Original run records and starting platforms</summary><ul><li><p><strong>service-confinement-ansible-rhel10-6842</strong></p><p><a href="/assets/run-sources/il-31/instruction.txt">instruction.md</a> · <a href="/assets/run-sources/il-31/index.html#configuration">Agent configuration</a> · <a href="/assets/run-sources/il-31/index.html">Selected command excerpts</a> · <a href="/assets/run-sources/il-31/index.html#evaluation">Evaluation</a> · <a href="/assets/run-sources/il-31/index.html#platforms">Recorded platform excerpt</a></p><p>Recorded starting platforms: <code>node1</code>: Red Hat Enterprise Linux 10.0 (Coughlan), kernel <code>6.12.0-55.9.1.el10_0.x86_64</code>; <code>node2</code>: Ubuntu 24.04.3 LTS, kernel <code>6.8.0-71-generic</code>.</p></li></ul></details>
+<div class="source-note" id="sources"><p>Article revised: <time datetime="2026-10-18">18 October 2026</time>. Adds the exact prompt, worker/controller topology and tool versions, and separates an operational logging concern from the quoted confinement requirements. Experiment: 6 October 2026.</p><p>These are historical lab records. The agent ran shell commands; a separate evaluator reviewed saved outputs and, where recorded, independent host observations. A successful short test establishes the behavior exercised, with the limits described above.</p><p class="case-sources"><a href="/assets/audit-logging-gaps-evidence.json">Source details and evidence extract</a></p></div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

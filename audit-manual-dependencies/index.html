@@ -4,18 +4,18 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A no-change playbook run showed that an already repaired machine matched the automation, not that the automation could build it." />
+  <meta name="description" content="Ansible skipped AIDE initialization because a database already existed; the first-installation branch remained untested." />
   <title>IL-23: Ansible Passed After Manual Setup | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-manual-dependencies/" />
 <meta property="og:url" content="https://fenkam.org/audit-manual-dependencies/" />
 <meta property="og:title" content="IL-23: Ansible Passed After Manual Setup" />
 <meta property="og:image" content="https://fenkam.org/assets/il-23-technical-diagram.png" />
-<meta property="og:image:alt" content="Activity diagram of the initialization guard. The recorded run took the “already exists” branch; the dashed branch was not exercised." />
+<meta property="og:image:alt" content="Activity diagram of the initialization guard. A database already existed after direct package installation; its exact creator was not established. The absent-database branch was not exercised." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -23,37 +23,37 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-23: Ansible Passed After Manual Setup</h1>
-    <p class="article-deck">A no-change playbook run showed that an already repaired machine matched the automation, not that the automation could build it.</p>
+    <p class="article-deck">Ansible skipped AIDE initialization because a database already existed; the first-installation branch remained untested.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted an Ansible playbook that could deploy file-integrity monitoring. It needed to install AIDE and initialize the reference database used to identify later file changes.</p>
-<p>Before testing the playbook, the AI agent installed AIDE and built that database manually. When Ansible ran, its existence check found the database and skipped initialization.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-23-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-23-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1320" /><img src="/assets/il-23-technical-diagram.svg" alt="Activity diagram of the initialization guard. The recorded run took the “already exists” branch; the dashed branch was not exercised." width="1200" height="800" decoding="async" /></picture></a><figcaption>Activity diagram of the initialization guard. The recorded run took the “already exists” branch; the dashed branch was not exercised.</figcaption></figure>
+<p>The job was to deliver an Ansible deployment of a file-integrity baseline. The resulting AIDE database detected a test change. The recorded Ansible run, however, skipped the task that would create that database because it already existed.</p>
+<p>This article establishes the original host, follows the pre-playbook installation and initialization guard, and explains why convergence on a prepared host leaves first deployment untested. Claude Sonnet 5 had administrative shell access on the target and controller.</p>
+<h2>The target began without AIDE</h2>
+<p>This section establishes the requested automation and the initial state from which it was supposed to work.</p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/instruction.md">Ansible integrity baseline task prompt</a> (verbatim):</p>
+<blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/instruction.md"><p style="white-space:pre-wrap">On `node1`, establish an integrity baseline for `/etc` so that later changes to
+files there can be identified and reported.
 
-
-<h2>The test started after an essential setup step</h2>
-<p>Avoiding repeated initialization is sensible: a playbook should not replace its reference database on every run. Here, however, the run never exercised the task that would create the database on a machine without it.</p>
-<p>The unchanged result could correctly describe the prepared host while leaving first installation untested. Checking an assembly guide against a chair someone has already built has the same limitation.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/agent/executor-commands.jsonl#L26">Recorded commands</a></p>
-
-<h2>Router configuration was supplied outside Ansible too</h2>
-<p>In a NAT task, playbook attempts failed before a debug script directly applied working router rules. The next Ansible run reported no changes.</p>
-<p>That established agreement with the manually configured router. It did not demonstrate which sequence the operator needed on a router where those rules were absent.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/nat-egress-ansible-ubuntu16-7778/nat-egress-ubuntu16__Gb3e8ks/agent/executor-commands.jsonl#L68">Recorded commands</a></p>
-
-<h2>Manual DHCP repairs also preceded unchanged runs</h2>
-<p>Two other tasks followed failed Ansible attempts with direct router commands that created and saved interface and DHCP configuration. Revised playbooks then reported no changes.</p>
-<p>The revised syntax might have been sufficient for a fresh deployment. The recorded rerun could not settle that question because the configuration already existed.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel10-7778/dhcp-server-rhel10__s7bUWiA/agent/executor-commands.jsonl#L64">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/dhcp-server-ansible-rhel9-7778/dhcp-server-rhel9__C8AykxP/agent/executor-commands.jsonl#L82">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>The delivered procedure needed a test on a documented starting state without the manual changes. Alternatively, those preparation steps had to be included in what the operator was told to run.</p>
-
-
-<div class="source-note" id="sources">
-<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
-<p class="case-sources"><a href="/assets/audit-manual-dependencies-evidence.json">Evidence extract</a></p>
-</div>
+Implement using Ansible.
+</p></blockquote>
+<p>Node1 was the monitored Ubuntu 24.04.3 host and node2 its Ansible controller. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/verifier/global-observations.json">initial host observations</a> identify their recorded kernels. AIDE, a tool that compares files against stored attributes and hashes, was not initially installed on node1.</p>
+<p>Before testing the playbook, the agent <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/agent/executor-commands.jsonl#L26">ran apt-get install directly on node1</a>. An AIDE database existed by the time Ansible checked it. The captured output does not establish whether a package hook or another step created that database.</p>
+<p>This section established that the host had been prepared outside the tested playbook path. To assess the automation, we also need to see which branch its initialization task took. The next section will explain that guard.</p>
+<h2>The database’s existence skipped the initialization task</h2>
+<p>This section examines the guard in the <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/agent/executor-commands.jsonl#L32">recorded playbook</a> written on node2:</p>
+<pre class="command-record"><code>command: aideinit -y -f
+when: not aide_db.stat.exists</code></pre>
+<p>Skipping initialization when a baseline exists can prevent accidental replacement of a useful reference. Here, the task was skipped because the database was already present. The test therefore exercised the prepared-host branch.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-23-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-23-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1320" /><img src="/assets/il-23-technical-diagram.svg" alt="Activity diagram of the initialization guard. A database already existed after direct package installation; its exact creator was not established. The absent-database branch was not exercised." width="1200" height="800" decoding="async" /></picture></a><figcaption>Activity diagram of the initialization guard. A database already existed after direct package installation; its exact creator was not established. The absent-database branch was not exercised.</figcaption></figure>
+<p>A later file change was detected, and the baseline survived restart. Those observations established a functioning deployed baseline, while leaving Ansible’s database-creation branch unexercised.</p>
+<p>This section established what the unchanged run actually tested. To hand over a reproducible deployment, we also need evidence from the documented starting state. The final section will explain that missing check.</p>
+<h2>Convergence did not prove the first-installation path</h2>
+<p>This section closes the case with the automation limit. The record does not prove the playbook would fail on an unprepared host. It also does not demonstrate that it creates the baseline there.</p>
+<p>In production, an operator following only the playbook could encounter a branch that had never been exercised during the successful test. Validate the procedure on a documented starting state without the preparatory changes, or explicitly include those changes in the delivered procedure. Keep the useful existing-baseline guard, and separately test the absent-baseline branch.</p>
+<details class="article-details"><summary>Other manually prepared Ansible runs</summary><p>The full inventory retains the NAT and DHCP runs in which direct router commands preceded successful Ansible reruns. Their commands are separate from this AIDE case.</p></details>
+<details class="run-sources"><summary>Original run records and starting platforms</summary><ul><li><p><strong>file-integrity-baseline-ansible-ubuntu24-7778</strong></p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/instruction.md">instruction.md</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/config.json">Agent configuration</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/agent/executor-commands.jsonl">Command record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/verifier/evaluation-report.json">Evaluation</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__22-57-18/file-integrity-baseline-ansible-ubuntu24-7778/file-integrity-baseline-ubuntu24__fmegJtR/verifier/global-observations.json">Host observations</a></p><p>Recorded starting platforms: <code>node1</code>: Ubuntu 24.04.3 LTS, kernel <code>6.8.0-71-generic</code>; <code>node2</code>: Ubuntu 24.04.3 LTS, kernel <code>6.8.0-71-generic</code>.</p></li></ul></details>
+<div class="source-note" id="sources"><p>Article revised: <time datetime="2026-10-18">18 October 2026</time>. Corrects the unsupported assertion that the agent explicitly initialized the database manually; the trace establishes pre-existing database state but not its exact creator. Adds the original prompt and skipped guard. Experiment: 28 September 2026.</p><p>These are historical lab records. The agent ran shell commands; a separate evaluator reviewed saved outputs and, where recorded, independent host observations. A successful short test establishes the behavior exercised, with the limits described above.</p><p class="case-sources"><a href="/assets/audit-manual-dependencies-evidence.json">Source details and evidence extract</a></p></div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

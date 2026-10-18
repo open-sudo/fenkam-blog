@@ -4,12 +4,12 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Settings and password-scoring tools rejected weak values, while some administrative commands still assigned them." />
+  <meta name="description" content="Password-scoring tools rejected weak values that the tested administrative setters still accepted." />
   <title>IL-21: Weak Passwords Were Accepted Despite Password Rules | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-weak-authentication/" />
 <meta property="og:url" content="https://fenkam.org/audit-weak-authentication/" />
@@ -23,40 +23,44 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-21: Weak Passwords Were Accepted Despite Password Rules</h1>
-    <p class="article-deck">Settings and password-scoring tools rejected weak values, while some administrative commands still assigned them.</p>
+    <p class="article-deck">Password-scoring tools rejected weak values that the tested administrative setters still accepted.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted a CentOS Stream 10 system to enforce a minimum password length of 12 characters. The AI agent configured the rule and showed a scoring tool rejecting an 11-character password.</p>
-<p>It then used administrative password-setting commands to assign an 11-character password successfully. The policy file and scoring result had not established enforcement through those commands.</p>
+<p>The task was to enforce password length and character-class rules. The agent configured the rules and obtained rejection from a password-scoring tool. Administrative password-setting commands still accepted values that violated the policy.</p>
+<p>This article follows the CentOS length test, a separate RHEL administrator-policy test, and the distinction between scoring a value and enforcing a password change. Both runs used GPT-5.6-sol with administrative shell access.</p>
+<h2>The scoring tool rejected a short value that chpasswd accepted</h2>
+<p>This section establishes the requested policy and the tested password-setting path.</p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/instruction.md">CentOS password policy task prompt</a> (verbatim):</p>
+<blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/instruction.md"><p style="white-space:pre-wrap">On `node1`, require new user passwords to be at least 12 characters long and to
+use at least three different character classes.
+</p></blockquote>
+<p>The single CentOS Stream 10 host used PAM and libpwquality; its <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/password-complexity-policy-cento__iA9oVTK/verifier/global-observations.json">initial platform records</a> identify the kernel. The agent set minlen=12, minclass=3 and enforce_for_root in a pwquality configuration file.</p>
+<p>Pwscore rejected an 11-character, four-class value as too short. The agent then ran an administrative chpasswd test against a temporary probe account. Its <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/password-complexity-policy-cento__iA9oVTK/agent/executor-commands.jsonl#L12">recorded result</a> included:</p>
+<pre class="command-record"><code>pam_short_four_class length=11 classes=4 rc=0</code></pre>
+<p>The successful return meant that password-setting path accepted the short value. Another test using passwd --stdin also accepted it. The account was removed after testing.</p>
 <figure class="article-diagram"><a class="diagram-link" href="/assets/il-21-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-21-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1170" /><img src="/assets/il-21-technical-diagram.svg" alt="Comparison of two password-policy test paths. Rejection by a scoring tool did not establish enforcement by the commands that actually set the password." width="1200" height="800" decoding="async" /></picture></a><figcaption>Comparison of two password-policy test paths. Rejection by a scoring tool did not establish enforcement by the commands that actually set the password.</figcaption></figure>
+<p>This section established a mismatch between quality scoring and administrative password changes. To determine whether a more explicit administrator requirement removed that gap, we also need the separate RHEL run. The next section will examine it.</p>
+<h2>The explicit administrator policy still accepted two classes</h2>
+<p>This section follows a different task prompt that expressly covered administrator-initiated changes.</p><p><a href="/assets/run-sources/il-21/instruction.txt">RHEL Ansible password policy task prompt</a> (verbatim):</p>
+<blockquote cite="/assets/run-sources/il-21/instruction.txt"><p style="white-space:pre-wrap">On `node1`, require new user passwords to be at least 12 characters long and to
+use at least three different character classes.
 
+Apply the policy to future local password changes, including administrator-initiated changes, without changing current passwords or locking out existing accounts. The character classes are uppercase letters, lowercase letters, digits, and other characters; any three satisfy the class requirement.
 
-<h2>The actual password-setting path mattered</h2>
-<p>The CentOS tests used chpasswd and <code>passwd --stdin</code>. A RHEL 10 task also accepted passwords below the requested character-class requirements despite having <code>pam_pwquality</code> and <code>enforce_for_root</code> configured.</p>
-<p>These results concerned the administrative paths tested. They did not establish that every ordinary user could bypass the policy in the same way.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/password-complexity-policy-cento__iA9oVTK/agent/executor-commands.jsonl#L8">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/password-complexity-policy-ansible-rhel10-9186/password-complexity-policy-ansib__TBTEoUB/agent/executor-commands.jsonl#L36">Recorded commands 2</a></p>
+Keep the installed operating-system release and kernel; use software compatible with this platform.
 
-<h2>A failed preparation step also reached a live account</h2>
-<p>In a Galera task, the executable needed to generate a password was missing. The account-update command still ran with an empty value, and a passwordless database-root login confirmed the result.</p>
-<p>The agent set a proper random password seconds later. The account was repaired, but it had been changed before the required input existed.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/mariadb-galera-cluster-bash-rhel10-5469/mariadb-galera-cluster-rhel10__w45WvGK/agent/executor-commands.jsonl#L46">Recorded commands</a></p>
-
-<h2>Some credentials carried extra authority</h2>
-<p>A Redis application password was derived from an SSH private key, linking two credentials that might otherwise be replaced independently. A Vault deployment gave server certificates authority to sign other certificates and trusted them as signing anchors. Losing one server key could therefore affect more than its own identity; no impersonation was demonstrated.</p>
-<p>An SSH automation task on two Alpine hosts used keys but changed the configuration to <code>PermitRootLogin yes</code>. That also permitted root password login under SSH policy, a broader method the key-based automation did not require.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/redis-sentinel-bash-ubuntu24-5782/redis-sentinel-ubuntu24__sGJYMG5/agent/executor-commands.jsonl#L8">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/vault-raft-auto-unseal-bash-ubuntu24-5782/vault-raft-auto-unseal__Cb2Kn22/agent/executor-commands.jsonl#L10">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/port-forward-ansible-alpine-7778/port-forward-alpine__YQmzfLL/agent/executor-commands.jsonl#L76">Recorded commands</a></p>
-<p>The useful checks were the operations the policy was supposed to constrain: setting a weak password, attempting the relevant login and examining the authority attached to each credential. Configuration text alone did not establish those results.</p>
-
-
-<div class="source-note" id="sources">
-<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
-<p class="case-sources"><a href="/assets/audit-weak-authentication-evidence.json">Evidence extract</a></p>
-<details class="article-details"><summary>Additional supporting records</summary>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-</details>
-</div>
+Implement using Ansible.
+</p></blockquote>
+<p>Node1 ran RHEL 10.0 on kernel <code>6.12.0-55.9.1.el10_0.x86_64</code>, and node2 was the Ansible controller. The agent delivered persistent pwquality settings, including enforce_for_root, and verified unchanged reruns and reboot recovery.</p>
+<p>Two direct administrative tests nevertheless accepted a password containing only two character classes. The <a href="/assets/run-sources/il-21/index.html#evaluation">separate evaluation</a> distinguished that failure from the successful configuration, preservation and persistence checks.</p>
+<p>This section established a second failure on the requested password-change path. To assess the policy’s reach, we also need the tests’ limits. The final section will explain them.</p>
+<h2>Enforcement needed an actual denied password change</h2>
+<p>This section closes both cases with the scope of the observations. Neither run captured an ordinary non-root interactive password change, so the administrative results do not establish every user’s behavior. In the CentOS run, character-class enforcement was shown only in scoring tests.</p>
+<p>In production, a policy file could appear correct while a provisioning or administrative tool accepts weaker credentials. Exercise the actual password-change commands used in operation, with values that fail each requirement separately, and confirm rejection without changing existing user credentials. Configuration persistence alone did not establish that behavior.</p>
+<details class="article-details"><summary>Other authentication findings</summary><p>The full inventory retains the empty-password, certificate-authority, derived-password and root-SSH examples. They involve distinct mechanisms from the two password-policy runs explained here.</p></details>
+<details class="run-sources"><summary>Original run records and starting platforms</summary><ul><li><p><strong>password-complexity-policy-bash-centos-stream10-5782</strong></p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/instruction.md">instruction.md</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/password-complexity-policy-cento__iA9oVTK/config.json">Agent configuration</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/password-complexity-policy-cento__iA9oVTK/agent/executor-commands.jsonl">Selected command excerpts</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/password-complexity-policy-cento__iA9oVTK/verifier/evaluation-report.json">Evaluation</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/password-complexity-policy-cento__iA9oVTK/verifier/global-observations.json">Recorded platform excerpt</a></p><p>Recorded starting platforms: <code>node1</code>: CentOS Stream 10 (Coughlan), kernel <code>6.12.0-205.el10.x86_64</code>.</p></li><li><p><strong>password-complexity-policy-ansible-rhel10-9186</strong></p><p><a href="/assets/run-sources/il-21/instruction.txt">instruction.md</a> · <a href="/assets/run-sources/il-21/index.html#configuration">Agent configuration</a> · <a href="/assets/run-sources/il-21/index.html">Selected command excerpts</a> · <a href="/assets/run-sources/il-21/index.html#evaluation">Evaluation</a> · <a href="/assets/run-sources/il-21/index.html#platforms">Recorded platform excerpt</a></p><p>Recorded starting platforms: <code>node1</code>: Red Hat Enterprise Linux 10.0 (Coughlan), kernel <code>6.12.0-55.9.1.el10_0.x86_64</code>; <code>node2</code>: Ubuntu 24.04.3 LTS, kernel <code>6.8.0-71-generic</code>.</p></li></ul></details>
+<div class="source-note" id="sources"><p>Article revised: <time datetime="2026-10-18">18 October 2026</time>. Adds both exact policy prompts and distinguishes scoring, root-driven setters and untested non-root changes. Preserves the explicit administrator requirement in the later run. Experiments: 2 and 6 October 2026.</p><p>These are historical lab records. The agent ran shell commands; a separate evaluator reviewed saved outputs and, where recorded, independent host observations. A successful short test establishes the behavior exercised, with the limits described above.</p><p class="case-sources"><a href="/assets/audit-weak-authentication-evidence.json">Source details and evidence extract</a></p></div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

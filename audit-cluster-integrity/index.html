@@ -4,12 +4,12 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="One node returned with an unhealthy local data shard. Another changed identity after reboot and never had a confirmed rejoin." />
+  <meta name="description" content="A MinIO node needed local shard healing; a separate RabbitMQ member never had a confirmed healthy rejoin." />
   <title>IL-28: A Cluster Node Rejoined but Still Needed Data Repair | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-cluster-integrity/" />
 <meta property="og:url" content="https://fenkam.org/audit-cluster-integrity/" />
@@ -23,35 +23,49 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-28: A Cluster Node Rejoined but Still Needed Data Repair</h1>
-    <p class="article-deck">One node returned with an unhealthy local data shard. Another changed identity after reboot and never had a confirmed rejoin.</p>
+    <p class="article-deck">A MinIO node needed local shard healing; a separate RabbitMQ member never had a confirmed healthy rejoin.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted to check that a MinIO storage node recovered when it returned to its cluster after a restart. Rejoining the membership list was one step. Its local share of the stored data also needed to recover.</p>
-<p>An AI agent configured the cluster and tested a node’s return. The node rejoined automatically, but its local data shard remained unhealthy. The agent then ran <code>mc admin heal</code>, MinIO’s repair command, and the status became healthy.</p>
+<p>A returning cluster node can be reachable while its data or identity still needs repair. These two lab runs show different failures: a MinIO member rejoined before its local object data was healed, and a RabbitMQ member restarted under a changed hostname.</p>
+<p>This article follows the storage recovery first, then the broker identity failure, and closes with checks on the affected member. GPT-5.6-sol handled MinIO; Claude Sonnet 5 handled RabbitMQ. Both had administrative shell access.</p>
+<h2>MinIO membership recovered before the local object shard</h2>
+<p>This section establishes the requested object-store recovery before comparing membership with data health.</p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/instruction.md">Distributed object storage task prompt</a> (verbatim):</p>
+<blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/instruction.md"><p style="white-space:pre-wrap">Set up one distributed MinIO service across `node1` through `node4` using the
+dedicated storage network. Provide authenticated TLS S3 access on port 9000 and
+create the bucket `infra-data` with `proof.txt` containing
+`distributed-storage-ready`.
+
+Provide MinIO Client administration from `node1`. Objects should remain readable
+and writable while one storage member is unavailable. When that member returns,
+it should rejoin automatically with current data.
+</p></blockquote>
+<p>The run had four Ubuntu 24.04.3 storage VMs and a dedicated storage network. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/verifier/global-observations.json">starting host records</a> identify their kernels. MinIO was initially absent or inactive. The final deployment used a locally built, modified binary based on release <code>RELEASE.2024-10-29T16-01-48Z</code>; this result should not be generalized to an unmodified current release.</p>
+<p>During the member-outage test, writes through the surviving cluster worked. Node4 returned automatically and could serve an object written while it was unavailable. That showed membership and cluster-visible data access, but the object’s local shard still needed repair.</p>
+<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl#L308">recorded node1 administration command</a> invoked <code>mc admin heal -r infra/infra-data</code>. The output included:</p>
+<pre class="command-record"><code>[Yellow -&gt; Green] infra-data/during-outage.txt
+Healed:	1/2 objects; 56 B in 1s</code></pre>
 <figure class="article-diagram"><a class="diagram-link" href="/assets/il-28-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-28-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-28-technical-diagram.svg" alt="Two dimensions of recovery. The node rejoined membership automatically, but its local data shard required an explicit repair command." width="1200" height="800" decoding="async" /></picture></a><figcaption>Two dimensions of recovery. The node rejoined membership automatically, but its local data shard required an explicit repair command.</figcaption></figure>
+<p>This section established automatic rejoin followed by manual local-data healing, without proving unrecoverable object loss. To understand another kind of incomplete return, we also need a node whose identity changed. The next section will examine RabbitMQ.</p>
+<h2>RabbitMQ’s reboot changed the node identity</h2>
+<p>This section examines a separate broker run rather than extending the MinIO incident.</p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/instruction.md">RabbitMQ mutual TLS task prompt</a> (verbatim):</p>
+<blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/instruction.md"><p style="white-space:pre-wrap">Run a RabbitMQ cluster across `node1`, `node2`, and `node3` that serves AMQP
+over TLS, using a certificate authority you create for this cluster.
 
-
-<h2>A returned member still needed a data repair</h2>
-<p>That sequence supported automatic membership recovery, but did not demonstrate automatic local resynchronization. The data status became healthy after the explicit repair command.</p>
-<p>This did not establish unrecoverable object loss. It established an additional repair step after the node had appeared to return.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-
-<h2>A broker restart failed for a different reason</h2>
-<p>An Alpine RabbitMQ task also required recovery after reboot. During startup, DHCP changed one server’s hostname. RabbitMQ incorporated that hostname into its node identity, so the service started as a different, unclustered node.</p>
-<p>The agent began repairing the identity problem, but the record ended before a successful rejoin was confirmed. Other members remained healthy. Checking a surviving member would not have revealed whether the missing server had recovered.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl#L36">Recorded commands</a></p>
-<p>These were two distinct recovery failures: one member returned but needed its local data healed; another had no confirmed return under its original identity. The recovery check needed to inspect the affected member, not infer its health from the rest of the cluster.</p>
-
-
-<div class="source-note" id="sources">
-<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
-<p class="case-sources"><a href="/assets/audit-cluster-integrity-evidence.json">Evidence extract</a></p>
-<details class="article-details"><summary>Supporting records and references</summary>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl#L306">Recorded commands</a></p>
-</details>
-</div>
+Accept only client connections presenting a certificate issued by that
+authority, and keep the management interface reachable only from within the
+cluster.
+</p></blockquote>
+<p>Three Alpine 3.23.3 VMs formed the broker cluster. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/verifier/global-observations.json">case-specific platform records</a> identify their kernels and final listeners. The agent established certificate-required TLS access and cluster membership before the reboot test.</p>
+<p>DHCP changed node1’s hostname during startup. RabbitMQ incorporated that hostname into its node identity, so the returned service appeared as a different, unclustered node. The agent began restoring the hostname and disabling DHCP’s hostname override, but the run timed out before recovery was confirmed.</p>
+<p>The final observations lacked node1’s TLS and management listeners while node2 and node3 remained healthy. The record did not show successful rejoin after the attempted repair.</p>
+<p>This section established an identity failure with an incomplete repair. To judge cluster recovery, we also need checks beyond surviving members. The final section will explain those checks.</p>
+<h2>Recovery evidence must include the returning member</h2>
+<p>This section closes the two cases with their different limits. MinIO rejoined and served cluster-visible data before explicit healing repaired a local object. RabbitMQ had no confirmed return under its original identity when the record ended.</p>
+<p>In production, a membership-only check could conceal degraded redundancy, and a healthy surviving broker could conceal a missing member. Check the returning node’s stable identity, membership, listeners and local data state. Distinguish automatic steps from administrator repairs and retest the complete return sequence after a fix.</p>
+<details class="run-sources"><summary>Original run records and starting platforms</summary><ul><li><p><strong>minio-distributed-bash-ubuntu24-5782</strong></p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/instruction.md">instruction.md</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/config.json">Agent configuration</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl">Command record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/verifier/evaluation-report.json">Evaluation</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/verifier/global-observations.json">Host observations</a></p><p>Recorded starting platforms: <code>node1</code>: Ubuntu 24.04.3 LTS, kernel <code>6.8.0-71-generic</code>; <code>node2</code>: Ubuntu 24.04.3 LTS, kernel <code>6.8.0-71-generic</code>; <code>node3</code>: Ubuntu 24.04.3 LTS, kernel <code>6.8.0-71-generic</code>; <code>node4</code>: Ubuntu 24.04.3 LTS, kernel <code>6.8.0-71-generic</code>.</p></li><li><p><strong>rabbitmq-tls-bash-alpine-5469</strong></p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/instruction.md">instruction.md</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/config.json">Agent configuration</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/agent/executor-commands.jsonl">Command record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/verifier/evaluation-report.json">Evaluation</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/rabbitmq-tls-alpine__VZmULGX/verifier/global-observations.json">Host observations</a></p><p>Recorded starting platforms: <code>node1</code>: Alpine Linux v3.23, kernel <code>6.18.7-0-lts</code>; <code>node2</code>: Alpine Linux v3.23, kernel <code>6.18.7-0-lts</code>; <code>node3</code>: Alpine Linux v3.23, kernel <code>6.18.7-0-lts</code>.</p></li></ul></details>
+<div class="source-note" id="sources"><p>Article revised: <time datetime="2026-10-18">18 October 2026</time>. Adds both exact prompts and starting deployments, distinguishes cluster-visible reads from local-shard healing, and preserves the broker timeout and unconfirmed repair. Experiments: 1 October and 4 September 2026.</p><p>These are historical lab records. The agent ran shell commands; a separate evaluator reviewed saved outputs and, where recorded, independent host observations. A successful short test establishes the behavior exercised, with the limits described above.</p><p class="case-sources"><a href="/assets/audit-cluster-integrity-evidence.json">Source details and evidence extract</a></p></div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

@@ -4,12 +4,12 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A Maildir filename changed during normal use could make an imported message look missing on the next run." />
+  <meta name="description" content="A Maildir filename changed during normal use could make an imported message look missing on the next Ansible run." />
   <title>IL-30: Rerunning Ansible Could Duplicate Mail | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-idempotency-risks/" />
 <meta property="og:url" content="https://fenkam.org/audit-idempotency-risks/" />
@@ -23,32 +23,46 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-30: Rerunning Ansible Could Duplicate Mail</h1>
-    <p class="article-deck">A Maildir filename changed during normal use could make an imported message look missing on the next run.</p>
+    <p class="article-deck">A Maildir filename changed during normal use could make an imported message look missing on the next Ansible run.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted existing email imported into a Maildir mailbox using Ansible. The messages would then be read and used normally. A later playbook run should recognize that they had already been imported.</p>
-<p>The AI agent wrote a playbook that copied each message to an exact destination filename. It used <code>force:false</code> to avoid overwriting a file already present at that path.</p>
+<p>The job was to migrate two staged messages into a working encrypted IMAP mailbox without changing the recovery source. The first migration worked. A later rerun after ordinary mailbox use could still duplicate a message because the playbook used a mutable filename as its import guard.</p>
+<p>This article establishes the source mailbox and Ansible setup, explains the filename-based guard, and distinguishes the source-supported rerun risk from an observed duplicate. GPT-5.6-sol could run administrative commands on the three lab machines.</p>
+<h2>The migration had to preserve both message content and state</h2>
+<p>This section establishes the original mailbox and the requested service before examining reruns.</p><p><a href="/assets/run-sources/il-30/instruction.txt">IMAP mailbox migration task prompt</a> (verbatim):</p>
+<blockquote cite="/assets/run-sources/il-30/instruction.txt"><p style="white-space:pre-wrap">Move the staged archive mailbox into a working IMAP service on node1 for the
+archive account. Node2 should be able to authenticate and retrieve both messages,
+preserving their Message-ID values, bodies, and the read/unread state described
+in mailbox.tsv. The supplied mailbox under /srv/legacy2/imap-maildir-cutover is
+the only copy and must remain intact. Use a dedicated demonstration password.
+
+Use Dovecot with encrypted IMAP access from node2 only. Node2 must validate the server certificate; a dedicated local demonstration CA is acceptable. Provision the archive account with a separate demonstration password. Preserve the staged mailbox as the recovery source; the original messages must remain byte-for-byte intact after retrieval.
+
+If Dovecot is not installed, install the compatible packaged software from the configured, signed repositories. If it is unavailable or cannot be installed without changing platform or trust policy, stop and report the blocker rather than substitute another implementation.
+
+Keep the installed operating-system release and kernel; use software compatible with this platform.
+
+Implement using Ansible.
+</p></blockquote>
+<p>Node1 was the Dovecot server, node2 its client and node3 the Ansible controller. The <a href="/assets/run-sources/il-30/index.html#platforms">initial host records</a> recorded <code>node1</code>: Red Hat Enterprise Linux 10.0 (Coughlan), kernel <code>6.12.0-55.9.1.el10_0.x86_64</code>; <code>node2</code>: Red Hat Enterprise Linux 10.0 (Coughlan), kernel <code>6.12.0-55.9.1.el10_0.x86_64</code>; <code>node3</code>: Ubuntu 24.04.3 LTS, kernel <code>6.8.0-71-generic</code>. Node1 initially lacked Dovecot. Its staged source contained <code>cur/one.eml</code>, <code>new/two.eml</code> and mailbox.tsv, which specified the expected read states.</p>
+<p>The agent installed packaged Dovecot and provisioned encrypted IMAP access. Maildir stores messages as individual files; filename suffixes encode message flags such as “seen.”</p>
+<p>This section established immutable source messages and mutable mailbox state. To preserve data on later automation runs, the import also needed a stable way to recognize completed work. The next section will examine its guard.</p>
+<h2>The guard checked a filename containing mutable flags</h2>
+<p>This section follows the copy tasks in the delivered playbook. The <a href="/assets/run-sources/il-30/index.html#L26">playbook written on node3</a> copied the unread source to the following destination and disabled replacement of an existing destination:</p>
+<pre class="command-record"><code>dest: "/home/archive/Maildir/cur/two.eml:2,"
+remote_src: true
+force: false</code></pre>
+<p>The exact destination path was the guard. Reading the message can change its Maildir flags and rename the file while leaving the message present. After such a rename, the original path would be absent and the same copy task could import the source again with its original flags.</p>
 <figure class="article-diagram"><a class="diagram-link" href="/assets/il-30-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-30-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1200" /><img src="/assets/il-30-technical-diagram.svg" alt="Sequence diagram of the import guard’s code risk. The message can still exist even after its original destination filename has changed." width="1200" height="800" decoding="async" /></picture></a><figcaption>Sequence diagram of the import guard’s code risk. The message can still exist even after its original destination filename has changed.</figcaption></figure>
-
-
-<h2>The import guard depended on a name the mailbox could change</h2>
-<p>One destination was <code>two.eml:2,</code>. Maildir stores message-state flags in a suffix on the filename. Reading a message can change those flags and rename the file, even though the message remains in the mailbox.</p>
-<p>After that rename, the playbook’s original destination path would be absent. A rerun could copy the same source message again under its old name and flags. The guard checked a mutable filename, rather than a durable record of the import.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9186/2026-10-06__23-01-03/imap-maildir-cutover-ansible-rhel10-9186/imap-maildir-cutover-ansible-rhe__owcohQ8/agent/executor-commands.jsonl#L26">Recorded commands</a></p>
-
-<h2>The risky rerun was not demonstrated</h2>
-<p>The first migration worked. The recorded test did not mark a message read and then reapply the playbook, so it did not show an actual duplicate.</p>
-<p>An immediate rerun before anyone used the mailbox would not exercise the same problem: the original filenames could still be present.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>A useful follow-up would use the imported mail before rerunning the migration. The completion marker or message identity used to prevent duplicates needs to survive the mailbox’s normal changes.</p>
-
-
-<div class="source-note" id="sources">
-<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
-<p class="case-sources"><a href="/assets/audit-idempotency-risks-evidence.json">Evidence extract</a></p>
-</div>
+<p>This section established how normal mailbox use could invalidate the guard. To assess the result fairly, we also need to state which rerun and retrieval tests were recorded. The final section will separate the demonstrated migration from the untested risk.</p>
+<h2>The first migration succeeded; the harmful rerun was not exercised</h2>
+<p>This section closes the case with its verification limits. Certificate-validated IMAP retrieval preserved both Message-ID values, bodies and expected states. The <a href="/assets/run-sources/il-30/index.html#L86">post-reboot hashes</a> showed the staged originals remained byte-identical. Immediate playbook reruns reported convergence.</p>
+<p>No recorded test changed the messages’ flags and then reapplied the import. No actual duplicate was observed. An immediate rerun while the original destination filenames still exist does not exercise the same condition.</p>
+<p>In production, a migration guard tied to mutable mailbox flags could create duplicate mail during routine reapplication. Use a migration completion record or stable message identity that survives normal mailbox use, then test a read-state change followed by a rerun. Those are proposed safeguards, rather than repairs demonstrated in this run.</p>
+<details class="run-sources"><summary>Original run records and starting platforms</summary><ul><li><p><strong>imap-maildir-cutover-ansible-rhel10-9186</strong></p><p><a href="/assets/run-sources/il-30/instruction.txt">instruction.md</a> · <a href="/assets/run-sources/il-30/index.html#configuration">Agent configuration</a> · <a href="/assets/run-sources/il-30/index.html">Selected command excerpts</a> · <a href="/assets/run-sources/il-30/index.html#evaluation">Evaluation</a> · <a href="/assets/run-sources/il-30/index.html#platforms">Recorded platform excerpt</a></p><p>Recorded starting platforms: <code>node1</code>: Red Hat Enterprise Linux 10.0 (Coughlan), kernel <code>6.12.0-55.9.1.el10_0.x86_64</code>; <code>node2</code>: Red Hat Enterprise Linux 10.0 (Coughlan), kernel <code>6.12.0-55.9.1.el10_0.x86_64</code>; <code>node3</code>: Ubuntu 24.04.3 LTS, kernel <code>6.8.0-71-generic</code>.</p></li></ul></details>
+<div class="source-note" id="sources"><p>Article revised: <time datetime="2026-10-18">18 October 2026</time>. Adds the full original migration prompt and three-node roles, quotes the exact copy guard, and preserves the distinction between immediate convergence and an untested post-use rerun. Experiment: 6 October 2026.</p><p>These are historical lab records. The agent ran shell commands; a separate evaluator reviewed saved outputs and, where recorded, independent host observations. A successful short test establishes the behavior exercised, with the limits described above.</p><p class="case-sources"><a href="/assets/audit-idempotency-risks-evidence.json">Source details and evidence extract</a></p></div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

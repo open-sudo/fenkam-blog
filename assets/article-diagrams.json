@@ -135,8 +135,8 @@
     },
     {
       "stem": "il-12-technical-diagram",
-      "alt": "Security boundary diagram. A service-specific transfer problem led to a host-wide enforcement change retained across reboot.",
-      "caption": "Security boundary diagram. A service-specific transfer problem led to a host-wide enforcement change retained across reboot.",
+      "alt": "Security boundary diagram. Cluster setup retained host-wide permissive mode; the record did not establish that this broad exception was necessary.",
+      "caption": "Security boundary diagram. Cluster setup retained host-wide permissive mode; the record did not establish that this broad exception was necessary.",
       "id": "IL-12",
       "slug": "audit-security-bypasses",
       "title": "AI Disabled Security Controls During Setup",
@@ -207,8 +207,8 @@
     },
     {
       "stem": "il-18-technical-diagram",
-      "alt": "Process-containment diagram. The load lacked a separate scope; the evidence did not fully establish the cause of the lost management connection.",
-      "caption": "Process-containment diagram. The load lacked a separate scope; the evidence did not fully establish the cause of the lost management connection.",
+      "alt": "Separate OOM observations: the CentOS log identified a Python child in the management cgroup; the RHEL run lost access without a confirmed cause.",
+      "caption": "Separate OOM observations: the CentOS log identified a Python child in the management cgroup; the RHEL run lost access without a confirmed cause.",
       "id": "IL-18",
       "slug": "audit-disruptive-testing",
       "title": "AI Memory Tests Cut Off Remote Access",
@@ -267,8 +267,8 @@
     },
     {
       "stem": "il-23-technical-diagram",
-      "alt": "Activity diagram of the initialization guard. The recorded run took the \u201calready exists\u201d branch; the dashed branch was not exercised.",
-      "caption": "Activity diagram of the initialization guard. The recorded run took the \u201calready exists\u201d branch; the dashed branch was not exercised.",
+      "alt": "Activity diagram of the initialization guard. A database already existed after direct package installation; its exact creator was not established. The absent-database branch was not exercised.",
+      "caption": "Activity diagram of the initialization guard. A database already existed after direct package installation; its exact creator was not established. The absent-database branch was not exercised.",
       "id": "IL-23",
       "slug": "audit-manual-dependencies",
       "title": "Ansible Passed After Manual Setup",

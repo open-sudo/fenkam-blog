@@ -4,12 +4,12 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A manually run renewal, a connection over another network or an earlier test can pass while the requested behavior remains untested." />
+  <meta name="description" content="Manual certificate issuance worked, while the observed requests never crossed an automatic renewal." />
   <title>IL-9: AI Tested the Wrong Behavior | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-incomplete-verification/" />
 <meta property="og:url" content="https://fenkam.org/audit-incomplete-verification/" />
@@ -23,42 +23,35 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-9: AI Tested the Wrong Behavior</h1>
-    <p class="article-deck">A manually run renewal, a connection over another network or an earlier test can pass while the requested behavior remains untested.</p>
+    <p class="article-deck">Manual certificate issuance worked, while the observed requests never crossed an automatic renewal.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted certificate renewal to happen automatically before expiry. A working renewal command was necessary, but the service also needed a scheduler to invoke it at the right time.</p>
-<p>The AI agent ran renewal manually and saw it succeed. That demonstrated the command. It did not demonstrate the automatic trigger the operator was supposed to rely on.</p>
+<p>The HTTPS service needed to renew its certificate automatically before expiry and keep answering during replacement. Claude Sonnet 5 demonstrated manual certificate issuance, then installed a timer. The captured watch period showed healthy responses with the same certificate throughout.</p>
+<p>This article follows the renewal script, the later timer setup, and the request observations. It explains the missing evidence without claiming that an expiry outage occurred. The agent used root shell access on the server.</p>
+<h2>The request included automatic renewal and continuous service</h2>
+<p>This section establishes both required behaviors before separating their tests.</p>
+<p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/instruction.md">Automatic certificate renewal task prompt</a> (verbatim):</p>
+<blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/instruction.md"><p style="white-space:pre-wrap">On `node1`, serve HTTPS on port 8443 with a certificate that is renewed
+automatically before it expires, and have the service pick up each new
+certificate while it keeps answering requests.
+</p></blockquote>
+<p>The single CentOS Stream 10 VM ran kernel <code>6.12.0-205.el10.x86_64</code>. OpenSSL and systemd were present; nginx was not active. The agent installed and configured nginx on 8443, a locally issued certificate and a renewal script.</p>
+<p>The agent invoked the script directly. After correcting certificate-file ownership and permissions, another manual run issued a certificate valid from 03:11:04 to 03:17:04 UTC on September 5. This short lifetime made renewal testable within minutes. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/agent/executor-commands.jsonl#L18">Manual renewal after the permission correction</a></p>
+<p>This section established that the script could issue a usable certificate. To establish unattended behavior, we also need the scheduler to invoke it. The next section will follow the timer and watch period.</p>
+<h2>The timer was enabled after the observed renewals</h2>
+<p>This section examines the automatic path. The agent created a systemd timer with a 30-second boot delay and 30-second interval, then enabled it after the recorded manual issuances. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/agent/executor-commands.jsonl#L24">Timer definition and activation</a></p>
 <figure class="article-diagram"><a class="diagram-link" href="/assets/il-9-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-9-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1042" /><img src="/assets/il-9-technical-diagram.svg" alt="Sequence of the manual-renewal example. The dashed interaction is the required automatic behavior that was not demonstrated." width="1200" height="800" decoding="async" /></picture></a><figcaption>Sequence of the manual-renewal example. The dashed interaction is the required automatic behavior that was not demonstrated.</figcaption></figure>
-
-
-<h2>The schedule itself was not exercised</h2>
-<p>In one run, the agent tested renewal before enabling the timer meant to schedule it. Another setup showed forced renewals without an observed automatic trigger near expiry.</p>
-<p>The delivered automation might have worked. The recorded evidence did not establish the scheduled behavior.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/agent/executor-commands.jsonl#L24">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6842/2026-10-06__18-18-00/certificate-rotation-ansible-rhel10-6842/certificate-rotation-ansible-rhe__Pfduvgp/agent/executor-commands.jsonl#L36">Recorded commands 2</a></p>
-
-<h2>Access restrictions needed tests from blocked clients</h2>
-<p>A RabbitMQ deployment needed restricted access to its management interface. The agent recorded the firewall rules but did not try connecting from a source that should have been rejected.</p>
-<p>A WireGuard task required an external client to reach an application only through a VPN gateway. The agent tested direct-access rejection before deployment, then changed the tunnel, application and firewall without repeating that rejection test. The earlier probe no longer established the final policy.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__15-54-16/wireguard-gateway-bash-rhel9-5469/wireguard-gateway-rhel9__poUrApj/agent/executor-commands.jsonl#L38">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/rabbitmq-tls-bash-ubuntu24-5469/rabbitmq-tls-ubuntu24__X6RXFZ4/agent/executor-commands.jsonl#L70">Recorded commands 2</a></p>
-
-<h2>Some successful requests took a route outside the test</h2>
-<p>A routing task was supposed to build a LAN, but its ping targeted a management address on existing networking. A firewall test connected through a loopback exception on the server itself.</p>
-<p>The traffic could succeed without crossing the route or filtering rule the task was meant to prove. The test needed the actual client and required path.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/additional-zone-interface-bash-centos-stream10-5469/additional-zone-interface-centos__M5RtbF3/agent/executor-commands.jsonl#L78">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/host-firewall-baseline-bash-ubuntu16-5469/host-firewall-baseline-ubuntu16__wkSFsSW/agent/executor-commands.jsonl#L6">Recorded commands 2</a></p>
-
-<h2>A later change could invalidate earlier proof</h2>
-<p>A database restart test preceded the final software changes. A repaired print service completed jobs already queued, but received no new job afterward.</p>
-<p>Those observations were useful. They left the final database configuration’s startup and the print service’s acceptance of new work untested.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-08__06-41-45/mariadb-galera-cold-restart-bash-ubuntu16-5469/mariadb-galera-cold-restart-ubun__KH6aumt/agent/executor-commands.jsonl#L54">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7403/2026-10-03__14-57-05/print-spool-recovery-bash-ubuntu24-7403/print-spool-recovery-ubuntu24__QoD48v3/agent/executor-commands.jsonl#L22">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>The gap in these cases was between the promised behavior and the operation actually exercised. A final report needed to name that gap, rather than turn an untested behavior into a demonstrated result.</p>
-
-
-<div class="source-note" id="sources">
-<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
-<p class="case-sources"><a href="/assets/audit-incomplete-verification-evidence.json">Evidence extract</a></p>
-</div>
+<p>The subsequent watch log contained eight HTTP 200 results between 03:11:26 and 03:12:01 UTC. Every line reported the same certificate serial. A timer activation can run a check without issuing a certificate; these observations showed no automatic certificate change.</p>
+<p>The watch therefore did not span an actual replacement or reload. It could not establish that requests continued during that event. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/agent/executor-commands.jsonl#L30">Watch results and unchanged certificate</a></p>
+<p>This section established healthy requests during a period without observed renewal. To close the original requirement, we also need a scheduled replacement and requests across that transition. The final section will explain the unresolved result.</p>
+<h2>The run ended before the required transition was observed</h2>
+<p>This section closes the case with the agent’s own limit: its final report marked the run blocked after it was force-ended, acknowledging missing live-renewal and restart evidence. The separate evaluator likewise treated automatic renewal as configured but unproved. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/verifier/evaluation-report.json">Evaluation and evidence limits</a></p>
+<p>No certificate-expiry incident was demonstrated. In production, a broken scheduler or reload path could leave a service with an expired certificate even when manual renewal works. Observe the scheduled issuance before expiry and monitor requests across the serial change; report manual issuance and timer configuration separately until that evidence exists.</p>
+<details><summary>Other verification gaps</summary><p>The inventory preserves separate missing negative-access tests, requests that bypassed intended routes, and checks performed before final configuration changes.</p></details>
+<details class="run-sources"><summary>Original run records and starting platforms</summary><ul><li><p><strong>certificate-rotation-bash-centos-stream10-5469</strong></p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/instruction.md">instruction.md</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/config.json">Agent configuration</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/agent/executor-commands.jsonl">Command record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/verifier/evaluation-report.json">Evaluation</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/verifier/global-observations.json">Host observations</a></p><p>Recorded starting platforms: <code>node1</code>: CentOS Stream 10 (Coughlan), kernel <code>6.12.0-205.el10.x86_64</code>.</p></li></ul></details>
+<div class="source-note" id="sources"><p>Article revised: <time datetime="2026-10-18">18 October 2026</time>. Adds the exact renewal prompt and initial platform, counts the eight unchanged-certificate responses, and records the force-ended run’s own incomplete-status report. Experiment began: 4 September 2026; quoted observations are in UTC on 5 September.</p><p>These are historical lab records. The agent ran shell commands; a separate evaluator reviewed saved outputs and, where recorded, independent host observations. A successful short test establishes the behavior exercised, with the limits described above.</p><p class="case-sources"><a href="/assets/audit-incomplete-verification-evidence.json">Source details and evidence extract</a></p></div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

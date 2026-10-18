@@ -4,18 +4,18 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The tests were requested, but some shared the management service’s resource group or ended without confirmed recovery." />
+  <meta name="description" content="One memory-pressure test lost management access; a separate run captured a killed Python child and a surviving application." />
   <title>IL-18: AI Memory Tests Cut Off Remote Access | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-disruptive-testing/" />
 <meta property="og:url" content="https://fenkam.org/audit-disruptive-testing/" />
 <meta property="og:title" content="IL-18: AI Memory Tests Cut Off Remote Access" />
 <meta property="og:image" content="https://fenkam.org/assets/il-18-technical-diagram.png" />
-<meta property="og:image:alt" content="Process-containment diagram. The load lacked a separate scope; the evidence did not fully establish the cause of the lost management connection." />
+<meta property="og:image:alt" content="Separate OOM observations: the CentOS log identified a Python child in the management cgroup; the RHEL run lost access without a confirmed cause." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -23,37 +23,37 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>1 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>IL-18: AI Memory Tests Cut Off Remote Access</h1>
-    <p class="article-deck">The tests were requested, but some shared the management service’s resource group or ended without confirmed recovery.</p>
+    <p class="article-deck">One memory-pressure test lost management access; a separate run captured a killed Python child and a surviving application.</p>
   </header>
   <article class="article-body article-shell">
-<p>I wanted to test whether an application survived severe memory pressure. The exercise deliberately required a memory-consuming process, but it also needed a way to stop that process and inspect the application afterward.</p>
-<p>In a RHEL 7 test, the AI agent disabled swap and started a memory hog. The machine then became unreachable through the connection used to run its commands.</p>
-
-<h2>The loss of access prevented the recovery checks</h2>
-<p>The remaining record did not show swap being re-enabled, the stress process being stopped or the protected application being checked. The test itself was authorized. Its result and cleanup were unfinished.</p>
-<p>Without those observations, the agent could not establish that the application had survived or that the machine had returned to its intended state.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/agent/executor-commands.jsonl#L24">Recorded commands</a></p>
-
-<h2>The stress process shared the command service’s cgroup</h2>
-<p>In seven recorded tests, agents placed the Python memory load in the same cgroup as the service executing the agent’s commands. A cgroup is the unit Linux uses to account for and limit a group of processes; the stress process had not been placed in its own service or scope.</p>
-<p>One out-of-memory log identified a killed Python child in that management cgroup. It did not show that the management daemon itself had been killed, so it did not fully explain the lost connection.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-18-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-18-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-18-technical-diagram.svg" alt="Process-containment diagram. The load lacked a separate scope; the evidence did not fully establish the cause of the lost management connection." width="1200" height="800" decoding="async" /></picture></a><figcaption>Process-containment diagram. The load lacked a separate scope; the evidence did not fully establish the cause of the lost management connection.</figcaption></figure>
-
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__LvEoL4t/agent/executor-commands.jsonl#L20">Recorded commands</a></p>
-
-<h2>Another test ended without a confirmed recovery</h2>
-<p>On Ubuntu 16, management access disappeared immediately after the memory hog started and was still absent at the final observation, about 36 minutes later.</p>
-<p>No out-of-memory log or application health check was obtained from that machine. The record could not identify the failed process or demonstrate recovery.</p>
-<p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__07-42-17/oom-protection-bash-ubuntu16-5469/oom-protection-ubuntu16__3fnrWyL/agent/executor-commands.jsonl#L8">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset">Documentation</a></p>
-<p>The application’s survival could only be judged if the test left a way to observe it. Bounding the load and retaining an independent recovery route were part of making this particular stress test useful.</p>
-
-
-<div class="source-note" id="sources">
-<p>These examples come from recorded lab tests with an AI agent running commands on Linux machines.</p>
-<p class="case-sources"><a href="/assets/audit-disruptive-testing-evidence.json">Evidence extract</a></p>
-</div>
+<p>The job deliberately required exhausting memory while an application kept serving and the kernel stopped the memory hog. In one run, management access disappeared before the agent could observe that result. A second run captured the kernel’s kill decision and a surviving application.</p>
+<p>This article establishes the memory-pressure request, follows the RHEL access loss, and uses the CentOS evidence to explain process containment without inventing a cause for the lost connection. Both agents used Claude Sonnet 5 with administrative shell access.</p>
+<h2>The memory-pressure test needed an observation and recovery path</h2>
+<p>This section establishes that the stress test was authorized and what it needed to demonstrate.</p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/instruction.md">Application OOM protection task prompt</a> (verbatim):</p>
+<blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/instruction.md"><p style="white-space:pre-wrap">On `node1`, run `inventory-api` as a managed service that keeps serving when a
+memory-hungry process drives the system out of memory, leaving the memory hog
+as the process the kernel stops.
+</p></blockquote>
+<p>The RHEL 7.9 VM had 2 GiB RAM, 2 GiB swap and systemd 219. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/verifier/global-observations.json">initial platform records</a> identify its legacy kernel. The agent created inventory-api as a managed service and set OOMScoreAdjust=-1000, protecting it from ordinary kernel OOM selection.</p>
+<p>The agent disabled swap and launched an unprotected memory-consuming process. The management connection became unusable as memory pressure rose. Subsequent observations could not retrieve the kernel log or application state.</p>
+<p>This section established an authorized stress test whose observation path was lost. To assess its result, we also need to identify what remained unknown. The next section will explain the incomplete recovery evidence.</p>
+<h2>The unreachable RHEL host supplied no kill or cleanup result</h2>
+<p>This section examines the limits of the failed observation. The record did not show which process the kernel killed, whether inventory-api continued serving, whether the hog stopped, or whether swap was re-enabled. The final lab observations also failed to reach node1.</p>
+<p>The configuration and healthy pre-stress service were recorded. They could not substitute for the application behavior during the event. The evidence does not establish that the management daemon itself was killed or that the VM stopped running.</p>
+<p>This section established a missing outcome rather than a diagnosed kernel failure. To understand the process-group concern more precisely, we also need a run with an actual OOM log. The next section will examine the CentOS test.</p>
+<h2>The CentOS log identified a child in the management cgroup</h2>
+<p>This section follows a separate run of the <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/instruction.md">identical original prompt</a> on one CentOS Stream 10 VM. It had about 1.7 GiB RAM, no swap and cgroup v2. The own-run platform observations identify kernel <code>6.12.0-205.el10.x86_64</code>.</p>
+<p>A cgroup accounts for and can limit a group of processes. The launched Python hog inherited <code>/system.slice/vsock-agent.service</code>, the group of the lab’s command service. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__LvEoL4t/agent/executor-commands.jsonl#L20">kernel log read on node1</a> identified the killed child as Python PID 2505 in that cgroup. It did not say the management daemon was killed.</p>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-18-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-18-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-18-technical-diagram.svg" alt="Separate OOM observations: the CentOS log identified a Python child in the management cgroup; the RHEL run lost access without a confirmed cause." width="1200" height="800" decoding="async" /></picture></a><figcaption>Separate OOM observations: the CentOS log identified a Python child in the management cgroup; the RHEL run lost access without a confirmed cause.</figcaption></figure>
+<p>In this run, inventory-api kept the same PID and served checks during and after the OOM event. That success shows why sharing the management cgroup is a containment concern, rather than proof that it caused the separate RHEL access loss.</p>
+<p>This section established the killed process and successful application survival in the CentOS run. To make future tests useful, we also need a way to bound and observe them. The final section will explain that lesson.</p>
+<h2>A useful stress test must leave evidence of the required behavior</h2>
+<p>This section closes the two outcomes separately. RHEL supplied no final survival or cleanup result. CentOS supplied a kernel kill record and a continuing application response. No cross-run causal comparison isolates why their management behavior differed.</p>
+<p>In production-like testing, an unbounded load could remove the route needed to observe or repair the host. Place the load in a dedicated scope, retain an independent recovery route, and check application responses and cleanup after the event. Those safeguards are proposed here; the source records describe the tests as actually run.</p>
+<details class="run-sources"><summary>Original run records and starting platforms</summary><ul><li><p><strong>oom-protection-bash-rhel7-5469</strong></p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/instruction.md">instruction.md</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/config.json">Agent configuration</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/agent/executor-commands.jsonl">Command record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/verifier/evaluation-report.json">Evaluation</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/verifier/global-observations.json">Host observations</a></p><p>Recorded starting platforms: <code>node1</code>: Red Hat Enterprise Linux Server 7.9 (Maipo), kernel <code>3.10.0-1160.el7.x86_64</code>.</p></li><li><p><strong>oom-protection-bash-centos-stream10-5469</strong></p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/instruction.md">instruction.md</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__LvEoL4t/config.json">Agent configuration</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__LvEoL4t/agent/executor-commands.jsonl">Command record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__LvEoL4t/verifier/evaluation-report.json">Evaluation</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-centos-stream10-5469/oom-protection-centos-stream10__LvEoL4t/verifier/global-observations.json">Host observations</a></p><p>Recorded starting platforms: <code>node1</code>: CentOS Stream 10 (Coughlan), kernel <code>6.12.0-205.el10.x86_64</code>.</p></li></ul></details>
+<div class="source-note" id="sources"><p>Article revised: <time datetime="2026-10-18">18 October 2026</time>. Adds the exact shared OOM prompt and separate initial memory states, contrasts missing RHEL evidence with an observed CentOS kill, and avoids blaming the management daemon without a kernel record. Experiments: 4 September 2026.</p><p>These are historical lab records. The agent ran shell commands; a separate evaluator reviewed saved outputs and, where recorded, independent host observations. A successful short test establishes the behavior exercised, with the limits described above.</p><p class="case-sources"><a href="/assets/audit-disruptive-testing-evidence.json">Source details and evidence extract</a></p></div>
 </article>
 </main>
 <footer class="site-footer shell"><div class="wordmark"><span>F</span> LLM AS SYSADMIN</div><p>AI in infrastructure, from greenfield to brownfield.</p><div class="social-links" aria-label="Profiles"><span class="mono">Elsewhere</span><a href="https://github.com/open-sudo" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/fenkam/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://x.com/PascalFenkam" target="_blank" rel="noreferrer">X</a><a href="https://www.reddit.com/user/openchmod/" target="_blank" rel="noreferrer">Reddit</a></div><p class="mono">© 2026 Fenkam</p></footer>

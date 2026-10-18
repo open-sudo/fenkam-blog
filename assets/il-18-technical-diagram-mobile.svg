@@ -7,8 +7,8 @@
 <text x="40" y="47" font-size="18" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-18  /  DEPLOYMENT DIAGRAM</text>
 <text x="40" y="98" font-size="36" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">The load shared its management</text>
 <text x="40" y="141" font-size="36" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">cgroup</text>
-<text x="40" y="178" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">Seven stress-test records placed the memory</text>
-<text x="40" y="210" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">load in the command service’s cgroup.</text>
+<text x="40" y="178" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">A recorded OOM kill and a separate run’s</text>
+<text x="40" y="210" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">lost management access.</text>
 <rect x="32" y="248" width="576" height="510" rx="14" fill="#eef3f7" stroke="#a7b8c7" stroke-width="2" stroke-dasharray="8 6"/>
 <text x="52" y="283" font-size="23" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">Command-execution service cgroup</text>
 <g data-node="Management process" data-bounds="64,358,512,140">
@@ -21,7 +21,7 @@
 </g>
 <g data-node="Observed access loss" data-bounds="48,838,544,160">
 <rect x="48" y="838" width="544" height="160" rx="10" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
-<text x="320" y="901.45" font-size="30" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Observed access loss</text>
+<text x="320" y="901.45" font-size="30" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Separate run: access lost</text>
 <text x="320" y="948.55" font-size="26" fill="#546574" style="fill:#546574" text-anchor="middle">Cause not fully established</text>
 </g>
 <text x="40" y="1058" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">One OOM log named a Python child. It did not</text>

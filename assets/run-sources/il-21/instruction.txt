@@ -1,0 +1,8 @@
+On `node1`, require new user passwords to be at least 12 characters long and to
+use at least three different character classes.
+
+Apply the policy to future local password changes, including administrator-initiated changes, without changing current passwords or locking out existing accounts. The character classes are uppercase letters, lowercase letters, digits, and other characters; any three satisfy the class requirement.
+
+Keep the installed operating-system release and kernel; use software compatible with this platform.
+
+Implement using Ansible.
