@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">IL-42: Certificate renewal changed file permissions</title>
+<desc id="desc">On one RHEL 9.8 VM, the root renewal job replaced active.pem with a mode 0600 file. The autohttps service could not read it: 78 of 80 requests failed. Changing the script to write mode 0640 allowed all 100 requests in the next test to succeed.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif}</style>
+<defs><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker></defs>
+<rect width="1200" height="800" fill="#f7fafc"/>
+<text x="64" y="50" font-size="19" fill="#546574" text-anchor="start" font-weight="700">IL-42  /  DATA FLOW + FILE STATE</text>
+<text x="64" y="108" font-size="40" fill="#17212b" text-anchor="start" font-weight="700">A renewed file broke new TLS connections</text>
+<text x="64" y="151" font-size="25" fill="#546574" text-anchor="start">Observed on one VM: node1 · RHEL 9.8 · HTTPS on TCP 8443</text>
+<rect x="64" y="194" width="1072" height="336" rx="12" fill="#eef3f7" stroke="#a7b8c7" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="88" y="232" font-size="23" fill="#546574" text-anchor="start" font-weight="700">node1  /  10.100.23.10  /  first forced certificate rotation</text>
+<g data-node="Renewal job" data-bounds="88,286,282,178">
+<rect x="88" y="286" width="282" height="178" rx="12" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="229.0" y="351.32" font-size="26" fill="#175c88" text-anchor="middle" font-weight="700">Renewal job</text>
+<text x="229.0" y="383.32" font-size="24" fill="#17212b" text-anchor="middle">Runs as root</text>
+<text x="229.0" y="415.32" font-size="24" fill="#17212b" text-anchor="middle">Creates a new bundle</text>
+</g>
+<g data-node="active.pem" data-bounds="461,286,282,178">
+<rect x="461" y="286" width="282" height="178" rx="12" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="602.0" y="351.96" font-size="28" fill="#a3342c" text-anchor="middle" font-weight="700">active.pem</text>
+<text x="602.0" y="383.96" font-size="26" fill="#17212b" text-anchor="middle">root:autohttps</text>
+<text x="602.0" y="415.96" font-size="26" fill="#17212b" text-anchor="middle">0600 · root-only</text>
+</g>
+<g data-node="HTTPS process" data-bounds="834,286,278,178">
+<rect x="834" y="286" width="278" height="178" rx="12" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
+<text x="973.0" y="351.0" font-size="25" fill="#175c88" text-anchor="middle" font-weight="700">HTTPS process</text>
+<text x="973.0" y="383.0" font-size="23" fill="#17212b" text-anchor="middle">Runs as autohttps</text>
+<text x="973.0" y="415.0" font-size="23" fill="#17212b" text-anchor="middle">Loads file per connection</text>
+</g>
+<path d="M370 375 L461 375" fill="none" stroke="#175c88" stroke-width="3" marker-end="url(#blue)"/>
+<path d="M743 375 L834 375" fill="none" stroke="#a3342c" stroke-width="3" marker-end="url(#red)"/>
+<circle cx="788.5" cy="375.0" r="14" fill="#fff1ee"/>
+<path d="M780.5 367.0 L796.5 383.0 M780.5 383.0 L796.5 367.0" stroke="#a3342c" stroke-width="3"/>
+<text x="415" y="500" font-size="22" fill="#546574" text-anchor="middle">replaces</text>
+<text x="788" y="500" font-size="22" fill="#a3342c" text-anchor="middle" font-weight="700">read fails</text>
+<text x="64" y="569" font-size="23" fill="#546574" text-anchor="start">The replacement did not preserve the previous file’s read permissions.</text>
+<g data-node="Before renewal" data-bounds="64,598,320,126">
+<rect x="64" y="598" width="320" height="126" rx="12" fill="#edf8f2" stroke="#176b50" stroke-width="2"/>
+<text x="224.0" y="653.32" font-size="26" fill="#176b50" text-anchor="middle" font-weight="700">Before renewal</text>
+<text x="224.0" y="685.32" font-size="24" fill="#17212b" text-anchor="middle">0640 · service can read</text>
+</g>
+<g data-node="First renewal" data-bounds="440,598,320,126">
+<rect x="440" y="598" width="320" height="126" rx="12" fill="#fff1ee" stroke="#a3342c" stroke-width="2"/>
+<text x="600.0" y="653.32" font-size="26" fill="#a3342c" text-anchor="middle" font-weight="700">First renewal</text>
+<text x="600.0" y="685.32" font-size="24" fill="#17212b" text-anchor="middle">0600 · service denied</text>
+</g>
+<g data-node="After script fix" data-bounds="816,598,320,126">
+<rect x="816" y="598" width="320" height="126" rx="12" fill="#edf8f2" stroke="#176b50" stroke-width="2"/>
+<text x="976.0" y="653.32" font-size="26" fill="#176b50" text-anchor="middle" font-weight="700">After script fix</text>
+<text x="976.0" y="685.32" font-size="24" fill="#17212b" text-anchor="middle">0640 · service can read</text>
+</g>
+<path d="M384 661 L440 661" fill="none" stroke="#a3342c" stroke-width="3" marker-end="url(#red)"/>
+<path d="M760 661 L816 661" fill="none" stroke="#176b50" stroke-width="3" marker-end="url(#green)"/>
+<text x="64" y="772" font-size="23" fill="#546574" text-anchor="start">First rotation: 78/80 requests failed. After the fix: 100/100 succeeded.</text>
+</svg>

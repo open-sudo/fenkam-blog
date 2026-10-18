@@ -1136,5 +1136,99 @@
       "nginx": "2:1.20.1-28.el9_8.6"
     },
     "source": "Operator tool response recorded in the authoring conversation; not an executor command."
+  },
+  "primary_story_record": {
+    "revision_date": "2026-10-18",
+    "repository_commit": "661f11046041ed2c1b351ad361313171cc02df5d",
+    "command_record": "jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl",
+    "prompt": "jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/instruction.md",
+    "configuration": "jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/config.json",
+    "model": {
+      "name": "gpt-5.6-sol",
+      "reasoning_effort": "high"
+    },
+    "starting_state": {
+      "node_count": 1,
+      "node": "node1",
+      "address": "10.100.23.10",
+      "os": "Red Hat Enterprise Linux 9.8 (Plow)",
+      "kernel": "5.14.0-687.20.1.el9_8.x86_64",
+      "init": "systemd",
+      "tcp_listeners": [
+        "0.0.0.0:22",
+        "[::]:22"
+      ],
+      "commands_present": [
+        "openssl",
+        "systemctl",
+        "python3"
+      ],
+      "commands_not_found_on_path": [
+        "nginx",
+        "httpd"
+      ],
+      "runtime_version_limit": "The main trace did not capture exact Python or OpenSSL versions.",
+      "source_line": 2
+    },
+    "implementation": {
+      "server": "/usr/local/sbin/autohttps-server.py",
+      "server_user_and_group": "autohttps",
+      "listener": "0.0.0.0:8443",
+      "certificate_bundle": "/etc/pki/autohttps/active.pem",
+      "certificate_owner": "root:autohttps",
+      "renewal_user": "root",
+      "certificate_days": 7,
+      "renewal_threshold_seconds": 259200,
+      "timer": {
+        "OnBootSec": "2min",
+        "OnUnitActiveSec": "6h",
+        "RandomizedDelaySec": "5min"
+      },
+      "certificate_loading": "Load the bundle for each new TLS connection.",
+      "source_lines": [
+        4,
+        6
+      ]
+    },
+    "observations": [
+      {
+        "event": "Directory traversal permissions repaired; trusted HTTPS subsequently succeeded.",
+        "source_lines": [
+          10,
+          12
+        ]
+      },
+      {
+        "event": "First forced rotation created a mode 0600 replacement; 78 of 80 HTTPS requests failed.",
+        "requests": 80,
+        "failures": 78,
+        "source_line": 14
+      },
+      {
+        "event": "Replacement was root:autohttps mode 0600; openssl as autohttps failed with Permission denied.",
+        "source_line": 16
+      },
+      {
+        "event": "Script and current file changed to mode 0640.",
+        "source_line": 18
+      },
+      {
+        "event": "Next forced rotation changed the served serial; all 100 requests succeeded. The loop used curl -k, followed by a separate locally trusted request.",
+        "requests": 100,
+        "failures": 0,
+        "source_line": 20
+      },
+      {
+        "event": "Changed boot ID; service, timer, firewall, listener and HTTPS response recovered with original OS and kernel.",
+        "source_line": 34
+      }
+    ],
+    "package_availability_provenance": "See operator_observation: a separate RHEL9-rerun operator check, not a package query by the executor in the primary trace.",
+    "production_consequence": {
+      "status": "Conditional inference from the observed and repaired lab defect; no production outage is claimed.",
+      "mechanism": "A later scheduled replacement with mode 0600 would deny the unprivileged server access to its bundle and prevent new TLS handshakes.",
+      "ownership": "The operator maintains the custom HTTP/TLS integration code as well as its renewal automation; Python and OpenSSL remain existing library implementations."
+    },
+    "test_limits": "Short local forced-rotation and reboot checks; no long-term production workload or OS-caused choice is established."
   }
 }

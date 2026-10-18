@@ -494,16 +494,16 @@
       "diagram_type": "Trust boundary"
     },
     {
-      "stem": "il-42-technical-diagram",
-      "alt": "Component diagram of the custom HTTPS approach. HTTP and TLS came from existing Python libraries; the operator inherited the service and certificate-loading code.",
-      "caption": "Component diagram of the custom HTTPS approach. HTTP and TLS came from existing Python libraries; the operator inherited the service and certificate-loading code.",
+      "stem": "il-42-certificate-renewal-permissions",
+      "alt": "On one RHEL 9.8 VM, the root renewal job replaced active.pem with a mode 0600 file. The autohttps service could not read it: 78 of 80 requests failed. Changing the script to write mode 0640 allowed all 100 requests in the next test to succeed.",
+      "caption": "The renewal replaced a readable file with a root-only file. Ownership stayed root:autohttps, but mode 0600 removed group read access. The agent fixed future replacements to use 0640 and repeated the rotation successfully.",
       "id": "IL-42",
       "slug": "same-prompt-same-model-linux-distros",
       "title": "AI Wrote an HTTPS Server Despite Available Packages",
-      "diagram_type": "Component diagram",
-      "desktop": "assets/il-42-technical-diagram.svg",
-      "mobile": "assets/il-42-technical-diagram-mobile.svg",
-      "social": "assets/il-42-technical-diagram.png"
+      "diagram_type": "Data flow and file-permission states",
+      "desktop": "assets/il-42-certificate-renewal-permissions.svg",
+      "mobile": "assets/il-42-certificate-renewal-permissions-mobile.svg",
+      "social": "assets/il-42-certificate-renewal-permissions.png"
     }
   ]
 }
