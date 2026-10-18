@@ -70,3 +70,14 @@ The original first and second stories retain `IL-1` and `IL-2`. The experiment
 overview and evaluation guide are separate from the numbered illusion stories.
 Keep the article heading, browser title, social title, homepage card and topic
 index consistent. Existing article URLs stay unchanged.
+
+## Homepage ordering and operating-system filter
+
+Keep numbered article cards in increasing IL order, followed by general articles.
+Each card's `data-os` lists systems covered by the article text or linked case
+examples, including family tags such as `ubuntu` and release tags such as
+`ubuntu-24`. Use `general` for articles without specific systems. Do not tag a
+story from unrelated cases found only in its full evidence inventory.
+`article-filter.js` filters these tags, updates the count and keeps visible
+images alternating. The selected filter can be shared with `?os=ubuntu-24`.
+All articles remain readable when JavaScript is disabled.
