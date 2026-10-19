@@ -1,6 +1,6 @@
 {
   "category": "Configuration drift",
-  "article_title": "The Requested Change Also Changed the Host Baseline",
+  "article_title": "IL-26: AI Left Package Sources Changed After Repository Tests",
   "count": 3,
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",

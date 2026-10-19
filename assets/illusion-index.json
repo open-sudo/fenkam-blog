@@ -17,7 +17,7 @@
       "id": "IL-3",
       "slug": "ai-tested-cron-access-and-deleted-existing-configuration",
       "url": "/ai-tested-cron-access-and-deleted-existing-configuration/",
-      "title": "AI Deleted Root\u2019s Crontab While Testing Permissions"
+      "title": "AI Deleted Root’s Crontab While Testing Permissions"
     },
     {
       "id": "IL-4",
@@ -29,7 +29,7 @@
       "id": "IL-5",
       "slug": "audit-credential-leakage",
       "url": "/audit-credential-leakage/",
-      "title": "AI Exposed Passwords in Logs and Transfers"
+      "title": "AI Printed Database Passwords into Its Command Log"
     },
     {
       "id": "IL-6",
@@ -41,7 +41,7 @@
       "id": "IL-7",
       "slug": "audit-secret-residue",
       "url": "/audit-secret-residue/",
-      "title": "AI Left Extra Copies of Secrets"
+      "title": "AI Left a Certificate Signing Key in a Temporary Directory"
     },
     {
       "id": "IL-8",
@@ -53,13 +53,13 @@
       "id": "IL-9",
       "slug": "audit-incomplete-verification",
       "url": "/audit-incomplete-verification/",
-      "title": "AI Tested the Wrong Behavior"
+      "title": "AI Finished Testing Before Automatic Certificate Renewal"
     },
     {
       "id": "IL-10",
       "slug": "audit-service-outages",
       "url": "/audit-service-outages/",
-      "title": "Some Servers Stayed Unreachable After Reboot"
+      "title": "A Server Became Unreachable During Its Reboot Test"
     },
     {
       "id": "IL-11",
@@ -77,7 +77,7 @@
       "id": "IL-13",
       "slug": "audit-unsafe-changes",
       "url": "/audit-unsafe-changes/",
-      "title": "AI Repairs Changed Unrelated Accounts and Services"
+      "title": "AI Cleared Database Passwords After Password Generation Failed"
     },
     {
       "id": "IL-14",
@@ -89,7 +89,7 @@
       "id": "IL-15",
       "slug": "audit-test-residue",
       "url": "/audit-test-residue/",
-      "title": "AI Left Test Files and Services Behind"
+      "title": "AI Left Backdated Test Archives Among Real Backups"
     },
     {
       "id": "IL-16",
@@ -155,7 +155,7 @@
       "id": "IL-26",
       "slug": "audit-configuration-drift",
       "url": "/audit-configuration-drift/",
-      "title": "AI Left Package Sources and Boot Settings Changed"
+      "title": "AI Left Package Sources Changed After Repository Tests"
     },
     {
       "id": "IL-27",
@@ -185,7 +185,7 @@
       "id": "IL-31",
       "slug": "audit-logging-gaps",
       "url": "/audit-logging-gaps/",
-      "title": "AI Discarded a Worker\u2019s Error Output"
+      "title": "AI Discarded a Worker’s Error Output"
     },
     {
       "id": "IL-32",
@@ -239,7 +239,7 @@
       "id": "IL-40",
       "slug": "tunnel-vision-the-task-passed-the-server-changed",
       "url": "/tunnel-vision-the-task-passed-the-server-changed/",
-      "title": "AI Finished Tasks but Disrupted Existing Services"
+      "title": "AI Killed Its Command Connection While Cleaning Up a Firewall Test"
     },
     {
       "id": "IL-41",

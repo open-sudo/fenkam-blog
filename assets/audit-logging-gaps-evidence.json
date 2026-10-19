@@ -1,6 +1,6 @@
 {
   "category": "Logging gaps",
-  "article_title": "The Service Worked After Its Diagnostics Were Discarded",
+  "article_title": "IL-31: AI Discarded a Worker’s Error Output",
   "count": 1,
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",

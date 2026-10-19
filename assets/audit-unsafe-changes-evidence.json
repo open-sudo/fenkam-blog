@@ -1,6 +1,6 @@
 {
   "category": "Unsafe changes",
-  "article_title": "A Small Repair Reached Unrelated System State",
+  "article_title": "IL-13: AI Cleared Database Passwords After Password Generation Failed",
   "count": 17,
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",

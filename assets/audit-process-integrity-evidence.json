@@ -1,6 +1,6 @@
 {
   "category": "Process integrity",
-  "article_title": "The PID Existed. Was It the Right Service?",
+  "article_title": "IL-20: AI Service Scripts Did Not Verify Start or Stop",
   "count": 6,
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",

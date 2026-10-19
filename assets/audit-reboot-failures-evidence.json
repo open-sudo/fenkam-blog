@@ -1,6 +1,6 @@
 {
   "category": "Reboot failures",
-  "article_title": "Recovery Worked Only After Another Manual Command",
+  "article_title": "IL-14: AI Setups Needed Repairs After Reboot",
   "count": 12,
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",

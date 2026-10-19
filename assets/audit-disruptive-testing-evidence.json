@@ -1,6 +1,6 @@
 {
   "article_id": "IL-18",
-  "article_title": "AI Lost SSH Access During Its Memory Test",
+  "article_title": "IL-18: AI Lost SSH Access During Its Memory Test",
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "RHEL 7.9 run only. References checked against the recorded commands and lab observations.",
   "task": "oom-protection-bash-rhel7-5469",

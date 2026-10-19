@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
-<title id="title">IL-41: the keytab transfer</title><desc id="desc">The login server serves a secret keytab over temporary HTTPS port 9443. The application server downloaded it without client authentication. Another reachable client knowing the URL could download it too; no theft was observed.</desc>
+<title id="title">IL-41: the keytab transfer</title><desc id="desc">The application server downloaded the keytab without authenticating. Another client able to reach the same URL could request the file too.</desc>
 <style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b}.kicker{font-size:22px;font-weight:700;letter-spacing:2px;fill:#536170}.title{font-size:44px;font-weight:700;letter-spacing:-1px}.sub{font-size:26px;fill:#536170}.node{font-size:32px;font-weight:700}.node-small{font-size:30px;font-weight:700}.body{font-size:26px}.small{font-size:24px;fill:#536170}.blue{fill:#185b8c}.green{fill:#176b50}.red{fill:#a33d32}.center{text-anchor:middle}</style>
 <defs><marker id="blue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#185b8c"/></marker><marker id="green" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#176b50"/></marker><marker id="red" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 5 L0 10 Z" fill="#a33d32"/></marker></defs>
 <rect width="1200" height="800" fill="#f7f9fb"/>
@@ -24,6 +24,4 @@
 <text x="824" y="626" class="body">Can reach the URL</text>
 <path d="M224 455 V605 H798" fill="none" stroke="#a33d32" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 9" marker-end="url(#red)"/>
 <text x="510" y="563" class="body red center">Could download a copy</text>
-<text x="64" y="724" class="body">The port was not restricted to the application server.</text>
-<text x="64" y="770" class="small">Dashed route: possible access, not an observed theft.</text>
-</svg>
+<text x="64" y="724.0" class="body">Dashed route: another reachable client could download the secret.</text></svg>

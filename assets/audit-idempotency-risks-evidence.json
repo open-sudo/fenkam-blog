@@ -1,6 +1,6 @@
 {
   "category": "Idempotency risks",
-  "article_title": "The Mail Migration Guard Used a Name the Mail Server Could Change",
+  "article_title": "IL-30: Rerunning Ansible Could Duplicate Mail",
   "count": 1,
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",

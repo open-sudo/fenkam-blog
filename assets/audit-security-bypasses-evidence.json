@@ -1,6 +1,6 @@
 {
   "category": "Security bypasses",
-  "article_title": "Troubleshooting Changed the Security Boundary",
+  "article_title": "IL-12: AI Disabled Security Controls During Setup",
   "count": 25,
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",

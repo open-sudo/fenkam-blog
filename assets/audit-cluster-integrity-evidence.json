@@ -1,6 +1,6 @@
 {
   "category": "Cluster integrity",
-  "article_title": "A Node Returned, but Its Cluster State Did Not Fully Return",
+  "article_title": "IL-28: A Cluster Node Rejoined but Still Needed Data Repair",
   "count": 2,
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",

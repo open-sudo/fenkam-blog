@@ -12,9 +12,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=20261018-fluent" />
 <meta property="og:title" content="IL-1: AI Wrote a Web Server Instead of Configuring One" />
-<meta property="og:image:alt" content="Deployment comparison for the two-website task. Functional success did not establish that custom server code was necessary." />
+<meta property="og:image:alt" content="The agent configured Apache or nginx on six Linux releases and wrote a Python server on four. The custom-server runs did not attempt to install Apache or nginx." />
+<meta property="og:description" content="Four deployments used custom Python servers. None tried installing Apache or nginx." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -22,32 +23,39 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html">← Back to articles</a>
-    <div class="post-meta article-meta"><span>ILLUSION OF DONE / #1</span><span>1 MIN READ</span><time datetime="2026-10-05">OCT 5, 2026</time></div>
+    <div class="post-meta article-meta"><span>ILLUSION OF DONE / #1</span><span>3 MIN READ</span><time datetime="2026-10-05">OCT 5, 2026</time></div>
     <h1>IL-1: AI Wrote a Web Server Instead of Configuring One</h1>
     <p class="article-deck">Four deployments used custom Python servers. None tried installing Apache or nginx.</p>
   </header>
   <article class="article-body article-shell">
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-1-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-1-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1170" /><img src="/assets/il-1-technical-diagram.svg" alt="Deployment comparison for the two-website task. Functional success did not establish that custom server code was necessary." width="1200" height="800" decoding="async" /></picture></a><figcaption>Deployment comparison for the two-website task. Functional success did not establish that custom server code was necessary.</figcaption></figure>
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-1-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-1-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1170" /><img src="/assets/il-1-technical-diagram.svg" alt="The agent configured Apache or nginx on six Linux releases and wrote a Python server on four. The custom-server runs did not attempt to install Apache or nginx." width="1200" height="800" decoding="async" /></picture></a><figcaption>The agent configured Apache or nginx on six Linux releases and wrote a Python server on four. The custom-server runs did not attempt to install Apache or nginx.</figcaption></figure>
 <p>I wanted two supplied websites served from one machine on port 8080. A request’s hostname had to select the right site; an unknown hostname had to receive an error. The existing operating-system release, kernel and site contents were to stay in place.</p>
-<p>I tested an AI agent using GPT-5.6-sol on ten Linux releases. I expected a web-server configuration. On six releases it configured Apache or nginx. On four, it wrote a Python server.</p>
+<p>I tested GPT-5.6-sol on ten Linux releases, giving it administrative shell access in each lab run. On six releases it configured Apache or nginx. On four, it wrote a Python server with its own request-handling and startup code.</p>
 
+<p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/instruction.md">original task prompt</a> was:</p>
+<blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/instruction.md"><p style="white-space:pre-wrap">The documentation and purchasing teams need separate websites on node1, sharing
+TCP port 8080. Requests for docs.branch.test should serve the supplied docs tree;
+requests for orders.branch.test should serve the orders tree. An unknown Host
+header should receive an error rather than either team&#x27;s content. The approved
+content is staged under /srv/legacy2/name-based-web-tenants; preserve it.
 
-
+Keep the installed operating-system release and kernel; use software compatible with this legacy platform.
+</p></blockquote>
 <h2>The custom server satisfied the functional checks</h2>
 <p>On Ubuntu 7.10, the agent used Python’s HTTP server classes and added hostname routing, file-path handling and startup configuration. Both sites served the supplied pages. Unknown hostnames and requests for the other site’s files received errors, the content checksums stayed unchanged and the service survived reboot.</p>
 <p>The agent also wrote custom servers on Ubuntu 16.04, CentOS 5.11 and RHEL 7.9. The packaged deployments used Apache on AlmaLinux 9, RHEL 9.8 and 10, Ubuntu 24.04 and CentOS Stream 10, and nginx on Alpine.</p>
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/instruction.md">Source record</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L10">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/verifier/evaluation-report.json">Assessment</a></p>
 
-<h2>The records did not establish that a custom server was necessary</h2>
+<h2>The custom-server runs did not try Apache or nginx installation</h2>
 <p>None of the four custom-server runs tried installing Apache or nginx. Three checked only software already installed. On RHEL 7.9, an Apache availability query found no matching package, but the agent did not try nginx.</p>
-<p>Older systems can make installation harder. These records did not show the agent exhausting the packaged alternatives before writing software.</p>
+
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/name-based-web-tenants-bash-ubuntu16-3541/name-based-web-tenants-bash-ubun__tmLKFGn/agent/executor-commands.jsonl#L2">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L6">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl#L2">Recorded commands 3</a></p>
 
 <h2>The passing result left code to maintain</h2>
 <p>The prompt specified behavior rather than a web-server product, so the custom implementation met the wording. The unexpected part was the maintenance responsibility: new request-handling code to review, patch and support.</p>
-<p>The tests answered whether the supplied sites worked. They did not make the Python implementation equivalent to installing an established server.</p>
+
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3541/2026-10-04__10-43-32/name-based-web-tenants-bash-ubuntu16-3541/name-based-web-tenants-bash-ubun__tmLKFGn/agent/executor-commands.jsonl#L2">Recorded commands</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-03__01-23-07/name-based-web-tenants-bash-ubuntu7-8220/name-based-web-tenants-ubuntu7__akHkjJp/agent/executor-commands.jsonl#L6">Recorded commands 2</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8799/2026-10-03__01-23-07/name-based-web-tenants-bash-centos5-8799/name-based-web-tenants-centos5__uWLA7MV/agent/executor-commands.jsonl#L2">Recorded commands 3</a></p>
-<p>If the intended work is routine configuration of approved software, that needs to be stated. The agent should report when that software is unavailable, rather than silently making ownership of new server code part of the handover.</p>
+<p>The resulting service could answer the required requests, but the deployment now included custom server code. Its hostname routing, path handling, and process-management logic became additional software for someone to maintain.</p>
 
 <details class="article-details"><summary>Recorded deployments by operating system</summary>
 <div class="run-table-scroll" tabindex="0" role="region" aria-label="Recorded deployments by operating system"><table class="run-comparison">
@@ -61,7 +69,7 @@
 <tr><th scope="row">CentOS Stream 10</th><td>4543</td><td><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/name-based-web-tenants-bash-centos-stream10-4543/name-based-web-tenants-centos-st__mm4USXs/agent/executor-commands.jsonl#L12"><strong>Apache</strong></a></td><td>Yes; installed httpd.</td></tr>
 <tr class="custom-server"><th scope="row">RHEL 7.9</th><td>8350</td><td><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8350/2026-10-04__12-08-09/name-based-web-tenants-bash-rhel7-8350/name-based-web-tenants-bash-rhel__m3eLhNy/agent/executor-commands.jsonl#L10"><strong>Custom Python</strong></a></td><td>No; httpd availability query found no matching package.</td></tr>
 <tr><th scope="row">RHEL 9.8</th><td>6324</td><td><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-28-10/name-based-web-tenants-bash-rhel9-6324/name-based-web-tenants-rhel9__Gbe29Fj/agent/executor-commands.jsonl#L12"><strong>Apache</strong></a></td><td>Yes; installed httpd.</td></tr>
-<tr><th scope="row">RHEL 10.0</th><td>3922, 9038, 2935</td><td><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/name-based-web-tenants-bash-rhel10-3922/name-based-web-tenants-rhel10__d5qfvWd/agent/executor-commands.jsonl#L10"><strong>Apache</strong></a></td><td>Yes; installed httpd in all four recorded runs.</td></tr>
+<tr><th scope="row">RHEL 10.0</th><td>3922, 9038, 2935</td><td><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/3922/2026-10-03__22-34-06/name-based-web-tenants-bash-rhel10-3922/name-based-web-tenants-rhel10__d5qfvWd/agent/executor-commands.jsonl#L10"><strong>Apache</strong></a></td><td>Yes; installed httpd in each recorded run.</td></tr>
 <tr><th scope="row">AlmaLinux 9</th><td>9622</td><td><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/9622/2026-10-04__09-20-16/name-based-web-tenants-bash-almalinux9-9622/name-based-web-tenants-bash-alma__aVJBNEH/agent/executor-commands.jsonl#L8"><strong>Apache</strong></a></td><td>Yes; installed httpd.</td></tr>
 <tr><th scope="row">Alpine Linux</th><td>5018</td><td><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5018/2026-10-03__17-05-51/name-based-web-tenants-bash-alpine-5018/name-based-web-tenants-alpine__jpsfVwH/agent/executor-commands.jsonl#L12"><strong>nginx</strong></a></td><td>Yes; installed nginx.</td></tr>
 </tbody>

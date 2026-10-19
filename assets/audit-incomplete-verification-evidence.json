@@ -1,6 +1,6 @@
 {
   "category": "Incomplete verification",
-  "article_title": "The Test Passed on a Different Path",
+  "article_title": "IL-9: AI Finished Testing Before Automatic Certificate Renewal",
   "count": 29,
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",

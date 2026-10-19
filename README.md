@@ -69,7 +69,7 @@ Illusion article titles use stable `IL-N: Title` identifiers. Assignments live i
 increment it. Keep existing identifiers when sorting or adding posts.
 The opening sequence is `IL-1` (web server), `IL-2` (swap/kernel downgrade),
 `IL-3` (cron verification) and `IL-4` (backup copies). The experiment
-overview and evaluation guide are separate from the numbered illusion stories.
+overview and general problem guide are separate from the numbered illusion stories.
 Keep the article heading, browser title, social title, homepage card and topic
 index consistent. Existing article URLs stay unchanged.
 
@@ -89,7 +89,9 @@ All articles remain readable when JavaScript is disabled.
 
 ## Editorial standard
 
-Write for Linux users who know nothing about the platform or test harness.
+Write for Linux specialists who are not native English speakers and know
+nothing about the platform or test harness. Use familiar words and explicit,
+connected sentences. Skip basic Linux definitions.
 Explain the agent's access to the machine and how the results were checked.
 Introduce case-specific accounts, files and unfamiliar terms before relying on
 them. Use plain language and short paragraphs without losing technical precision.
@@ -99,7 +101,7 @@ instead of relying on phrases such as “the boundary” or “the retained stat
 Explain the case directly. Add a short analogy only when it makes a difficult
 distinction easier to understand; remove it when it repeats the explanation.
 Use short, concrete titles. Cut repeated introductions, lessons and conclusions.
-Keep long run inventories in expandable details below the main story.
+Keep unrelated run inventories in linked evidence files, outside the article.
 Distinguish an observed failure, a code risk and a behavior that was not tested.
 Keep internal finding IDs and batch labels in the evidence, not in the narrative.
 Link recorded commands next to the case and detailed evidence at the end.
@@ -123,8 +125,9 @@ through the prose rather than using them as a repeated set of headings.
 Do not invent customers, incidents, dialogue or requirements to make a story.
 
 Use architecture or flow diagrams when the reader needs to understand machines,
-connections, permissions or a sequence of copies. Place the diagram after the
-opening gives those objects a purpose. Show the requested setup or the recorded
+connections, permissions or a sequence of copies. Place the image at the top
+of the article, directly after the separator and before the opening text.
+Show the requested setup or the recorded
 actions; mark hypothetical access separately from observed traffic.
 
 `assets/article-diagrams.json` lists the technical diagrams for all 42 numbered
@@ -141,11 +144,21 @@ exports support social previews. New article diagrams open at full size.
 Homepage diagrams show the full image without cropping and keep the existing
 alternating-card layout. Original illustrations and prompts remain as history.
 
-Make section handoffs explicit: state what the current section established,
-connect the remaining work to the article's main requirement, and say what the
-next section will explain. Begin each section by naming its subject and how
-it follows from the preceding section. Use concrete terms such as "web-server
-software" so readers can identify the decision or component being discussed.
+Connect sections through the events and their consequences. Name the agent,
+command, process or machine that acted. Do not write that an article or section
+"establishes", "follows" or "separates" events, and do not add section previews.
+
+Our role is to identify and explain issues posed by LLMs acting as sysadmins.
+Do not propose fixes, safeguards, alternative implementations or operator
+checklists. Describe recorded repairs as events. Remove defensive caveats
+about claims the article never made; qualify a claim only where the reader
+would otherwise mistake an uncertain or hypothetical result for an observation.
+
+Before publication, obtain an independent comprehension review from a reader
+who sees only the article. The reader must explain the task, agent action,
+issue and consequence without guessing connections or repeatedly rereading.
+Revise and repeat the review when that test fails. Verify facts against the
+original records separately, and preserve verbatim task prompts.
 
 Before publishing, reread the entire article yourself from beginning to end.
 Check that it is coherent in reading order: the context is sufficient, terms

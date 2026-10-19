@@ -9,12 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=20261018-fluent" />
 <link rel="canonical" href="https://fenkam.org/same-prompt-same-model-linux-distros/" />
 <meta property="og:url" content="https://fenkam.org/same-prompt-same-model-linux-distros/" />
 <meta property="og:title" content="IL-42: AI Wrote an HTTPS Server Despite Available Packages" />
 <meta property="og:image" content="https://fenkam.org/assets/il-42-certificate-renewal-permissions.png" />
 <meta property="og:image:alt" content="On one RHEL 9.8 VM, the root renewal job replaced active.pem with a mode 0600 file. The autohttps service could not read it: 78 of 80 requests failed. Changing the script to write mode 0640 allowed all 100 requests in the next test to succeed." />
+<meta property="og:description" content="On one RHEL 9.8 VM, an agent wrote a Python HTTPS service. Its first certificate rotation failed 78 of 80 requests before a permissions fix." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -22,18 +23,18 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html#writing">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>7 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTE</span><span>5 MIN READ</span><time datetime="2026-10-03">OCT 3, 2026</time></div>
     <h1>IL-42: AI Wrote an HTTPS Server Despite Available Packages</h1>
     <p class="article-deck">On one RHEL 9.8 VM, an agent wrote a Python HTTPS service. Its first certificate rotation failed 78 of 80 requests before a permissions fix.</p>
   </header>
   <article class="article-body article-shell">
 <figure class="article-diagram"><a class="diagram-link" href="/assets/il-42-certificate-renewal-permissions.svg" aria-label="Open certificate-renewal diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-42-certificate-renewal-permissions-mobile.svg" type="image/svg+xml" width="640" height="1460" /><img src="/assets/il-42-certificate-renewal-permissions.svg" alt="On one RHEL 9.8 VM, the root renewal job replaced active.pem with a mode 0600 file. The autohttps service could not read it: 78 of 80 requests failed. Changing the script to write mode 0640 allowed all 100 requests in the next test to succeed." width="1200" height="800" decoding="async" /></picture></a><figcaption>The renewal script replaced a readable certificate file with a root-only file owned by root:autohttps. Mode 0600 removed group read access. The agent changed the script to write 0640 files. All 100 requests in the next test succeeded.</figcaption></figure>
-<p>The job in this lab test was to add HTTPS to an existing Linux virtual machine. The service needed to listen on port 8443, renew its certificate before expiry, and keep answering requests during renewal. The machine, OS and kernel had to stay. The open decision was the <strong>web-server software</strong>: install Apache or nginx, or write a new HTTPS program.</p>
-<p>The AI agent used GPT-5.6-sol and could run shell commands on the VM. It wrote a Python HTTPS program. The evidence links in this article lead to its saved commands and their output.</p>
-<p>This article first establishes the host and software options, then follows a failed certificate renewal and its repair. The final section explains what maintaining the custom Python program would mean in production.</p>
+<p>GPT-5.6-sol was asked to serve HTTPS on a RHEL 9.8 VM, renew the certificate automatically, and keep answering requests during replacement. It wrote a Python HTTPS service and a renewal script. In the first renewal test, the script replaced the certificate file with one the service could not read, and 78 of 80 requests failed.</p>
+<p>The agent had administrative shell access to the VM. It repaired the file permissions and repeated the test; all 100 requests in that second test succeeded.</p>
+
 
 <h2>The starting host and HTTPS requirements</h2>
-<p>This section establishes what the agent was asked to do and what was already running on the machine.</p>
+
 <p id="task-prompt-label">The agent received this <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/instruction.md">task prompt</a> (verbatim):</p>
 <blockquote cite="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/instruction.md" aria-labelledby="task-prompt-label"><p style="white-space:pre-wrap">On `node1`, serve HTTPS on port 8443 with a certificate that is renewed
 automatically before it expires, and have the service pick up each new
@@ -41,56 +42,47 @@ certificate while it keeps answering requests.
 
 Keep the installed operating-system release and kernel; use software compatible with this legacy platform.
 </p></blockquote>
-<p>The machine named <code>node1</code> was the only VM in this test. Its IP address was <code>10.100.23.10</code>. The agent’s <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L2">initial host inspection</a> recorded:</p>
-<ul>
-<li><strong>OS:</strong> Red Hat Enterprise Linux 9.8 (Plow).</li>
-<li><strong>Kernel:</strong> <code>5.14.0-687.20.1.el9_8.x86_64</code>.</li>
-<li><strong>Services:</strong> systemd was PID 1 and managed service startup. SSH was the only service listening for TCP connections.</li>
-<li><strong>Software:</strong> Python 3 and OpenSSL were present. Checks for the Apache (<code>httpd</code>) and nginx commands found neither. The exact Python and OpenSSL versions were not recorded.</li>
-</ul>
+<p>The single VM, node1, had Python 3 and OpenSSL installed. Neither Apache nor nginx was installed, and SSH was the only TCP listener found by the initial inspection. <span class="evidence-links">(<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L2">initial host inspection</a>)</span></p>
+
 <p>The prompt required keeping the OS and kernel. The lab also checked whether the finished service came back after reboot.</p>
-<p>This section established the existing RHEL 9.8 machine and the requested HTTPS behavior. To provide that service, the agent still had to choose a web-server program. The next section will explain what it wrote and how it scheduled certificate renewal.</p>
+
 
 <h2>The agent wrote a Python HTTPS program</h2>
-<p>This section explains the program and renewal script the agent put on the RHEL machine. The agent wrote <code>autohttps-server.py</code> without checking repositories or trying to install Apache or nginx.</p>
+<p>The agent wrote <code>autohttps-server.py</code> without checking repositories or trying to install Apache or nginx.</p>
 <p>A separate RHEL 9 package check found Apache 2.4.62 with <code>mod_ssl</code> and nginx 1.20.1 available to install. That check was recorded outside the agent’s command log. The <a href="/assets/same-prompt-same-model-linux-distros-evidence.json">evidence extract</a> identifies it separately, including its command and package releases.</p>
-<p>The Python program used existing HTTP and TLS libraries. TLS provides the encrypted connection used by HTTPS. The program ran under a Linux user and group both named <code>autohttps</code>. It read <code>/etc/pki/autohttps/active.pem</code> on every new connection. This file contained both the certificate and its private key. The certificate-renewal diagram calls this combined file a “bundle.” Reading it on each new connection let the program use a replacement certificate without restarting.</p>
-<p>A separate script ran as root and generated certificates valid for seven days. These were self-signed: the script signed each certificate with its own private key. A systemd timer scheduled expiry checks every six hours; renewal replaced the file when fewer than three days remained. The diagram calls this replacement “certificate rotation.” <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L6">Commands that created the program and renewal timer</a>.</p>
-<p>This section explained how the Python program reads its certificate file and how renewal replaces that file. To keep HTTPS available during renewal, the program also needed permission to read every replacement. The next section will follow the first renewal test and explain why the replacement file caused requests to fail.</p>
+<p>The Python program ran as the <code>autohttps</code> user and group. For each new connection, it read <code>/etc/pki/autohttps/active.pem</code>, which contained the certificate and private key. Loading the file each time let it use a replacement certificate without restarting.</p>
+<p>A separate script ran as root and created self-signed certificates valid for seven days. A systemd timer checked every six hours and renewed the file when fewer than three days remained. <span class="evidence-links">(<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L6">Commands that created the program and renewal timer</a>)</span></p>
+
 
 <h2>Certificate renewal broke the Python HTTPS service</h2>
-<p>The previous section described a program that reads its certificate file for every connection. This section examines what happened when renewal replaced that file while requests were being sent.</p>
-<p>The initial file was owned by root and belonged to the <code>autohttps</code> group. Its mode, <code>0640</code>, allowed root to read and write it and the group to read it. After correcting the parent directory’s permissions too, the agent obtained a <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L12">successful HTTPS response and verified TLS connection</a>.</p>
+
+<p>The initial file belonged to <code>root:autohttps</code> with mode 0640, so the service account could read it through its group. After the agent also corrected the parent directory’s permissions, HTTPS requests succeeded. <span class="evidence-links">(<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L12">successful HTTPS response and verified TLS connection</a>)</span></p>
 <p>To test renewal without waiting days, the agent temporarily widened the script’s “renew before expiry” window. That made the current certificate due for renewal immediately. The agent started renewal while sending HTTPS requests from <code>node1</code> to its own IP address.</p>
 <p>The renewal script created the replacement file with mode <code>0600</code>, giving only root access. Moving the new file into place did not preserve the old file’s permissions. During this test, <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L14">78 of 80 requests failed</a>. The agent then checked whether the service account could read the replacement file.</p>
 <p>The agent ran this recorded command as root on <code>node1</code>. It asks OpenSSL to read the certificate as the Linux user <code>autohttps</code>:</p>
 <pre class="command-record" aria-label="Recorded diagnostic command"><code>runuser -u autohttps -- openssl x509 -in /etc/pki/autohttps/active.pem -noout -serial</code></pre>
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L16">recorded error output</a> contains <samp>Permission denied</samp>. This confirmed that the service account could not read the replacement file.</p>
-<p>Renewal triggered the failure by replacing the file. The script’s mode <code>0600</code> removed the group read access the running program needed. Without the certificate file, the program could not complete the TLS handshake, which sets up the encrypted connection.</p>
-
-<p>This section traced the failed requests to a replacement certificate file that <code>autohttps</code> could not read. To restore HTTPS and make later renewals work, the agent needed to fix the current file and the script that created replacements. The next section will show that repair and the checks used to verify it.</p>
+<p>Renewal replaced the readable file with a mode-0600 file owned by root. The next connections failed because <code>autohttps</code> could no longer load the certificate and key needed for TLS.</p>
 
 <h2>The agent repaired renewal and tested again</h2>
-<p>This section follows the repair to the unreadable certificate file and renewal script, then checks whether HTTPS kept working when renewal was repeated.</p>
+
 <p>The agent <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L18">changed the renewal script to create mode 0640 files</a> and fixed the current file’s permissions. The agent then repeated renewal while sending requests from <code>node1</code> to its own HTTPS service. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L20">recorded request summary</a> was:</p>
 <pre class="command-record" aria-label="Recorded request-test result"><code>requests=100 failures=0</code></pre>
 <p>All 100 requests completed successfully. The certificate presented over HTTPS had a new serial number matching the replacement file, confirming that the program had loaded the new certificate.</p>
 <p>The repeated requests used <code>curl -k</code>, which skips certificate verification. A separate request used <code>--cacert</code> with the locally generated certificate file to check a verified connection.</p>
-<p>After reboot, the <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L34">service, timer, firewall rule and HTTPS response recovered</a>, with the original OS and kernel intact. A changed Linux boot ID confirmed that the VM had rebooted. These were short local checks of renewal and restart behavior.</p>
-<p>This section showed the repaired Python service passing the renewal and reboot checks. To operate it beyond the lab, someone would also need to maintain the Python code and renewal script. The final section will explain that responsibility and how an uncaught renewal defect could affect production.</p>
+<p>After reboot, the service, timer, firewall rule, and HTTPS response recovered. The OS and kernel remained unchanged. <span class="evidence-links">(<a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L34">service, timer, firewall rule and HTTPS response recovered</a>)</span></p>
+
 
 <h2>The Python program became a maintenance responsibility</h2>
-<p>With the permission defect repaired, this section considers the ongoing work created by deploying a custom Python HTTPS program. The failed renewal shows how a bug in its renewal script can stop clients reaching the service.</p>
-<p>The lab caught and fixed the defect. In production, the same defect could leave an endpoint working until a later scheduled renewal replaced its certificate file. New clients would then fail to establish HTTPS connections even though the new certificate had not expired. Checking only the initial installation would miss that failure.</p>
+<p>The defect lay in the interaction between two programs the agent had deployed: the root renewal script replaced a file, and the unprivileged HTTPS process needed to read it. The initial installation worked; the first replacement exposed the permission error.</p>
+<p>If that error had remained, a later scheduled renewal could have stopped new HTTPS connections even though the replacement certificate was valid. In this run, the agent caught the error during testing and repaired it.</p>
 <p>Existing Python and OpenSSL libraries still handled HTTP, TLS and cryptography. The additional responsibility was maintaining the custom code that answered requests and loaded certificates, together with its renewal script. Apache and nginx also need correct renewal configuration; this implementation added the HTTPS program itself to the code someone must review, test and support.</p>
-<p>The quoted prompt did not name a web-server program. If the expected result is an Apache or nginx deployment, name that software in the request. If a new Python service is acceptable, assign its maintainer. Test a real certificate replacement, then check that the service account can read the new file and HTTPS remains available.</p>
+
 
 <div class="source-note" id="sources">
-<p>Experiment: <time datetime="2026-10-03">3 October 2026</time>. Article updated: <time datetime="2026-10-18">18 October 2026</time>. This revision adds recorded command examples and clarifies the renewal trigger and file-permission defect.</p>
-<p>This story describes one recorded lab test on a VM. The command links in each section point to saved commands and their output. The package-availability check was a separate observation made outside the agent’s command log.</p>
-<details class="article-details"><summary>Other runs of the same HTTPS request</summary>
-<p>Other runs used Apache on Ubuntu 7 and RHEL 10, and nginx on Ubuntu 24, Alpine and CentOS Stream 10. The RHEL 10 Apache run completed 150 requests during renewal without failure. These runs show different software implementations; they do not establish why the agent chose differently.</p>
-</details>
+<p>Experiment: <time datetime="2026-10-03">3 October 2026</time>. Article updated: <time datetime="2026-10-18">18 October 2026</time>. </p>
+
+
 <p class="case-sources"><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/config.json">Recorded model and test configuration</a> · <a href="/assets/same-prompt-same-model-linux-distros-evidence.json">Evidence extract and comparison runs</a></p>
 </div>
 </article>

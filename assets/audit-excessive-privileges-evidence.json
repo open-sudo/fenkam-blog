@@ -1,6 +1,6 @@
 {
   "article_id": "IL-16",
-  "article_title": "AI Gave a Test Login Access to Every Database",
+  "article_title": "IL-16: AI Gave a Test Login Access to Every Database",
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "One CentOS Stream 10 Galera run. Grant creation and subsequent commands checked against the source record.",
   "sources": {

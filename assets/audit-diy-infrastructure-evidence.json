@@ -1,6 +1,6 @@
 {
   "article_id": "IL-17",
-  "article_title": "AI Wrote a Proxy That Could Submit a Write Twice",
+  "article_title": "IL-17: AI Wrote a Proxy That Could Submit a Write Twice",
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "One RHEL 7.9 load-balancer run. The order scenario illustrates a conditional consequence of the recorded proxy code; the recorded applications served reads.",
   "sources": {

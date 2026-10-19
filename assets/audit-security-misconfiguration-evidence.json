@@ -1,6 +1,6 @@
 {
   "category": "Security misconfiguration",
-  "article_title": "The Security Setting Protected a Different Boundary",
+  "article_title": "IL-25: Security Settings Did Not Enforce the Promised Limits",
   "count": 4,
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
   "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",

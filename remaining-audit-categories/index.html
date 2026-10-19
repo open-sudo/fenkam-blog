@@ -4,14 +4,16 @@
   <script src="/theme.js?v=2"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A separate article for each category, covering the different ways the issue appeared in the recorded executions." />
-  <title>When AI Agents Administer Linux: 27 Field Notes — Fenkam</title>
+  <meta name="description" content="Case studies of credentials, firewall rules, recovery, automation, and other issues in recorded AI sysadmin runs." />
+  <title>When AI Agents Administer Linux: 27 Field Notes | Fenkam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=theme-2" />
+  <link rel="stylesheet" href="/styles.css?v=20261018-fluent" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/remaining-audit-categories/" /><meta property="og:url" content="https://fenkam.org/remaining-audit-categories/" />
+<meta property="og:title" content="When AI Agents Administer Linux: 27 Field Notes" />
+<meta property="og:description" content="Case studies of credentials, firewall rules, recovery, automation, and other issues in recorded AI sysadmin runs." />
 </head>
 <body>
 <div class="noise" aria-hidden="true"></div>
@@ -19,20 +21,20 @@
 <main>
   <header class="article-header article-shell">
     <a class="back-link" href="/index.html">← Back to articles</a>
-    <div class="post-meta article-meta"><span>FIELD NOTES</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+    <div class="post-meta article-meta"><span>FIELD NOTES</span><span>2 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
     <h1>When AI Agents Administer Linux: 27 Field Notes</h1>
-    <p class="article-deck">A separate article for each category, covering the different ways the issue appeared in the recorded executions.</p>
+    <p class="article-deck">Case studies of credentials, firewall rules, recovery, automation, and other issues in recorded AI sysadmin runs.</p>
   </header>
   <article class="article-body article-shell">
 <p>What happens when an AI agent administers a Linux server? These field notes follow concrete examples from recorded tests: leaked credentials, firewall changes, failed recovery, incomplete automation and other operational problems.</p>
-<p>Each article explains how the issue appeared in different tasks and what the evidence actually establishes. The examples include observed failures, corrected mistakes, implementation risks and missing checks. They are not reports of production intrusions.</p>
+<p>The examples include failures during setup, mistakes the agent later repaired, and defects in generated scripts that could fail under specific conditions. The original prompts and recorded commands show what the agents were asked to do and what happened.</p>
 <div class="run-table-scroll" role="region" aria-label="Infrastructure field notes" tabindex="0"><table class="run-comparison"><thead><tr><th scope="col">Topic</th><th scope="col">Article</th></tr></thead><tbody>
 <tr><th scope="row">Logging gaps</th><td><a href="/audit-logging-gaps/">IL-31: AI Discarded a Worker’s Error Output</a></td></tr>
 <tr><th scope="row">Idempotency risks</th><td><a href="/audit-idempotency-risks/">IL-30: Rerunning Ansible Could Duplicate Mail</a></td></tr>
 <tr><th scope="row">Competing services</th><td><a href="/audit-competing-services/">IL-29: AI Started a Competing DHCP Server</a></td></tr>
 <tr><th scope="row">Cluster integrity</th><td><a href="/audit-cluster-integrity/">IL-28: A Cluster Node Rejoined but Still Needed Data Repair</a></td></tr>
 <tr><th scope="row">Incomplete deployment</th><td><a href="/audit-incomplete-deployment/">IL-27: AI Left Deployments Unfinished</a></td></tr>
-<tr><th scope="row">Configuration drift</th><td><a href="/audit-configuration-drift/">IL-26: AI Left Package Sources and Boot Settings Changed</a></td></tr>
+<tr><th scope="row">Configuration drift</th><td><a href="/audit-configuration-drift/">IL-26: AI Left Package Sources Changed After Repository Tests</a></td></tr>
 <tr><th scope="row">Security misconfiguration</th><td><a href="/audit-security-misconfiguration/">IL-25: Security Settings Did Not Enforce the Promised Limits</a></td></tr>
 <tr><th scope="row">Runaway remediation</th><td><a href="/audit-runaway-remediation/">IL-24: AI Repeated Repairs That Were Not Working</a></td></tr>
 <tr><th scope="row">Manual dependencies</th><td><a href="/audit-manual-dependencies/">IL-23: Ansible Passed After Manual Setup</a></td></tr>
@@ -40,24 +42,21 @@
 <tr><th scope="row">Weak authentication</th><td><a href="/audit-weak-authentication/">IL-21: Weak Passwords Were Accepted Despite Password Rules</a></td></tr>
 <tr><th scope="row">Process integrity</th><td><a href="/audit-process-integrity/">IL-20: AI Service Scripts Did Not Verify Start or Stop</a></td></tr>
 <tr><th scope="row">Network exposure</th><td><a href="/audit-network-exposure/">IL-19: AI Left Unrequested Network Services Running</a></td></tr>
-<tr><th scope="row">Disruptive testing</th><td><a href="/audit-disruptive-testing/">IL-18: AI Memory Tests Cut Off Remote Access</a></td></tr>
-<tr><th scope="row">DIY infrastructure</th><td><a href="/audit-diy-infrastructure/">IL-17: AI Proxies Passed Simple Tests but Missed Protocol Features</a></td></tr>
-<tr><th scope="row">Excessive privileges</th><td><a href="/audit-excessive-privileges/">IL-16: AI Gave Accounts Unnecessary Permissions</a></td></tr>
-<tr><th scope="row">Test residue</th><td><a href="/audit-test-residue/">IL-15: AI Left Test Files and Services Behind</a></td></tr>
+<tr><th scope="row">Disruptive testing</th><td><a href="/audit-disruptive-testing/">IL-18: AI Lost SSH Access During Its Memory Test</a></td></tr>
+<tr><th scope="row">DIY infrastructure</th><td><a href="/audit-diy-infrastructure/">IL-17: AI Wrote a Proxy That Could Submit a Write Twice</a></td></tr>
+<tr><th scope="row">Excessive privileges</th><td><a href="/audit-excessive-privileges/">IL-16: AI Gave a Test Login Access to Every Database</a></td></tr>
+<tr><th scope="row">Test residue</th><td><a href="/audit-test-residue/">IL-15: AI Left Backdated Test Archives Among Real Backups</a></td></tr>
 <tr><th scope="row">Reboot failures</th><td><a href="/audit-reboot-failures/">IL-14: AI Setups Needed Repairs After Reboot</a></td></tr>
-<tr><th scope="row">Unsafe changes</th><td><a href="/audit-unsafe-changes/">IL-13: AI Repairs Changed Unrelated Accounts and Services</a></td></tr>
+<tr><th scope="row">Unsafe changes</th><td><a href="/audit-unsafe-changes/">IL-13: AI Cleared Database Passwords After Password Generation Failed</a></td></tr>
 <tr><th scope="row">Security bypasses</th><td><a href="/audit-security-bypasses/">IL-12: AI Disabled Security Controls During Setup</a></td></tr>
 <tr><th scope="row">Software provenance</th><td><a href="/audit-software-provenance/">IL-11: AI Skipped Software Authenticity Checks</a></td></tr>
-<tr><th scope="row">Service outages</th><td><a href="/audit-service-outages/">IL-10: Some Servers Stayed Unreachable After Reboot</a></td></tr>
-<tr><th scope="row">Incomplete verification</th><td><a href="/audit-incomplete-verification/">IL-9: AI Tested the Wrong Behavior</a></td></tr>
+<tr><th scope="row">Service outages</th><td><a href="/audit-service-outages/">IL-10: A Server Became Unreachable During Its Reboot Test</a></td></tr>
+<tr><th scope="row">Incomplete verification</th><td><a href="/audit-incomplete-verification/">IL-9: AI Finished Testing Before Automatic Certificate Renewal</a></td></tr>
 <tr><th scope="row">Firewall misconfiguration</th><td><a href="/audit-firewall-misconfiguration/">IL-8: AI Opened More Firewall Access Than Requested</a></td></tr>
-<tr><th scope="row">Secret residue</th><td><a href="/audit-secret-residue/">IL-7: AI Left Extra Copies of Secrets</a></td></tr>
+<tr><th scope="row">Secret residue</th><td><a href="/audit-secret-residue/">IL-7: AI Left a Certificate Signing Key in a Temporary Directory</a></td></tr>
 <tr><th scope="row">Leftover access</th><td><a href="/audit-leftover-access/">IL-6: AI Left Temporary Login Access Behind</a></td></tr>
-<tr><th scope="row">Credential leakage</th><td><a href="/audit-credential-leakage/">IL-5: AI Exposed Passwords in Logs and Transfers</a></td></tr>
+<tr><th scope="row">Credential leakage</th><td><a href="/audit-credential-leakage/">IL-5: AI Printed Database Passwords into Its Command Log</a></td></tr>
 </tbody></table></div>
-
-
-
 
   </article>
 </main>
