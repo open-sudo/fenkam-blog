@@ -95,7 +95,7 @@
       "id": "IL-16",
       "slug": "audit-excessive-privileges",
       "url": "/audit-excessive-privileges/",
-      "title": "AI Gave Accounts Unnecessary Permissions"
+      "title": "AI Gave a Test Login Access to Every Database"
     },
     {
       "id": "IL-17",

@@ -183,12 +183,12 @@
     },
     {
       "stem": "il-16-technical-diagram",
-      "alt": "Access-control comparison. The recorded global database grant exceeded the verification operation and remained after testing.",
-      "caption": "Access-control comparison. The recorded global database grant exceeded the verification operation and remained after testing.",
+      "alt": "The recorded tests used galeratest.t1. The galtest account received ALL PRIVILEGES ON *.*, covering every database, and the agent finished without removing it.",
+      "caption": "The checks used one test table. The account received privileges across all databases, and the agent left that grant in place.",
       "id": "IL-16",
       "slug": "audit-excessive-privileges",
-      "title": "AI Gave Accounts Unnecessary Permissions",
-      "diagram_type": "Access-control matrix",
+      "title": "AI Gave a Test Login Access to Every Database",
+      "diagram_type": "Recorded test and privilege scope",
       "desktop": "assets/il-16-technical-diagram.svg",
       "mobile": "assets/il-16-technical-diagram-mobile.svg",
       "social": "assets/il-16-technical-diagram.png"
