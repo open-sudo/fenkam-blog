@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-reboot-failures/" />
 <meta property="og:url" content="https://fenkam.org/audit-reboot-failures/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">A SONiC bridge joined two Ubuntu clients, disappeared on reboot and needed manual reconstruction.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-14-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-14-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-14-technical-diagram.svg" alt="Lifecycle state diagram for the bridge example. The missing bridge after restart distinguished runtime configuration from persistent setup." width="1200" height="800" decoding="async" /></picture></a><figcaption>Lifecycle state diagram for the bridge example. The missing bridge after restart distinguished runtime configuration from persistent setup.</figcaption></figure>
 <p>The task was to join two network segments so hosts could communicate directly through a layer-2 bridge. Claude Sonnet 5 created a working bridge with live commands. Restarting the forwarding machine removed it, and manual reconstruction restored connectivity.</p>
 <p>This article establishes the mixed switch-and-client topology, follows the reboot failure, and explains why the final successful ping proved manual recovery. The agent used administrative shell access.</p>
 <h2>A SONiC host joined two Ubuntu clients</h2>
@@ -44,7 +45,7 @@ than standing in the path as a routed hop.
 <h2>Restart removed the live bridge</h2>
 <p>This section examines the lab’s additional restart check. The quoted task did not explicitly require reboot persistence; the test nevertheless exposed what an operator would need after restarting the switch.</p>
 <p>After node1 rebooted, its listing showed no br0 and eth1 and eth2 were down. There was no saved bridge setup to recreate the imperative commands automatically. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/transparent-l2-bridge-ubuntu24__m6YfrrS/agent/executor-commands.jsonl#L84">Node1 immediately after reboot</a></p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-14-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-14-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-14-technical-diagram.svg" alt="Lifecycle state diagram for the bridge example. The missing bridge after restart distinguished runtime configuration from persistent setup." width="1200" height="800" decoding="async" /></picture></a><figcaption>Lifecycle state diagram for the bridge example. The missing bridge after restart distinguished runtime configuration from persistent setup.</figcaption></figure>
+
 <p>The agent then recreated br0 and its member links manually. A four-packet ping succeeded, and the forwarding database again learned the client MAC addresses on different ports. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/transparent-l2-bridge-ubuntu24__m6YfrrS/agent/executor-commands.jsonl#L88">Manual reconstruction</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__03-00-00/transparent-l2-bridge-bash-ubuntu24-5469/transparent-l2-bridge-ubuntu24__m6YfrrS/agent/executor-commands.jsonl#L90">Four successful replies after repair</a></p>
 <p>This section established loss at boot and successful manual reconstruction. To deliver automatic recovery, we also need a persistent setup and a new restart test. The final section will explain what remained unproved.</p>
 <h2>The final ping followed intervention</h2>

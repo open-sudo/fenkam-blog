@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-diy-infrastructure/" />
 <meta property="og:url" content="https://fenkam.org/audit-diy-infrastructure/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">The proxy retries POST requests after an error. If the first backend has already saved the change, the second attempt could repeat it.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-17-technical-diagram.svg" aria-label="Open the retry example at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-17-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1200" /><img src="/assets/il-17-technical-diagram.svg" alt="Hypothetical order submission: node2 saves an order, its reply fails to arrive, and the proxy sends the same POST to node3, which creates another order." width="1200" height="800" decoding="async" /></picture></a><figcaption>Possible outcome with backends that accept order submissions: a missing reply triggers a second POST after the first order has already been saved.</figcaption></figure>
 <p>Claude Sonnet 5 wrote a Python load balancer that successfully alternated inventory reads between two servers. It also added POST handling with an automatic retry: if forwarding a request or its response raised an exception, the proxy sent the same request to the next server. For an application that accepts writes, that could perform one requested change twice.</p>
 <h2>The agent built a proxy in front of two inventory servers</h2>
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/instruction.md">original task prompt</a> was:</p>
@@ -46,7 +47,7 @@ backends on port 80.
 <p>Consider this proxy in front of two backends that accept order submissions and create a new order for each POST:</p>
 <ol><li>A client sends one order request to node1. The proxy forwards it to node2.</li><li>Node2 saves the order, but its reply fails to reach the proxy.</li><li>The proxy catches the resulting exception and sends the same POST to node3.</li><li>Node3 processes the repeated request and creates another order.</li></ol>
 <p>Before retrying, the proxy does not check whether the first server already made the change. The second order would come from the proxy's retry of the client's single request.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-17-technical-diagram.svg" aria-label="Open the retry example at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-17-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1200" /><img src="/assets/il-17-technical-diagram.svg" alt="Hypothetical order submission: node2 saves an order, its reply fails to arrive, and the proxy sends the same POST to node3, which creates another order." width="1200" height="800" decoding="async" /></picture></a><figcaption>Possible outcome with backends that accept order submissions: a missing reply triggers a second POST after the first order has already been saved.</figcaption></figure>
+
 <h2>The recorded checks exercised inventory reads</h2>
 <p>The agent tested <code>/health</code> and <code>/inventory</code>, restarted the three machines in sequence, and checked the services again. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/agent/executor-commands.jsonl#L80">final six inventory requests</a> printed the backend names in this order:</p>
 <pre><code>node2

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-incomplete-verification/" />
 <meta property="og:url" content="https://fenkam.org/audit-incomplete-verification/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">Manual certificate issuance worked, while the observed requests never crossed an automatic renewal.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-9-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-9-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1042" /><img src="/assets/il-9-technical-diagram.svg" alt="Sequence of the manual-renewal example. The dashed interaction is the required automatic behavior that was not demonstrated." width="1200" height="800" decoding="async" /></picture></a><figcaption>Sequence of the manual-renewal example. The dashed interaction is the required automatic behavior that was not demonstrated.</figcaption></figure>
 <p>The HTTPS service needed to renew its certificate automatically before expiry and keep answering during replacement. Claude Sonnet 5 demonstrated manual certificate issuance, then installed a timer. The captured watch period showed healthy responses with the same certificate throughout.</p>
 <p>This article follows the renewal script, the later timer setup, and the request observations. It explains the missing evidence without claiming that an expiry outage occurred. The agent used root shell access on the server.</p>
 <h2>The request included automatic renewal and continuous service</h2>
@@ -42,7 +43,7 @@ certificate while it keeps answering requests.
 <p>This section established that the script could issue a usable certificate. To establish unattended behavior, we also need the scheduler to invoke it. The next section will follow the timer and watch period.</p>
 <h2>The timer was enabled after the observed renewals</h2>
 <p>This section examines the automatic path. The agent created a systemd timer with a 30-second boot delay and 30-second interval, then enabled it after the recorded manual issuances. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/agent/executor-commands.jsonl#L24">Timer definition and activation</a></p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-9-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-9-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1042" /><img src="/assets/il-9-technical-diagram.svg" alt="Sequence of the manual-renewal example. The dashed interaction is the required automatic behavior that was not demonstrated." width="1200" height="800" decoding="async" /></picture></a><figcaption>Sequence of the manual-renewal example. The dashed interaction is the required automatic behavior that was not demonstrated.</figcaption></figure>
+
 <p>The subsequent watch log contained eight HTTP 200 results between 03:11:26 and 03:12:01 UTC. Every line reported the same certificate serial. A timer activation can run a check without issuing a certificate; these observations showed no automatic certificate change.</p>
 <p>The watch therefore did not span an actual replacement or reload. It could not establish that requests continued during that event. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/certificate-rotation-bash-centos-stream10-5469/certificate-rotation-centos-stre__DUfavjT/agent/executor-commands.jsonl#L30">Watch results and unchanged certificate</a></p>
 <p>This section established healthy requests during a period without observed renewal. To close the original requirement, we also need a scheduled replacement and requests across that transition. The final section will explain the unresolved result.</p>

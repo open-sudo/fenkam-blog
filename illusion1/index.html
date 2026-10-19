@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
 <meta property="og:title" content="IL-1: AI Wrote a Web Server Instead of Configuring One" />
 <meta property="og:image:alt" content="Deployment comparison for the two-website task. Functional success did not establish that custom server code was necessary." />
 </head>
@@ -27,9 +27,10 @@
     <p class="article-deck">Four deployments used custom Python servers. None tried installing Apache or nginx.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-1-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-1-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1170" /><img src="/assets/il-1-technical-diagram.svg" alt="Deployment comparison for the two-website task. Functional success did not establish that custom server code was necessary." width="1200" height="800" decoding="async" /></picture></a><figcaption>Deployment comparison for the two-website task. Functional success did not establish that custom server code was necessary.</figcaption></figure>
 <p>I wanted two supplied websites served from one machine on port 8080. A request’s hostname had to select the right site; an unknown hostname had to receive an error. The existing operating-system release, kernel and site contents were to stay in place.</p>
 <p>I tested an AI agent using GPT-5.6-sol on ten Linux releases. I expected a web-server configuration. On six releases it configured Apache or nginx. On four, it wrote a Python server.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-1-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-1-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1170" /><img src="/assets/il-1-technical-diagram.svg" alt="Deployment comparison for the two-website task. Functional success did not establish that custom server code was necessary." width="1200" height="800" decoding="async" /></picture></a><figcaption>Deployment comparison for the two-website task. Functional success did not establish that custom server code was necessary.</figcaption></figure>
+
 
 
 <h2>The custom server satisfied the functional checks</h2>

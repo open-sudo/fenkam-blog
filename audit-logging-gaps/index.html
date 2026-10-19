@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-logging-gaps/" />
 <meta property="og:url" content="https://fenkam.org/audit-logging-gaps/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">The confined worker ran, but its systemd unit discarded standard output and standard error.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-31-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-31-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-31-technical-diagram.svg" alt="Logging data-flow diagram for the delivered unit. The conclusion concerns discarded standard streams, not the absence of every possible host or application log." width="1200" height="800" decoding="async" /></picture></a><figcaption>Logging data-flow diagram for the delivered unit. The conclusion concerns discarded standard streams, not the absence of every possible host or application log.</figcaption></figure>
 <p>The task was to run an unprivileged background worker inside a restricted filesystem. The delivered worker ran, but its systemd unit discarded standard output and standard error. That made ordinary diagnostics unavailable through those streams.</p>
 <p>This article establishes the worker and controller, follows the logging workaround, and explains the gap between confinement checks and demonstrated error retention. GPT-5.6-sol used administrative shell access and Ansible.</p>
 <h2>A confined worker still needed an observable error path</h2>
@@ -46,7 +47,7 @@ Implement using Ansible.
 <pre class="command-record"><code>StandardOutput=null
 StandardError=null</code></pre>
 <p>Those settings discard data written to standard output and standard error. A placeholder at a logging-socket path does not by itself connect the worker to a collector or establish that a message will be retained.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-31-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-31-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-31-technical-diagram.svg" alt="Logging data-flow diagram for the delivered unit. The conclusion concerns discarded standard streams, not the absence of every possible host or application log." width="1200" height="800" decoding="async" /></picture></a><figcaption>Logging data-flow diagram for the delivered unit. The conclusion concerns discarded standard streams, not the absence of every possible host or application log.</figcaption></figure>
+
 <p>This section established that the service discarded its ordinary output streams. To assess the finished deployment, we also need to separate that setting from the confinement checks. The final section will explain what was verified and what was missing.</p>
 <h2>The healthy worker had no demonstrated replacement for those streams</h2>
 <p>This section closes the case with the observed final state. The <a href="/assets/run-sources/il-31/index.html#L100">post-restart checks</a> showed an active inventorysvc worker, persistent application files and a root-owned chroot. Those results support the requested confinement behavior.</p>

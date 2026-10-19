@@ -169,6 +169,7 @@ h1 em { color:var(--muted); }
 
 /* Architecture diagrams keep labels legible and show the whole topology. */
 .article-body .article-diagram { margin:32px 0 40px; }
+.article-body > .article-diagram:first-child { margin-top:0; }
 .article-diagram picture { display:block; }
 .article-body .article-diagram img { margin:0; width:100%; height:auto; }
 .article-diagram figcaption { margin-top:12px; color:var(--muted); font:12px/1.6 'DM Mono',monospace; }

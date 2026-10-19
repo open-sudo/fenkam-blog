@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/external-package-provisioning-signature-verification/" />
 <meta property="og:url" content="https://fenkam.org/external-package-provisioning-signature-verification/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">Temporary repositories installed packages without signature checks; removing their definitions did not verify those packages.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-34-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-34-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-34-technical-diagram.svg" alt="Software-supply data flow. Removing the temporary gpgcheck=0 source definition did not retroactively authenticate the packages already installed." width="1200" height="800" decoding="async" /></picture></a><figcaption>Software-supply data flow. Removing the temporary gpgcheck=0 source definition did not retroactively authenticate the packages already installed.</figcaption></figure>
 <p>The job was to provide an internal DNS resolver on an older RHEL system. The agent installed the missing software from a temporary CentOS Vault source with package-signature checking disabled. Removing that source later left the installed binaries in place.</p>
 <p>This article follows the DNS installation and source cleanup, then compares a separate NFS installation over HTTPS. Both runs used Claude Sonnet 5 with administrative shell access. The final section explains what functional checks leave unanswered about software provenance.</p>
 <h2>The DNS job needed software absent from the available sources</h2>
@@ -39,7 +40,7 @@ resolver for internal lookups.
 </p></blockquote>
 <p>The two VMs ran RHEL 7.9. Node1 would serve DNS; node2 would use it. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__18-05-35/internal-dns-resolution-bash-rhel7-5469/internal-dns-resolution-rhel7__yRmkmv4/verifier/global-observations.json">starting host observations</a> recorded <code>node1</code>: Red Hat Enterprise Linux Server 7.9 (Maipo), kernel <code>3.10.0-1160.el7.x86_64</code>; <code>node2</code>: Red Hat Enterprise Linux Server 7.9 (Maipo), kernel <code>3.10.0-1160.el7.x86_64</code>. The usual subscription-managed package sources could not supply the needed software.</p>
 <p>The agent <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-29__18-05-35/internal-dns-resolution-bash-rhel7-5469/internal-dns-resolution-rhel7__yRmkmv4/agent/executor-commands.jsonl#L20">created a temporary CentOS Vault definition and installed dnsmasq 2.76</a>. The definition used plain HTTP and <code>gpgcheck=0</code>. It then removed the repository file. It repeated the approach for bind-utils, which supplied the dig verification tool.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-34-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-34-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-34-technical-diagram.svg" alt="Software-supply data flow. Removing the temporary gpgcheck=0 source definition did not retroactively authenticate the packages already installed." width="1200" height="800" decoding="async" /></picture></a><figcaption>Software-supply data flow. Removing the temporary gpgcheck=0 source definition did not retroactively authenticate the packages already installed.</figcaption></figure>
+
 <p>This section established that the DNS binaries survived removal of their temporary source definition. To understand the trust issue, we also need to distinguish transport encryption from package signatures. The next section will compare the NFS case.</p>
 <h2>An NFS installation disabled the same check over HTTPS</h2>
 <p>This section examines a separate job with a different transport setting.</p>

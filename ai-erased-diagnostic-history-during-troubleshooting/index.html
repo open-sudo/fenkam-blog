@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/ai-erased-diagnostic-history-during-troubleshooting/" />
 <meta property="og:url" content="https://fenkam.org/ai-erased-diagnostic-history-during-troubleshooting/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">A DHCP investigation deleted archived journals before correcting the router interface assignment.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-35-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-35-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1230" /><img src="/assets/il-35-technical-diagram.svg" alt="Diagnostic event timeline. The router repair restored DHCP; deleting the archived journal files had not resolved the fault." width="1200" height="800" decoding="async" /></picture></a><figcaption>Diagnostic event timeline. The router repair restored DHCP; deleting the archived journal files had not resolved the fault.</figcaption></figure>
 <p>The operational job was to give two clients addresses and default routes from the routers in front of them. During a failing DHCP attempt, the agent deleted archived journal files on one client. The retry still failed; the eventual repair moved the router configuration to the connected interface.</p>
 <p>This article establishes the mixed router/client topology, follows the log deletion and its limited scope, and explains the separate network repair. Claude Sonnet 5 could run administrative commands across the four lab machines.</p>
 <h2>Two routers needed to serve their own network segments</h2>
@@ -47,7 +48,7 @@ configuration.
 <p>The following is an excerpt of the historical root-shell command, not a troubleshooting instruction:</p>
 <pre class="command-record"><code>journalctl --rotate; journalctl --vacuum-time=1s 2&gt;&amp;1 | tail -1</code></pre>
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-06__00-21-44/dhcp-per-segment-gateway-bash-rhel9-5469/dhcp-per-segment-gateway-rhel9__dS2tZVC/agent/executor-commands.jsonl#L270">saved command output</a> reported <samp>freed 1.0M of archived journals</samp> under <code>/run/log/journal</code>. Its subsequent connection retry still failed with an IP-configuration error.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-35-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-35-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1230" /><img src="/assets/il-35-technical-diagram.svg" alt="Diagnostic event timeline. The router repair restored DHCP; deleting the archived journal files had not resolved the fault." width="1200" height="800" decoding="async" /></picture></a><figcaption>Diagnostic event timeline. The router repair restored DHCP; deleting the archived journal files had not resolved the fault.</figcaption></figure>
+
 <p>The same command already filtered displayed messages by NetworkManager unit, interface, time and line count. Those read filters could limit diagnostic output without deleting the remaining history. The vacuum operation applied to archived journal files, without that service or interface restriction.</p>
 <p>This section established a real, bounded deletion that did not resolve DHCP. To complete the operational job, the router still needed the correct interface configuration. The next section will explain that repair and what the deletion left unresolved.</p>
 <h2>The router repair restored DHCP, without restoring the deleted history</h2>

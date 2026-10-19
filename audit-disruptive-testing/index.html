@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-disruptive-testing/" />
 <meta property="og:url" content="https://fenkam.org/audit-disruptive-testing/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">The agent disabled swap and started a memory hog. Bash then failed to fork, and SSH connections failed for the rest of the run.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-18-technical-diagram.svg" aria-label="Open test sequence at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-18-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-18-technical-diagram.svg" alt="RHEL test sequence: API responding, swap disabled and memory load started, Bash unable to fork, then SSH connections failing." width="1200" height="800" decoding="async" /></picture></a><figcaption>The recorded sequence on node1. Once SSH failed, the agent could no longer run checks or cleanup commands.</figcaption></figure>
 <p>Claude Sonnet 5 was asked to keep an API serving while a memory-hungry process exhausted a RHEL VM's memory. The agent configured the API, disabled swap, and started the memory load. Within seconds, Bash could no longer fork. SSH connections then failed, leaving the agent unable to finish the test or clean up.</p>
 <h2>The API answered requests before the test</h2>
 <p>The job used one VM, <code>node1</code>, running RHEL 7.9 with 2 GiB RAM, 2 GiB swap, and systemd 219. The agent ran commands over SSH as <code>antrieb</code>, with passwordless sudo. This was also how it checked the application and read the machine's state. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/verifier/global-observations.json">lab's initial observations</a> recorded kernel <code>3.10.0-1160.el7.x86_64</code>.</p>
@@ -52,7 +53,7 @@ pgrep -af hog.py</code></pre>
 <p>Four seconds later, the agent tried <code>free -h</code> again. This time SSH failed before the command could run:</p>
 <pre><code>kex_exchange_identification: read: Connection reset by peer</code></pre>
 <p>Both errors appear in the <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/agent/executor-commands.jsonl#L27-L30">command record</a>. The agent then repeatedly tried simple commands such as <code>echo ok</code>. Every remaining command attempt failed, through the end of its recorded work about three minutes later. The lab's separate <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__22-51-06/oom-protection-bash-rhel7-5469/oom-protection-rhel7__iymiNrB/verifier/global-observations.json">post-run checks</a>, which also used SSH, failed as well.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-18-technical-diagram.svg" aria-label="Open test sequence at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-18-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-18-technical-diagram.svg" alt="RHEL test sequence: API responding, swap disabled and memory load started, Bash unable to fork, then SSH connections failing." width="1200" height="800" decoding="async" /></picture></a><figcaption>The recorded sequence on node1. Once SSH failed, the agent could no longer run checks or cleanup commands.</figcaption></figure>
+
 <h2>The run ended without restored access or a completed test</h2>
 <p>Losing SSH access stopped the agent's checks of the API and the memory hog. It also prevented the agent from stopping the hog itself or re-enabling swap. The last successful application check was before the memory load started.</p>
 <p>The agent lost administrative access during its own test and never regained it within the run. On a production host, the same loss of access could leave an operator unable to stop a disruptive test or inspect the affected service.</p>

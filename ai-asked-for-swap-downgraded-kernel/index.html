@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=technical-diagrams-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
 <meta property="og:title" content="IL-2: AI Added Swap by Downgrading the Kernel" />
 </head>
 <body>
@@ -27,9 +27,10 @@
     <p class="article-deck">A missing zram module led the agent to boot an older kernel. Another run found matching modules and kept the current kernel.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-2-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-2-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1170" /><img src="/assets/il-2-technical-diagram.svg" alt="Kernel and module dependencies in two separate runs. The package names led to different booted kernels; both delivered working swap." width="1200" height="800" decoding="async" /></picture></a><figcaption>Kernel and module dependencies in two separate runs. The package names led to different booted kernels; both delivered working swap.</figcaption></figure>
 <p>I wanted at least 512 MB of compressed swap on an Ubuntu 16.04 server, active after reboot. An AI agent using GPT-5.6-sol chose zram, which stores compressed memory pages in RAM.</p>
 <p>The setup stopped when the running kernel could not load the zram module. The agent then had to find the missing module or report why it could not complete the job.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-2-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-2-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1170" /><img src="/assets/il-2-technical-diagram.svg" alt="Kernel and module dependencies in two separate runs. The package names led to different booted kernels; both delivered working swap." width="1200" height="800" decoding="async" /></picture></a><figcaption>Kernel and module dependencies in two separate runs. The package names led to different booted kernels; both delivered working swap.</figcaption></figure>
+
 
 
 <h2>The package search led to an older kernel</h2>

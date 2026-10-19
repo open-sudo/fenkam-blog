@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-network-exposure/" />
 <meta property="og:url" content="https://fenkam.org/audit-network-exposure/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">An HTTPS deployment retained ordinary HTTP, and a separate integrity-tool installation introduced an SMTP listener.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-19-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-19-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-19-technical-diagram.svg" alt="Network endpoint inventory for the HTTPS example. A successful request tested one listener while another remained on the same server." width="1200" height="800" decoding="async" /></picture></a><figcaption>Network endpoint inventory for the HTTPS example. A successful request tested one listener while another remained on the same server.</figcaption></figure>
 <p>A successful request to a new HTTPS endpoint leaves another question: which other network services did the installation expose? One certificate setup kept ordinary HTTP alongside HTTPS. A separate integrity-monitoring installation introduced an SMTP listener.</p>
 <p>This article establishes each job, compares the intended service with the final listener inventory, and explains why reachability needs its own checks. GPT-5.6-sol handled HTTPS; Claude Sonnet 5 handled integrity monitoring. Both used administrative shell access.</p>
 <h2>The HTTPS host also retained ordinary HTTP</h2>
@@ -41,7 +42,7 @@ Keep the installed operating-system release and kernel; use software compatible 
 </p></blockquote>
 <p>Two Alpine 3.23.3 VMs ran kernel <code>6.18.7-0-lts</code>. Node1 created the CA and node2 served HTTPS on 8443. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5018/2026-10-03__17-05-51/internal-ca-tls-bash-alpine-5018/internal-ca-tls-alpine__p48cdSP/agent/executor-commands.jsonl#L2">initial inspection</a> showed SSH listening before the web setup.</p>
 <p>The agent installed the web software, configured the certificate and demonstrated a verified HTTPS connection. The final listener inventory also showed the package’s default HTTP endpoint on port 80. That endpoint was additional to the requested TLS service.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-19-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-19-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-19-technical-diagram.svg" alt="Network endpoint inventory for the HTTPS example. A successful request tested one listener while another remained on the same server." width="1200" height="800" decoding="async" /></picture></a><figcaption>Network endpoint inventory for the HTTPS example. A successful request tested one listener while another remained on the same server.</figcaption></figure>
+
 <p>The HTTPS request proved the intended endpoint worked. It did not test port 80’s content, intended clients or network reachability.</p>
 <p>This section established an additional listener on a working HTTPS host. To see how package dependencies can add a different service, we also need the integrity-monitoring run. The next section will examine it.</p>
 <h2>Installing integrity-monitoring tools introduced SMTP</h2>

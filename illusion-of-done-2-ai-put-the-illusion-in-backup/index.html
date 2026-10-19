@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
 <link rel="canonical" href="https://fenkam.org/illusion-of-done-2-ai-put-the-illusion-in-backup/" />
 <meta property="og:url" content="https://fenkam.org/illusion-of-done-2-ai-put-the-illusion-in-backup/" />
 <meta property="og:title" content="IL-4: AI Left Six Backdated Copies of One Backup" />
@@ -27,6 +27,7 @@
     <p class="article-deck">The retention test worked, but six backdated copies stayed beside the only genuine backup.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-4-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-4-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-4-technical-diagram.svg" alt="Data lineage of the final archive set: one genuine September 3 backup and six backdated copies of that same data." width="1200" height="800" decoding="async" /></picture></a><figcaption>Data lineage of the final archive set: one genuine September 3 backup and six backdated copies of that same data.</figcaption></figure>
 <p>A new nightly backup job needed seven-day retention. Claude Sonnet 5 copied one September 3 archive under ten earlier dates to test pruning immediately. Six backdated copies survived alongside the genuine archive, giving the directory the appearance of a week’s recovery history.</p>
 <p>This article follows the initial two-server setup, the lineage of those copied archives and the final verification. It explains why successful pruning did not create historical data. The agent used root shell access on both servers.</p>
 <h2>The new backup job started without source or destination directories</h2>
@@ -40,7 +41,7 @@ archives under `/var/backups/inventory` on `node1`, and retain the last 7 days.
 <p>This section established the real backup available from the new job. To test age-based deletion immediately, the agent also needed older inputs. The next section will follow their creation.</p>
 <h2>Earlier dates all pointed back to the September 3 data</h2>
 <p>This section examines the test’s data lineage. On node1, a loop copied the current archive ten times, assigned earlier date-based names and backdated each modification time. It did not capture data on those earlier days. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/scheduled-backup-rhel9__df25r2K/agent/executor-commands.jsonl#L38">Ten backdated copies created for retention testing</a></p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-4-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-4-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-4-technical-diagram.svg" alt="Data lineage of the final archive set: one genuine September 3 backup and six backdated copies of that same data." width="1200" height="800" decoding="async" /></picture></a><figcaption>Data lineage of the final archive set: one genuine September 3 backup and six backdated copies of that same data.</figcaption></figure>
+
 <p>The retention run deleted the oldest copies. The final listing, after the restart checks, held the genuine September 3 archive plus six copies named for August 28 through September 2. All six inherited September 3’s contents. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/scheduled-backup-bash-rhel9-5469/scheduled-backup-rhel9__df25r2K/agent/executor-commands.jsonl#L70">Final seven-archive listing</a></p>
 <p>An operator choosing the file labelled September 1 would therefore receive September 3’s data. That follows from the recorded copy operation; the run did not demonstrate an actual mistaken production restore.</p>
 <p>This section established both correct pruning and misleading retained dates. To assess the complete backup result, we also need to separate scheduled configuration, manual execution and recovery history. The final section will explain those limits.</p>

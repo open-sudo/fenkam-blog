@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-idempotency-risks/" />
 <meta property="og:url" content="https://fenkam.org/audit-idempotency-risks/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">A Maildir filename changed during normal use could make an imported message look missing on the next Ansible run.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-30-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-30-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1200" /><img src="/assets/il-30-technical-diagram.svg" alt="Sequence diagram of the import guard’s code risk. The message can still exist even after its original destination filename has changed." width="1200" height="800" decoding="async" /></picture></a><figcaption>Sequence diagram of the import guard’s code risk. The message can still exist even after its original destination filename has changed.</figcaption></figure>
 <p>The job was to migrate two staged messages into a working encrypted IMAP mailbox without changing the recovery source. The first migration worked. A later rerun after ordinary mailbox use could still duplicate a message because the playbook used a mutable filename as its import guard.</p>
 <p>This article establishes the source mailbox and Ansible setup, explains the filename-based guard, and distinguishes the source-supported rerun risk from an observed duplicate. GPT-5.6-sol could run administrative commands on the three lab machines.</p>
 <h2>The migration had to preserve both message content and state</h2>
@@ -55,7 +56,7 @@ Implement using Ansible.
 remote_src: true
 force: false</code></pre>
 <p>The exact destination path was the guard. Reading the message can change its Maildir flags and rename the file while leaving the message present. After such a rename, the original path would be absent and the same copy task could import the source again with its original flags.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-30-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-30-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1200" /><img src="/assets/il-30-technical-diagram.svg" alt="Sequence diagram of the import guard’s code risk. The message can still exist even after its original destination filename has changed." width="1200" height="800" decoding="async" /></picture></a><figcaption>Sequence diagram of the import guard’s code risk. The message can still exist even after its original destination filename has changed.</figcaption></figure>
+
 <p>This section established how normal mailbox use could invalidate the guard. To assess the result fairly, we also need to state which rerun and retrieval tests were recorded. The final section will separate the demonstrated migration from the untested risk.</p>
 <h2>The first migration succeeded; the harmful rerun was not exercised</h2>
 <p>This section closes the case with its verification limits. Certificate-validated IMAP retrieval preserved both Message-ID values, bodies and expected states. The <a href="/assets/run-sources/il-30/index.html#L86">post-reboot hashes</a> showed the staged originals remained byte-identical. Immediate playbook reruns reported convergence.</p>

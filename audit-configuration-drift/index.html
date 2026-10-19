@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-configuration-drift/" />
 <meta property="og:url" content="https://fenkam.org/audit-configuration-drift/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">Repository demonstrations left normal package sources disabled or blocked after the local installation succeeded.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-26-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-26-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-26-technical-diagram.svg" alt="Repository-configuration state diagram. The temporary test arrangement remained on the machine after its purpose ended." width="1200" height="800" decoding="async" /></picture></a><figcaption>Repository-configuration state diagram. The temporary test arrangement remained on the machine after its purpose ended.</figcaption></figure>
 <p>A local-repository demonstration needs a controlled period when normal package sources are unavailable. In these runs, the agent proved a local installation but left source changes behind after the test. A later update would inherit that test configuration.</p>
 <p>This article follows CentOS repository files moved aside, then an Ubuntu source left pointing at a vanished server. GPT-5.6-sol handled CentOS; Claude Sonnet 5 handled Ubuntu. Both used administrative shell access.</p>
 <h2>CentOS’s remote source files stayed outside active configuration</h2>
@@ -39,7 +40,7 @@ Keep the installed operating-system release and kernel; use software compatible 
 </p></blockquote>
 <p>The run used one CentOS Stream 10 VM on kernel <code>6.12.0-205.el10.x86_64</code>. Its <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/local-package-repository-bash-centos-stream10-4543/local-package-repository-centos__gCCAVN3/agent/executor-commands.jsonl#L2">initial inspection</a> showed BaseOS, AppStream and Extras sources enabled. The agent prepared an Apache-served local repository containing tree 2.1.0.</p>
 <p>It <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/local-package-repository-bash-centos-stream10-4543/local-package-repository-centos__gCCAVN3/agent/executor-commands.jsonl#L10">moved the normal centos*.repo files</a> into <code>/etc/yum.repos.d/remote-disabled/</code>, then installed tree with only the local source enabled. This was configuration isolation, not a captured network outage.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-26-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-26-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-26-technical-diagram.svg" alt="Repository-configuration state diagram. The temporary test arrangement remained on the machine after its purpose ended." width="1200" height="800" decoding="async" /></picture></a><figcaption>Repository-configuration state diagram. The temporary test arrangement remained on the machine after its purpose ended.</figcaption></figure>
+
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/local-package-repository-bash-centos-stream10-4543/local-package-repository-centos__gCCAVN3/agent/executor-commands.jsonl#L26">post-restart inspection</a> still showed those files in remote-disabled and only the local source listed. The local installation worked; the ordinary sources were not restored.</p>
 <p>This section established a temporary test condition retained on CentOS. To see why file cleanup alone is insufficient, we also need the Ubuntu case where the configured target disappeared. The next section will explain it.</p>
 <h2>Ubuntu retained a source for a server that no longer existed</h2>

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
 <link rel="canonical" href="https://fenkam.org/same-prompt-same-model-linux-distros/" />
 <meta property="og:url" content="https://fenkam.org/same-prompt-same-model-linux-distros/" />
 <meta property="og:title" content="IL-42: AI Wrote an HTTPS Server Despite Available Packages" />
@@ -27,6 +27,7 @@
     <p class="article-deck">On one RHEL 9.8 VM, an agent wrote a Python HTTPS service. Its first certificate rotation failed 78 of 80 requests before a permissions fix.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-42-certificate-renewal-permissions.svg" aria-label="Open certificate-renewal diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-42-certificate-renewal-permissions-mobile.svg" type="image/svg+xml" width="640" height="1460" /><img src="/assets/il-42-certificate-renewal-permissions.svg" alt="On one RHEL 9.8 VM, the root renewal job replaced active.pem with a mode 0600 file. The autohttps service could not read it: 78 of 80 requests failed. Changing the script to write mode 0640 allowed all 100 requests in the next test to succeed." width="1200" height="800" decoding="async" /></picture></a><figcaption>The renewal script replaced a readable certificate file with a root-only file owned by root:autohttps. Mode 0600 removed group read access. The agent changed the script to write 0640 files. All 100 requests in the next test succeeded.</figcaption></figure>
 <p>The job in this lab test was to add HTTPS to an existing Linux virtual machine. The service needed to listen on port 8443, renew its certificate before expiry, and keep answering requests during renewal. The machine, OS and kernel had to stay. The open decision was the <strong>web-server software</strong>: install Apache or nginx, or write a new HTTPS program.</p>
 <p>The AI agent used GPT-5.6-sol and could run shell commands on the VM. It wrote a Python HTTPS program. The evidence links in this article lead to its saved commands and their output.</p>
 <p>This article first establishes the host and software options, then follows a failed certificate renewal and its repair. The final section explains what maintaining the custom Python program would mean in production.</p>
@@ -66,7 +67,7 @@ Keep the installed operating-system release and kernel; use software compatible 
 <pre class="command-record" aria-label="Recorded diagnostic command"><code>runuser -u autohttps -- openssl x509 -in /etc/pki/autohttps/active.pem -noout -serial</code></pre>
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/6324/2026-10-03__19-23-12/certificate-rotation-bash-rhel9-6324/certificate-rotation-rhel9__ant5rJM/agent/executor-commands.jsonl#L16">recorded error output</a> contains <samp>Permission denied</samp>. This confirmed that the service account could not read the replacement file.</p>
 <p>Renewal triggered the failure by replacing the file. The script’s mode <code>0600</code> removed the group read access the running program needed. Without the certificate file, the program could not complete the TLS handshake, which sets up the encrypted connection.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-42-certificate-renewal-permissions.svg" aria-label="Open certificate-renewal diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-42-certificate-renewal-permissions-mobile.svg" type="image/svg+xml" width="640" height="1460" /><img src="/assets/il-42-certificate-renewal-permissions.svg" alt="On one RHEL 9.8 VM, the root renewal job replaced active.pem with a mode 0600 file. The autohttps service could not read it: 78 of 80 requests failed. Changing the script to write mode 0640 allowed all 100 requests in the next test to succeed." width="1200" height="800" decoding="async" /></picture></a><figcaption>The renewal script replaced a readable certificate file with a root-only file owned by root:autohttps. Mode 0600 removed group read access. The agent changed the script to write 0640 files. All 100 requests in the next test succeeded.</figcaption></figure>
+
 <p>This section traced the failed requests to a replacement certificate file that <code>autohttps</code> could not read. To restore HTTPS and make later renewals work, the agent needed to fix the current file and the script that created replacements. The next section will show that repair and the checks used to verify it.</p>
 
 <h2>The agent repaired renewal and tested again</h2>

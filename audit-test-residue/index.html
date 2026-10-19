@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-test-residue/" />
 <meta property="og:url" content="https://fenkam.org/audit-test-residue/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">A backup test left six synthetic dated archives beside a genuine backup after pruning and restart checks.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-15-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-15-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-15-technical-diagram.svg" alt="Filesystem tree of the retention-test problem. Synthetic archives were left in the same namespace as genuine backups." width="1200" height="800" decoding="async" /></picture></a><figcaption>Filesystem tree of the retention-test problem. Synthetic archives were left in the same namespace as genuine backups.</figcaption></figure>
 <p>A nightly backup job needed a seven-day retention rule. Claude Sonnet 5 tested pruning by copying one archive under ten earlier dates. The rule removed older copies, but six synthetic archives remained beside the real backup.</p>
 <p>This article follows the backup setup, the artificial history used for testing, and the final directory. It explains why working deletion logic did not make the surviving dates genuine recovery points. The agent had administrative shell access to both machines.</p>
 <h2>The source directory was created during setup</h2>
@@ -47,7 +48,7 @@ archives under `/var/backups/inventory` on `node1`, and retain the last 7 days.
   cp inventory-$(date +%Y-%m-%d).tar.gz &quot;$f&quot;
   touch -d &quot;-${i} days&quot; &quot;$f&quot;</code></pre>
 <p>These are excerpts from the <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl#L30">historical test command</a>, not a backup procedure to run. Every dated copy originated from the current archive.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-15-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-15-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-15-technical-diagram.svg" alt="Filesystem tree of the retention-test problem. Synthetic archives were left in the same namespace as genuine backups." width="1200" height="800" decoding="async" /></picture></a><figcaption>Filesystem tree of the retention-test problem. Synthetic archives were left in the same namespace as genuine backups.</figcaption></figure>
+
 <p>After pruning and later verification, the final listing contained the genuine September 3 archive plus six synthetic archives dated August 28 through September 2. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__10-02-42/scheduled-backup-bash-ubuntu16-5469/scheduled-backup-ubuntu16__8iTUy7c/agent/executor-commands.jsonl#L60">Final backup directory listing</a></p>
 <p>This section established that pruning ran and artificial history remained. To evaluate the nightly-backup requirement, we also need to distinguish script execution from scheduled execution and recovery history. The final section will explain those limits.</p>
 <h2>The script worked, but the directory overstated its history</h2>

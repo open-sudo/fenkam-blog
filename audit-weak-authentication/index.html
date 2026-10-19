@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-weak-authentication/" />
 <meta property="og:url" content="https://fenkam.org/audit-weak-authentication/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">Password-scoring tools rejected weak values that the tested administrative setters still accepted.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-21-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-21-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1170" /><img src="/assets/il-21-technical-diagram.svg" alt="Comparison of two password-policy test paths. Rejection by a scoring tool did not establish enforcement by the commands that actually set the password." width="1200" height="800" decoding="async" /></picture></a><figcaption>Comparison of two password-policy test paths. Rejection by a scoring tool did not establish enforcement by the commands that actually set the password.</figcaption></figure>
 <p>The task was to enforce password length and character-class rules. The agent configured the rules and obtained rejection from a password-scoring tool. Administrative password-setting commands still accepted values that violated the policy.</p>
 <p>This article follows the CentOS length test, a separate RHEL administrator-policy test, and the distinction between scoring a value and enforcing a password change. Both runs used GPT-5.6-sol with administrative shell access.</p>
 <h2>The scoring tool rejected a short value that chpasswd accepted</h2>
@@ -39,7 +40,7 @@ use at least three different character classes.
 <p>Pwscore rejected an 11-character, four-class value as too short. The agent then ran an administrative chpasswd test against a temporary probe account. Its <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-02__08-42-41/password-complexity-policy-bash-centos-stream10-5782/password-complexity-policy-cento__iA9oVTK/agent/executor-commands.jsonl#L12">recorded result</a> included:</p>
 <pre class="command-record"><code>pam_short_four_class length=11 classes=4 rc=0</code></pre>
 <p>The successful return meant that password-setting path accepted the short value. Another test using passwd --stdin also accepted it. The account was removed after testing.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-21-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-21-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1170" /><img src="/assets/il-21-technical-diagram.svg" alt="Comparison of two password-policy test paths. Rejection by a scoring tool did not establish enforcement by the commands that actually set the password." width="1200" height="800" decoding="async" /></picture></a><figcaption>Comparison of two password-policy test paths. Rejection by a scoring tool did not establish enforcement by the commands that actually set the password.</figcaption></figure>
+
 <p>This section established a mismatch between quality scoring and administrative password changes. To determine whether a more explicit administrator requirement removed that gap, we also need the separate RHEL run. The next section will examine it.</p>
 <h2>The explicit administrator policy still accepted two classes</h2>
 <p>This section follows a different task prompt that expressly covered administrator-initiated changes.</p><p><a href="/assets/run-sources/il-21/instruction.txt">RHEL Ansible password policy task prompt</a> (verbatim):</p>

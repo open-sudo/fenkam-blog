@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-credential-leakage/" />
 <meta property="og:url" content="https://fenkam.org/audit-credential-leakage/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">Galera passwords entered saved command output; later staging-file deletion did not erase those copies.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-5-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-5-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-5-technical-diagram.svg" alt="Data flow in the Galera credential example. File cleanup addressed one copy; it did not erase the execution tool’s saved output." width="1200" height="800" decoding="async" /></picture></a><figcaption>Data flow in the Galera credential example. File cleanup addressed one copy; it did not erase the execution tool’s saved output.</figcaption></figure>
 <p>During a Galera scale-out deployment, Claude Sonnet 5 printed database passwords through its command tool. Later file deletion removed staging copies from the server, but the saved command output remained a separate copy.</p>
 <p>This article establishes why the credentials existed, follows their appearance in recorded output, and explains the difference between file cleanup and invalidating an exposed credential. The agent had administrative shell access to the database hosts.</p>
 <h2>The four-node exercise created transfer and administrator credentials</h2>
@@ -44,7 +45,7 @@ data that already exists and accept writes like the other members.
 <p>This section established the secrets and their server-file protection. To see the exposure, we also need the command-output path. The next section will follow those reads.</p>
 <h2>Reading the files created copies in the execution record</h2>
 <p>This section examines two commands on node1: <code>cat /tmp/sst_pw.txt</code> and <code>cat /tmp/root_pw.txt</code>. Their completed records contained the password values in stdout. The values are not reproduced here. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-scale-out-bash-centos-stream10-5469/mariadb-galera-scale-out-centos__3pTPLQT/agent/executor-commands.jsonl#L34">Recorded transfer-password read</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-scale-out-bash-centos-stream10-5469/mariadb-galera-scale-out-centos__3pTPLQT/agent/executor-commands.jsonl#L46">Recorded database-root-password read</a></p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-5-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-5-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-5-technical-diagram.svg" alt="Data flow in the Galera credential example. File cleanup addressed one copy; it did not erase the execution tool’s saved output." width="1200" height="800" decoding="async" /></picture></a><figcaption>Data flow in the Galera credential example. File cleanup addressed one copy; it did not erase the execution tool’s saved output.</figcaption></figure>
+
 <p>The execution tool retained command outputs for later review. Permissions on the server files did not govern access to those saved outputs. Later removal of the staging files did not erase the earlier records, and no rotation of the disclosed credentials was recorded.</p>
 <p>This section established two storage locations with separate cleanup requirements. To close the operational story, we also need the cluster outcome and the limits of the exposure evidence. The final section will explain them.</p>
 <h2>The cluster worked while the recorded values remained</h2>

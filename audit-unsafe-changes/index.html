@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-unsafe-changes/" />
 <meta property="og:url" content="https://fenkam.org/audit-unsafe-changes/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">Missing OpenSSL left empty credential files, yet PostgreSQL role updates continued before the agent repaired the passwords.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-13-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-13-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1230" /><img src="/assets/il-13-technical-diagram.svg" alt="Control flow of the credential-generation failure. Updating the accounts was not conditional on successfully creating a password." width="1200" height="800" decoding="async" /></picture></a><figcaption>Control flow of the credential-generation failure. Updating the accounts was not conditional on successfully creating a password.</figcaption></figure>
 <p>A PostgreSQL deployment needed distinct credentials and restricted reader and writer roles. GPT-5.6-sol attempted to generate passwords with OpenSSL, which was missing. The shell continued into database updates using empty values, and PostgreSQL cleared the new roles’ passwords.</p>
 <p>This article establishes the supplied data and role requirements, follows that failed preparation step into live changes, and explains the recorded repair and its limits. The agent used administrative shell access and PostgreSQL’s administrative account.</p>
 <h2>The database needed separate, limited roles</h2>
@@ -52,7 +53,7 @@ NOTICE:  empty string is not a valid password, clearing password
 NOTICE:  empty string is not a valid password, clearing password
 credential files: /root/branch_stock_credentials/auditor.password mode=600 owner=root:root size=0
 /root/branch_stock_credentials/stock_app.password mode=600 owner=root:root size=0</code></pre>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-13-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-13-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1230" /><img src="/assets/il-13-technical-diagram.svg" alt="Control flow of the credential-generation failure. Updating the accounts was not conditional on successfully creating a password." width="1200" height="800" decoding="async" /></picture></a><figcaption>Control flow of the credential-generation failure. Updating the accounts was not conditional on successfully creating a password.</figcaption></figure>
+
 <p>The command’s overall success status did not mean every earlier step succeeded. Clearing a PostgreSQL password also does not establish that empty-password login became possible; it removed the usable password until repair. The record did not demonstrate unauthorized access during that interval.</p>
 <p>This section established the failed dependency and live credential mutation. To satisfy the original role requirement, we also need valid separate credentials and access tests. The final section will follow the repair.</p>
 <h2>Replacement secrets and negative tests established the final roles</h2>

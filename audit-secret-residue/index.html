@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-secret-residue/" />
 <meta property="og:url" content="https://fenkam.org/audit-secret-residue/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">TLS replication worked while its root-only CA signing key remained in the temporary issuance directory.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-7-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-7-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-7-technical-diagram.svg" alt="PKI dependency diagram: a certificate authority signs the service certificate. Retaining the CA private key adds authority beyond the installed service key." width="1200" height="800" decoding="async" /></picture></a><figcaption>PKI dependency diagram: a certificate authority signs the service certificate. Retaining the CA private key adds authority beyond the installed service key.</figcaption></figure>
 <p>PostgreSQL replication needed TLS and certificates issued by a dedicated cluster authority. Claude Sonnet 5 built that setup, then left the authority’s private signing key in the temporary issuance directory.</p>
 <p>This article establishes the certificate roles, follows the staging key into the delivered system, and separates working replication from the decision about who should retain issuing authority. The agent used administrative shell access on three database hosts.</p>
 <h2>The cluster required certificates for replication peers</h2>
@@ -45,7 +46,7 @@ certificate issued by that authority.
 <p>This section established the intended trust hierarchy. To assess retained secrets, we also need the key files created during issuance. The next section will examine their placement and permissions.</p>
 <h2>The root-owned signing key remained in staging</h2>
 <p>This section follows the issuance directory. The creation output listed <code>ca.key</code> as root-owned with mode 0600. A later listing showed the CA key beside node1 and replicator issuance files. <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl#L18">CA creation and file mode</a> · <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-replication-tls-bash-rhel9-5469/postgresql-replication-tls-rhel9__oskDi9n/agent/executor-commands.jsonl#L20">Service and client certificate issuance</a></p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-7-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-7-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-7-technical-diagram.svg" alt="PKI dependency diagram: a certificate authority signs the service certificate. Retaining the CA private key adds authority beyond the installed service key." width="1200" height="800" decoding="async" /></picture></a><figcaption>PKI dependency diagram: a certificate authority signs the service certificate. Retaining the CA private key adds authority beyond the installed service key.</figcaption></figure>
+
 <p>The trace recorded no cleanup or transfer of the CA key into a documented long-term custody arrangement. Its presence under /tmp does not by itself make it readable by every local user; the captured permissions were restrictive. The issue was the retained signing authority and its unmanaged location.</p>
 <p>Keeping a CA key can be intentional for future issuance. That purpose needs an explicit owner, access policy and lifetime. The running database’s use of its own key does not explain those decisions for the CA key.</p>
 <p>This section established the retained issuing key without overstating local readability. To assess the delivered service, we also need the replication result. The final section will connect that success to the remaining custody question.</p>

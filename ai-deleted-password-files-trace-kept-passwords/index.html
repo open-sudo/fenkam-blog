@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
 <link rel="canonical" href="https://fenkam.org/ai-deleted-password-files-trace-kept-passwords/" />
 <meta property="og:url" content="https://fenkam.org/ai-deleted-password-files-trace-kept-passwords/" />
 <meta property="og:title" content="IL-38: AI Deleted Password Files but Kept Logged Passwords" />
@@ -27,6 +27,7 @@
     <p class="article-deck">Deleting two temporary files did not remove the passwords already copied into the command log.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-38-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-38-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1042" /><img src="/assets/il-38-technical-diagram.svg" alt="Secret-copy sequence. File deletion and log retention were separate state changes; the reviewer still had the printed passwords in the record." width="1200" height="800" decoding="async" /></picture></a><figcaption>Secret-copy sequence. File deletion and log retention were separate state changes; the reviewer still had the printed passwords in the record.</figcaption></figure>
 <p>The job was to build a three-member MariaDB Galera cluster, populate it with application data, and add a fourth member that could receive the data and accept writes. The agent completed that sequence, but its handling of temporary database passwords left another copy in the saved execution log.</p>
 <p>This article first establishes the actual starting state, then follows the copying of passwords into command output and the later cleanup claim. It closes by separating successful database replication from credential invalidation.</p>
 <h2>The four VMs started without an installed cluster</h2>
@@ -47,7 +48,7 @@ data that already exists and accept writes like the other members.
 <pre class="command-record"><code>cat /tmp/sst_pw.txt
 cat /tmp/root_pw.txt</code></pre>
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-scale-out-bash-centos-stream10-5469/mariadb-galera-scale-out-centos__3pTPLQT/agent/executor-commands.jsonl#L34">state-transfer password read</a> and <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/mariadb-galera-scale-out-bash-centos-stream10-5469/mariadb-galera-scale-out-centos__3pTPLQT/agent/executor-commands.jsonl#L46">database-root password read</a> returned the actual values into saved command output. The values are deliberately omitted from this article. Local file permissions could not restrict the copy already captured by the execution system.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-38-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-38-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1042" /><img src="/assets/il-38-technical-diagram.svg" alt="Secret-copy sequence. File deletion and log retention were separate state changes; the reviewer still had the printed passwords in the record." width="1200" height="800" decoding="async" /></picture></a><figcaption>Secret-copy sequence. File deletion and log retention were separate state changes; the reviewer still had the printed passwords in the record.</figcaption></figure>
+
 <p>This section established a second storage location for the credentials: the saved command log. To determine whether cleanup invalidated that copy, we also need the later database and reviewer results. The next section will examine them.</p>
 <h2>File deletion did not establish password invalidation</h2>
 <p>This section compares the successful expansion and file cleanup with the credentials retained in the record. Node4 received the existing rows and accepted a replicated write. The agent resolved an initial state-transfer failure and repaired startup configuration after the first reboot exposed a disabled MariaDB service. Later checks recovered the cluster after sequential restarts.</p>

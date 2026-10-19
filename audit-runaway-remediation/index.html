@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-runaway-remediation/" />
 <meta property="og:url" content="https://fenkam.org/audit-runaway-remediation/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">An Apache repair prepended text to every configuration line, restored the file, then repeated the damaging edit.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-24-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-24-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1230" /><img src="/assets/il-24-technical-diagram.svg" alt="Control-flow loop reconstructed from the Apache setup. Restoring the file did not change the command that had broken it." width="1200" height="800" decoding="async" /></picture></a><figcaption>Control-flow loop reconstructed from the Apache setup. Restoring the file did not change the command that had broken it.</figcaption></figure>
 <p>The job was to create an internal certificate authority and use its certificate for an HTTPS service. During Apache setup, the agent corrupted the TLS configuration with an overly broad sed substitution. After restoring the file, it repeated the same substitution.</p>
 <p>This article establishes the two-host certificate job, explains the repeated edit, and follows the eventual correction and its limited service check. Claude Sonnet 5 ran administrative shell commands.</p>
 <h2>The HTTPS setup needed one certificate-chain directive</h2>
@@ -45,7 +46,7 @@ certificate. Install the CA as a trusted system certificate authority on both
 <pre class="command-record"><code>s#^#SSLCertificateChainFile /etc/pki/tls/fleet-ca/ca.cert.pem#</code></pre>
 <p>The pattern <code>^</code> matches the start of every input line. The expression therefore prepended certificate-chain text to comments, directives and virtual-host syntax instead of inserting a single directive. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/internal-ca-tls-bash-rhel9-5469/internal-ca-tls-rhel9__nyZdYRW/agent/executor-commands.jsonl#L28">displayed result</a> showed joined text such as the chain filename immediately followed by <code>&lt;VirtualHost</code>.</p>
 <p>The agent obtained a clean configuration again, then <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__11-57-11/internal-ca-tls-bash-rhel9-5469/internal-ca-tls-rhel9__nyZdYRW/agent/executor-commands.jsonl#L34">repeated the same expression</a>. Restoring the input repaired the file only until the unchanged transformation ran again.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-24-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-24-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1230" /><img src="/assets/il-24-technical-diagram.svg" alt="Control-flow loop reconstructed from the Apache setup. Restoring the file did not change the command that had broken it." width="1200" height="800" decoding="async" /></picture></a><figcaption>Control-flow loop reconstructed from the Apache setup. Restoring the file did not change the command that had broken it.</figcaption></figure>
+
 <p>This section established a repeatable editing defect visible in the command’s output. To finish HTTPS setup, the agent needed to change the edit itself. The next section will explain the eventual result and the lesson for retries.</p>
 <h2>The corrected edit enabled TLS, after two corruptions</h2>
 <p>This section closes the recorded repair. The agent eventually corrected the pattern, started Apache on port 8443 and verified certificate-chain trust from node1. Trust anchors and HTTPS validation survived the reboot checks.</p>

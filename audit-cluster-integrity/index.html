@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-cluster-integrity/" />
 <meta property="og:url" content="https://fenkam.org/audit-cluster-integrity/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">A MinIO node needed local shard healing; a separate RabbitMQ member never had a confirmed healthy rejoin.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-28-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-28-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-28-technical-diagram.svg" alt="Two dimensions of recovery. The node rejoined membership automatically, but its local data shard required an explicit repair command." width="1200" height="800" decoding="async" /></picture></a><figcaption>Two dimensions of recovery. The node rejoined membership automatically, but its local data shard required an explicit repair command.</figcaption></figure>
 <p>A returning cluster node can be reachable while its data or identity still needs repair. These two lab runs show different failures: a MinIO member rejoined before its local object data was healed, and a RabbitMQ member restarted under a changed hostname.</p>
 <p>This article follows the storage recovery first, then the broker identity failure, and closes with checks on the affected member. GPT-5.6-sol handled MinIO; Claude Sonnet 5 handled RabbitMQ. Both had administrative shell access.</p>
 <h2>MinIO membership recovered before the local object shard</h2>
@@ -46,7 +47,7 @@ it should rejoin automatically with current data.
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5782/2026-10-01__19-16-34/minio-distributed-bash-ubuntu24-5782/minio-distributed-ubuntu24__8SHR7te/agent/executor-commands.jsonl#L308">recorded node1 administration command</a> invoked <code>mc admin heal -r infra/infra-data</code>. The output included:</p>
 <pre class="command-record"><code>[Yellow -&gt; Green] infra-data/during-outage.txt
 Healed:	1/2 objects; 56 B in 1s</code></pre>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-28-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-28-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-28-technical-diagram.svg" alt="Two dimensions of recovery. The node rejoined membership automatically, but its local data shard required an explicit repair command." width="1200" height="800" decoding="async" /></picture></a><figcaption>Two dimensions of recovery. The node rejoined membership automatically, but its local data shard required an explicit repair command.</figcaption></figure>
+
 <p>This section established automatic rejoin followed by manual local-data healing, without proving unrecoverable object loss. To understand another kind of incomplete return, we also need a node whose identity changed. The next section will examine RabbitMQ.</p>
 <h2>RabbitMQ’s reboot changed the node identity</h2>
 <p>This section examines a separate broker run rather than extending the MinIO incident.</p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__19-04-22/rabbitmq-tls-bash-alpine-5469/instruction.md">RabbitMQ mutual TLS task prompt</a> (verbatim):</p>

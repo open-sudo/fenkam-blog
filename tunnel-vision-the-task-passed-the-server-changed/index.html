@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
 <link rel="canonical" href="https://fenkam.org/tunnel-vision-the-task-passed-the-server-changed/" />
 <meta property="og:url" content="https://fenkam.org/tunnel-vision-the-task-passed-the-server-changed/" />
 <meta property="og:title" content="IL-40: AI Finished Tasks but Disrupted Existing Services" />
@@ -27,6 +27,7 @@
     <p class="article-deck">A cron test erased an existing root schedule; a separate network cleanup interrupted the command service.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-40-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-40-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-40-technical-diagram.svg" alt="Dependency and blast-radius diagram for the firewall cleanup example. Killing every process named socat selected both a temporary listener and the management transport." width="1200" height="800" decoding="async" /></picture></a><figcaption>Dependency and blast-radius diagram for the firewall cleanup example. Killing every process named socat selected both a temporary listener and the management transport.</figcaption></figure>
 <p>Limiting cron access and enforcing a network firewall are different jobs. These two lab runs share an operational problem: tests of the requested feature changed something else the machine needed. One lost root’s existing cron schedule. The other interrupted the agent’s own command service.</p>
 <p>The first case follows the schedule replacement; the second explains why process-name cleanup killed a management connection. The final section turns those mechanisms into concrete preservation checks. GPT-5.6-sol handled the cron case; Claude Sonnet 5 handled the firewall case. Both agents could run administrative shell commands.</p>
 <h2>A cron-access test replaced root’s existing schedule</h2>
@@ -52,7 +53,7 @@ Implement using Ansible.
 <p>The following historical cleanup excerpt ran with administrative access on node2 and node3. It selected every matching process name, including management socat processes:</p>
 <pre class="command-record"><code>pkill socat 2&gt;/dev/null; pkill nc 2&gt;/dev/null; echo done</code></pre>
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/cross-lan-firewall-ansible-alpine-7778/cross-lan-firewall-alpine__wFDepex/agent/executor-commands.jsonl#L132">cleanup command</a> interrupted command access. The agent recovered using SSH from node4 and <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/7778/2026-09-28__23-27-33/cross-lan-firewall-ansible-alpine-7778/cross-lan-firewall-alpine__wFDepex/agent/executor-commands.jsonl#L144">restarted vsock-agent</a>; subsequent output reported <samp>alive-again</samp>. It repeated that recovery on node3.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-40-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-40-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-40-technical-diagram.svg" alt="Dependency and blast-radius diagram for the firewall cleanup example. Killing every process named socat selected both a temporary listener and the management transport." width="1200" height="800" decoding="async" /></picture></a><figcaption>Dependency and blast-radius diagram for the firewall cleanup example. Killing every process named socat selected both a temporary listener and the management transport.</figcaption></figure>
+
 <p>This section traced the interruption to a shared executable and an overly broad process selection. To judge completion of the firewall job, we also need to distinguish the repaired feature from the side effect. The next section will explain the final checks and preservation lesson.</p>
 <h2>The feature checks needed preservation checks beside them</h2>
 <p>This section compares the completed features with the state those tests disturbed. The firewall rules eventually passed allowed-port, rejected-port, reverse-direction and restart checks. The management service recovered. The cron run also passed its access checks, but root’s package-managed crontab remained missing.</p>

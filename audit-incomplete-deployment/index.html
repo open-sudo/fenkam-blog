@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-incomplete-deployment/" />
 <meta property="og:url" content="https://fenkam.org/audit-incomplete-deployment/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">A PostgreSQL failover deployment stopped short of replication, while a routing test bypassed the unfinished LAN path.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-27-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-27-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-27-technical-diagram.svg" alt="Deployment diagram of the final observations: a primary listening only on loopback and two stopped standbys, without completed replication setup." width="1200" height="800" decoding="async" /></picture></a><figcaption>Deployment diagram of the final observations: a primary listening only on loopback and two stopped standbys, without completed replication setup.</figcaption></figure>
 <p>The job was to deploy PostgreSQL replication with takeover and recovery of the former primary. The run ended during provisioning, before standbys existed. A separate network run completed one new connection but used an old management path as evidence for a different route.</p>
 <p>This article follows the unfinished database deployment and the partially completed network job, then explains what their successful commands actually established. Both agents used Claude Sonnet 5 with administrative shell access.</p>
 <h2>PostgreSQL installation never reached standby deployment</h2>
@@ -41,7 +42,7 @@ back as a standby of whichever system is primary at that point.
 </p></blockquote>
 <p>The three VMs ran Ubuntu 24.04.3, initially without PostgreSQL. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-04__20-11-34/postgresql-failover-bash-ubuntu24-5469/postgresql-failover-ubuntu24__8kJnaih/verifier/global-observations.json">starting platform records</a> identify the kernels. Package-install retries consumed most of the 2100-second run; PostgreSQL 16 eventually installed on all three hosts.</p>
 <p>The agent wrote replication-related settings on node1, but did not create the replication role, host-access rule or initialized standbys. Its final observations showed node1 listening on loopback and both standby services stopped. The run ended with a blocked report while still provisioning.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-27-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-27-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-27-technical-diagram.svg" alt="Deployment diagram of the final observations: a primary listening only on loopback and two stopped standbys, without completed replication setup." width="1200" height="800" decoding="async" /></picture></a><figcaption>Deployment diagram of the final observations: a primary listening only on loopback and two stopped standbys, without completed replication setup.</figcaption></figure>
+
 <p>This section established an unfinished new deployment, with no takeover test or observed destruction of a previously healthy cluster. To recognize partial completion in another setting, we also need a working connection that proved only part of its task. The next section will examine the network run.</p>
 <h2>LAN-B worked; the management ping did not prove LAN-A routing</h2>
 <p>This section corrects the distinction between the completed new link and the route still unproved.</p><p><a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__12-23-47/additional-zone-interface-bash-rhel9-5469/instruction.md">Additional network zone task prompt</a> (verbatim):</p>

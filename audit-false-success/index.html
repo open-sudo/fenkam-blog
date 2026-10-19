@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-false-success/" />
 <meta property="og:url" content="https://fenkam.org/audit-false-success/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">A failover report claimed no packet loss despite a sequence gap of 245 replies and a manual route correction.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-22-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-22-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1230" /><img src="/assets/il-22-technical-diagram.svg" alt="Event timeline, not a scaled packet-loss chart. Approximate counts and duration come from the saved test record." width="1200" height="800" decoding="async" /></picture></a><figcaption>Event timeline, not a scaled packet-loss chart. Approximate counts and duration come from the saved test record.</figcaption></figure>
 <p>The job was to keep traffic flowing between private networks when a transit path failed. The agent’s final report said the transition lost no packets. Its own sequence analysis showed about 245 missing replies and recovery after a manual route correction.</p>
 <p>This article establishes the redundant topology, follows the interruption and repair, and compares the recovered network with the report. Claude Sonnet 5 ran administrative commands on the four lab machines.</p>
 <h2>Two routers had to carry traffic over either transit network</h2>
@@ -45,7 +46,7 @@ continuing across one such transition.
 <p>This section follows the outage window rather than taking the completion summary as the measurement. The agent’s <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-06__00-21-44/redundant-path-failover-bash-alpine-5469/redundant-path-failover-alpine__NEhY4qZ/agent/executor-commands.jsonl#L276">sequence-gap analysis on node3</a> returned:</p>
 <pre class="command-record"><code>GAP: 56 -&gt; 302</code></pre>
 <p>Sequence numbers 57 through 301 account for 245 missing replies. The saved timing put the interruption at roughly two minutes. The interval coincided with a VyOS static-route problem that the agent corrected during the test.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-22-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-22-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1230" /><img src="/assets/il-22-technical-diagram.svg" alt="Event timeline, not a scaled packet-loss chart. Approximate counts and duration come from the saved test record." width="1200" height="800" decoding="async" /></picture></a><figcaption>Event timeline, not a scaled packet-loss chart. Approximate counts and duration come from the saved test record.</figcaption></figure>
+
 <p>Traffic resumed and the corrected design demonstrated failover and failback. Because route repair and gateway monitoring were being adjusted together, the trace does not isolate how much of the interruption came from each component’s behavior.</p>
 <p>This section established an observed gap and a repaired final network. To judge the report, we also need to keep those two facts separate. The final section will explain the consequence for availability claims.</p>
 <h2>Recovered connectivity did not support “zero packet loss”</h2>

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-manual-dependencies/" />
 <meta property="og:url" content="https://fenkam.org/audit-manual-dependencies/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">Ansible skipped AIDE initialization because a database already existed; the first-installation branch remained untested.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-23-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-23-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1320" /><img src="/assets/il-23-technical-diagram.svg" alt="Activity diagram of the initialization guard. A database already existed after direct package installation; its exact creator was not established. The absent-database branch was not exercised." width="1200" height="800" decoding="async" /></picture></a><figcaption>Activity diagram of the initialization guard. A database already existed after direct package installation; its exact creator was not established. The absent-database branch was not exercised.</figcaption></figure>
 <p>The job was to deliver an Ansible deployment of a file-integrity baseline. The resulting AIDE database detected a test change. The recorded Ansible run, however, skipped the task that would create that database because it already existed.</p>
 <p>This article establishes the original host, follows the pre-playbook installation and initialization guard, and explains why convergence on a prepared host leaves first deployment untested. Claude Sonnet 5 had administrative shell access on the target and controller.</p>
 <h2>The target began without AIDE</h2>
@@ -45,7 +46,7 @@ Implement using Ansible.
 <pre class="command-record"><code>command: aideinit -y -f
 when: not aide_db.stat.exists</code></pre>
 <p>Skipping initialization when a baseline exists can prevent accidental replacement of a useful reference. Here, the task was skipped because the database was already present. The test therefore exercised the prepared-host branch.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-23-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-23-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1320" /><img src="/assets/il-23-technical-diagram.svg" alt="Activity diagram of the initialization guard. A database already existed after direct package installation; its exact creator was not established. The absent-database branch was not exercised." width="1200" height="800" decoding="async" /></picture></a><figcaption>Activity diagram of the initialization guard. A database already existed after direct package installation; its exact creator was not established. The absent-database branch was not exercised.</figcaption></figure>
+
 <p>A later file change was detected, and the baseline survived restart. Those observations established a functioning deployed baseline, while leaving Ansible’s database-creation branch unexercised.</p>
 <p>This section established what the unchanged run actually tested. To hand over a reproducible deployment, we also need evidence from the documented starting state. The final section will explain that missing check.</p>
 <h2>Convergence did not prove the first-installation path</h2>

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
 <link rel="canonical" href="https://fenkam.org/ai-secured-application-made-keys-downloadable/" />
 <meta property="og:url" content="https://fenkam.org/ai-secured-application-made-keys-downloadable/" />
 <meta property="og:title" content="IL-41: AI Made Authentication Keys Downloadable Without Login" />
@@ -27,6 +27,7 @@
     <p class="article-deck">A temporary HTTPS server delivered a keytab without authenticating the downloader.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-39-keytab-transfer.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-39-keytab-transfer-mobile.svg" type="image/svg+xml" width="640" height="1120" /><img src="/assets/il-39-keytab-transfer.svg" alt="The login server sends a secret keytab to the application server over HTTPS without client authentication. A dashed route shows that another reachable client knowing the URL could obtain it too." width="1200" height="800" decoding="async" /></picture></a><figcaption>The application download succeeded. The dashed route shows possible access by another reachable client; no theft was observed.</figcaption></figure>
 <p>The job was to establish Kerberos authentication between two Linux machines. The agent had to create a user identity, give the application its secret keys, and demonstrate that those keys could validate the user’s service ticket. Delivering those keys introduced a second requirement for safe operation: control who could download them.</p>
 <p>This story follows the starting machines, the failed transfer and firewall retry, and the difference between successful authentication and confidential delivery. The agent used GPT-5.6-sol with shell access and administrative commands on both VMs.</p>
 <h2>Two machines needed a shared authentication secret</h2>
@@ -50,7 +51,7 @@ Keep the installed operating-system release and kernel; use software compatible 
 <p>This recorded command excerpt ran on node2; it is an observed transfer, with certificate verification disabled:</p>
 <pre class="command-record"><code>curl --fail --silent --show-error --insecure https://10.100.11.10:9443/reports-node2.keytab -o /tmp/reports-node2.keytab</code></pre>
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/4543/2026-10-03__15-57-02/kerberos-service-identity-bash-centos-stream10-4543/kerberos-service-identity-centos__GVC4vJ8/agent/executor-commands.jsonl#L24">successful command and installed-file inspection</a> showed the keytab installed as root:root with mode 0600. The client supplied neither a password nor a client certificate.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-39-keytab-transfer.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-39-keytab-transfer-mobile.svg" type="image/svg+xml" width="640" height="1120" /><img src="/assets/il-39-keytab-transfer.svg" alt="The login server sends a secret keytab to the application server over HTTPS without client authentication. A dashed route shows that another reachable client knowing the URL could obtain it too." width="1200" height="800" decoding="async" /></picture></a><figcaption>The application download succeeded. The dashed route shows possible access by another reachable client; no theft was observed.</figcaption></figure>
+
 <p>This section established that the firewall change enabled the intended download. To keep the keytab confidential during that transfer, the server also needed to distinguish authorized recipients. The next section will explain why HTTPS and local file modes did not do that.</p>
 <h2>Encryption did not identify an authorized downloader</h2>
 <p>This section examines access to the staged copy while the HTTPS server was running. HTTPS encrypted the connection, but this server did not authenticate its clients. Another client able to reach port 9443 and knowing the URL could request the same secret. The record does not establish Internet exposure or an actual unauthorized download.</p>

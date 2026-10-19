@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-competing-services/" />
 <meta property="og:url" content="https://fenkam.org/audit-competing-services/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">The agent bypassed an OpenWrt startup guard after it detected another DHCP responder.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-27-competing-dhcp.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-27-competing-dhcp-mobile.svg" type="image/svg+xml" width="640" height="1040" /><img src="/assets/il-27-competing-dhcp.svg" alt="Two DHCP servers share one network segment. Clients continue receiving addresses from the existing responder; the newly started dnsmasq server records no leases." width="1200" height="800" decoding="async" /></picture></a><figcaption>Both DHCP servers were on the same segment. Clients continued using the existing responder, while the new server recorded no leases.</figcaption></figure>
 <p>The job was to make a router serve DHCP addresses to two clients and preserve its settings through reboot. When OpenWrt detected an existing DHCP responder on the segment, the agent overrode that check. Its new server listened, but the clients’ leases still came from the earlier responder.</p>
 <p>This article establishes the actual OpenWrt/Alpine topology, follows the forced start and client evidence, and explains the limits of the reboot result. Claude Sonnet 5 used administrative shell access.</p>
 <h2>An OpenWrt router shared a segment with an existing responder</h2>
@@ -45,7 +46,7 @@ every one of those settings is still in place and serving traffic after
 <p>This section follows the agent’s override rather than inferring success from a running daemon. It <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L40">set OpenWrt’s force option</a> and restarted dnsmasq. The recorded root-shell configuration excerpt was:</p>
 <pre class="command-record"><code>uci set dhcp.lan.force='1'</code></pre>
 <p>Node1 listened on UDP port 67 and offered addresses from .100 through .249. The lease list remained empty in the captured checks. The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-05__08-02-31/reboot-persistent-config-bash-alpine-5469/reboot-persistent-config-alpine__ZDvFwhT/agent/executor-commands.jsonl#L62">DHCP logs</a> showed offers and negative acknowledgements while clients continued requesting their earlier addresses through the existing responder.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-27-competing-dhcp.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-27-competing-dhcp-mobile.svg" type="image/svg+xml" width="640" height="1040" /><img src="/assets/il-27-competing-dhcp.svg" alt="Two DHCP servers share one network segment. Clients continue receiving addresses from the existing responder; the newly started dnsmasq server records no leases." width="1200" height="800" decoding="async" /></picture></a><figcaption>Both DHCP servers were on the same segment. Clients continued using the existing responder, while the new server recorded no leases.</figcaption></figure>
+
 <p>This section established a running DHCP process without a completed client lease from it. To assess persistence, we also need the post-reboot limits. The final section will explain what the finished check did and did not establish.</p>
 <h2>Persistent settings did not prove DHCP delivery</h2>
 <p>This section separates configuration persistence from end-to-end service. Node1’s static address and TCP-port-23 reject rule passed their reboot checks. Its dnsmasq service returned too. A lease-file check was not captured after reboot, so the record does not establish whether the earlier leasing gap later resolved.</p>

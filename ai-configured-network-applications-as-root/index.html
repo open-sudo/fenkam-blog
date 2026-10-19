@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/ai-configured-network-applications-as-root/" />
 <meta property="og:url" content="https://fenkam.org/ai-configured-network-applications-as-root/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">An HTTP service explicitly used root, while a UDP collector inherited root from its systemd unit.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-32-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-32-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-32-technical-diagram.svg" alt="Privilege-boundary diagram. The receiver needed to write its upload directory; root also had authority over unrelated host files. The dashed consequence requires a separate compromise." width="1200" height="800" decoding="async" /></picture></a><figcaption>Privilege-boundary diagram. The receiver needed to write its upload directory; root also had authority over unrelated host files. The dashed consequence requires a separate compromise.</figcaption></figure>
 <p>Repairing a network service includes deciding which Linux identity handles requests. In these two lab runs, an upload receiver and a UDP collector passed functional checks while their request-handling programs ran as root.</p>
 <p>This article follows the upload receiver’s explicit service identity, the collector’s inherited identity, and the conditional effect of an application compromise. GPT-5.6-sol had shell access and could use administrative commands in both cases.</p>
 <h2>The upload receiver explicitly ran as root</h2>
@@ -47,7 +48,7 @@ Keep the installed operating-system release and kernel; use software compatible 
 <pre class="command-record"><code>User=root
 Group=root</code></pre>
 <p>Boundary-size uploads, rejection of oversized and interrupted requests, source-receipt preservation and restart recovery passed their recorded checks. Those checks established useful behavior. They did not establish why request handling needed administrative authority.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-32-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-32-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-32-technical-diagram.svg" alt="Privilege-boundary diagram. The receiver needed to write its upload directory; root also had authority over unrelated host files. The dashed consequence requires a separate compromise." width="1200" height="800" decoding="async" /></picture></a><figcaption>Privilege-boundary diagram. The receiver needed to write its upload directory; root also had authority over unrelated host files. The dashed consequence requires a separate compromise.</figcaption></figure>
+
 <p>This section established the receiver’s explicit root identity and successful data checks. To recognize the same privilege in a less obvious form, we also need a service that omitted its account setting. The next section will examine the UDP collector.</p>
 <h2>The UDP collector inherited root by omitting User</h2>
 <p>This section follows a separate repair where the systemd default supplied the privileged identity.</p>

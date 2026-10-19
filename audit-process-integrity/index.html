@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css?v=il42-command-examples-20261018" />
+  <link rel="stylesheet" href="/styles.css?v=article-image-top-20261018" />
   <style>.article-body pre { overflow-x: auto; padding: 14px; border: 1px solid var(--line); }.article-body pre code { background: none; padding: 0; }</style>
 <link rel="canonical" href="https://fenkam.org/audit-process-integrity/" />
 <meta property="og:url" content="https://fenkam.org/audit-process-integrity/" />
@@ -28,6 +28,7 @@
     <p class="article-deck">One script trusted a saved PID; another selected a swap device dynamically but hardcoded its shutdown target.</p>
   </header>
   <article class="article-body article-shell">
+<figure class="article-diagram"><a class="diagram-link" href="/assets/il-20-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-20-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-20-technical-diagram.svg" alt="State machine for the PID-file weakness. The check established that a process number existed, not that it still identified the intended application." width="1200" height="800" decoding="async" /></picture></a><figcaption>State machine for the PID-file weakness. The check established that a process number existed, not that it still identified the intended application.</figcaption></figure>
 <p>Starting a service and recording a process number does not establish that the intended application is ready. In one local-repository run, the delivered script trusted a PID file without checking the process’s identity. A separate swap helper selected a device dynamically at startup but hardcoded its shutdown target.</p>
 <p>This article explains both source-supported lifecycle risks and separates them from the successful tests. GPT-5.6-sol used administrative shell access in both runs.</p>
 <h2>The repository script treated an existing PID as the service</h2>
@@ -39,7 +40,7 @@ Keep the installed operating-system release and kernel; use software compatible 
 </p></blockquote>
 <p>The single VM used Ubuntu 7.10’s SysV service arrangement and kernel <code>2.6.22-14-generic</code>. The initial record lacked /etc/os-release but captured uname and the legacy platform context. The agent wrote a script for a Python SimpleHTTPServer on port 8080.</p>
 <p>The <a href="https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/8220/2026-10-02__23-55-49/local-package-repository-bash-ubuntu7-8220/local-package-repository-ubuntu7__MMKawVy/agent/executor-commands.jsonl#L8">delivered script</a> used <code>kill -0</code> with a number read from its PID file to decide whether the service was already running. That operation checks whether a process number exists and is signalable. It does not establish the executable or socket readiness.</p>
-<figure class="article-diagram"><a class="diagram-link" href="/assets/il-20-technical-diagram.svg" aria-label="Open technical diagram at full size"><picture><source media="(max-width:600px)" srcset="/assets/il-20-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img src="/assets/il-20-technical-diagram.svg" alt="State machine for the PID-file weakness. The check established that a process number existed, not that it still identified the intended application." width="1200" height="800" decoding="async" /></picture></a><figcaption>State machine for the PID-file weakness. The check established that a process number existed, not that it still identified the intended application.</figcaption></figure>
+
 <p>If the original server exited without removing the file and Linux later reused that number, an unrelated process could satisfy the check. This was a risk in the script; the run did not demonstrate mistaken control of a reused PID.</p>
 <p>This section established the missing link between a saved number and application identity. To examine the same tracking problem for another resource, we also need the swap helper. The next section will follow its startup and shutdown targets.</p>
 <h2>The swap helper did not retain the device it allocated</h2>
