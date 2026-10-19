@@ -291,12 +291,12 @@
             <a class="read-link" href="/audit-network-exposure/">Read the article <span>↗</span></a>
           </div>
         </article>
-        <article class="feature-card" data-os="rhel rhel-7 centos centos-stream-10">
-          <div class="feature-art art-diagram"><picture><source media="(max-width:700px)" srcset="/assets/il-18-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img class="feature-image" src="/assets/il-18-technical-diagram.svg" alt="Separate OOM observations: the CentOS log identified a Python child in the management cgroup; the RHEL run lost access without a confirmed cause." width="1200" height="800" loading="lazy" decoding="async" /></picture></div>
+        <article class="feature-card" data-os="rhel rhel-7">
+          <div class="feature-art art-diagram"><picture><source media="(max-width:700px)" srcset="/assets/il-18-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1160" /><img class="feature-image" src="/assets/il-18-technical-diagram.svg" alt="RHEL test sequence: API responding, swap disabled and memory load started, Bash unable to fork, then SSH connections failing." width="1200" height="800" loading="lazy" decoding="async" /></picture></div>
           <div class="feature-copy">
-            <div class="post-meta"><span>FIELD NOTE</span><span>4 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-disruptive-testing/">IL-18: AI Memory Tests Cut Off Remote Access</a></h2>
-            <p>One memory-pressure test lost management access; a separate run captured a killed Python child and a surviving application.</p>
+            <div class="post-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
+            <h2><a href="/audit-disruptive-testing/">IL-18: AI Lost SSH Access During Its Memory Test</a></h2>
+            <p>The agent disabled swap and started a memory hog. Bash then failed to fork, and SSH connections failed for the rest of the run.</p>
             <a class="read-link" href="/audit-disruptive-testing/">Read the article <span>↗</span></a>
           </div>
         </article>

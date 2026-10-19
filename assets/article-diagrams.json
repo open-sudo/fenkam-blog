@@ -207,12 +207,12 @@
     },
     {
       "stem": "il-18-technical-diagram",
-      "alt": "Separate OOM observations: the CentOS log identified a Python child in the management cgroup; the RHEL run lost access without a confirmed cause.",
-      "caption": "Separate OOM observations: the CentOS log identified a Python child in the management cgroup; the RHEL run lost access without a confirmed cause.",
+      "alt": "RHEL test sequence: API responding, swap disabled and memory load started, Bash unable to fork, then SSH connections failing.",
+      "caption": "The recorded sequence on node1. Once SSH failed, the agent could no longer run checks or cleanup commands.",
       "id": "IL-18",
       "slug": "audit-disruptive-testing",
-      "title": "AI Memory Tests Cut Off Remote Access",
-      "diagram_type": "Deployment diagram",
+      "title": "AI Lost SSH Access During Its Memory Test",
+      "diagram_type": "Recorded event sequence",
       "desktop": "assets/il-18-technical-diagram.svg",
       "mobile": "assets/il-18-technical-diagram-mobile.svg",
       "social": "assets/il-18-technical-diagram.png"
