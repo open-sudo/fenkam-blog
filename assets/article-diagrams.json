@@ -195,12 +195,12 @@
     },
     {
       "stem": "il-17-technical-diagram",
-      "alt": "Sequence diagram of a conditional retry risk. If the first backend commits before a connection failure, a retry can repeat the operation; the lab did not demonstrate a duplicate.",
-      "caption": "Sequence diagram of a conditional retry risk. If the first backend commits before a connection failure, a retry can repeat the operation; the lab did not demonstrate a duplicate.",
+      "alt": "Hypothetical order submission: node2 saves an order, its reply fails to arrive, and the proxy sends the same POST to node3, which creates another order.",
+      "caption": "Possible outcome with backends that accept order submissions: a missing reply triggers a second POST after the first order has already been saved.",
       "id": "IL-17",
       "slug": "audit-diy-infrastructure",
-      "title": "AI Proxies Passed Simple Tests but Missed Protocol Features",
-      "diagram_type": "Sequence diagram",
+      "title": "AI Wrote a Proxy That Could Submit a Write Twice",
+      "diagram_type": "Hypothetical retry sequence",
       "desktop": "assets/il-17-technical-diagram.svg",
       "mobile": "assets/il-17-technical-diagram-mobile.svg",
       "social": "assets/il-17-technical-diagram.png"

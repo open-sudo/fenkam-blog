@@ -301,11 +301,11 @@
           </div>
         </article>
         <article class="feature-card reverse" data-os="rhel rhel-7">
-          <div class="feature-art art-diagram"><picture><source media="(max-width:700px)" srcset="/assets/il-17-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1200" /><img class="feature-image" src="/assets/il-17-technical-diagram.svg" alt="Sequence diagram of a conditional retry risk. If the first backend commits before a connection failure, a retry can repeat the operation; the lab did not demonstrate a duplicate." width="1200" height="800" loading="lazy" decoding="async" /></picture></div>
+          <div class="feature-art art-diagram"><picture><source media="(max-width:700px)" srcset="/assets/il-17-technical-diagram-mobile.svg" type="image/svg+xml" width="640" height="1200" /><img class="feature-image" src="/assets/il-17-technical-diagram.svg" alt="Hypothetical order submission: node2 saves an order, its reply fails to arrive, and the proxy sends the same POST to node3, which creates another order." width="1200" height="800" loading="lazy" decoding="async" /></picture></div>
           <div class="feature-copy">
             <div class="post-meta"><span>FIELD NOTE</span><span>3 MIN READ</span><time datetime="2026-10-17">OCT 17, 2026</time></div>
-            <h2><a href="/audit-diy-infrastructure/">IL-17: AI Proxies Passed Simple Tests but Missed Protocol Features</a></h2>
-            <p>A generated proxy alternated successful reads, but its broad POST retry could repeat a write after an ambiguous failure.</p>
+            <h2><a href="/audit-diy-infrastructure/">IL-17: AI Wrote a Proxy That Could Submit a Write Twice</a></h2>
+            <p>The proxy retries POST requests after an error. If the first backend has already saved the change, the second attempt could repeat it.</p>
             <a class="read-link" href="/audit-diy-infrastructure/">Read the article <span>↗</span></a>
           </div>
         </article>

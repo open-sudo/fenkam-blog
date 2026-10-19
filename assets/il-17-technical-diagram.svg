@@ -1,47 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
-<title id="title">IL-17: Retrying a write can repeat its effect</title>
-<desc id="desc">Sequence diagram of a conditional retry risk. If the first backend commits before a connection failure, a retry can repeat the operation; the lab did not demonstrate a duplicate.</desc>
-<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b} .label{font-weight:700} .small{fill:#546574}</style>
-<defs><marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#175c88"/></marker><marker id="blue-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#175c88"/></marker><marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#176b50"/></marker><marker id="green-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#176b50"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#a3342c"/></marker><marker id="red-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#a3342c"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#8d580d"/></marker><marker id="amber-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#8d580d"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#17212b"/></marker><marker id="ink-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#17212b"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#546574"/></marker><marker id="muted-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#546574"/></marker><marker id="line" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#b8c7d3"/></marker><marker id="line-start" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M10 0 L0 5 L10 10Z" fill="#b8c7d3"/></marker></defs>
+<title id="title">One POST could create two orders</title><desc id="desc">Hypothetical order submission: node2 saves an order, its reply fails to arrive, and the proxy sends the same POST to node3, which creates another order.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17212b}</style>
 <rect width="1200" height="800" fill="#f7fafc"/>
-<text x="64" y="50" font-size="19" fill="#546574" style="fill:#546574" text-anchor="start" font-weight="700">IL-17  /  SEQUENCE DIAGRAM</text>
-<text x="64" y="104" font-size="40" fill="#17212b" style="fill:#17212b" text-anchor="start" font-weight="700">Retrying a write can repeat its effect</text>
-<text x="64" y="141" font-size="25" fill="#546574" style="fill:#546574" text-anchor="start">Illustrative failure path allowed by the generated proxy’s retry code.</text>
-<g data-node="Client" data-bounds="30.0,210,240,72">
-<rect x="30.0" y="210" width="240" height="72" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
-<text x="150" y="252.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Client</text>
+<text x="40" y="50" font-size="18">IL-17 / HYPOTHETICAL ORDER EXAMPLE</text>
+<text x="40" y="100" font-size="40">One POST could create two orders</text>
+<text x="40" y="140" font-size="25">With backends that create an order for each POST</text>
+<g data-bounds="60,205,520,170"><rect x="60" y="205" width="520" height="170" rx="12" fill="#edf5fc" stroke="#879aa9"/>
+<text x="82" y="253" font-size="26">1. Client submits one order</text>
+<text x="82" y="305" font-size="23">Node1 forwards the POST to node2.</text>
 </g>
-<path d="M150 283 L150 675" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="9 8"/>
-<g data-node="Proxy" data-bounds="330.0,210,240,72">
-<rect x="330.0" y="210" width="240" height="72" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
-<text x="450" y="252.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Proxy</text>
+<g data-bounds="620,205,520,170"><rect x="620" y="205" width="520" height="170" rx="12" fill="#edf5fc" stroke="#879aa9"/>
+<text x="642" y="253" font-size="26">2. Node2 saves the order</text>
+<text x="642" y="305" font-size="23">Its reply fails to reach the proxy.</text>
 </g>
-<path d="M450 283 L450 675" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="9 8"/>
-<g data-node="Backend A" data-bounds="630.0,210,240,72">
-<rect x="630.0" y="210" width="240" height="72" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
-<text x="750" y="252.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Backend A</text>
+<g data-bounds="60,460,520,170"><rect x="60" y="460" width="520" height="170" rx="12" fill="#fff1ee" stroke="#879aa9"/>
+<text x="82" y="508" font-size="26">3. Proxy retries the same POST</text>
+<text x="82" y="560" font-size="23">The exception handler tries node3.</text>
 </g>
-<path d="M750 283 L750 675" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="9 8"/>
-<g data-node="Backend B" data-bounds="930.0,210,240,72">
-<rect x="930.0" y="210" width="240" height="72" rx="10" fill="#edf5fc" stroke="#175c88" stroke-width="2"/>
-<text x="1050" y="252.625" font-size="25" fill="#17212b" style="fill:#17212b" text-anchor="middle" font-weight="700">Backend B</text>
+<g data-bounds="620,460,520,170"><rect x="620" y="460" width="520" height="170" rx="12" fill="#fff1ee" stroke="#879aa9"/>
+<text x="642" y="508" font-size="26">4. Node3 creates another order</text>
+<text x="642" y="560" font-size="23">The client submitted only once.</text>
 </g>
-<path d="M1050 283 L1050 675" fill="none" stroke="#546574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="9 8"/>
-<path d="M150 340 L450 340" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
-<rect x="157" y="300" width="286" height="35" rx="4" fill="#f7fafc"/>
-<text x="300" y="327" font-size="23" fill="#175c88" style="fill:#175c88" text-anchor="middle" class="edge">POST request</text>
-<path d="M450 417 L750 417" fill="none" stroke="#175c88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#blue)"/>
-<rect x="457" y="377" width="286" height="35" rx="4" fill="#f7fafc"/>
-<text x="600" y="404" font-size="23" fill="#175c88" style="fill:#175c88" text-anchor="middle" class="edge">Forward write</text>
-<path d="M750 479 L792 479 L792 506 L752 506" fill="none" stroke="#8d580d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="9 8" marker-end="url(#amber)"/>
-<rect x="813" y="457" width="215" height="34" rx="4" fill="#f7fafc"/>
-<text x="818" y="483" font-size="22" fill="#8d580d" style="fill:#8d580d" text-anchor="start" class="edge">May commit the write</text>
-<path d="M750 571 L450 571" fill="none" stroke="#a3342c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#red)"/>
-<rect x="457" y="504" width="286" height="62" rx="4" fill="#f7fafc"/>
-<text x="600" y="531" font-size="23" fill="#a3342c" style="fill:#a3342c" text-anchor="middle" class="edge">Exception / reply not</text>
-<text x="600" y="558" font-size="23" fill="#a3342c" style="fill:#a3342c" text-anchor="middle" class="edge">obtained</text>
-<path d="M450 648 L1050 648" fill="none" stroke="#8d580d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#amber)"/>
-<rect x="457" y="608" width="586" height="35" rx="4" fill="#f7fafc"/>
-<text x="750" y="635" font-size="23" fill="#8d580d" style="fill:#8d580d" text-anchor="middle" class="edge">Retry POST on another backend</text>
-<text x="64" y="737" font-size="22" fill="#546574" style="fill:#546574" text-anchor="start">The retry was in the code. A committed first write and a duplicate were not observed.</text>
+<text x="40" y="755" font-size="24">The proxy retries after a missing reply.</text>
 </svg>

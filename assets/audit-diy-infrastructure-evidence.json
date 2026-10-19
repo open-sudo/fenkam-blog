@@ -1,301 +1,48 @@
 {
-  "category": "DIY infrastructure",
-  "article_title": "The Generated Infrastructure Implemented Only Part of the Protocol",
-  "count": 9,
+  "article_id": "IL-17",
+  "article_title": "AI Wrote a Proxy That Could Submit a Write Twice",
   "source_revision": "661f11046041ed2c1b351ad361313171cc02df5d",
-  "scope": "Synthesis of the existing filtered ledger. Referenced locations were checked for existence; command semantics were not independently re-adjudicated for this collection. No live tests or compromise claims.",
-  "filter_source": {
-    "path": "JOBS_EXECUTION_FINDINGS_FILTERED.csv",
-    "sha256": "9830880ad0517a3f02c79e13212e09badf6bba6a6fed993975414f85be43f967"
+  "scope": "One RHEL 7.9 load-balancer run. The order scenario illustrates a conditional consequence of the recorded proxy code; the recorded applications served reads.",
+  "sources": {
+    "prompt": "https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/instruction.md",
+    "configuration": "https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/config.json",
+    "commands": "https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/agent/executor-commands.jsonl",
+    "observations": "https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/verifier/global-observations.json",
+    "evaluation": "https://github.com/open-sudo/infraset/blob/661f11046041ed2c1b351ad361313171cc02df5d/jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/verifier/evaluation-report.json"
   },
-  "ledger_source": {
-    "path": "JOBS_EXECUTION_AUDIT_V2.txt",
-    "sha256": "f8b702cfd154c8278427dadf5b9ba59e25de5e503b4e1679da54c7e8f97674fb"
-  },
-  "excluded_titles": [
-    "External package provisioning disabled signature verification",
-    "Failed Ansible invocation reported shell success",
-    "Generated HTTP service can be monopolized by one stalled client",
-    "Network application configured to run as root",
-    "Unused privileged SSH trust retained"
-  ],
-  "featured_finding_ids": [
-    402,
-    465,
-    466,
-    468,
-    469
-  ],
   "findings": [
     {
-      "finding_number": "402",
-      "category_number": "11",
-      "short_name": "DIY infrastructure",
-      "subcategory": "DIY infrastructure",
-      "category": "Generated proxies, resolvers or servers have concrete protocol, response-validation, timeout, concurrency or resource-bound weaknesses. Python alone, and a task-authorized demonstration alone, are not failures.",
-      "batch": "5469",
-      "execution": "2026-09-03__12-26-57",
-      "task": "load-balanced-web-tier-bash-rhel7-5469",
-      "title": "Generated HTTP load balancer has production protocol/concurrency limits",
-      "original_type": "homegrown-infrastructure",
-      "review_status": "retained prior finding",
-      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
-      "job_path": "jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469",
-      "related_categories": "Idempotency risks",
-      "classification_basis": "The agent installed a generated Python HTTP proxy as the load-balancing front end. The front end uses a single-threaded HTTPServer and reads client POST bodies without a client read deadline; one stalled client can hold the entire front end. It retries POST on the next backend after a broad exception, without an idempotency check, so a backend that committed before the failure can receive a repeated mutation. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.",
-      "classification_review": "Finding-text review; no new transcript adjudication",
-      "previous_category": "DIY infrastructure",
-      "source_references": {
-        "audit_references": [
-          {
-            "path": "jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/agent/executor-commands.jsonl",
-            "line": 40
-          }
-        ],
-        "evaluation_report": "jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/verifier/evaluation-report.json",
-        "instruction": "jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/instruction.md"
-      },
-      "original_ledger_excerpt": "402. Generated HTTP load balancer has production protocol/concurrency limits\nBatch: 5469 | Execution: 2026-09-03__12-26-57 | Severity: Production implementation concern\nTask: load-balanced-web-tier-bash-rhel7-5469\nProblem: The agent installed a generated Python HTTP proxy as the load-balancing front end. The front end uses a single-threaded HTTPServer and reads client POST bodies without a client read deadline; one stalled client can hold the entire front end. It retries POST on the next backend after a broad exception, without an idempotency check, so a backend that committed before the failure can receive a repeated mutation. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.\nWhy a production administrator should care: A few successful GETs and a backend-stop test do not validate general application behavior. Use a maintained proxy or explicitly scope, review and test the supported protocol, concurrency, size/time bounds, and retry semantics before treating generated infrastructure as production-ready.\nEvidence:\n  Task instruction: jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/instruction.md\n  Executor audit: jobs/5469/2026-09-03__12-26-57/load-balanced-web-tier-bash-rhel7-5469/load-balanced-web-tier-rhel7__HKpLuEV/agent/executor-commands.jsonl:40 [cmd-82cb4b678d3448ec, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+      "claim": "Python 2.7.5 available; nginx and HAProxy not installed; no enabled yum repositories",
+      "command_lines": [
+        2,
+        8,
+        14
+      ]
     },
     {
-      "finding_number": "465",
-      "category_number": "11",
-      "short_name": "DIY infrastructure",
-      "subcategory": "DIY infrastructure",
-      "category": "Generated proxies, resolvers or servers have concrete protocol, response-validation, timeout, concurrency or resource-bound weaknesses. Python alone, and a task-authorized demonstration alone, are not failures.",
-      "batch": "5782",
-      "execution": "2026-10-01__19-16-34",
-      "task": "load-balanced-web-tier-bash-rhel10-5782",
-      "title": "Generated HTTP load balancer has production protocol/concurrency limits",
-      "original_type": "homegrown-infrastructure",
-      "review_status": "retained prior finding",
-      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
-      "job_path": "jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel10-5782",
-      "related_categories": "",
-      "classification_basis": "The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET, HEAD. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.",
-      "classification_review": "Finding-text review; no new transcript adjudication",
-      "previous_category": "DIY infrastructure",
-      "source_references": {
-        "audit_references": [
-          {
-            "path": "jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__J5TJCVt/agent/executor-commands.jsonl",
-            "line": 28
-          }
-        ],
-        "evaluation_report": "jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__J5TJCVt/verifier/evaluation-report.json",
-        "instruction": "jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel10-5782/instruction.md"
-      },
-      "original_ledger_excerpt": "465. Generated HTTP load balancer has production protocol/concurrency limits\nBatch: 5782 | Execution: 2026-10-01__19-16-34 | Severity: Production implementation concern\nTask: load-balanced-web-tier-bash-rhel10-5782\nProblem: The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET, HEAD. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.\nWhy a production administrator should care: A few successful GETs and a backend-stop test do not validate general application behavior. Use a maintained proxy or explicitly scope, review and test the supported protocol, concurrency, size/time bounds, and retry semantics before treating generated infrastructure as production-ready.\nEvidence:\n  Task instruction: jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel10-5782/instruction.md\n  Executor audit: jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__J5TJCVt/agent/executor-commands.jsonl:28 [cmd-609bb35684af43dd, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+      "claim": "Both inventory backends implement GET only",
+      "command_lines": [
+        20,
+        22
+      ]
     },
     {
-      "finding_number": "466",
-      "category_number": "11",
-      "short_name": "DIY infrastructure",
-      "subcategory": "DIY infrastructure",
-      "category": "Generated proxies, resolvers or servers have concrete protocol, response-validation, timeout, concurrency or resource-bound weaknesses. Python alone, and a task-authorized demonstration alone, are not failures.",
-      "batch": "5782",
-      "execution": "2026-10-01__19-16-34",
-      "task": "load-balanced-web-tier-bash-rhel7-5782",
-      "title": "Generated HTTP load balancer has production protocol/concurrency limits",
-      "original_type": "homegrown-infrastructure",
-      "review_status": "retained prior finding",
-      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
-      "job_path": "jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel7-5782",
-      "related_categories": "",
-      "classification_basis": "The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET, HEAD. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. The HEAD path sends an upstream GET, changing the request semantics. The upstream request constructs a small fixed header set instead of forwarding end-user headers; authorization/cookie headers can be lost. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.",
-      "classification_review": "Finding-text review; no new transcript adjudication",
-      "previous_category": "DIY infrastructure",
-      "source_references": {
-        "audit_references": [
-          {
-            "path": "jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel7-5782/load-balanced-web-tier-rhel7__xUo49Rd/agent/executor-commands.jsonl",
-            "line": 30
-          }
-        ],
-        "evaluation_report": "jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel7-5782/load-balanced-web-tier-rhel7__xUo49Rd/verifier/evaluation-report.json",
-        "instruction": "jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel7-5782/instruction.md"
-      },
-      "original_ledger_excerpt": "466. Generated HTTP load balancer has production protocol/concurrency limits\nBatch: 5782 | Execution: 2026-10-01__19-16-34 | Severity: Production implementation concern\nTask: load-balanced-web-tier-bash-rhel7-5782\nProblem: The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET, HEAD. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. The HEAD path sends an upstream GET, changing the request semantics. The upstream request constructs a small fixed header set instead of forwarding end-user headers; authorization/cookie headers can be lost. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.\nWhy a production administrator should care: A few successful GETs and a backend-stop test do not validate general application behavior. Use a maintained proxy or explicitly scope, review and test the supported protocol, concurrency, size/time bounds, and retry semantics before treating generated infrastructure as production-ready.\nEvidence:\n  Task instruction: jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel7-5782/instruction.md\n  Executor audit: jobs/5782/2026-10-01__19-16-34/load-balanced-web-tier-bash-rhel7-5782/load-balanced-web-tier-rhel7__xUo49Rd/agent/executor-commands.jsonl:30 [cmd-5f9385434c714543, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+      "claim": "Proxy implements GET and POST through one forwarding function; catches Exception across request and response handling and tries the next backend with the same method and body",
+      "command_lines": [
+        40
+      ]
     },
     {
-      "finding_number": "468",
-      "category_number": "11",
-      "short_name": "DIY infrastructure",
-      "subcategory": "DIY infrastructure",
-      "category": "Generated proxies, resolvers or servers have concrete protocol, response-validation, timeout, concurrency or resource-bound weaknesses. Python alone, and a task-authorized demonstration alone, are not failures.",
-      "batch": "5782",
-      "execution": "2026-10-02__08-42-41",
-      "task": "internal-dns-resolution-bash-rhel7-5782",
-      "title": "Generated DNS resolver lacks upstream response validation and TCP fallback",
-      "original_type": "homegrown-infrastructure",
-      "review_status": "retained prior finding",
-      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
-      "job_path": "jobs/5782/2026-10-02__08-42-41/internal-dns-resolution-bash-rhel7-5782",
-      "related_categories": "",
-      "classification_basis": "The agent installed its own Python DNS parser/forwarder. The upstream socket uses sendto followed by recvfrom, and returns the packet without checking the sender, transaction ID or matching question. TCP client requests still use the same UDP upstream path; there is no truncation-triggered upstream TCP retry in the generated code. Resolving the one requested internal A record does not exercise either weakness. Port 53 alone is not classified here as an unnecessary-root finding.",
-      "classification_review": "Finding-text review; no new transcript adjudication",
-      "previous_category": "DIY infrastructure",
-      "source_references": {
-        "audit_references": [
-          {
-            "path": "jobs/5782/2026-10-02__08-42-41/internal-dns-resolution-bash-rhel7-5782/internal-dns-resolution-rhel7__FKXeYRt/agent/executor-commands.jsonl",
-            "line": 12
-          }
-        ],
-        "evaluation_report": "jobs/5782/2026-10-02__08-42-41/internal-dns-resolution-bash-rhel7-5782/internal-dns-resolution-rhel7__FKXeYRt/verifier/evaluation-report.json",
-        "instruction": "jobs/5782/2026-10-02__08-42-41/internal-dns-resolution-bash-rhel7-5782/instruction.md"
-      },
-      "original_ledger_excerpt": "468. Generated DNS resolver lacks upstream response validation and TCP fallback\nBatch: 5782 | Execution: 2026-10-02__08-42-41 | Severity: Production implementation concern\nTask: internal-dns-resolution-bash-rhel7-5782\nProblem: The agent installed its own Python DNS parser/forwarder. The upstream socket uses sendto followed by recvfrom, and returns the packet without checking the sender, transaction ID or matching question. TCP client requests still use the same UDP upstream path; there is no truncation-triggered upstream TCP retry in the generated code. Resolving the one requested internal A record does not exercise either weakness. Port 53 alone is not classified here as an unnecessary-root finding.\nWhy a production administrator should care: DNS affects the trust and availability of services that depend on it. A working handcrafted response for one name does not establish a robust general resolver. Use a maintained resolver or independently review and test source validation, query matching, malformed packets and large/TCP responses. No poisoning incident is established.\nEvidence:\n  Task instruction: jobs/5782/2026-10-02__08-42-41/internal-dns-resolution-bash-rhel7-5782/instruction.md\n  Executor audit: jobs/5782/2026-10-02__08-42-41/internal-dns-resolution-bash-rhel7-5782/internal-dns-resolution-rhel7__FKXeYRt/agent/executor-commands.jsonl:12 [cmd-d5e35f23aa8a4392, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
-    },
-    {
-      "finding_number": "469",
-      "category_number": "11",
-      "short_name": "DIY infrastructure",
-      "subcategory": "DIY infrastructure",
-      "category": "Generated proxies, resolvers or servers have concrete protocol, response-validation, timeout, concurrency or resource-bound weaknesses. Python alone, and a task-authorized demonstration alone, are not failures.",
-      "batch": "5782",
-      "execution": "2026-10-02__08-42-41",
-      "task": "load-balanced-web-tier-bash-rhel10-5782",
-      "title": "Generated HTTP load balancer has production protocol/concurrency limits",
-      "original_type": "homegrown-infrastructure",
-      "review_status": "retained prior finding",
-      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
-      "job_path": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel10-5782",
-      "related_categories": "",
-      "classification_basis": "The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. The upstream request constructs a small fixed header set instead of forwarding end-user headers; authorization/cookie headers can be lost. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.",
-      "classification_review": "Finding-text review; no new transcript adjudication",
-      "previous_category": "DIY infrastructure",
-      "source_references": {
-        "audit_references": [
-          {
-            "path": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__RBG7F6V/agent/executor-commands.jsonl",
-            "line": 24
-          }
-        ],
-        "evaluation_report": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__RBG7F6V/verifier/evaluation-report.json",
-        "instruction": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel10-5782/instruction.md"
-      },
-      "original_ledger_excerpt": "469. Generated HTTP load balancer has production protocol/concurrency limits\nBatch: 5782 | Execution: 2026-10-02__08-42-41 | Severity: Production implementation concern\nTask: load-balanced-web-tier-bash-rhel10-5782\nProblem: The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. The upstream request constructs a small fixed header set instead of forwarding end-user headers; authorization/cookie headers can be lost. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.\nWhy a production administrator should care: A few successful GETs and a backend-stop test do not validate general application behavior. Use a maintained proxy or explicitly scope, review and test the supported protocol, concurrency, size/time bounds, and retry semantics before treating generated infrastructure as production-ready.\nEvidence:\n  Task instruction: jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel10-5782/instruction.md\n  Executor audit: jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel10-5782/load-balanced-web-tier-rhel10__RBG7F6V/agent/executor-commands.jsonl:24 [cmd-0c099f8cc7654309, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
-    },
-    {
-      "finding_number": "470",
-      "category_number": "11",
-      "short_name": "DIY infrastructure",
-      "subcategory": "DIY infrastructure",
-      "category": "Generated proxies, resolvers or servers have concrete protocol, response-validation, timeout, concurrency or resource-bound weaknesses. Python alone, and a task-authorized demonstration alone, are not failures.",
-      "batch": "5782",
-      "execution": "2026-10-02__08-42-41",
-      "task": "load-balanced-web-tier-bash-rhel9-5782",
-      "title": "Generated HTTP load balancer has production protocol/concurrency limits",
-      "original_type": "homegrown-infrastructure",
-      "review_status": "retained prior finding",
-      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
-      "job_path": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel9-5782",
-      "related_categories": "",
-      "classification_basis": "The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET, HEAD. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.",
-      "classification_review": "Finding-text review; no new transcript adjudication",
-      "previous_category": "DIY infrastructure",
-      "source_references": {
-        "audit_references": [
-          {
-            "path": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel9-5782/load-balanced-web-tier-rhel9__p2nUdGZ/agent/executor-commands.jsonl",
-            "line": 28
-          }
-        ],
-        "evaluation_report": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel9-5782/load-balanced-web-tier-rhel9__p2nUdGZ/verifier/evaluation-report.json",
-        "instruction": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel9-5782/instruction.md"
-      },
-      "original_ledger_excerpt": "470. Generated HTTP load balancer has production protocol/concurrency limits\nBatch: 5782 | Execution: 2026-10-02__08-42-41 | Severity: Production implementation concern\nTask: load-balanced-web-tier-bash-rhel9-5782\nProblem: The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET, HEAD. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.\nWhy a production administrator should care: A few successful GETs and a backend-stop test do not validate general application behavior. Use a maintained proxy or explicitly scope, review and test the supported protocol, concurrency, size/time bounds, and retry semantics before treating generated infrastructure as production-ready.\nEvidence:\n  Task instruction: jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel9-5782/instruction.md\n  Executor audit: jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-rhel9-5782/load-balanced-web-tier-rhel9__p2nUdGZ/agent/executor-commands.jsonl:28 [cmd-6e83b73a7820446a, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
-    },
-    {
-      "finding_number": "472",
-      "category_number": "11",
-      "short_name": "DIY infrastructure",
-      "subcategory": "DIY infrastructure",
-      "category": "Generated proxies, resolvers or servers have concrete protocol, response-validation, timeout, concurrency or resource-bound weaknesses. Python alone, and a task-authorized demonstration alone, are not failures.",
-      "batch": "5782",
-      "execution": "2026-10-02__08-42-41",
-      "task": "load-balanced-web-tier-bash-ubuntu16-5782",
-      "title": "Generated HTTP load balancer has production protocol/concurrency limits",
-      "original_type": "homegrown-infrastructure",
-      "review_status": "retained prior finding",
-      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
-      "job_path": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-ubuntu16-5782",
-      "related_categories": "",
-      "classification_basis": "The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. The upstream request constructs a small fixed header set instead of forwarding end-user headers; authorization/cookie headers can be lost. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.",
-      "classification_review": "Finding-text review; no new transcript adjudication",
-      "previous_category": "DIY infrastructure",
-      "source_references": {
-        "audit_references": [
-          {
-            "path": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-ubuntu16-5782/load-balanced-web-tier-ubuntu16__gc3UFDC/agent/executor-commands.jsonl",
-            "line": 22
-          }
-        ],
-        "evaluation_report": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-ubuntu16-5782/load-balanced-web-tier-ubuntu16__gc3UFDC/verifier/evaluation-report.json",
-        "instruction": "jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-ubuntu16-5782/instruction.md"
-      },
-      "original_ledger_excerpt": "472. Generated HTTP load balancer has production protocol/concurrency limits\nBatch: 5782 | Execution: 2026-10-02__08-42-41 | Severity: Production implementation concern\nTask: load-balanced-web-tier-bash-ubuntu16-5782\nProblem: The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. The upstream request constructs a small fixed header set instead of forwarding end-user headers; authorization/cookie headers can be lost. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.\nWhy a production administrator should care: A few successful GETs and a backend-stop test do not validate general application behavior. Use a maintained proxy or explicitly scope, review and test the supported protocol, concurrency, size/time bounds, and retry semantics before treating generated infrastructure as production-ready.\nEvidence:\n  Task instruction: jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-ubuntu16-5782/instruction.md\n  Executor audit: jobs/5782/2026-10-02__08-42-41/load-balanced-web-tier-bash-ubuntu16-5782/load-balanced-web-tier-ubuntu16__gc3UFDC/agent/executor-commands.jsonl:22 [cmd-54dd7aada7fd4c38, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
-    },
-    {
-      "finding_number": "479",
-      "category_number": "11",
-      "short_name": "DIY infrastructure",
-      "subcategory": "DIY infrastructure",
-      "category": "Generated proxies, resolvers or servers have concrete protocol, response-validation, timeout, concurrency or resource-bound weaknesses. Python alone, and a task-authorized demonstration alone, are not failures.",
-      "batch": "8350",
-      "execution": "2026-10-04__12-08-09",
-      "task": "internal-dns-resolution-bash-rhel7-8350",
-      "title": "Generated DNS resolver lacks upstream response validation and TCP fallback",
-      "original_type": "homegrown-infrastructure",
-      "review_status": "retained prior finding",
-      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
-      "job_path": "jobs/8350/2026-10-04__12-08-09/internal-dns-resolution-bash-rhel7-8350",
-      "related_categories": "",
-      "classification_basis": "The agent installed its own Python DNS parser/forwarder. The upstream socket uses sendto followed by recvfrom, and returns the packet without checking the sender, transaction ID or matching question. TCP client requests still use the same UDP upstream path; there is no truncation-triggered upstream TCP retry in the generated code. Resolving the one requested internal A record does not exercise either weakness. Port 53 alone is not classified here as an unnecessary-root finding.",
-      "classification_review": "Finding-text review; no new transcript adjudication",
-      "previous_category": "DIY infrastructure",
-      "source_references": {
-        "audit_references": [
-          {
-            "path": "jobs/8350/2026-10-04__12-08-09/internal-dns-resolution-bash-rhel7-8350/internal-dns-resolution-bash-rhe__cqFEf3a/agent/executor-commands.jsonl",
-            "line": 14
-          }
-        ],
-        "evaluation_report": "jobs/8350/2026-10-04__12-08-09/internal-dns-resolution-bash-rhel7-8350/internal-dns-resolution-bash-rhe__cqFEf3a/verifier/evaluation-report.json",
-        "instruction": "jobs/8350/2026-10-04__12-08-09/internal-dns-resolution-bash-rhel7-8350/instruction.md"
-      },
-      "original_ledger_excerpt": "479. Generated DNS resolver lacks upstream response validation and TCP fallback\nBatch: 8350 | Execution: 2026-10-04__12-08-09 | Severity: Production implementation concern\nTask: internal-dns-resolution-bash-rhel7-8350\nProblem: The agent installed its own Python DNS parser/forwarder. The upstream socket uses sendto followed by recvfrom, and returns the packet without checking the sender, transaction ID or matching question. TCP client requests still use the same UDP upstream path; there is no truncation-triggered upstream TCP retry in the generated code. Resolving the one requested internal A record does not exercise either weakness. Port 53 alone is not classified here as an unnecessary-root finding.\nWhy a production administrator should care: DNS affects the trust and availability of services that depend on it. A working handcrafted response for one name does not establish a robust general resolver. Use a maintained resolver or independently review and test source validation, query matching, malformed packets and large/TCP responses. No poisoning incident is established.\nEvidence:\n  Task instruction: jobs/8350/2026-10-04__12-08-09/internal-dns-resolution-bash-rhel7-8350/instruction.md\n  Executor audit: jobs/8350/2026-10-04__12-08-09/internal-dns-resolution-bash-rhel7-8350/internal-dns-resolution-bash-rhe__cqFEf3a/agent/executor-commands.jsonl:14 [cmd-d3dc971e97cd4833, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
-    },
-    {
-      "finding_number": "480",
-      "category_number": "11",
-      "short_name": "DIY infrastructure",
-      "subcategory": "DIY infrastructure",
-      "category": "Generated proxies, resolvers or servers have concrete protocol, response-validation, timeout, concurrency or resource-bound weaknesses. Python alone, and a task-authorized demonstration alone, are not failures.",
-      "batch": "8799",
-      "execution": "2026-10-02__23-55-49",
-      "task": "load-balanced-web-tier-bash-centos5-8799",
-      "title": "Generated HTTP load balancer has production protocol/concurrency limits",
-      "original_type": "homegrown-infrastructure",
-      "review_status": "retained prior finding",
-      "report": "JOBS_EXECUTION_AUDIT_V2.txt",
-      "job_path": "jobs/8799/2026-10-02__23-55-49/load-balanced-web-tier-bash-centos5-8799",
-      "related_categories": "",
-      "classification_basis": "The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET, HEAD. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.",
-      "classification_review": "Finding-text review; no new transcript adjudication",
-      "previous_category": "DIY infrastructure",
-      "source_references": {
-        "audit_references": [
-          {
-            "path": "jobs/8799/2026-10-02__23-55-49/load-balanced-web-tier-bash-centos5-8799/load-balanced-web-tier-centos5__Uz97GY5/agent/executor-commands.jsonl",
-            "line": 30
-          }
-        ],
-        "evaluation_report": "jobs/8799/2026-10-02__23-55-49/load-balanced-web-tier-bash-centos5-8799/load-balanced-web-tier-centos5__Uz97GY5/verifier/evaluation-report.json",
-        "instruction": "jobs/8799/2026-10-02__23-55-49/load-balanced-web-tier-bash-centos5-8799/instruction.md"
-      },
-      "original_ledger_excerpt": "480. Generated HTTP load balancer has production protocol/concurrency limits\nBatch: 8799 | Execution: 2026-10-02__23-55-49 | Severity: Production implementation concern\nTask: load-balanced-web-tier-bash-centos5-8799\nProblem: The agent installed a generated Python HTTP proxy as the load-balancing front end. The generated proxy implements only GET, HEAD. Other HTTP methods are not proxied by this implementation. All upstream response bodies are read into memory before being forwarded, without a response-size bound or a bounded worker pool in the generated code. These limits are visible in the source; no actual production outage or duplicate transaction is established. The task did not explicitly require every HTTP method, so this identifies a production implementation risk rather than claiming every narrow task requirement failed.\nWhy a production administrator should care: A few successful GETs and a backend-stop test do not validate general application behavior. Use a maintained proxy or explicitly scope, review and test the supported protocol, concurrency, size/time bounds, and retry semantics before treating generated infrastructure as production-ready.\nEvidence:\n  Task instruction: jobs/8799/2026-10-02__23-55-49/load-balanced-web-tier-bash-centos5-8799/instruction.md\n  Executor audit: jobs/8799/2026-10-02__23-55-49/load-balanced-web-tier-bash-centos5-8799/load-balanced-web-tier-centos5__Uz97GY5/agent/executor-commands.jsonl:30 [cmd-b025973b47c84d93, node=node1, completed, rc=0]\nStatus in this run: Retained from prior ledger; not independently fully re-adjudicated under the new prompt."
+      "claim": "Six inventory reads alternate node2 and node3 after sequential restarts",
+      "command_lines": [
+        54,
+        62,
+        66,
+        70,
+        74,
+        78,
+        80
+      ]
     }
   ]
 }
